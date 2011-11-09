@@ -1,0 +1,289 @@
+---
+layout: post
+title: "Fedora 15 post installation setup & tips"
+categories:
+- Linux
+- Fedora
+---
+
+# Overture
+
+I've recently upgraded all my systems to Fedora 15. The default
+installation is not very usable for some tasks for several reasons -
+like CD size limitations and software patents for instance. I also
+happen to disagree with some defaults in Fedora like the fact that
+sudo is not enabled by default (like in Ubuntu) and the use of the
+bash shell. In this article I'll share some of the things I do after a
+fresh Fedora 15 installation to enhance it (at least by my standards).
+
+# Tweak defaults
+
+**Configure sudo**
+
+sudo gives you a way to execute single commands as the superuser. You
+can also do this with "su -c", but you have to quote the commands there,
+which I don't like very much. To enable sudo for some account first
+run the command:
+
+{% highlight console %}
+$ su -c "visudo"
+{% endhighlight %}
+
+The file /etc/sudoers will open up in a customized vi editor. Append
+somewhere to the end of the file the following line:
+
+`username ALL=(ALL) ALL`
+
+You should replace *username* with your username.
+
+**Configure yum**
+
+yum has a lot of plugins, but one of them is particularly useful - the
+fastest mirror plug-in. You can install it like this:
+
+{% highlight console %}
+$ sudo yum install yum-plugin-fastestmirror
+{% endhighlight %}
+
+**Disable SELinux**
+
+If you're a desktop Linux user you want to disable SELinux - trust
+me. Open the file /etc/selinux/config and change this line:
+
+`SELINUX=enforcing`
+
+to
+
+`SELINUX=disabled`
+
+Restart afterwards.
+
+# Install additional software
+
+Fedora's default installation medium is a 700MB CD. It's
+understandable that not everything can be fitted in there. Luckily
+adding new software from the vast Fedora on-line repos is child's play.
+
+**Install REAL text editors**
+
+gedit is ok for causal text editing, but professionals like software
+engineers and system administrators will definitely need something more:
+
+{% highlight console %}
+$ sudo yum install emacs vim
+{% endhighlight %}
+
+Personally I use Emacs most of the time and use vim only to edit
+config files that require root access. 
+
+**Install Z Shell**
+
+It's no secret that I love the Z Shell - after all I [rave about it](/Z%20Shell/2011/04/29/one-shell-to-rule-them-all.html)
+quite often. It should come as no surprise that I happen to use it
+and probably you should start using it as well:
+
+{% highlight console %}
+$ sudo yum install zsh
+$ sudo vim /etc/passwd
+{% endhighlight %}
+
+Find the line about your account and change there /bin/bash to
+/bin/zsh. Afterwards start a new login shell and a simple wizard will
+fire up asking you some questions to create a default .zshrc file for you.
+
+**Install LibreOffice**
+
+LibreOffice is currently the best Linux option for word processing,
+spreadsheet handling and presentation creation. You can install the
+most common components with the following command:
+
+{% highlight console %}
+sudo yum install libreoffice-calc libreoffice-impress libreoffice-draw libreoffice-writer
+{% endhighlight %}
+
+LibreOffice uses hunspell to do spellchecking. An English dictionary
+will be installed by default, but you'll need to install additional
+dictionaries manually:
+
+{% highlight console %}
+$ sudo yum install hunspell-bg
+{% endhighlight %}
+
+This command will install the Bulgarian hunspell dictionary. You
+likely don't need it so install some more helpful dictionary instead. :-)
+
+**Install OpenJDK**
+
+If you need to run Java programs/applets:
+
+{% highlight console %}
+$ sudo yum install java-1.6.0-openjdk java-1.6.0-openjdk-plugin
+{% endhighlight %}
+
+If you're planning to do some Java development:
+
+{% highlight console %}
+$ sudo yum install java-1.6.0-openjdk-devel java-1.6.0-openjdk-javadoc java-1.6.0-openjdk-src
+{% endhighlight %}
+
+**Install Deluge torrent client**
+
+The default Transmission torrent client is pretty basic. I recommend
+you to replace it with the much more feature-rich deluge:
+
+{% highlight console %}
+$ sudo yum install deluge
+{% endhighlight %}
+
+**Install Inconsolata font**
+
+I'm a software engineer and I obviously spend a lot of time reading
+and writing source code. I'm very picking about the monospace font
+that I use and currently Inconsolata happens to be my favorite:
+
+{% highlight console %}
+$ sudo yum install levien-inconsolata-fonts
+$ gsettings set org.gnome.desktop.interface monospace-font-name "Inconsolata 12"
+{% endhighlight %}
+
+These two commands will install the font and make it the default
+monospaced font on your Fedora system.
+
+**Install GIMP**
+Fedora does not ship with an image editor. GIMP is generally
+considered the best option so you might want to install it:
+
+{% highlight console %}
+$ sudo yum install gimp
+{% endhighlight %}
+
+**Install gnome-tweak-tool to customize fonts, themes, etc in GNOME 3.0**
+
+GNOME 3.0 has stripped many configuration options, but luckily most of
+them are available by installing gnome-tweak-tool:
+
+{% highlight console %}
+$ sudo yum install gnome-tweak-tool
+{% endhighlight %}
+
+Run it (by pressing Alt+F2 and typing gnome-tweak-tool) and change the
+settings. It does not have OK or Apply buttons, but simply selecting the
+options performs the changes. Some changes may require logging out and
+logging back in.
+
+# Install additional patent encumbered/proprietary software
+
+**Enable RPMFusion**
+
+RPMFusion is the most popular third party repository for Fedora. It's
+full of goodness like audio/video codecs, proprietary drivers, etc. To
+enable it just run the following command:
+
+{% highlight console %}
+$ sudo yum localinstall --nogpgcheck \
+http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-stable.noarch.rpm \
+http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-stable.noarch.rpm
+{% endhighlight %}
+
+**Install proprietary codecs**
+
+No MP3 support in Fedora by default? And almost no video codecs?
+RPMFusion to the rescue! Type this:
+
+{% highlight console %}
+$ sudo yum install gstreamer-plugins-ugly gstreamer-plugins-bad gstreamer-ffmpeg
+{% endhighlight %}
+
+**Install VLC**
+
+With MPlayer's development in stagnation VLC has established itself as
+the best video player for Linux recently. It's in RPMFusion, so if you
+enabled it installing it is as easy as typing the following command:
+
+{% highlight console %}
+$ sudo yum install vlc
+{% endhighlight %}
+
+**Install Adobe Flash Player**
+
+Love it or hate it - you probably need it.
+
+{% highlight console %}
+$ sudo rpm -Uvh http://linuxdownload.adobe.com/adobe-release/adobe-release-i386-1.0-1.noarch.rpm
+$ sudo yum install flash-plug-in
+{% endhighlight %}
+
+You can omit this if you're planning to use Google Chrome, since it
+comes with Flash Player built-in.
+
+**Install Skype**
+
+Download Skype from the
+[official site](http://www.skype.com/intl/en/get-skype/on-your-computer/linux/downloading.fedora). Assuming
+you've downloaded it to ~/Downloads, you can install it like this:
+
+{% highlight console %}
+$ sudo yum localinstall Downloads/skype-2.2.0.25-fedora.i586.rpm
+{% endhighlight %}
+
+Yum will automatically installed any dependencies required by skype.
+
+**Install Oracle JDK**
+
+OpenJDK is great, but due to licensing problems it's not quite the
+same as the Oracle JDK. If you start experiencing strange problems
+(mostly in Swing programs) you'd probably do well to try the Oracle
+JDK instead. Download Oracle's JDK from the
+[official site](http://www.oracle.com/technetwork/java/javase/downloads/index.html). Select
+"Linux x86 - RPM Installer" or "Linux x64 - RPM Installer" depending
+on your distribution and install the JDK like this:
+
+{% highlight console %}
+$ sudo sh jre-6u25-linux-i586-rpm.bin
+{% endhighlight %}
+
+Fedora uses OpenJDK by default, so you'll have to do some more work to
+tell it to start using Oracle JDK. The **alternatives** program allows
+you to select between multiple installed versions of a program:
+
+{% highlight console %}
+$ sudo alternatives --install /usr/bin/java java /usr/java/default/bin/java 1000
+$ sudo alternatives --install /usr/bin/javac javac /usr/java/default/bin/javac 1000
+$ sudo alternatives --install /usr/bin/javaws javaws /usr/java/default/bin/javaws 1000
+{% endhighlight %}
+
+These commands will make alternative aware of the java binaries and
+set high priorities to them which will make them the default Java
+binaries. You can use "alternatives --config binaryname" to select
+active binaries manually.
+
+**Install Google Chrome**
+
+Firefox is dying, Google Chrome is the new king of the
+browsers. Download it from the [official site](http://www.google.com/chrome) and install it:
+
+{% highlight console %}
+$ sudo yum localinstall ~/Downloads/google-chrome-stable_current_i386.rpm
+{% endhighlight %}
+
+Google Chrome will install a yum repository as well, so you'll receive
+updates as soon as they arrive.
+
+**Install DropBox**
+
+[DropBox](http://www.dropbox.com) is a great file sharing service
+which allows you to sync files between all of your computers and
+mobile devices(Android, iPhone, iPad, etc). It has a great Linux
+client which I use all the time. Download it from
+[here](http://www.dropbox.com/downloading?os=lnx) and install it like
+this:
+
+{% highlight console %}
+$ sudo yum localinstall --nogpgcheck nautilus-dropbox-0.6.7-1.fedora.i386.rpm
+{% endhighlight %}
+
+# Epilogue
+
+Hopefully some of my setup has made your setup more enjoyable and more
+productive. I'll update this article along the way if I stumble upon
+other things that I consider to be generally helpful.

@@ -1,0 +1,31 @@
+---
+layout: post
+title: "Running Xerox Phaser 3117 under Fedora 15"
+categories:
+- Linux
+- Hardware
+- Fedora
+---
+
+I've been a GNU/Linux user for quite some time now and a Fedora user
+for just as long. The first distribution that I ever used was Fedora 2
+and even though I've used extensively other distros I've always come
+back to Fedora. Recently Fedora 15 was released and I was
+(naturally) one of the first people to install it.
+
+Everything is great in the new release (as ever), but my Xerox Phaser
+3117 printer is unsupported (also as ever) out of the box, so it's
+time for one of those quick articles on how to get it up and running this
+time. First run the following command as root (or with sudo):
+
+``` bash
+# yum install gutenprint-foomatic
+```
+
+Now you can run the "Printing" application. It will autodetect your
+printer and suggest you to use the driver for Xerox Phaser 3110. Just
+accept this suggestion and you should be good to go. Happy printing!
+
+P.S. You might also want to check out my article on
+[Fedora 15 post installation setup](/Linux/Fedora/2011/05/31/fedora-15-tips.html).
+
