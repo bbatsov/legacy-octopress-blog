@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "A peek at Emacs 24"
+comments: true
 categories:
 - Emacs
 ---
@@ -14,6 +15,8 @@ I've found in Emacs 24.
 
 It seems to me that this will be the most important Emacs release in
 quite some time.
+
+<!--more-->
 
 ## Installation changes in Emacs 24
 

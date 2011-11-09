@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Das Keyboard"
+comments: true
 categories:
 - Hardware
 ---
@@ -32,7 +33,7 @@ consider when I was buying it, but it turned out quite helpful. I've
 actually stopped using the USB ports of my computer entirely(except
 for input devices) - I use the keyboard hub to plug-in flash drives
 and charge devices. When your computer is sitting beneath a desk you
-learn to appreciate USB hubs very quickly. 
+learn to appreciate USB hubs very quickly.
 
 I have long heard stories about Das Keyboard's quality
 and comfort and I it has totally lived up to its hype. They price is

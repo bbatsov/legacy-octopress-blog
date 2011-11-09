@@ -22,6 +22,8 @@ hence this post.
 I'll discuss here the installation and initial configuration of Emacs
 24 on OSX, GNU/Linux and Windows.
 
+<!--more-->
+
 ## Installing Emacs 24
 
 #### OS X

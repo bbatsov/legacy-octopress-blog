@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Django 1.3 vs Rails 3: A not so final showdown"
+comments: true
 categories:
 - Ruby
 - Rails
@@ -36,6 +37,8 @@ give you enough pointers to get you started.
 
 Hopefully this article will be useful to people that are in the same
 boat as was - picking between Rails and Django.
+
+<!--more-->
 
 ## Setup & Getting started
 

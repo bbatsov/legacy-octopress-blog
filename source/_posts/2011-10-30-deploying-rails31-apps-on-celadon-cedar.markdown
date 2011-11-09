@@ -1,8 +1,11 @@
 ---
 layout: post
-title: "Deploying Rails 3.1 applications on Heroku's Celadon Cedar stack"
+title: "Deploying Rails 3.1 applications on Heroku's Celadon Cedar
+stack"
+comments: true
 categories:
 - Ruby
+- Ruby on Rails
 - Heroku
 ---
 
@@ -33,6 +36,8 @@ resources, which is a very tedious task.
 While our experience with Heroku has been very positive in
 general, we've hit some bumps along the road, so I've decided to share
 some of the problems and their solutions with everyone.
+
+<!--more-->
 
 ## Background
 
@@ -117,7 +122,7 @@ It's absolutely required to have this line:
 in your **production.rb** file if you want your assets to be compiled
 automatically by Heroku (which I highly recommend).
 
-#### Use thin
+#### Use thin or unicorn as the application server
 
 By default, your app's web process runs `rails server`, which uses
 Webrick. This is fine for testing, but for production apps you`ll want
@@ -131,7 +136,31 @@ and this to your Procfile (create it if it doesn't already exist):
 `web: bundle exec rails server thin -p $PORT`
 
 The creation of the Procfile is very important! You can use the
-[foreman](https://github.com/ddollar/foreman) gem to test the correctness of the Procfile locally.
+[foreman](https://github.com/ddollar/foreman) gem to test the
+correctness of the Procfile locally.
+
+Alternatively you can use unicorn. While I haven't used Cedar with
+Heroku yet, I've read some nice articles, like this
+[one](http://michaelvanrooijen.com/articles/2011/06/01-more-concurrency-on-a-single-heroku-dyno-with-the-new-celadon-cedar-stack/),
+according to which one can gain significant performance boost with
+unicorn.
+
+#### Optimize your slug's size
+
+Your slug size is displayed at the end of a successful compile. You
+can roughly estimate slug size locally by doing a fresh checkout of
+your app, deleting the `.git` directory, and running `du -hsc`.
+
+Smaller slugs can be transferred across the dyno grid more quickly,
+allowing for a faster spin-up speed on your dynos. Generally speaking,
+any slug under 15MB is small and nimble; 30MB is average; and 40MB or
+above is weighty. If you find your app getting into the 40MB+ range,
+you may want to look into some techniques (such as removing unneeded
+dependencies or excluding files via `.slugignore`) to reduce the size.
+
+If your repository contains files not necessary to run your app, you
+may wish to add these to a `.slugignore` file in the root of your
+repository.
 
 ## Deployment
 
