@@ -10,7 +10,9 @@ Every professional developer knows how important to the development
 process the keyboard is, so it is only natural to be on the look for
 some quality piece of hardware. After a long research in the area of
 good keyboards I decided to upgrade my current rig to the recently
-released ["Das Keyboard 3"](http://www.daskeyboard.com/).
+released [Das Keyboard 3](http://www.daskeyboard.com/).
+
+{% img mechanical_keyboard.jpg http://www.daskeyboard.com/images/products/mechanical_keyboard.jpg %}
 
 Das Keyboard comes in three flavours - Professional(mechanical
 keyboard with labelled keys), Ultimate(the original mechanical
