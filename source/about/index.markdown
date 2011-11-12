@@ -20,7 +20,7 @@ for some embedded devices. As you can see I've gradually transferred
 from low-level to very high level programming - hopefully this will
 preserve my sanity for a while.
 
-For more professional details - check my [linkedin profile]().
+For more professional details - check my [linkedin profile](http://www.linkedin.com/in/bozhidarbatsov).
 
 Apart from programming I've always been fond of Unix operating systems
 (and operating systems in general (especially those with the source
