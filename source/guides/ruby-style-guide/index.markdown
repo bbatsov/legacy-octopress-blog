@@ -13,8 +13,8 @@ footer: true
 Style is what separates the good from the great.
 {% endblockquote %}
 
-One thing has always bothered me as Ruby developer - Python devs have
-a great programming style reference (PEP-8) and we never got an
+One thing has always bothered me as Ruby developer - Python developers have
+a great programming style reference ([PEP-8](http://www.python.org/dev/peps/pep-0008/)) and we never got an
 official guide documenting Ruby coding style and best practices. And I
 do believe that style matters.
 
@@ -50,9 +50,6 @@ The guide is still a work in progress - some rules are lacking
 examples, some rules don't have examples that illustrate them clearly
 enough. In due time these issues will be addressed - just keep them in
 mind for now.
-
-You can generate a PDF or an HTML copy of this guide using
-[Transmuter](https://github.com/TechnoGate/transmuter).
 
 #### Formatting
 
@@ -372,9 +369,9 @@ names.select do |name|
 end.map { |name| name.upcase }
 ```
 
-    Some will argue that multiline chaining would look OK with the use of {...}, but they should
-    ask themselves - it this code really readable and can't the blocks contents be extracted into
-    nifty methods.
+Some will argue that multiline chaining would look OK with the use of {...}, but they should
+ask themselves - it this code really readable and can't the blocks contents be extracted into
+nifty methods.
 
 * Avoid `return` where not required.
 
@@ -404,8 +401,8 @@ def some_method(arg1 = :default, arg2 = nil, arg3 = [])
 end
 ```
 
-    While several Ruby books suggest the first style, the second is much more prominent
-    in practice (and arguably a bit more readable).
+While several Ruby books suggest the first style, the second is much more prominent
+in practice (and arguably a bit more readable).
 
 * Avoid line continuation (\\) where not required. In practice, avoid using
   line continuations at all.
@@ -459,9 +456,10 @@ f(3 + 2) + 1
 
 #### Naming
 
-> The only real difficulties in programming are cache invalidation and
-> naming things. <br/>
-> -- Phil Karlton
+{% blockquote Phil Karlton %}
+The only real difficulties in programming are cache invalidation and
+naming things.
+{% endblockquote %}
 
 * Use `snake_case` for methods and variables.
 * Use `CamelCase` for classes and modules.  (Keep acronyms like HTTP,
@@ -472,27 +470,6 @@ f(3 + 2) + 1
   (i.e. `Array#empty?`).
 * The names of potentially "dangerous" methods (i.e. methods that modify `self` or the
   arguments, `exit!`, etc.) should end with an exclamation mark.
-* The length of an identifier determines its scope.  Use one-letter variables
-  for short block/method parameters, according to this scheme:
-
-        a,b,c: any object
-        d: directory names
-        e: elements of an Enumerable
-        ex: rescued exceptions
-        f: files and file names
-        i,j: indexes
-        k: the key part of a hash entry
-        m: methods
-        o: any object
-        r: return values of short methods
-        s: strings
-        v: any value
-        v: the value part of a hash entry
-        x,y,z: numbers
-
-  And in general, the first letter of the class name if all objects are of
-  that type.
-
 * When using `inject` with short blocks, name the arguments `|a, e|`
   (accumulator, element).
 * When defining binary operators, name the argument `other`.
@@ -509,11 +486,12 @@ end
 
 #### Comments
 
-> Good code is its own best documentation. As you're about to add a
-> comment, ask yourself, "How can I improve the code so that this
-> comment isn't needed?" Improve the code and then document it to make
-> it even clearer. <br/>
-> -- Steve McConnell
+{% blockquote Steve McConnell %}
+Good code is its own best documentation. As you're about to add a
+comment, ask yourself, "How can I improve the code so that this
+comment isn't needed?" Improve the code and then document it to make
+it even clearer.
+{% endblockquote %}
 
 * Write self-documenting code and ignore the rest of this section. Seriously!
 * Comments longer than a word are capitalized and use punctuation. Use [one
