@@ -41,16 +41,16 @@ The second easy way to obtain Emacs 24 is via
 [homebrew](http://mxcl.github.com/homebrew/). Just type the following
 incantation in your shell and you're done:
 
-{% highlight bash %}
+``` bash
 $ brew install emacs --cocoa --use-git-head --HEAD
 $ cp -r /usr/local/Cellar/emacs/HEAD/Emacs.app /Applications/
-{% endhighlight bash %}
+```
 
 The second step is optional, but it's recommended if you like to start
 Emacs from the launchpad or from Spotlight. Personally I prefer to
-start Emacs in daemon mode (emacs --daemon), so that I could share a
-single Emacs instance between several Emacs clients (emacsclient
--c/t).
+start Emacs in daemon mode (`emacs --daemon`), so that I could share a
+single Emacs instance between several Emacs clients (`emacsclient
+-c/t`).
 
 That's all folk! You may now proceed to the configuration section.
 
@@ -75,7 +75,7 @@ installation instructions there for all the relevant Debian and Ubuntu
 versions out there. High quality, highly recommended builds!
 
 Gentoo users have even less to do, since Emacs 24 can be obtained via
-the emacs-vcs package in portage, as noted in the official
+the `emacs-vcs` package in portage, as noted in the official
 [Emacs on Gentoo page](http://www.gentoo.org/proj/en/lisp/emacs/emacs.xml).
 
 Unfortunately I wasn't able to find prebuilt Emacs 24 packages for any
@@ -123,7 +123,7 @@ experience for all new Emacs users.
 The Prelude itself is a moving target. I've created it recently and I
 plan to add a lot more cool things very soon, so stay tuned. If you
 have any problems with it or have feature suggestions - do not
-hesitate to open tickets and send pull requests. :-)
+hesitate to open tickets and send pull requests.
 
 ## Epilogue
 
