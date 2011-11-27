@@ -57,6 +57,7 @@ they're looking most of the time for people ready to commit to their
 cause for at least a few years.
 
 Pros of staying:
+
 * you know the game and how to play it
 * you're accustomed to colleagues, the office and you don't have to
   change them
@@ -65,6 +66,7 @@ Pros of staying:
   in the company hierarchy if you're willing to stay long enough
 
 Cons of staying:
+
 * you limit your professional development
 * you limit the possibilities for salary improvements
 
@@ -101,6 +103,7 @@ enough at your job - you'll find a new one soon enough and that shouldn't
 really be bothering you.
 
 Pros of moving:
+
 * moving to a new company is likely to represent a raise in your
   salary you'll have to wait several years to get with your current
   employer
@@ -111,6 +114,7 @@ Pros of moving:
   and improve your professional skills
 
 Cons of moving:
+
 * you have to prove your worth again(you've already did this in your
   old job)
 * the is the factor of uncertainty every time you start something new

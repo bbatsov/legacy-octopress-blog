@@ -122,7 +122,7 @@ guys behind Active Admin have done) wouldn't hurt.
 Active Admin is the other big Rails admin UI framework, developed by
 Greg Bell. Its official web site describes it like this:
 
-{% blockqoute %}
+{% blockquote %}
 Active Admin is a Ruby on Rails plugin for generating administration
 style interfaces. It abstracts common business application patterns to
 make it simple for developers to implement beautiful and elegant
