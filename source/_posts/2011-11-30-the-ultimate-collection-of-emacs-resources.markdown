@@ -26,7 +26,7 @@ section. So here we go...
 
 <!--more-->
 
-## Emacs Squares (Beginners)
+## Emacs Squires (Beginners)
 
 #### The Emacs Tutorial
 
