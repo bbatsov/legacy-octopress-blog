@@ -24,6 +24,8 @@ certainly don't know about many great repositories of Emacs wisdom. I
 hope you'll help me by pointing out such repositories in the comments
 section. So here we go...
 
+<!--more-->
+
 ## Emacs Squares (Beginners)
 
 #### The Emacs Tutorial
