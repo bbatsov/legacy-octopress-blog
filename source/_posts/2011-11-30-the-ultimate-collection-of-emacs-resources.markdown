@@ -34,7 +34,21 @@ Built into Emacs itself this should be the first thing you ever read
 about Emacs. The tutorial is interactive (you get to play with
 concepts after you read about them) and you can start it at any point
 (provided you've started Emacs first) by
-pressing `C-h t`. 
+pressing `C-h t`.
+
+#### The Emacs Refcard
+
+[The Emacs Refcard](http://www.damtp.cam.ac.uk/user/sje30/ess11/resources/emacs-refcard.pdf)
+is a very useful resource to keep tugged under your keyboard (in
+printed form). It's generally bundled with your Emacs installation in
+both pdf and tex formats, but I've included a hyperlink to spare you
+the search for it.
+
+#### The Emacs Reference Mug
+
+[The Emacs Reference Mug](http://www.cafepress.com/geekcheat.13042487)
+is basically a refcard printed on a tea mug. Let's you memorize
+keybindings while enjoying a delightful cup of English Breakfast...
 
 #### Mastering Emacs
 
