@@ -231,8 +231,8 @@ etc) and is able to install them, update them and remove them, but
 more importantly it will init them for you.
 
 That means it will require the features you need, load the necessary
-files, set the Info paths so that C-h i shows the new documentation
-you now depend on, and finally call your own :post-init function for
+files, set the Info paths so that `C-h i` shows the new documentation
+you now depend on, and finally call your own `:post-init` function for
 you to setup the extension. Or call it a package.
 
 el-get is inherently troublesome piece of software on Windows machines
@@ -242,7 +242,55 @@ dislike. Master package branches are often buggy (but there are also
 authors that never tag versions and rely on the rolling release model)
 and I'm generally supportive of the stable version releases. While
 some view it as a nice addition to `package.el` I feel that el-get is
-too low level tool (in its approach to the problem) and should be avoided.
+too low level tool (in its approach to the problem) and should be
+avoided.
+
+**Update**
+
+A few hours after I posted this article it got a nice lengthy comment
+by el-get's author. Since I believe, that the comment is quite
+interesting I'm adding it here without any alterations.
+
+{% blockquote Dimitri Fontaine, Author of el-get %}
+As the author of el-get, good article!  The Emacs extension situation
+is far from ideal and needs hard critics so that work is done to
+improve it.
+
+I now want to share with you some of the features that are currently
+only available in the development branch of el-get (soon to be
+released as 4.1): you can now easily checkout a stable branch from a
+git repository (thanks to the :checkout property) and you can even
+setup which checksum you want installed.So when using git, the
+checksum is in fact a revision, when using emacswiki you have to
+compute the checksum (doing M-x el-get-checksum) and register it in
+your el-get-sources setup, then if the file change on emacswiki el-get
+will refuse loading it (hopefully until you've done your review then
+updated the checksum).So while I perfectly understand your reserve
+toward depending on el-get, I believe that your concerns are being
+solved now.I would like to believe that authors of emacs lisp scripts
+would take the time to consider formatting their sources for
+package.el. Today it's far from granted, so by choosing ELPA you miss
+a lot of things. And for the situation to change you need to have the
+authors willing to package their extensions, or you have to fork their
+work. With el-get you have access to 536 packages from the get-go, and
+all of emacswiki (that's currently more than 1700 packages) after
+you've done M-x el-get-emacswiki-refresh. As of writing this comment,
+my M-x el-get-package-list contains 2106 packages ready to install,
+almost all with descriptions.el-get is about social packaging where
+it's easy to prepare a recipe for a package, whatever distribution
+means its author picked. Then you can share that recipe very easily,
+for example with el-get on github where we'll be happy to add your
+work and have it installed by default when users either install el-get
+or do M-x el-get-self-update.As for windows support, it all depends on
+the packages you want to install. Most of them just work out of the
+box, being a single emacs lisp file (.el). Some of them require to
+have extra tools installed, from git or svn or mercurial to make and
+autoconf. That's only how the authors are shipping their extensions
+though, el-get is only providing for an integrated way to get at it.
+We have accepted several improvements so that the windows experience
+matches the others OS, and we consider windows a first class citizen
+here.
+{% endblockquote %}
 
 ## Epilogue
 

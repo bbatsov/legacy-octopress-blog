@@ -94,12 +94,13 @@ user you're already covered. This folder exists and is automatically
 added to `custom-theme-load-path` by Prelude, so all you have to do is
 drop there the themes you'd want to try out.
 
-You may find the [rainbow-mode]() useful when developing color
-themes. If fontifies strings that represent color codes according to
-those colors. The mode is known to be a great addition to css-mode,
-but I find it very helpful with color theme development as well. It's
-also included (and enabled) in Prelude by default. Here you can see it
-in action.
+You may find the
+[rainbow-mode](http://julien.danjou.info/software/rainbow-mode) useful
+when developing color themes. If fontifies strings that represent
+color codes according to those colors. The mode is known to be a great
+addition to css-mode, but I find it very helpful with color theme
+development as well. It's also included (and enabled) in Prelude by
+default. Here you can see it in action.
 
 {% img /images/articles/rainbow-mode.png %}
 
