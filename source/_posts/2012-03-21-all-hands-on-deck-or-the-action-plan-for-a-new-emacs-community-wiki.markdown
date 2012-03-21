@@ -135,11 +135,12 @@ systems since it will increase the entry bar for user
 participation. I'm even more against the use of a custom platform
 developed specially to serve as the EmacsWiki.
 
-2. I'll pay for the hosting and the new domain. I'd suggest that the
-new project begins with the domain emacswiki.net or emacswiki.info and
-eventually we'll assume the old emacswiki.org domain as well (should
-the new wiki be successful enough). Suggestions for another name are
-welcome in the comments section.
+2. I'll pay for the hosting and the new domain and set up the wiki
+initially. I'd suggest that the new project begins with the domain
+emacswiki.net or emacswiki.info and eventually we'll assume the old
+emacswiki.org domain as well (should the new wiki be successful
+enough). Suggestions for another name are welcome in the comments
+section.
 
 3. I and anyone willing to lend a hand will pick the articles worth
 saving from the EmacsWiki and migrate them to the new one. I and
