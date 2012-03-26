@@ -157,3 +157,10 @@ contribute documentation to an official project's wiki, package
 something on Marmalade...
 
 Die, Die EmacsWiki! I'll be seeing you in hell...
+
+**Update**
+
+This post stirred a huge discussion online and as a result there is
+now another Emacs wiki out there. The new wiki is available at
+[http://wikemacs.org](http://wikemacs.org). It's using MediaWiki (it
+turned out it had several nice advantages over MoinMoin).

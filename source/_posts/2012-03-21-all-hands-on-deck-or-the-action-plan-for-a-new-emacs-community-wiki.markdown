@@ -173,3 +173,8 @@ massive undertaking on my own. I encourage everyone serious about
 helping out to comment the article (here, not on reddit or hacker
 news) or send me a personal email.
 
+**Update**
+
+The new wiki is now available at
+[http://wikemacs.org](http://wikemacs.org). It's using MediaWiki (it
+turned out it had several nice advantages over MoinMoin).
