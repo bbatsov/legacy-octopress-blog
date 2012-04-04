@@ -7,12 +7,6 @@ categories:
 - Emacs
 ---
 
-There was a lot of heated arguing online after my post about the
-problems of the EmacsWiki (The reddit thread had so many personal insults
-against me that I decided I don't want to be a part of reddit
-anymore. Apparently I was "batshit" and was causing problems in the
-quiet rural Emacs community with my crazy ideas.).
-
 I'd like to apologize to everyone insulted by my previous
 posts. Contrary to popular belief I acknowledge EmacsWiki's
 contribution to the Emacs community. Obviously many people are too
