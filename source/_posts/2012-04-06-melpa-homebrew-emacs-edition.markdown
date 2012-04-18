@@ -66,7 +66,7 @@ I'd rather not duplicate it here.
 
 I would encourage package authors and users to investigate and
 contribute to MELPA. I've already submitted a bunch of packages
-there and rebased [Emacs Prelude](http://batsov.com/emacs-prelude) to
+there and rebased [Emacs Prelude](http://batsov.com/prelude) to
 use MELPA instead of Marmalade.
 
 Together we can turn MELPA into the most extensive and robust community-supported

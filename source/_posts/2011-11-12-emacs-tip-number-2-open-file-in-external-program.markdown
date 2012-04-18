@@ -36,4 +36,4 @@ I find it convenient to bind the command to `C-c o`:
 (global-set-key (kbd "C-c o") 'prelude-open-with)
 ```
 
-This command is naturally part of [Emacs Prelude](https://github.com/bbatsov/emacs-prelude).
+This command is naturally part of [Emacs Prelude](https://github.com/bbatsov/prelude).

@@ -89,7 +89,7 @@ that's on the `custom-theme-load-path`. I'd suggest the following:
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 ```
 
-If you're an [Emacs Prelude](https://github.com/bbatsov/emacs-prelude)
+If you're an [Emacs Prelude](https://github.com/bbatsov/prelude)
 user you're already covered. This folder exists and is automatically
 added to `custom-theme-load-path` by Prelude, so all you have to do is
 drop there the themes you'd want to try out.

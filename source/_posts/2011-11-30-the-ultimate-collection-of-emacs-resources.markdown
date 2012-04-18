@@ -107,7 +107,7 @@ in the short videos.
 
 #### Emacs Prelude
 
-[Emacs Prelude](https://github.com/bbatsov/emacs-prelude) is a custom
+[Emacs Prelude](https://github.com/bbatsov/prelude) is a custom
 Emacs 24 configuration developed by me and optimized for your joy and
 productivity. It's a good starting point for anyone looking to get
 started with Emacs without too much initial research and ceremony. I'm
@@ -254,7 +254,7 @@ suggestion.
 If you're an Emacs beginner start from the Emacs Tutorial and proceed
 with the articles on Mastering
 Emacs. [Get a copy of Emacs 24](/articles/2011/10/09/getting-started-with-emacs-24/)
-and [Emacs Prelude](https://github.com/bbatsov/emacs-prelude) to start
+and [Emacs Prelude](https://github.com/bbatsov/prelude) to start
 off with a solid initial configuration.
 
 Study the rest of the resources at your own discretion. Following

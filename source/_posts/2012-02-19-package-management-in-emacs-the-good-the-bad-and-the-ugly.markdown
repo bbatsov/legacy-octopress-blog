@@ -104,7 +104,7 @@ what if you have a custom Emacs configuration, stored under version
 control, that you'd like to instantly deploy on any OS/machine (like
 Emacs Prelude). Here in play comes `package.el`'s programmer
 interface. In
-[Emacs Prelude](https://github.com/bbatsov/emacs-prelude) I use the
+[Emacs Prelude](https://github.com/bbatsov/prelude) I use the
 following code to install a list of required packages automatically on Emacs
 startup (if necessary):
 

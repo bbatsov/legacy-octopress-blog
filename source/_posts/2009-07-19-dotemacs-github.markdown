@@ -19,4 +19,4 @@ that I happen to be working on.
 **Update**
 
 At some point my custom configuration grew into what is known today as
-the [Emacs Prelude](https://github.com/bbatsov/emacs-prelude).
+the [Emacs Prelude](https://github.com/bbatsov/prelude).

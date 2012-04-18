@@ -280,7 +280,7 @@ passion and resolve to modernize Emacs.
 Expect future blog posts dedicated to specific new features and
 improvements.
 
-P.S. Btw [The Emacs Prelude](https://github.com/bbatsov/emacs-prelude)
+P.S. Btw [The Emacs Prelude](https://github.com/bbatsov/prelude)
 already makes use of some the new features from Emacs 24. In due time
 it will make use of much more of them. It's one of the very few
 advanced Emacs setups targeting exclusively Emacs 24.

@@ -54,5 +54,5 @@ concept even further, but it's absent from GNU Emacs.
 So, that's all for this tip, folks! I hope you've enjoyed it!
 Personally I find it much more useful that the standard auto-save
 mechanism in Emacs. And one more thing -
-[Emacs Prelude](https://github.com/bbatsov/emacs-prelude) naturally
+[Emacs Prelude](https://github.com/bbatsov/prelude) naturally
 enables this functionality by default.

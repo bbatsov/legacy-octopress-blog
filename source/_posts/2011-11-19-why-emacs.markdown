@@ -386,7 +386,7 @@ Emacs 23 is old news, Emacs 24 is the future. Take a look at my post
 
 #### Obtain a Decent Initial Config
 
-The default configuration sucks. Luckily there is [Emacs Prelude](https://github.com/bbatsov/emacs-prelude) -
+The default configuration sucks. Luckily there is [Emacs Prelude](https://github.com/bbatsov/prelude) -
 Emacs 24 configuration that doesn't suck. I highly recommend you to
 use Prelude as your initial Emacs config. Studying its source will
 give you a bit of an insight into Emacs Lisp programming

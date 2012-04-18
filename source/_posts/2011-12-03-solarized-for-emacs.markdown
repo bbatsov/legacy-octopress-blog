@@ -25,7 +25,7 @@ the colors yet. The source code and installation instructions can be
 found on [GitHub](https://github.com/bbatsov/solarized-emacs).
 
 The theme is already bundled in
-[Emacs Prelude](https://github.com/bbatsov/emacs-prelude) and I'll
+[Emacs Prelude](https://github.com/bbatsov/prelude) and I'll
 submit it to Marmalade soon. Note that I've dropped some things like
 the degraded palette and the 16 color palette (at least for now),
 since I doubt many people need them. On the other hand - you'll proper

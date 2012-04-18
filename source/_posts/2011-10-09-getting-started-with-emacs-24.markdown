@@ -102,14 +102,14 @@ choice of a binary vendor.
 
 Installing Emacs has always been the easy part, configuring it
 properly - not that much. That's why I've created the
-[Emacs Prelude](https://github.com/bbatsov/emacs-prelude) - an
+[Emacs Prelude](https://github.com/bbatsov/prelude) - an
 advanced Emacs setup specifically for Emacs 24 that has been tested to
 properly work on OSX, Linux and Windows.
 
 Its installation is dead simple:
 
 ``` bash
-$ git clone git://github.com/bbatsov/emacs-prelude.git path/to/local/repo
+$ git clone git://github.com/bbatsov/prelude.git path/to/local/repo
 $ ln -s path/to/local/repo ~/.emacs.d
 ```
 

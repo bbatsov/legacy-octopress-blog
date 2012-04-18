@@ -73,7 +73,7 @@ It’s always a good idea to add [ecb](http://ecb.sourceforge.net/)(the Emacs co
 though this is entirely optional.
 
 A lot of the stuff I discussed here are part of the
-[Emacs Prelude](https://github.com/bbatsov/emacs-prelude) that I
+[Emacs Prelude](https://github.com/bbatsov/prelude) that I
 develop and maintain. I urge you to use the Emacs Prelude as a starting point to
 develop your very own customized version of Emacs. Prelude comes with a
 few ruby-mode customizations, yari(ri integration for Emacs), haml and
