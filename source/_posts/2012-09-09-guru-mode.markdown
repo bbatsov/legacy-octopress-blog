@@ -1,0 +1,37 @@
+---
+layout: post
+title: "guru-mode"
+date: 2012-09-09 21:17
+comments: true
+categories: 
+- Emacs
+---
+
+Getting started with Emacs is hard. That's a fact of life and you
+shouldn't believe anyone telling you otherwise. 
+
+One of the harder parts of the journey to Emacs mastery is remembering
+all those keybindings at the beginning (`C-h t`), which can be really
+overwhelming. To make matters worse for many common commands there are
+two sets of keybindings - the Emacs ones (that are touch typing
+friendly) and the popular ones (that typically involve the use of the
+arrow keys). Most people never get to use the *proper* keybindings and
+forever make use of the arrow keys. 
+
+To help Emacs newcomers get used to the proper Emacs keybindings I've
+created [guru-mode](http://github.com/bbatsov/guru-mode) - a simple
+minor mode that will show you a (helpful) message in the minibuffer
+every time you try to use a *non Emacs way* keybinding.
+
+{% img /images/articles/guru-mode.png %}
+
+It will probably annoy you **a lot** in the beginning, but trust me -
+it'll be worth it in the long run.
+
+`guru-mode` comes bundled with
+[Emacs Prelude](http://github.com/bbatsov/prelude) and is available
+for installation from [Marmalade](http://marmalade-repo.org) and [MELPA](http://melpa.milkbox.net).
+
+P.S. True Emacs mastery cannot be achieved if you do not practice
+touch typing; if you're doing hunt-and-peck typing you'd better fire up the
+venerable `gtypist` before looking at `guru-mode`.

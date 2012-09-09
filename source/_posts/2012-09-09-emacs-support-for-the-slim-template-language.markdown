@@ -27,4 +27,6 @@ welcome. I very much doubt that me and
 [Daniel Mendler](https://github.com/minad) are the only two people
 dreaming of great Slim experience in Emacs. :-)
 
+{% img /images/articles/slim-mode.png %}
+
 Let us together eliminate that big Haml advantage. :-)
