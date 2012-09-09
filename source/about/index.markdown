@@ -12,8 +12,8 @@ My name is Bozhidar Ivanov Batsov. I'm originally from Veliko Tarnovo,
 Bulgaria, but I've been residing in Sofia (Bulgaria's current capitol)
 for quite some time now.
 
-I'm currently the Technical Lead of [Empower United Inc.](http://empowerunited.com), where I
-develop and supervise various Ruby on Rails applications. Before that
+I'm currently the Technical Lead of [Tradeo Inc.](http://tradeo.com), where I
+develop and supervise various Ruby on Rails and Node.js applications. Before that
 I've worked as Java developer (Swing, JavaEE, etc). Before that I used
 to be a C++ developer and before that I developed Linux kernel drivers
 for some embedded devices. As you can see I've gradually transferred
