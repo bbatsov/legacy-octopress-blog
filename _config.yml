@@ -90,7 +90,7 @@ delicious_count: 3
 
 # Disqus Comments
 disqus_short_name: batsov
-disqus_show_comment_count: true
+disqus_show_comment_count: false
 
 # Google Analytics
 google_analytics_tracking_id: UA-22917580-1
