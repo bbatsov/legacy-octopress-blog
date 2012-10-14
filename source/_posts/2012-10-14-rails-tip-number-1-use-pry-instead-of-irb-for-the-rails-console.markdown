@@ -15,7 +15,7 @@ replacement, that somewhat reminds me of the mighty Lisp REPLs. What
 you might not know is how to hook it into Rails so that the `rails
 console` (a.k.a. `rails c`) command would fire a pry shell instead of
 an irb one. There are several ways to do so, but I find one
-particularly nice - the awesome little gem
+particularly straightforward - the awesome little gem
 [pry-rails](https://github.com/rweng/pry-rails).
 
 So what are you waiting for? Go ahead, install the little sucker and
