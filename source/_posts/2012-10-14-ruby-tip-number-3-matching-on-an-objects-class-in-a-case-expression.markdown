@@ -23,10 +23,12 @@ end
 Behind the scenes this is transformed to:
 
 ``` ruby
-case object
-when Fixnum === object then puts 'Object is an integer number'
-when String === object then puts 'Object is a string'
-when Hash === object then puts 'Object is a hash'
+if Fixnum === object
+  puts 'Object is an integer number'
+elsif String === object
+  puts 'Object is a string'
+elsif Hash === object
+  puts 'Object is a hash'
 end
 ```
 
