@@ -30,11 +30,14 @@ $ sudo rm /usr/bin/emacs
 $ sudo rm -rf /usr/share/emacs
 ```
 
+Keep in mind that the OSX updates will (unfortunately) bring Emacs 22 back from the dead, so
+you might consider altering your `PATH` instead.
+
 Alternatively you can just create an alias in your shell and when you
 invoke `emacs` it will run the newly installed version:
 
 ``` bash
-$ alias emacs="/Applications/Emacs.app/Contents/MacOS/"
+$ alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
 ```
 
 If you installed via Homebrew that path might look like this:
