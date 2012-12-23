@@ -11,10 +11,10 @@ categories:
 One of the most requested Emacs features - native OSX Lion style
 full-screen support has finally landed in Emacs 24.3 (due to be
 released in a few months). If you're eager to try it out right now
-homebrew is your best bet:
+homebrew is a good option:
 
 ``` bash
-$ brew install emacs --cocoa --use-git-head
+$ brew install emacs --cocoa --use-git-head --HEAD
 ```
 
 Homebrew's devs have even backported the full-screen patch to Emacs
@@ -24,10 +24,12 @@ Homebrew's devs have even backported the full-screen patch to Emacs
 $ brew install emacs --cocoa
 ```
 
-Using nightly builds from
-[Emacs for Mac OSX](http://emacsformacosx.com/) is a no-go at the
-moment, since they seem to be compiling Emacs without the required
-compilation flag to enable the full-screen support.
+Alternatively you can install the
+[Emacs 24.2.91 pretest](http://emacsformacosx.com/emacs-builds/Emacs-pretest-24.2.91-universal-10.6.8.dmg)
+(or a newer pretest/nightly build) from
+[Emacs for Mac OSX](http://emacsformacosx.com/). Personally I
+recommend this option, since cloning the Emacs git mirror (as homebrew
+does) takes like forever.
 
 Here's the beast in action:
 
