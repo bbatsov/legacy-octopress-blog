@@ -30,7 +30,7 @@ knowledge, that's why I decided to terminate WikEmacs sooner rather than later.
 I want to extend a big public apology to Alex Schroeder for my harsh
 criticism of EmacsWiki.  One year later I see that stewarding
 documentation projects and nurturing a healthy community around them
-is much harder that writing software. I'm but a humble software
+is much harder than writing software. I'm but a humble software
 engineer and you'll have to forgive me for my misguided actions.
 
 I hope that something good has(will) come up from all this drama. At
