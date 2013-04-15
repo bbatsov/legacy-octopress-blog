@@ -1,0 +1,27 @@
+---
+layout: post
+title: "RuboCop"
+date: 2013-04-15 17:22
+comments: true
+categories:
+- Ruby
+- Emacs
+---
+
+After I launched the
+[Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide) I
+often received requests to create a tool enforcing the rules in the guide
+automatically.
+
+Today this tool is a reality - meet
+[RuboCop](https://github.com/bbatsov/rubocop). RuboCop already covers
+a significant portion of the Guide, supports both MRI 1.9 and MRI 2.0
+and has pretty neat Emacs integration(via
+[rubocop.el](https://github.com/bbatsov/rubocop-emacs) and
+[flycheck](https://github.com/lunaryorn/flycheck)).
+
+I'd love to see more Ruby hackers check out RuboCop!
+
+I'd love to thank all the great people who contributed code, issue
+reports and ideas to RuboCop's development and I sincerely hope many
+Ruby hackers will find it useful!
