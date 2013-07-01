@@ -21,7 +21,7 @@ This is a big deal! Prior to 0.9, RuboCop piggybacked on MRI's `ruby
 being unportable - this wasn't particularly fast (spawning processes
 never is) either.
 
-That's no longer the case - errors are not reported directly by
+That's no longer the case - errors are now reported directly by
 [Parser](https://github.com/whitequark/parser) and we've reimplemented
 MRI's linting in pure Ruby into RuboCop itself. Now you'll get the
 same errors and warnings on MRI, JRuby and Rubinius. And to top it
