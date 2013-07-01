@@ -40,3 +40,10 @@ interesting discussions with you!
 
 Feel free to take a look at the
 [first article in the series, dedicated to the maximum line length we should aim for](/articles/2013/06/26/the-elements-of-style-in-ruby-number-1-maximum-line-length/).
+
+## Articles in the Series
+
+1. [Maximum Line Length](/articles/2013/06/26/the-elements-of-style-in-ruby-number-1-maximum-line-length/)
+2. [Favor sprintf(format) Over String#%](/articles/2013/06/27/the-elements-of-style-in-ruby-number-2-favor-sprintf-format-over-string-number-percent/)
+3. [Make Sure Something Is an Array](/articles/2013/06/28/the-elements-of-style-in-ruby-number-3-make-sure-something-is-an-array/)
+4. [Array#join vs Array#*](/articles/2013/07/01/the-elements-of-style-in-ruby-number-4-array-number-join-vs-array-number-star/)
