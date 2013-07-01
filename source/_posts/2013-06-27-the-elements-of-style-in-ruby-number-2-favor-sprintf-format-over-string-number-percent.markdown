@@ -50,7 +50,7 @@ sprintf('%d %d', 20, 10)
 Personally, I dislike such inconsistencies a lot.
 
 * It's not always clear what `%` means without additional
-  context. Take a loot at this short snippet:
+  context. Take a look at this short snippet:
 
 ``` ruby
 # a and b are variables
