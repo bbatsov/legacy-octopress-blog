@@ -60,8 +60,8 @@ an excellent test suite (that you undoubtedly have).
 ## Rails Support
 
 `rubocop -R` will run additional Rails specific code checks. This
-feature is also alpha at this point (meaning there's just one specific
-Rails check at this point).
+feature is also alpha at this point (meaning there's just one Rails
+specific check at this point).
 
 ## The Road to 1.0
 
