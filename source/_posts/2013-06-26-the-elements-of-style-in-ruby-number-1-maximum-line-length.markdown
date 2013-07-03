@@ -5,6 +5,7 @@ date: 2013-06-26 16:57
 comments: true
 categories:
 - Ruby
+- Style
 ---
 
 Welcome to the first installment of **The Elements of Style in Ruby**.
