@@ -47,3 +47,4 @@ Feel free to take a look at the
 2. [Favor sprintf(format) Over String#%](/articles/2013/06/27/the-elements-of-style-in-ruby-number-2-favor-sprintf-format-over-string-number-percent/)
 3. [Make Sure Something Is an Array](/articles/2013/06/28/the-elements-of-style-in-ruby-number-3-make-sure-something-is-an-array/)
 4. [Array#join vs Array#*](/articles/2013/07/01/the-elements-of-style-in-ruby-number-4-array-number-join-vs-array-number-star/)
+5. [Readability of Long Numeric Literals](/articles/2013/07/02/the-elements-of-style-in-ruby-number-5-readability-of-long-numeric-literals)
