@@ -48,3 +48,5 @@ Feel free to take a look at the
 3. [Make Sure Something Is an Array](/articles/2013/06/28/the-elements-of-style-in-ruby-number-3-make-sure-something-is-an-array/)
 4. [Array#join vs Array#*](/articles/2013/07/01/the-elements-of-style-in-ruby-number-4-array-number-join-vs-array-number-star/)
 5. [Readability of Long Numeric Literals](/articles/2013/07/02/the-elements-of-style-in-ruby-number-5-readability-of-long-numeric-literals)
+6. [Attributes Redux](/articles/2013/07/04/the-elements-of-style-in-ruby-number-6-attributes-redux)
+7. [The case against `===`](/articles/2013/07/10/the-elements-of-style-in-ruby-number-7-the-case-against-equals-equals-equals)
