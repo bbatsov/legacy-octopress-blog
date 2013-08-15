@@ -20,6 +20,8 @@ Obviously `Fixnum#even?` would have been a better choice:
 if x.even? ...
 ```
 
+There is also `Fixnum#odd?` if you need to check for odd numbers.
+
 By the way, there is even a `Numeric#zero?` predicate:
 
 ``` ruby
@@ -77,6 +79,11 @@ if !arr.nil? && arr.empty?
 ```
 
 Of course check for `nil`s like this is generally not a good idea, but that's discussion for some other time.
+On a somewhat related note `something.nil?` is generally preferred over `something == nil`. If you're reasonably sure that `something` can't have the value `false` you can, of course, simply things even further:
+
+``` ruby
+if something ...
+```
 
 As usual I'm looking forward to hearing your thoughts here and on
 [Twitter](http://twitter.com/bbatsov)!
