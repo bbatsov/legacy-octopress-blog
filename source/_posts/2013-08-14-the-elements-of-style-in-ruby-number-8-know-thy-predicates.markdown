@@ -1,0 +1,60 @@
+---
+layout: post
+title: "The Elements of Style in Ruby #8: Know Thy Predicates"
+date: 2013-08-14 17:28
+comments: true
+categories:
+- Ruby
+- Style
+---
+
+I often see people writing code like this:
+
+``` ruby
+if x % 2 == 0 ...
+```
+
+Obviously `Fixnum#even?` would have been a better choice:
+
+``` ruby
+if x.even? ...
+```
+
+Another bit of code you'll often see is:
+
+``` ruby
+if x > 0 && x < 7 ...
+```
+
+While there is nothing particularly bad about that code, I'd argue
+that `between?` makes for a nicer (and more OO) alternative:
+
+``` ruby
+if x.between?(1, 6) ...
+```
+
+When using predicate methods you should be mindful of `nil`
+receivers. That's generally not a serious issue in practice but still I'd ask
+you to consider this example:
+
+``` ruby
+if arr == [] ...
+```
+
+It's not equivalent to
+
+``` ruby
+if arr.empty?
+```
+
+Why so? Because `arr` might be `nil`. So the equivalent code would be:
+
+
+``` ruby
+if !arr.nil? && arr.empty?
+```
+
+Of course check for `nil`s like this is generally not a good idea, but that's discussion for some other time.
+
+As usual I'm looking forward to hearing your thoughts here and on
+[Twitter](http://twitter.com/bbatsov)!
