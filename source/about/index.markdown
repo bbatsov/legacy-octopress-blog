@@ -32,7 +32,7 @@ I maintain a couple of smallish open-source projects here and there
 (mostly on [GitHub](https://github.com/bbatsov/ruby-style-guide)) and I've contributed to many more. I'm also the
 principle author of the [community-driven Ruby coding style guide](https://github.com/bbatsov/ruby-style-guide)
 and the
-[community-driven Ruby on Rails style guide](https://github.com/bbatsov/ruby-style-guide).
+[community-driven Ruby on Rails style guide](https://github.com/bbatsov/rails-style-guide).
 
 I teach some free programming courses from time to time, covering
 topics like Perl, Java and Ruby. I've also taught a few Linux
