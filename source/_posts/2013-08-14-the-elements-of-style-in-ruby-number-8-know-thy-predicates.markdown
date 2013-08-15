@@ -20,6 +20,19 @@ Obviously `Fixnum#even?` would have been a better choice:
 if x.even? ...
 ```
 
+By the way, there is even a `Numeric#zero?` predicate:
+
+``` ruby
+if x == 0 ...
+
+# same as
+if x.zero? ...
+```
+
+Personally I feel that `x == 0` makes more sense for such simple
+numeric checks, but `zero?` is there for those you who think
+otherwise.
+
 Another bit of code you'll often see is:
 
 ``` ruby
@@ -31,6 +44,15 @@ that `between?` makes for a nicer (and more OO) alternative:
 
 ``` ruby
 if x.between?(1, 6) ...
+```
+
+Using a range predicate you can also exclude the end value:
+
+``` ruby
+if x > 0 && x < 1000 ...
+
+# is the same as
+if (1...1000).include?(x) ...
 ```
 
 When using predicate methods you should be mindful of `nil`
