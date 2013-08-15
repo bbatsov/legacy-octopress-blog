@@ -78,8 +78,13 @@ Why so? Because `arr` might be `nil`. So the equivalent code would be:
 if !arr.nil? && arr.empty?
 ```
 
-Of course check for `nil`s like this is generally not a good idea, but that's discussion for some other time.
-On a somewhat related note `something.nil?` is generally preferred over `something == nil`. If you're reasonably sure that `something` can't have the value `false` you can, of course, simply things even further:
+Of course checking for `nil`s like this is generally not a good idea, but
+that's a discussion for some other time.
+
+On a somewhat related note `something.nil?` is generally preferred
+over `something == nil`. If you're reasonably sure that `something`
+can't have the value `false` you can, of course, simplify things even
+further:
 
 ``` ruby
 if something ...
