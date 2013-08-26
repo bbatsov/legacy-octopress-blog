@@ -77,7 +77,6 @@ even better readability, since `format` is obviously less cryptic name
 than `sprintf` and the same name is employed in many programming
 languages (most notably `Java` and many Lisp dialects).
 
-
 There's one thing about `sprintf/format` that I dislike, though. It
 doesn't make that much sense to have such an operation as command in a
 OO language like Ruby. Alas, those things are not up to me - I guess
@@ -93,3 +92,7 @@ consistency. I encourage you to use them (`format` in particular)!
 
 As usual I'm looking forward to hearing your thoughts here and on
 [Twitter](http://twitter.com/bbatsov)!
+
+**Update**
+
+`String#format` is part of the [Powerpack library](https://github.com/bbatsov/powerpack).

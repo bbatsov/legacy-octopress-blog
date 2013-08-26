@@ -50,3 +50,5 @@ Feel free to take a look at the
 5. [Readability of Long Numeric Literals](/articles/2013/07/02/the-elements-of-style-in-ruby-number-5-readability-of-long-numeric-literals)
 6. [Attributes Redux](/articles/2013/07/04/the-elements-of-style-in-ruby-number-6-attributes-redux)
 7. [The case against `===`](/articles/2013/07/10/the-elements-of-style-in-ruby-number-7-the-case-against-equals-equals-equals)
+8. [Know Thy Predicates](/articles/2013/08/14/the-elements-of-style-in-ruby-number-8-know-thy-predicates/)
+9. [Hash#has_key? and Hash#has_value? are deprecated](/articles/2013/08/21/the-elements-of-style-in-ruby-number-9-hash-number-has-key-and-hash-number-has-value-are-deprecated/)

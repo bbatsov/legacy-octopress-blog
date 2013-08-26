@@ -27,13 +27,18 @@ By the way, there is even a `Numeric#zero?` predicate:
 ``` ruby
 if x == 0 ...
 
-# same as
+# same as the above (provided x is a number)
 if x.zero? ...
 ```
 
 Personally I feel that `x == 0` makes more sense for such simple
 numeric checks, but `zero?` is there for those you who think
-otherwise.
+otherwise. `x == 0` also has the benefit of being `nil` safe, but
+that's not of significant importance.
+
+The [Powerpack library](https://github.com/bbatsov/powerpack) also
+includes the predicate methods `Fixnum#pos?` and `Fixnum#neg?`, which
+are roughly the same as `> 0` and `< 0` comparisons.
 
 Another bit of code you'll often see is:
 
