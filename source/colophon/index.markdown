@@ -14,8 +14,7 @@ I write all of the articles in [Emacs 24.2](http://emacsformacosx.com/) and publ
 GitHub pages. Everything is running on MacOS X Mountain Lion. The keyboard I'm
 using is [Das Keyboard Ultimate](http://daskeyboard.com).
 
-I'm using [Octopress Slash theme](http://zespia.tw/Octopress-Theme-Slash/) with no changes whatsoever to
-it. The code snippets are highlighted with the light version of the
+The code snippets are highlighted with the light version of the
 popular [Solarized](http://ethanschoonover.com/solarized).
 
 The source code of the site is freely available at [GitHub](https://github.com/bbatsov/bbatsov.github.com).
