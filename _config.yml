@@ -34,6 +34,11 @@ plugins: plugins
 code_dir: downloads/code
 category_dir: articles/categories
 markdown: rdiscount
+rdiscount:
+  extensions:
+    - autolink
+    - footnotes
+    - smart
 pygments: false # default python pygments have been replaced by pygments.rb
 
 paginate: 5          # Posts per page on the blog index
@@ -65,10 +70,6 @@ github_skip_forks: true
 
 # Twitter
 twitter_user: bbatsov
-twitter_tweet_count: 4
-twitter_show_replies: false
-twitter_follow_button: true
-twitter_show_follower_count: false
 twitter_tweet_button: true
 
 # Google +1
