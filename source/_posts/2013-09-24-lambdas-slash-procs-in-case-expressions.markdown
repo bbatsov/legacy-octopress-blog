@@ -54,7 +54,7 @@ end
 case x
 when even? then puts 'even'
 when odd? then puts 'odd'
-else puts 'zero'
+else puts 'Impossible!'
 end
 ```
 
@@ -64,7 +64,7 @@ You can also save a few lines by defining the lambdas inline:
 case x
 when ->(n) { n.even? } then puts 'even'
 when ->(n) { n.odd? } then puts 'odd'
-else puts 'zero'
+else puts 'Impossible!'
 end
 ```
 
