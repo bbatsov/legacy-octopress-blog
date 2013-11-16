@@ -8,7 +8,7 @@ categories:
 - Style
 ---
 
-One can often similar code in the wild:
+One can often find similar code in the wild:
 
 ``` ruby
 some_hash.has_key?(some_key)
