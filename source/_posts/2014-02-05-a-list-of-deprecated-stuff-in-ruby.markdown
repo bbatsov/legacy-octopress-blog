@@ -27,12 +27,20 @@ ruby -w test.rb
 ```
 
 * Alternative Ruby implementations (like `JRuby` and `Rubinius`)
-generally don't produce the same deprecation warnings. For instance - `JRuby` doesn't produce any warnings
-for the code listed above.
+generally don't produce the same deprecation warnings. For instance -
+`JRuby` doesn't produce any warnings for the code listed above. One
+can say that currently deprecations are an MRI implementation detail
+(although they shouldn't be).
 
 * Deprecations are rarely mentioned in the API docs.
 
-* Some APIs are deprecated only informally (like `Hash#has_key?` and `Hash#has_value?`).
+* There's no easy way to find out in which version of Ruby
+something got deprecated as `rb_warn` is a generic instrumentation for
+producing all sorts of warnings, as opposed to something created specifically to handle
+deprecations.
+
+* Some APIs are deprecated only informally (like
+  [`Hash#has_key?` and `Hash#has_value?`](http://batsov.com/articles/2013/08/21/the-elements-of-style-in-ruby-number-9-hash-number-has-key-and-hash-number-has-value-are-deprecated/)).
 
 * Some APIs are deprecated with `Kernel#warn` (like `Digest::Digest`).
 
@@ -133,6 +141,11 @@ that's unlikely to be of general interest.
 * passing a block to `String#bytes` is deprecated
 * passing a block to `String#chars` is deprecated
 * passing a block to `String#codepoints` is deprecated
+
+Unfortunately there's no way to know in which version of Ruby
+something got deprecated. Obviously most of the things on the list
+were deprecated before Ruby 2.1. Ideally in the future we'll get a
+better deprecation mechanism that actually keeps track of such data.
 
 Hopefully some of you will find this information useful!
 
