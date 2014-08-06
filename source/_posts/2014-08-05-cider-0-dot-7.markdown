@@ -1,0 +1,202 @@
+---
+layout: post
+title: "CIDER 0.7"
+date: 2014-08-05 15:19
+comments: true
+categories:
+- Emacs
+- Clojure
+---
+
+[CIDER](https://github.com/clojure-emacs/cider) 0.7 is finally out and
+it's an epic release! It's without a doubt the most important release
+since the inception of the project about two years ago and it's the
+biggest one in terms of features and code changes.
+
+The release is special for a number of reasons. Allow me to quickly
+enumerate though them.
+
+### Middleware-based
+
+One of the huge problems we've had so far was that a lot of
+functionality that was present in SLIME + swank-clojure was missing in
+CIDER. For many people the transition between the two didn't really
+feel like an upgrade (although it was advertised as such) - after all
+they lost things like inspection, tracing, apropos, caller cross-reference, the
+debugger, etc.
+
+The reason this happened was CIDER's initial approach of implementing
+features by inlining Clojure code within the Emacs Lisp code and
+evaluating this code in a dedicated nREPL session (called the tooling
+session), to avoid contaminating the results in the "primary" eval
+session. This approach had one upside (you didn't need any extra deps
+(middleware) to run CIDER) and one huge downside (it's impossible
+to maintain non-trivial inlined code; not to mention it's not very
+practical). This meant that pretty much all third party libs were out
+of the equation and pretty much every advanced feature.
+
+This problem was initially address by
+[ritz](https://github.com/pallet/ritz), which provided some extra
+functionality built on top of extra nREPL middleware. As it was a
+separate project it was hard to be kept in sync with the flurry of
+changes in CIDER and was abandoned at some point. While `ritz` failed
+it had the right approach and it served as the principle inspiration
+for CIDER 0.7.
+
+In CIDER 0.6 we introduced optional nREPL middleware for some
+operations (like completion, error reporting, var info) and in 0.7 the
+middleware stack was greatly extended, improved and promoted to a
+mandatory CIDER component. This has one downside (you'll have to
+install it to leverage all of CIDER's power) and a several upsides:
+
+* A lot of the heavy lifting is now done in pure Clojure code (see
+[cider-nrepl](https://github.com/clojure-emacs/cider-nrepl)) and it's
+much easier to implement complex features now (not to mention - this
+code is much easier to maintain). This also means that it's much
+easier for Clojure programmers to contribute to CIDER as a lot of
+functionality is just lots of Clojure code and very little Emacs Lisp
+code. I'm reasonably sure I'm one of the very few CIDER users who
+knows more Emacs Lisp than Clojure, so I consider this a big win.
+
+* It's now easy to provide pretty similar level of support for both
+  Clojure and ClojureScript as we can reconcile the differences
+  between them in our middleware.
+
+* It's easier to keep the code backwards compatible (which is a
+  nightmare for inlined code).
+
+* There are no implicit dependencies in the system (unlike before).
+
+Consider auto-completion - this feature was implemented in terms of
+evaluating some `clojure-complete` code with the assumption that
+`clojure-complete` is available in the environment you were using as
+CIDER assumed you had started the nREPL server using `lein repl`. This
+would fire up a REPL-y REPL and `clojure-complete` is a REPL-y
+dependency. Not everyone uses `lein repl`, though and REPL-y can always
+switch to another completion library in the future.
+
+If you connected CIDER to an embedded nREPL server,
+you'd be greeted by a missing class error, as most apps don't normally
+depend on `clojure-complete`. You'd be puzzled for a while, but eventually
+you'll realize what the problem is.
+
+Now we're free to explicitly specify our deps and pick the best
+libraries for the job (as opposed to those that are available) -
+you'll quickly notice how smarter auto-completion is now on Clojure,
+because we're internally using the newer, faster and more feature-rich
+[compliment](https://github.com/alexander-yakushev/compliment) library
+(note that we're using a different library for ClojureScript
+completion).
+* Other projects can leverage some of our middleware - somewhat
+  amusingly for Emacs users, `vim-fireplace` is using `cider-nrepl`
+  as well.
+
+At this point we've removed pretty much all inlined code (except some
+pretty-printing code) and that has yielded much improved eldoc,
+macroexpansion, documentation viewing (`cider-doc` will now display
+Javadoc in Emacs!!!), source browsing, etc.
+
+We've also started bringing back some features we loved in SLIME, but
+were missing so far - the inspector, apropos and tracing are back. We're now working on
+bringing back function call cross-referencing and debugging as well.
+
+Note that CIDER will still work if you connect to an nREPL server
+that's not using CIDER's middleware. In this case you'll get a
+warning and a pretty limited feature-set - source file loading, code
+evaluation, pretty-printing and error highlighting.
+
+### cider-test
+
+`clojure-test-mode` (which was more or less abandoned in terms of
+maintenance) finally has a successor in CIDER itself. `cider-test`
+provides more or less the same functionality, but is implemented in
+terms of nREPL middleware and is a more robust solution. As it's part
+of CIDER it cannot ever be out-of-sync with CIDER as `clojure-test-mode` has
+often been lately.
+
+`cider-test` is a little rough around the edges, but I'm fairly sure it has bright future
+ahead. Use it, love it, hate it and send us your feedback! We'd love to hear it.
+
+**P.S.** We might extend this with support for other frameworks like
+`midje` and `expectations`, although that's not high on our priority
+list.
+
+### Grimoire support
+
+In addition to built-in Clojure & Javadoc you can now peruse the
+extended documentation provided by
+[Grimoire](http://grimoire.arrdem.com/) from the comfort of your
+beloved editor. No more browser interruptions just to get a few usage
+examples of some function! `C-c C-d g` for the win!
+
+Adding some extended Grimoire integration is definitely on the roadmap.
+
+### Increased bus factor
+
+One of the biggest problems of the project so far was that fairly few people
+were involved with it.  At one point it was mostly Tim, Hugo and
+me. At another it was mostly me. The bus factor was dangerously close
+to 1, which always worried me. Recently, however, a lot of people have
+been helping quite actively, which makes me more optimistic about the
+future. As much as I love CIDER I don't want it to depend on one
+extremely busy and very clumsy person (each time I go hiking there's a
+serious chance I'll fall of a cliff or something).
+
+I'd like to thank everyone for your wonderful contributions and single
+out a bunch of people for some outstanding work done by them:
+
+* [Gary Trakhman](https://github.com/gtrak) is the one responsible for
+the good ClojureScript support we now boast. Fantastic work, Gary! You have a big thanks from me!
+* [Jeff Valk](https://github.com/jeffvalk) did some mighty fine work
+  on the var info retrieval, source navigation, documentation display
+  and single-handedly implemented `cider-test` and `cider-apropos`. We
+  all owe Jeff a huge thanks!
+* [Hugo Duncan](https://github.com/hugoduncan) who constantly
+    contributed patches, bug reports and ideas. His `nrepl-ritz`
+    project provided a lot of inspiration for some of the existing
+    middleware.
+* [Ian Eslick](https://github.com/eslick) contributed the new inspector.
+* [Alexander Yakushev](https://github.com/alexander-yakushev/compliment)
+    made so many improvements to his awesome `compliment`
+    library for the needs of CIDER. Did you notice that you now get
+    completion suggestions for **locals**? How amazing is that!
+* [Dmitry Gutov](https://github.com/dgutov) implemented native support in CIDER for `company-mode`.
+
+## The Road Before Us
+
+Obviously our work is far from over - we're still lacking some crucial
+features (most notably a debugger) and a lot of code needs
+polish. This will obviously take some time and a lot of work to get right, but I'm
+confident we'll get there.
+
+I'd also want us to work a bit in the area of documentation - a
+manual, a cheatsheet, etc. Have a look at the
+[issue tracker](https://github.com/clojure-emacs/cider/issues) if
+you'd like to help out - we definitely need all the help we can get.
+
+The 0.7 release required a massive amount of work and we spent more that 3 months to get it to
+a shippable state. With the bulk of the work behind us I hope we'll be able to deliver new
+releases more frequently - on a monthly (or bi-monthly) basis.
+
+I'd love to be able to raise a lot of money via crowd-funding and work
+on CIDER for an year or get hired by some company to work full-time on
+it, but that's not going to happen. For one reason or another people
+rarely get excited about dev tools, so all of us have to work together
+to make CIDER the ultimate Clojure(Script) development environment.
+
+If I knew how much work I'd have to do when I assumed the maintenance
+of CIDER exactly one year ago I might not have done it. Maintaining a
+project that's pivotal to an entire community (I recall some article
+mentioning about half the Clojure devs were using it) is both a lot of
+work and a lot of stress and pressure. That said, it's probably my
+favourite OSS project and I enjoy working on it immensely. If you
+don't have the time to help out with code or docs you can still support my
+work on CIDER (and all my other projects) via
+[gittip](https://www.gittip.com/bbatsov).
+
+[![Support via Gittip](https://rawgithub.com/twolfson/gittip-badge/0.2.0/dist/gittip.png)](https://www.gittip.com/bbatsov)
+
+For all the gory details regarding new features and changes in CIDER 0.7 - take a look at the
+[changelog](https://github.com/clojure-emacs/cider/blob/master/CHANGELOG.md).
+
+That's all from me, folks! Use CIDER, drink cider and prosper!
