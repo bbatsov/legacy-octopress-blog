@@ -7,10 +7,6 @@ categories:
 - Clojure
 ---
 
-Recent permalinks to rules were added to the community
-[Ruby](https://github.com/bbatsov/ruby-style-guide) and
-[Rails](https://github.com/bbatsov/rails-style-guide) style guides.
-
 I'm happy to report that now you can use permalinks to the rules listed in the
 community [Clojure style guide](https://github.com/bbatsov/clojure-style-guide) as well.
 
