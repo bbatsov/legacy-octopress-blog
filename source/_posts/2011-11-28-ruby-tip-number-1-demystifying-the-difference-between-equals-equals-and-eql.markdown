@@ -66,7 +66,7 @@ inspiration for Ruby). Common Lisp has [quite a few equality
 predicates](http://eli.thegreenplace.net/2004/08/08/equality-in-lisp/),
 dealing with various aspects of equality. I guess I never found `==`
 and `eql?` in Ruby particularly confusing, because I knew Common Lisp,
-before I started playing around with Ruby.
+before I started playing with Ruby.
 
 Hopefully, I've managed to make the difference between `==` and `eql?`
 clear. That's some fairly esoteric matter that's not totally
