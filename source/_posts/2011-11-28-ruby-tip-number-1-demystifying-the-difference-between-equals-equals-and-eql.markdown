@@ -10,7 +10,7 @@ categories:
 
 Newcomers to Ruby are often confused by the fact the `Object` class
 defines three methods related to equality - `==`, `eql?` and
-`equals?`. Of the three the one that it's easiest to describe is
+`equal?`. Of the three the one that it's easiest to describe is
 `equal?` - it implements what's commonly known as reference equality
 check. The method returns `true` only if its receiver (the object upon
 the method was invoked) and parameter (the object we're comparing to) are
@@ -21,7 +21,7 @@ there).
 some_word = "word"
 some_other_word = some_word
 
-some_word.equals? some_other_word # true
+some_word.equal? some_other_word # true
 ```
 
 Both `==` and `eql?` implement value equality checks - they are not
@@ -32,7 +32,7 @@ different `String` objects, but they are quite obviously the same as
 far as their value is concerned.
 
 ``` ruby
-"cat".equals? "cat"    # false
+"cat".equal? "cat"     # false
 "cat" == "cat"         # true
 "cat".eql? "cat"       # true
 ```
