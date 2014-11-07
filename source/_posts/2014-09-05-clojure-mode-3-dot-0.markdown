@@ -35,8 +35,8 @@ When (if) this will happen?
 Sadly, I have no idea... Help is definitely welcome! If you
 don't have the time to help out with code or docs you can still support my
 work on `clojure-mode` (and all my other projects) via
-[gittip](https://www.gittip.com/bbatsov).
+[gratipay](https://www.gratipay.com/bbatsov).
 
-[![Support via Gittip](https://rawgithub.com/twolfson/gittip-badge/0.2.0/dist/gittip.png)](https://www.gittip.com/bbatsov)
+[![Support via Gratipay](https://cdn.rawgit.com/gratipay/gratipay-badge/2.1.3/dist/gratipay.png)](https://gratipay.com/bbatsov)
 
 That's all for now, folks! Enjoy the new `clojure-mode`!
