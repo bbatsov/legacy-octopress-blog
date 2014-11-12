@@ -43,7 +43,7 @@ Some of my other projects in no particular order:
 * [clojure-mode](https://github.com/clojure-emacs/clojure-mode) - A major mode for programming in Clojure
 * [cider](https://github.com/clojure-emacs/cider) - A Clojure programming environment for Emacs
 * [guru-mode](https://github.com/bbatsov/guru-mode) - An annoying companion on your journey to Emacs mastery
-* [rubocop-emacs](https://github.com/bbatsov/projectile) - Emacs integration for [RuboCop](https://github.com/bbatsov/rubocop)
+* [rubocop-emacs](https://github.com/bbatsov/rubocop-emacs) - Emacs integration for [RuboCop](https://github.com/bbatsov/rubocop)
 * [zenburn-emacs](https://github.com/bbatsov/zenburn-emacs) - The Zenburn color theme, ported to Emacs
 * [solarized-emacs](https://github.com/bbatsov/solarized-emacs) - The Solarized color theme, ported to Emacs
 * [puppet-mode](https://github.com/lunaryorn/puppet-mode) - A mode for editing Puppet 3 manifests
