@@ -9,7 +9,7 @@ While I doubt that any of you want to read something about me I'll
 continue writing anyway.
 
 My name is Bozhidar Ivanov Batsov. I'm originally from Veliko Tarnovo,
-Bulgaria, but I've been residing in Sofia (Bulgaria's current capitol)
+Bulgaria, but I've been residing in Sofia (Bulgaria's current capital)
 for quite some time now.
 
 I'm currently the CTO of [Tradeo Inc.](http://tradeo.com), where I
