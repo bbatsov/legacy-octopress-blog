@@ -49,9 +49,11 @@ Some of my other projects in no particular order:
 * [puppet-mode](https://github.com/lunaryorn/puppet-mode) - A mode for editing Puppet 3 manifests
 * [swift-mode](https://github.com/chrisbarrett/swift-mode) - A mode for editing Swift code
 
-If you like my projects you can support their development via [gittip](https://www.gittip.com/bbatsov).
+If you like my projects you can support their development via [gratipay](https://www.gratipay.com/bbatsov) or PayPal.
 
-[![Support via Gittip](https://rawgithub.com/twolfson/gittip-badge/0.2.0/dist/gittip.png)](https://www.gittip.com/bbatsov)
+[![Support via Gratipay](https://cdn.rawgit.com/gratipay/gratipay-badge/2.1.3/dist/gratipay.png)](https://gratipay.com/bbatsov)
+
+[![Paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3J4QE5QBJU84Q)
 
 I teach some free programming courses from time to time, covering
 topics like Perl, Java and Ruby. I've also taught a few Linux
