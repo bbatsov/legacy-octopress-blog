@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: rake | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/rake/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Find out where a rake task is defined]]></title>
+    <link href="http://batsov.com/articles/2014/05/30/find-out-where-a-rake-task-is-defined/"/>
+    <updated>2014-05-30T17:23:00+03:00</updated>
+    <id>http://batsov.com/articles/2014/05/30/find-out-where-a-rake-task-is-defined</id>
+    <content type="html"><![CDATA[<p>Have you ever wondered where a particular rake task is defined? Enter <code>rake -W</code> (introduced in <code>rake</code> 0.9):</p>
+
+<p>```
+$ rake -W db:schema:load</p>
+
+<p>rake db:schema:load                 /Users/bozhidar/.rbenv/versions/2.1.1/lib/ruby/gems/2.1.0/gems/activerecord-4.1.1/lib/active_record/railties/databases.rake:236:in <code>block (2 levels) in &lt;top (required)&gt;'
+rake db:schema:load_if_ruby         /Users/bozhidar/.rbenv/versions/2.1.1/lib/ruby/gems/2.1.0/gems/activerecord-4.1.1/lib/active_record/railties/databases.rake:240:in</code>block (2 levels) in <top (required)>&lsquo;
+```</p>
+
+<p>You can also invoke <code>rake -W</code> without an argument and you&rsquo;ll get a listing of all available rake tasks and their source locations.</p>
+
+<p>Pretty neat, right?</p>
+]]></content>
+  </entry>
+  
+</feed>

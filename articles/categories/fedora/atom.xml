@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Fedora | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/fedora/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Running Xerox Phaser 3117 under Fedora 15]]></title>
+    <link href="http://batsov.com/articles/2011/06/04/phaser-3117-fedora-15/"/>
+    <updated>2011-06-04T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/06/04/phaser-3117-fedora-15</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve been a GNU/Linux user for quite some time now and a Fedora user
+for just as long. The first distribution that I ever used was Fedora 2
+and even though I&rsquo;ve used extensively other distros I&rsquo;ve always come
+back to Fedora. Recently Fedora 15 was released and I was
+(naturally) one of the first people to install it.</p>
+
+<p>Everything is great in the new release (as ever), but my Xerox Phaser
+3117 printer is unsupported (also as ever) out of the box, so it&rsquo;s
+time for one of those quick articles on how to get it up and running this
+time. First run the following command as root (or with sudo):</p>
+
+<p>``` bash</p>
+
+<h1>yum install gutenprint-foomatic</h1>
+
+<p>```</p>
+
+<p>Now you can run the &ldquo;Printing&rdquo; application. It will autodetect your
+printer and suggest you to use the driver for Xerox Phaser 3110. Just
+accept this suggestion and you should be good to go. Happy printing!</p>
+
+<p>P.S. You might also want to check out my article on
+<a href="/Linux/Fedora/2011/05/31/fedora-15-tips.html">Fedora 15 post installation setup</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Fedora 15 post installation setup & tips]]></title>
+    <link href="http://batsov.com/articles/2011/05/31/fedora-15-tips/"/>
+    <updated>2011-05-31T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/05/31/fedora-15-tips</id>
+    <content type="html"><![CDATA[<h2>Prelude</h2>
+
+<p>I&rsquo;ve recently upgraded all my systems to Fedora 15. The default
+installation is not very usable for some tasks for several reasons &ndash;
+like CD size limitations and software patents for instance. I also
+happen to disagree with some defaults in Fedora like the fact that
+sudo is not enabled by default (like in Ubuntu) and the use of the
+bash shell. In this article I&rsquo;ll share some of the things I do after a
+fresh Fedora 15 installation to enhance it (at least by my standards).</p>
+
+<!--more-->
+
+
+<h2>Tweak defaults</h2>
+
+<h4>Configure sudo</h4>
+
+<p><code>sudo</code> gives you a way to execute single commands as the superuser. You
+can also do this with <code>su -c</code>, but you have to quote the commands there,
+which I don&rsquo;t like very much. To enable sudo for some account first
+run the command:</p>
+
+<p><code>bash
+$ su -c "visudo"
+</code></p>
+
+<p>The file <code>/etc/sudoers</code> will open up in a customized vi editor. Append
+somewhere to the end of the file the following line:</p>
+
+<p><code>username ALL=(ALL) ALL</code></p>
+
+<p>You should replace <em>username</em> with your username.</p>
+
+<h4>Configure yum</h4>
+
+<p>yum has a lot of plugins, but one of them is particularly useful &ndash; the
+fastest mirror plug-in. You can install it like this:</p>
+
+<p><code>bash
+$ sudo yum install yum-plugin-fastestmirror
+</code></p>
+
+<h4>Disable SELinux</h4>
+
+<p>If you&rsquo;re a desktop Linux user you want to disable SELinux &ndash; trust
+me. Open the file /etc/selinux/config and change this line:</p>
+
+<p><code>SELINUX=enforcing</code></p>
+
+<p>to</p>
+
+<p><code>SELINUX=disabled</code></p>
+
+<p>Restart afterwards.</p>
+
+<h2>Install additional software</h2>
+
+<p>Fedora&rsquo;s default installation medium is a 700MB CD. It&rsquo;s
+understandable that not everything can be fitted in there. Luckily
+adding new software from the vast Fedora on-line repos is child&rsquo;s play.</p>
+
+<h4>Install REAL text editors</h4>
+
+<p>gedit is ok for causal text editing, but professionals like software
+engineers and system administrators will definitely need something more:</p>
+
+<p><code>bash
+$ sudo yum install emacs vim
+</code></p>
+
+<p>Personally I use Emacs most of the time and use vim only to edit
+config files that require root access.</p>
+
+<h4>Install Z Shell</h4>
+
+<p>It&rsquo;s no secret that I love the Z Shell &ndash; after all I <a href="/articles/2011/04/29/one-shell-to-rule-them-all/">rave about it</a>
+quite often. It should come as no surprise that I happen to use it
+and probably you should start using it as well:</p>
+
+<p><code>bash
+$ sudo yum install zsh
+$ sudo vim /etc/passwd
+</code></p>
+
+<p>Find the line about your account and change there /bin/bash to
+/bin/zsh. Afterwards start a new login shell and a simple wizard will
+fire up asking you some questions to create a default .zshrc file for you.</p>
+
+<h4>Install LibreOffice</h4>
+
+<p>LibreOffice is currently the best Linux option for word processing,
+spreadsheet handling and presentation creation. You can install the
+most common components with the following command:</p>
+
+<p><code>bash
+sudo yum install libreoffice-calc libreoffice-impress libreoffice-draw libreoffice-writer
+</code></p>
+
+<p>LibreOffice uses hunspell to do spellchecking. An English dictionary
+will be installed by default, but you&rsquo;ll need to install additional
+dictionaries manually:</p>
+
+<p><code>bash
+$ sudo yum install hunspell-bg
+</code></p>
+
+<p>This command will install the Bulgarian hunspell dictionary. You
+likely don&rsquo;t need it so install some more helpful dictionary instead. :&ndash;)</p>
+
+<h4>Install OpenJDK</h4>
+
+<p>If you need to run Java programs/applets:</p>
+
+<p><code>bash
+$ sudo yum install java-1.6.0-openjdk java-1.6.0-openjdk-plugin
+</code></p>
+
+<p>If you&rsquo;re planning to do some Java development:</p>
+
+<p><code>bash
+$ sudo yum install java-1.6.0-openjdk-devel java-1.6.0-openjdk-javadoc java-1.6.0-openjdk-src
+</code></p>
+
+<h4>Install Deluge torrent client</h4>
+
+<p>The default Transmission torrent client is pretty basic. I recommend
+you to replace it with the much more feature-rich deluge:</p>
+
+<p><code>bash
+$ sudo yum install deluge
+</code></p>
+
+<h4>Install Inconsolata font</h4>
+
+<p>I&rsquo;m a software engineer and I obviously spend a lot of time reading
+and writing source code. I&rsquo;m very picking about the monospace font
+that I use and currently Inconsolata happens to be my favorite:</p>
+
+<p><code>bash
+$ sudo yum install levien-inconsolata-fonts
+$ gsettings set org.gnome.desktop.interface monospace-font-name "Inconsolata 12"
+</code></p>
+
+<p>These two commands will install the font and make it the default
+monospaced font on your Fedora system.</p>
+
+<h4>Install GIMP</h4>
+
+<p>Fedora does not ship with an image editor. GIMP is generally
+considered the best option so you might want to install it:</p>
+
+<p><code>bash
+$ sudo yum install gimp
+</code></p>
+
+<h4>Install gnome-tweak-tool to customize fonts, themes, etc in GNOME 3.0</h4>
+
+<p>GNOME 3.0 has stripped many configuration options, but luckily most of
+them are available by installing gnome-tweak-tool:</p>
+
+<p><code>bash
+$ sudo yum install gnome-tweak-tool
+</code></p>
+
+<p>Run it (by pressing Alt+F2 and typing gnome-tweak-tool) and change the
+settings. It does not have OK or Apply buttons, but simply selecting the
+options performs the changes. Some changes may require logging out and
+logging back in.</p>
+
+<h2>Install additional patent encumbered/proprietary software</h2>
+
+<h4>Enable RPMFusion</h4>
+
+<p>RPMFusion is the most popular third party repository for Fedora. It&rsquo;s
+full of goodness like audio/video codecs, proprietary drivers, etc. To
+enable it just run the following command:</p>
+
+<p><code>bash
+$ sudo yum localinstall --nogpgcheck \
+http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-stable.noarch.rpm \
+http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-stable.noarch.rpm
+</code></p>
+
+<h4>Install proprietary codecs</h4>
+
+<p>No MP3 support in Fedora by default? And almost no video codecs?
+RPMFusion to the rescue! Type this:</p>
+
+<p><code>bash
+$ sudo yum install gstreamer-plugins-ugly gstreamer-plugins-bad gstreamer-ffmpeg
+</code></p>
+
+<h4>Install VLC</h4>
+
+<p>With MPlayer&rsquo;s development in stagnation VLC has established itself as
+the best video player for Linux recently. It&rsquo;s in RPMFusion, so if you
+enabled it installing it is as easy as typing the following command:</p>
+
+<p><code>bash
+$ sudo yum install vlc
+</code></p>
+
+<h4>Install Adobe Flash Player</h4>
+
+<p>Love it or hate it &ndash; you probably need it.</p>
+
+<p><code>bash
+$ sudo rpm -Uvh http://linuxdownload.adobe.com/adobe-release/adobe-release-i386-1.0-1.noarch.rpm
+$ sudo yum install flash-plug-in
+</code></p>
+
+<p>You can omit this if you&rsquo;re planning to use Google Chrome, since it
+comes with Flash Player built-in.</p>
+
+<h4>Install Skype</h4>
+
+<p>Download Skype from the
+<a href="http://www.skype.com/intl/en/get-skype/on-your-computer/linux/downloading.fedora">official site</a>. Assuming
+you&rsquo;ve downloaded it to ~/Downloads, you can install it like this:</p>
+
+<p><code>bash
+$ sudo yum localinstall Downloads/skype-2.2.0.25-fedora.i586.rpm
+</code></p>
+
+<p>Yum will automatically installed any dependencies required by skype.</p>
+
+<h4>Install Oracle JDK</h4>
+
+<p>OpenJDK is great, but due to licensing problems it&rsquo;s not quite the
+same as the Oracle JDK. If you start experiencing strange problems
+(mostly in Swing programs) you&rsquo;d probably do well to try the Oracle
+JDK instead. Download Oracle&rsquo;s JDK from the
+<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">official site</a>. Select
+&ldquo;Linux x86 &ndash; RPM Installer&rdquo; or &ldquo;Linux x64 &ndash; RPM Installer&rdquo; depending
+on your distribution and install the JDK like this:</p>
+
+<p><code>bash
+$ sudo sh jre-6u25-linux-i586-rpm.bin
+</code></p>
+
+<p>Fedora uses OpenJDK by default, so you&rsquo;ll have to do some more work to
+tell it to start using Oracle JDK. The <strong>alternatives</strong> program allows
+you to select between multiple installed versions of a program:</p>
+
+<p><code>bash
+$ sudo alternatives --install /usr/bin/java java /usr/java/default/bin/java 1000
+$ sudo alternatives --install /usr/bin/javac javac /usr/java/default/bin/javac 1000
+$ sudo alternatives --install /usr/bin/javaws javaws /usr/java/default/bin/javaws 1000
+</code></p>
+
+<p>These commands will make alternative aware of the java binaries and
+set high priorities to them which will make them the default Java
+binaries. You can use &ldquo;alternatives &mdash;config binaryname&rdquo; to select
+active binaries manually.</p>
+
+<h4>Install Google Chrome</h4>
+
+<p>Firefox is dying, Google Chrome is the new king of the
+browsers. Download it from the <a href="http://www.google.com/chrome">official site</a> and install it:</p>
+
+<p><code>bash
+$ sudo yum localinstall ~/Downloads/google-chrome-stable_current_i386.rpm
+</code></p>
+
+<p>Google Chrome will install a yum repository as well, so you&rsquo;ll receive
+updates as soon as they arrive.</p>
+
+<h4>Install DropBox</h4>
+
+<p><a href="http://www.dropbox.com">DropBox</a> is a great file sharing service
+which allows you to sync files between all of your computers and
+mobile devices(Android, iPhone, iPad, etc). It has a great Linux
+client which I use all the time. Download it from
+<a href="http://www.dropbox.com/downloading?os=lnx">here</a> and install it like
+this:</p>
+
+<p><code>bash
+$ sudo yum localinstall --nogpgcheck nautilus-dropbox-0.6.7-1.fedora.i386.rpm
+</code></p>
+
+<h2>Epilogue</h2>
+
+<p>Hopefully some of my setup has made your setup more enjoyable and more
+productive. I&rsquo;ll update this article along the way if I stumble upon
+other things that I consider to be generally helpful.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Enabling 3D support for Nouveau in Fedora 13]]></title>
+    <link href="http://batsov.com/articles/2010/05/26/3d-support-nouveau-fedora-13/"/>
+    <updated>2010-05-26T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2010/05/26/3d-support-nouveau-fedora-13</id>
+    <content type="html"><![CDATA[<p>Most of you probably have heard that Fedora 13 will feature
+experimental 3D support for the Nouveau open source driver for Nvidia
+cards. This support, however, is not enabled by default. To enable it
+you need to install the mesa-dri-drivers-experimental package. I,
+personally, do it like this(if you haven’t configured sudo, you’ll
+have to perform this as root):</p>
+
+<p><code>bash
+sudo yum install mesa-dri-drivers-experimental
+</code></p>
+
+<p>Afterwards you can enable Compuz, play chromium-bsu or whatever your heart desires.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using Xerox Phaser 3117 on Fedora]]></title>
+    <link href="http://batsov.com/articles/2009/09/25/xerox-phaser-3117-fedora/"/>
+    <updated>2009-09-25T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2009/09/25/xerox-phaser-3117-fedora</id>
+    <content type="html"><![CDATA[<p>The driver selected by default by Fedora 11 is not appropriate for
+Xerox Phaser 3117 &ndash; it will not print with it. However there is a very
+easy solution to the problem.</p>
+
+<p>Go to <strong>System &ndash;> Administration &ndash;> Printing</strong> (In GNOME at least, in KDE
+it’s probably something similar). Right click the Xerox Phaser 3117
+printer icon there and select &ldquo;Properties&rdquo; from the menu. Then in the
+&ldquo;Make and model&rdquo; section choose change and then select Samsung
+ML-1710.</p>
+
+<p>After you apply the change you&rsquo;ve just made, you can start printing
+with your Phaser.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Find out quickly which package provides a certain library with YUM]]></title>
+    <link href="http://batsov.com/articles/2009/07/14/yum-provides/"/>
+    <updated>2009-07-14T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2009/07/14/yum-provides</id>
+    <content type="html"><![CDATA[<p>One of the most dreaded things that you can see while trying to run
+some application or trying to install an rpm package is a message
+saying that some required library is missing.</p>
+
+<p>Generally this is not a big problem, because most often the library
+that you miss is packaged in a package named similarly to the
+library. Sometime however this is not the case&hellip; Suppose for example
+that you&rsquo;re trying to install IBM JDK 5.0 on a Fedora 11 box. You&rsquo;ll
+most likely get the following error message:</p>
+
+<p><code>bash
+error: Failed dependencies:
+libstdc++.so.5 is needed by ibm-java2-i386-sdk-5.0-9.0.i386
+</code></p>
+
+<p>and there is no package named libstdc++ that you can install, so how
+can you find out which package do you need?</p>
+
+<p>The answer is simple:</p>
+
+<p>``` bash
+$ yum provides libstdc++.so.5</p>
+
+<p>Loaded plugins: fastestmirror, presto, refresh-packagekit
+compat-libstdc++-33-3.2.3-66.i586 : Compatibility standard C++ libraries
+Repo        : fedora
+Matched from:
+Other       : libstdc++.so.5
+```</p>
+
+<p>Pretty neat, eh?</p>
+]]></content>
+  </entry>
+  
+</feed>

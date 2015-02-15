@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: osx | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/osx/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs on OSX]]></title>
+    <link href="http://batsov.com/articles/2012/10/14/emacs-on-osx/"/>
+    <updated>2012-10-14T22:03:00+03:00</updated>
+    <id>http://batsov.com/articles/2012/10/14/emacs-on-osx</id>
+    <content type="html"><![CDATA[<h2>Prelude</h2>
+
+<p>In this article I&rsquo;ll share with you a few tips and tricks about
+running Emacs under the Max OSX operating system.</p>
+
+<h2>Installation</h2>
+
+<p>While Emacs is available for installation from
+<a href="http://wikemacs.org/wiki/Installing_Emacs_on_OS_X">various sources</a>
+I personally recommend you to use the
+<a href="http://wikemacs.org/wiki/Installing_Emacs_on_OS_X">Emacs for Mac OSX binary distribution</a>.</p>
+
+<p>Installation via Homebrew is also a decent option, although it more time consuming.</p>
+
+<p>After the installation you might want to wipe out the ancient Emacs 22
+that ships with OSX by default(its presence will only cause headaches, trust me):</p>
+
+<p><code>bash
+$ sudo rm /usr/bin/emacs
+$ sudo rm -rf /usr/share/emacs
+</code></p>
+
+<p>Keep in mind that the OSX updates will (unfortunately) bring Emacs 22 back from the dead, so
+you might consider altering your <code>PATH</code> instead.</p>
+
+<p>Alternatively you can just create an alias in your shell and when you
+invoke <code>emacs</code> it will run the newly installed version:</p>
+
+<p><code>bash
+$ alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
+</code></p>
+
+<p>If you installed via Homebrew that path might look like this:</p>
+
+<p><code>bash
+$ alias emacs="/usr/local/Cellar/emacs/24.2/Emacs.app/Contents/MacOS/Emacs -nw"
+</code></p>
+
+<p>To make it permanent, if using bash, add that line to
+<code>~/.bash_profile</code>. zsh users will want to update <code>~/.zshrc</code> instead.</p>
+
+<h2>Full-screen support</h2>
+
+<p>The Homebrew Emacs formula includes a patch providing the <code>M-x
+ns-toggle-fullscreen</code> command for switching between normal and
+full-screen modes. It works well, but does not provide the typical OS
+X Lion full-screen app experience. In particular, it remains on the
+desktop, obscuring non-full-screen applications, rather than moving to
+its own space. For OSX Lion style fullscreen support have a look at
+this
+<a href="http://sourcematters.org/2012/04/10/full-screen-emacs-24-for-os-x-lion.html">article</a>.</p>
+
+<p>Another option that you might want to explore is
+the <a href="http://osxdaily.com/2011/07/22/enable-full-screen-support-all-apps-os-x-lion-maximizer/">maximizer</a>
+utility that brings full-screen support for all Cocoa apps under Lion.</p>
+
+<h2>Keybindings</h2>
+
+<p>I heartily recommend you to remap your <em>Caps Lock</em> key to <em>Control</em>. This
+can be easily done via <em>Preferences &ndash;> Keyboard &ndash;> Modifier Keys</em>. If
+you&rsquo;re using a laptop keyboard or the bluetooth keyboard you&rsquo;ll
+definitely want to remap your right Option key to Control as
+well. No one can use effectively Emacs without a right Control
+key. Remapping it is a bit more involved and requires the use of the
+third-party utility
+<a href="http://pqrs.org/macosx/keyremap4macbook/">KeyRemap4MacBook</a>.</p>
+
+<p>On a regular Mac keyboard you&rsquo;ll probably want to map Command to Meta
+and Option to Super. On an external Windows keyboard you&rsquo;ll want to
+map Command to Super and Option to Meta (on Windows keyboard the
+Command and Option keys are swapped). Add this to your <code>init.el</code> (or
+<code>.emacs</code>) file:</p>
+
+<p><code>cl
+(setq mac-command-modifier 'super)
+(setq mac-option-modifier 'meta)
+</code></p>
+
+<p>If you often switch between your laptop keyboard and an external
+Windows keyboard (like me) you might want to define this helper
+command and bind it to some key combo (<code>C-c w</code> in the example):</p>
+
+<p>``` cl
+(defun swap-meta-and-super ()
+  &ldquo;Swap the mapping of meta and super. Very useful for people using their Mac
+with a Windows external keyboard from time to time.&rdquo;
+  (interactive)
+  (if (eq mac-command-modifier &lsquo;super)</p>
+
+<pre><code>  (progn
+    (setq mac-command-modifier 'meta)
+    (setq mac-option-modifier 'super)
+    (message "Command is now bound to META and Option is bound to SUPER."))
+(progn
+  (setq mac-command-modifier 'super)
+  (setq mac-option-modifier 'meta)
+  (message "Command is now bound to SUPER and Option is bound to META."))))
+</code></pre>
+
+<p>(global-set-key (kbd &ldquo;C-c w&rdquo;) &lsquo;swap-meta-and-super)
+```</p>
+
+<h2>Setting the PATH variable</h2>
+
+<p>Long story short &ndash; if you&rsquo;re running Emacs from Spotlight (or any
+other launcher for that matter) your <code>PATH</code> and <code>exec-path</code> variables
+won&rsquo;t be same as the ones in your shell (and that&rsquo;s every nasty since
+you want be able to run some external programs from Emacs). The best
+way to handle this would be installing the package
+<a href="https://github.com/purcell/exec-path-from-shell">exec-path-from-shell</a>
+by Steve Purcell.</p>
+
+<h2>Flyspell</h2>
+
+<p>For flyspell to work correctly you&rsquo;ll need to install aspell plus a few dictionaries.</p>
+
+<p><code>bash
+$ brew install aspell --lang=en
+</code></p>
+
+<h2>More goodies</h2>
+
+<p>If you want to spare yourself part of the headache of configuring
+Emacs on OSX and get a lot of extra firepower you might want to install
+<a href="https://github.com/bbatsov/prelude">Emacs Prelude</a> &ndash; an enhanced
+Emacs 24.x configuration (developed by yours truly) that should make
+your experience with Emacs both more pleasant and more powerful.</p>
+]]></content>
+  </entry>
+  
+</feed>

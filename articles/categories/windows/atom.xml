@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Windows | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/windows/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[The Linux desktop experience is killing Linux on the desktop, Part II]]></title>
+    <link href="http://batsov.com/articles/2011/06/14/linux-desktop-part-2/"/>
+    <updated>2011-06-14T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/06/14/linux-desktop-part-2</id>
+    <content type="html"><![CDATA[<p><em>Read this with an open mind.</em></p>
+
+<h2>Prelude</h2>
+
+<p>A few days back I wrote a somewhat controversial article called,
+<a href="/Linux/Windows/Rant/2011/06/11/linux-desktop-experience-killing-linux-on-the-desktop.html">&ldquo;The Linux desktop experience is killing Linux on the desktop&rdquo;</a>. While
+many readers seem to have grasped the true purpose of the article, a
+lot of people claimed that it was nothing but FUD (a favorite term
+of many people in the Linux community, who would rather ignore
+existing problems than face/acknowledge them).</p>
+
+<p>If you&rsquo;ve read my last post and generally agree with it &ndash; don&rsquo;t bother
+reading this one. It&rsquo;s basically more of the same &ndash; in greater detail
+and with less profanities.</p>
+
+<p>In this article I&rsquo;ll have a look at the state of the Linux desktop,
+it&rsquo;s usability, strengths and weaknesses.</p>
+
+<h2>Let&rsquo;s get some facts straight</h2>
+
+<p>I&rsquo;m writing this post from my Emacs 23.2 client (in Markdown, to
+publish it via git to my jekyll powered blog) connected to my Emacs
+daemon, running on my Fedora 15 GNOME 3.0 desktop at home. This
+machine has its every part carefully selected for maximum Linux
+compatibility (the machine is a bit old, but that wasn&rsquo;t always the case) &ndash;
+a GeForce 9600GT known to work &ldquo;great&rdquo; with the open-source nouveau
+driver, an Asus Xonar DX sound card, supported by the great Oxygen HD
+audio driver, etc. I do know how to buy hardware (contrary to popular
+belief). Actually I&rsquo;ve been a hardware
+enthusiast for most of my life and I know much more about the inner
+workings of computer components than most people. That said &ndash; the hardware that
+I bought for my home PC was not the hardware that I wanted to buy, but
+the one I had to buy.</p>
+
+<p>Even the ill-fated T520 Sandy Bridge laptop was supposed to work very
+well with Linux &ndash; after all Intel and Nvidia video cards are the
+safest bet in town.</p>
+
+<p>One of the great things about using a free (as in speech) OS like
+Linux is that you get to do things exactly the way you want to do
+them. You&rsquo;re in control. Everything is transparent. Nothing magically
+happens behind the scenes. It&rsquo;s sad that this
+doesn&rsquo;t extend to the ability to pick any piece of fairly generic
+hardware and properly enjoy it. Often you just have to hope
+and pray &ndash; and sometimes you might get lucky.</p>
+
+<p>A reader pointed me to
+<a href="http://blog.eracc.com/2011/06/14/the-century-of-the-linux-desktop/">this piece</a>
+&ndash; a rebuttal of my article. Here&rsquo;s an excerpt:</p>
+
+<p><em>Here we go again. Some fellow has gotten all whiny about being such a
+big Linux fan, &ldquo;… hardcore Linux user …&rdquo;, but he just had to go back
+to Microsoft to get things done. Why? Because he is tired of having to
+tinker with Fedora Linux to make things work, or fail to work, with
+cutting edge hardware … and 64-bit Flash on 64-bit Linux is sucky …
+and Skype on Linux is sucky … and … and … and. It was all just so
+painful and time consuming he could not take it any longer and went
+back to the safe arms of Microsoft to escape the horror that is
+Linux. Good grief.
+Okay, first and foremost, a true &ldquo;hardcore Linux user&rdquo;, in my mind a
+fan of Linux, is unlikely to switch from Linux to anything else. Oh
+yes, he or she will switch Linux distributions in a heartbeat, or
+maybe three heartbeats, if a distribution fails to work as needed. But
+switching to Microsoft and leaving the Linux desktop behind? Not
+likely, my friends. I consider myself a true &ldquo;hardcore Linux user&rdquo; and
+I see no voluntary switch from Linux in my future … ever.</em></p>
+
+<p>This bit produced a sad smile on my face. Had to go back to Microsoft?
+Absolutely not! Chose to use Windows 7 (for the time
+being)&hellip; If I was to go back to something it should have been FreeBSD
+since it was the OS I was using before Linux (and of course Windows
+before that indeed). I actually switched quite reluctantly from
+FreeBSD to Linux for a simple reason &ndash; Linux supported wider hardware
+variety and there were more native apps for it.</p>
+
+<p>All Unix-derived OSes are more or less the same from an user&rsquo;s
+perspective &ndash; mostly the same environment, the same applications. The
+only thing that really makes the difference is the hardware support
+and Linux is clearly far ahead of its competition.</p>
+
+<p>Hardcore user? You bet! But hardcore doesn&rsquo;t mean an &lsquo;unreasonable
+idiot, blinded by zealously&rsquo;. It&rsquo;s not always that someone&rsquo;s favorite
+technologies are the best solution to a problem. The section &ldquo;the shit
+I&rsquo;ve endured&rdquo; had a dual purpose &ndash; list a &ldquo;few&rdquo; problems and show how
+resilient I am.</p>
+
+<p>Distro hopping is something that mostly newbies do, because they fail
+to grasp a fundamental thing in the land of Linux &ndash; 95% of the stuff
+that comprises a distribution is generic stuff found in most other
+distros. You cannot seriously expect that the same drivers in a
+different distro will yield wildly different results&hellip; Sure, bugs do
+tend to occur, and sometimes they are truly distribution
+specific. Sure, some distros happen to patch the stuff they ship
+heavily, while others favor shipping vanilla versions of both software ant
+the kernel.</p>
+
+<h2>The process of driver development</h2>
+
+<p>My former post placed a heavy emphasis on existing driver
+issues. While I abhor some Linux drivers I&rsquo;ve never ever blamed the
+authors of open source drivers. Here&rsquo;s why:</p>
+
+<p>The year and a half I&rsquo;ve spent writing Linux drivers for a proprietary
+Austrian company was some of the hardest time in my professional
+career. Writing drivers is fairly hard task for two reasons &ndash; you have
+to have very intimate knowledge of the hardware at hand and you have
+to write very safe code (and carefully test it), because otherwise you might bring the whole
+kernel down. I was basically reading tech specs (most boring read in
+the world) most of the day and
+writing very little code in end. Debugging drivers is not a pleasant
+task either.</p>
+
+<p>Linux certainly has some of the best developers in the world. I have
+little doubt in that. The problem is that these same developers spent
+their days working other jobs and you cannot seriously expect them to
+have the time or the energy (not to mention the specs required) to
+produce drivers that are on par with commercial counterparts developed
+for OSX and Windows by big team with vast resources at their disposal.</p>
+
+<p>This is the actual problem as I see it &ndash; we&rsquo;re expecting individuals
+to create good drivers for us out the kindness of their hearts in
+their little spare time with little or no hardware specs on which to
+rely for absolutely no money.</p>
+
+<p>I&rsquo;ve read the source code of many network layer drivers in the Linux
+kernel and I&rsquo;ve noticed a common trend &ndash; a lot of the drivers were
+actually written by hardware engineers (instead of software engineers)
+&ndash; they are filled with copy/paste segments from other drivers, lots of
+  useless/dubious/dangerous code. This doesn&rsquo;t surprise me &ndash; few
+  software engineers have solid grasp of hardware and/or the will to
+  take part in driver development. This is a big problem with no easy solution.</p>
+
+<p>The hardware vendors are the only party that deserves blame for the
+sorry state of many drivers. I cannot believe how hard it is for a
+company with the size of AMD to deliver a decent Linux driver
+for so many years. Their driver is a monument of everything that is
+wrong with hardware vendors as far as Linux is concerned &ndash; no support
+for latest kernels/X, no support for current state-of-the-art Linux
+video technologies, notorious instability and performance. Nvidia fare
+a lot better but still &ndash; their driver lacks the support basic stuff
+such as KMS&hellip;</p>
+
+<p>So what can we do? Obviously not everyone can start writing better
+drivers, but still everyone could try to help&hellip;</p>
+
+<p>For most desktop hardware vendors Linux is a non-existing OS. Linux
+truly has a small market share, but that is not the actual
+problem. The actual problem is that Linux desktop user would rather
+wait for someone from the community to come up with a solution instead
+of the pressure the vendors into action. Fill their mailboxes with angry
+letters, write blog posts about their inadequacy to properly support
+the third largest desktop OS in the world. Companies love to make
+money and hate bad press&hellip;</p>
+
+<h2>The desktop software stack</h2>
+
+<p>The Linux desktop stack has some great qualities &ndash; for instance it
+often comes with batteries included. You have most of your day to day
+need covered as soon as you install your distro &ndash; a decent browser, a
+good email client, an office suit, disk burning utility, torrent
+downloader, IM client, text editors, photo organizers, image editors,
+etc. When I installed Windows 7 I was a bit surprised how bare the
+initial installation is and how many third party apps I needed to
+install. And of course most of the Linux desktop apps coming from the
+same environment (KDE, GNOME, XFCE, etc) have a very uniform look and
+feel to them which I personally value a lot.</p>
+
+<p>Unfortunately not everything is great&hellip;</p>
+
+<p>The Linux desktop application stack suffers from a few serious
+problems:</p>
+
+<ul>
+<li>a few individuals make crucial decisions without taking any input
+from the user community</li>
+<li>many projects have only one principle developer that happens to do
+things his way without regard for anyone else</li>
+<li>often highly unstable beta quality software is pushed as stable to
+the end users</li>
+<li>a lot of prominent apps that are multi-platform seem to undergo
+sub-par testing/QA process under Linux and experience common problems
+like crashes and memory leaks that don&rsquo;t manifest that often on
+other platforms</li>
+</ul>
+
+
+<p>In more details&hellip;</p>
+
+<p><strong>Is it really better for the users?</strong></p>
+
+<p>Often a new feature arrives that is marketed as a huge improvement for
+the end-users. Most of the time the end-users are never inquired about
+their opinion of the feature. PulseAudio is a great example. I was
+pretty happy using ALSA directly, but nobody asked me what I thought
+about the change. Initially it was fairly easy to disable pulse audio,
+but as it became more and more integrated into the desktops the
+process became harder (luckily pulse audio improved in the
+process). While I&rsquo;m perfectly aware of the technical reasoning that
+lead to pulse audio&rsquo;s creation I do find it rather useless. With only
+one major architecture left (almost no one uses OSS on Linux these
+days) the introduction of intermediate sound layer of dubious quality
+never made that much sense to me. Sure, ALSA needed a simpler API, but
+we didn&rsquo;t deserve to be punished with pulse audio&hellip;</p>
+
+<p><strong>It&rsquo;s my way or the highway</strong></p>
+
+<p>Most of you probably remember that Pidgin (formerly Gaim) used to be
+the default IM client in GNOME based distros. At some point this
+quickly changed and Empathy became the default client. Part of the
+reason for the switch was the unwillingness of the lead developer in the
+Pidgin project to collaborate with the GNOME developers. I still
+remember the controversial fix that made the input area non-resizable
+with no option to go back to the previous setting. I guess GNOME&rsquo;s
+devs were really pissed about something since they replaced the all around great
+Pidgin with a vastly inferior and immensely buggy (at least for the
+first year and a half) product.</p>
+
+<p>Too much power of the hands of a single person with no overseer is
+dangerous. In the open-source world one can easily fork a project, but
+this is a dangerous path as well that is often likely to wreak havoc
+into the development of the project.</p>
+
+<p><strong>Are we your users or your beta testers?</strong></p>
+
+<p>A few examples from recent years:</p>
+
+<p>KDE 4.0</p>
+
+<p>GNOME 3.0</p>
+
+<p>Empathy</p>
+
+<p>PulseAudio</p>
+
+<p>NetworkManager</p>
+
+<p>Beagle</p>
+
+<p>The list could go on and on&hellip; Microsoft and Apple have certainly had
+their fair share of mistakes (Win ME, Win Vista, OS X Leopard), but
+nothing on a scale as epic as KDE 4.0 or GNOME 3.0&hellip;</p>
+
+<p><strong>Some users are more important then others it seems&hellip;</strong></p>
+
+<p>All those programs run on all major OS, but they perform worst on Linux:</p>
+
+<p>Firefox</p>
+
+<p>OpenOffice</p>
+
+<p>Flash Player</p>
+
+<p>Obviously writing great multi-platform apps is possible as illustrated
+by software such as VLC and Google Chrome. But what about all the
+rest. I feel that Firefox&rsquo;s days as the dominant browser on the Linux
+desktop are numbered &ndash; most of my friends that use Linux have already
+switched to Chrome (or the open source Chromium). Firefox on Linux is
+like a bad joke &ndash; slow, memory hungry and unstable. I keep hearing
+that it runs a lot better on OSX and Windows, probably because it got
+a lot more testing on those platforms. I understand their reasoning &ndash;
+most of their clients use those two OSes so it makes sense to make them
+important in the dev/testing phases. But they should remember
+something &ndash; Firefox is (for now) the default
+browser only in most Linux distros and it&rsquo;s never going to be the
+default in Windows or OSX&hellip;</p>
+
+<p>Same goes for OpenOffice to the letter.</p>
+
+<p>And flash is well &ndash;
+flash. It&rsquo;s not the greatest piece of software on any platform, but
+it&rsquo;s absolutely horrible in Linux. When I open a flash intensive web
+site my CPU load generally spikes up to the sky (thank God for AdBlock
+&amp; FlashBlock).</p>
+
+<p>Skype was not even mentioned here (until now obviously) since the Linux version is so far behind
+the one for OSX and Windows that I wouldn&rsquo;t even consider it a
+port. It&rsquo;s just some pile of crap compiled to be able to list Linux as
+a supported OS on their website&hellip; They promised improvements, they
+promised an open-source Linux client &ndash; two years later we&rsquo;re still
+using Skype 2.1 BETA. I wish more people had the sense to use a
+service like Google Talk so I wouldn&rsquo;t have to put up with skype at all.</p>
+
+<h2>The community (communist) model</h2>
+
+<p>I live in a country from the former Soviet block (Bulgaria) and I&rsquo;ve seen first
+hand what Communism leads to. I&rsquo;ve also seen first-hand why Communism
+doesn&rsquo;t actually work &ndash; few people actually live and abide by it and
+the rest of society simply practices the fine art of &ldquo;getting by&rdquo; and
+lives on their shoulders. The Communism can only really work if
+everyone is pulling their own weight in it (which sounds a bit absurd indeed).</p>
+
+<p>Something similar is happening on the Linux desktop ship &ndash; everybody
+says he&rsquo;s on board, but very few people are actually rowing and
+bringing the Linux desktop to it&rsquo;s designated port.</p>
+
+<p>I&rsquo;ve written only two desktop project for Linux from scratch (an
+English-Bulgarian dictionary utility and a GUI front-end for pacman on
+Arch Linux), but I&rsquo;ve contributed bug reports and patches to lots of
+projects. No matter what your opinion about me is &ndash; I&rsquo;ve done
+something for the Linux desktop and I&rsquo;m doing something for the desktop now
+as well &ndash; writing this article&hellip;</p>
+
+<p>What have you done? Sure, very few users are software engineers, but
+that doesn&rsquo;t mean they can&rsquo;t help. Bug reports are just as important
+as patches. Ideas and suggestions for improvements are highly valued
+as well. Don&rsquo;t sit in the shadows doing nothing &ndash; step into the light
+and do something to help your favorite project get a little bit
+better.</p>
+
+<p>Step by step. Fix by fix. Improvement by improvement. This is how good
+software gets created.</p>
+
+<p>The bottom line is &ndash; the more of us that pitch in the fight for a
+proper Linux desktop experience, the bigger the chances of the dream
+becoming reality become.</p>
+
+<h2>Future</h2>
+
+<p>Unless something radically changes in the near future I don&rsquo;t see how
+Linux can rise up to be a mainstream desktop OS. With very few
+companies having any stakes in the Linux desktop that isn&rsquo;t happening
+any time soon. I find a somewhat troubling trend in recent years &ndash; a
+lot of companies that worked for a better desktop experience are now
+gone. Ximian (the company behind GNOME) was purchased by Novell and
+later Novell crumbled, making the future of one of the most popular
+desktop distributions OpenSUSE doubtful. Mandrake was once one of the
+most powerful Linux companies and Mandrake Linux was widely
+used. Currently Mandriva is constantly on the brink of
+bankruptcy. There are many other examples &ndash; Xandros, VidaLinux,
+etc&hellip; Even the &ldquo;mighty&rdquo; Canonical struggles to build a successful
+business model around their widely successful Ubuntu OS.</p>
+
+<p>Desktop Linux has to be made somehow profitable for companies to start
+investing more heavily in it. This is the hard, but honest truth. As
+long as the primarily development is carried out with little (or no
+funding), mostly by volunteers the hour of the desktop Linux will
+never come.</p>
+
+<p>There is one more serious problem &ndash; diversity. There are two many
+distributions bring too little value to the table. The time spent
+repacking the same software for a hundred distros could be better
+utilized developing new applications/drivers and improving existing
+ones. We need to have at least a couple rock solid desktop
+distros/environments, otherwise the whole diversity thing means
+basically nothing.</p>
+
+<p>Few good options are worth more than a million half-baked options!</p>
+
+<h2>Epilogue</h2>
+
+<p>This article (and the one before it) was never about jumping the
+ship, claiming that Windows or OSX are better than Linux or spreading
+&ldquo;FUD&rdquo; (if I totally hate a term this is the one). It was always about
+raising the awareness of existing issues in the land of desktop
+Linux. After all just a few days before <a href="/Linux/Fedora/2011/05/31/fedora-15-tips.html">I had written a post
+installation guide for Fedora 15</a>.</p>
+
+<p>While I was writing the last paragraph I got another GNOME 3 shell corruption (time
+for killall gnome-shell to take the stage) on my totally supported
+hardware&hellip; A skype sound notification interrupted the song I was
+listening to (thanks a lot, PulseAudio)&hellip; And yet I&rsquo;m still here. I
+did switch to Windows 7 on my laptop and I do intend to use Window 7
+at least for a while there. It&rsquo;s not perfect either, trust me about
+that. Poor terminal emulator (though great PowerShell), a few random
+application crashes (but these happen in Linux as well in recent
+years) just to name a few.</p>
+
+<p>The Linux desktop is at the edge of a cliff now. It&rsquo;s up to us to
+decide whether we would save it or push it over the edge.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Linux desktop experience is killing Linux on the desktop]]></title>
+    <link href="http://batsov.com/articles/2011/06/11/linux-desktop-experience-killing-linux-on-the-desktop/"/>
+    <updated>2011-06-11T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/06/11/linux-desktop-experience-killing-linux-on-the-desktop</id>
+    <content type="html"><![CDATA[<p><strong>Disclaimer</strong></p>
+
+<p><em>This post is a bona fide rant. It tells how a hardcore Linux user
+(me) decided to abandon Linux as a desktop platform and the reasons
+behind this decision. It might provoke some controversy, but
+I frankly don&rsquo;t care.</em></p>
+
+<h2>Prelude</h2>
+
+<p>I&rsquo;m generally known as one of the biggest supporters of GNU/Linux,
+I&rsquo;ve taught courses on Linux administration, I&rsquo;ve spoken at Linux
+conferences and I naturally use Linux as my primary desktop on all my
+machines. Well, that last part is not so true anymore. Here the story
+begins&hellip;</p>
+
+<h2>The background</h2>
+
+<p>I&rsquo;ve been using GNU/Linux exclusively for 8 years now. I&rsquo;ve spent a
+lot of time with Fedora, Gentoo and Arch Linux. I use it at home, I
+use it at work and along the way I&rsquo;ve converted many Windows users to
+Linux. I&rsquo;ve lived through a lot of driver and software problems
+with Linux, hoping that the day would come when it will become a
+first-class citizen of the desktop operating systems town. Alas, this
+day never came and probably never will.</p>
+
+<p>My patience ended this week and I&rsquo;ll be gradually moving all my
+desktop machines back to Windows. What caused me to take such drastic
+course of action? I&rsquo;ve bought myself a new ThinkPad T520 laptop,
+powered by Nvidia&rsquo;s Optimus GPU switching technology &ndash; when the GPU
+load is low it uses the built-in Sandy Bridge GPU, when it gets higher
+&ndash; it switches to the discrete NVS 4200M GPU. Needless to say &ndash; this
+  technology is not supported under Linux, but I was prepared to live
+  without it. After all both Intel and Nvidia are known to have decent
+  Linux drivers so I was about to try both GPU and select the one with
+  the better performance. All I had to do was pick a shiny new
+  distribution to power my mobile powerhouse&hellip;</p>
+
+<h2>The Distribution</h2>
+
+<p>I love Fedora &ndash; always have, always will. They constantly deliver to
+the end users the cutting edge in Linux technologies (both desktop and
+server), so it&rsquo;s naturally my distro of choice (I&rsquo;m quite fond of
+cutting edge tech). I installed on the new
+laptop the latest Fedora 15 with GNOME 3.0 and here the problems
+started. GNOME 3 requires 3d acceleration to work properly &ndash; a
+reasonable requirement these days, at least on an operating system with
+normal video drivers.</p>
+
+<p>The Intel driver sucked so bad that I got constant screen corruption
+and hang-ups. Too bad, because I preferred to use the Intel GPU since
+I mostly work on the laptop. The open source Nvidia driver nouveau
+doesn&rsquo;t support the NVS 4200, so I was forced to install the
+proprietary driver. It ran OK initially, but after some time my system
+just started to freeze while waiting for Plymouth (probably after some
+kernel update, which I didn&rsquo;t notice). I could have tried the usual
+tricks and fixed the problem, but at this point I finally realized how
+idiotic it was of me to keep using Linux for a desktop OS after all
+the shit I&rsquo;ve endured and the time I&rsquo;ve wasted dealing with stuff that
+should have been &ldquo;just working&rdquo;. I just want to get some work done, I
+don&rsquo;t want to waste my time debugging all kind of crap.</p>
+
+<h2>The Shit I endured</h2>
+
+<p><strong>Disclaimer</strong></p>
+
+<p><em>I&rsquo;ve endured this Shit over the aforementioned period of 8
+years. Some of the problems here have been alleviated (like
+ethernet/wireless support) and some manifest mainly with newer
+hardware (released in the past 6-12 months). Many of the problems,
+unfortunately manifest on all kind of hardware no matter how old.</em></p>
+
+<p><strong>Non-existing ethernet/wireless drivers</strong> &ndash; not so common today, but
+  try remembering the time circa 2005</p>
+
+<p><strong>Non-existing/crappy audio drivers</strong> &ndash; got an X-Fi 5 years ago, ALSA
+  driver was released 3-4 years later and was total piece of garbage,
+  OSS driver was barely usable. I don&rsquo;t even get me started on USB
+  audio support &ndash; what a joke&hellip;</p>
+
+<p><strong>Lamest video card drivers ever</strong> &ndash; most video card drivers for Linux
+  are so bad I cannot even watch tear-free video. Nvidia have the only
+  decent video driver, but it&rsquo;s far from perfect either &ndash; no KMS, poor
+  2D acceleration. AMD&rsquo;s drivers are a punishment from the Lord and
+  Intel&rsquo;s constantly &ldquo;evolving&rdquo; drivers are barely usable most of the
+  time. The video card drivers made me buy and HD media player and an
+  PS3 (for which I&rsquo;m thankful), but I have to ask myself &ndash; why suffer
+  all this shit instead of getting a normal desktop OS like OS X or
+  Windows? Did I love Linux that much? Did I believe that much it&rsquo;s
+  desktop day would come? What an idiot I was.</p>
+
+<p><strong>Lack of printer drivers</strong> &ndash; that&rsquo;s a funny one. Often printers
+  listed as having Linux drivers are mostly unusable. The printer that
+  own is listed as having a &ldquo;perfect&rdquo; Linux compatability in
+  openprinting.org. If this is perfect I cannot begin to imagine what
+  is &ldquo;poor&rdquo; compatibility.</p>
+
+<p><strong>Crappiest suspend/resume support</strong> &ndash; laptop goes to sleep, but
+  doesn&rsquo;t wake up. Wireless dies after wake up. Suspend/resume used to
+  be something mythical to most Linux users. Recently the situation
+  has improved a bit it&rsquo;s still light years away from what you get
+  with Windows/OSX.</p>
+
+<p><strong>Poor power management</strong> &ndash; my older laptop&rsquo;s battery lasted several
+  weeks while sleeping when I was using Windows on it. When I replaced
+  it with Linux the battery was being drained in 2 days while the
+  laptop was sleeping (and I had to wait about half a year for a set
+  of wireless and video drivers that actually made sleep a
+  possibility)&hellip; I&rsquo;ve noticed that as far as dynamic power
+  management is concerned Windows generally managed to squeeze more time
+  out of the battery, while at the same time my rig generated less
+  heat (dynamic fan control is another weakness of Linux).</p>
+
+<p>I&rsquo;ll stop writing about the driver problems now, because they affect
+so many thing. Even my fairly advanced mouse is missing some functions
+in Linux. I&rsquo;m not even mentioning the things like support for &ldquo;Turbo
+Memory&rdquo;, Optimus, etc.</p>
+
+<p><strong>Lack of decent office software</strong> &ndash; call it OpenOffice.org and don&rsquo;t
+  insult it anymore&hellip;</p>
+
+<p><strong>Problematic sound architecture</strong> &ndash; let me be completely blunt &ndash;
+  everything sound related in Linux sucks &ndash; OSS, ALSA, PulseAudio (the
+  sucker king). From a technical standpoint OSS never actually sucked,
+  but since it wasn&rsquo;t picked up by the community the project fell
+  into oblivion. How many of you have enjoy Dolby Digital or DTS sound
+  from their Linux boxes?</p>
+
+<p><strong>Poor flash support</strong> &ndash; should I explain? Have you tried it on a 64
+  bit distro? Do I hate it? Sure. Do I hope HTML5 will kill it?
+  Sure. Do I need it? Sure. You think your video drivers work OK under
+  Linux? Have you tried playing a HD video clip in youtube with flash
+  player at full-screen? Very few Linux video drivers handle this task properly&hellip;</p>
+
+<p><strong>Poor skype support</strong> &ndash; Same story as with flash. I keep dreaming of
+  a world with more intelligent users where GTalk has a conference
+  mode and everybody&rsquo;s using it instead of skype.</p>
+
+<p><strong>Poor quality of desktop apps</strong> &ndash; Known issues in core applications
+  such as Nautilus don&rsquo;t get fixed for years. Such things naturally
+  piss me off. Trying to contribute to the solution of a problem is
+  often met with apathy by maintainers. Btw Linux users think that
+  Mozilla Firefox is very slow and memory hungry &ndash; but it turns out
+  that the Windows version is generally performing a lot better (not
+  to mention &ndash; supporting hardware video acceleration).</p>
+
+<p>I can keep listing things here forever. When I come to think about it
+for the entire time I&rsquo;ve been using Linux only one major problem got
+resolved &ndash; USB devices support. I still remember the days when I had
+to write auto mounting policies myself or to use <em>mount</em> manually all
+the time. I won&rsquo;t even mention the quality of most proprietary apps on
+Linux, the huge amount of missing essential application and the
+unavailability of mainstream video games.</p>
+
+<p>So this is it! Hasta la vista, Linux! You still remain the best server
+operating system, though. You&rsquo;ll always have a special place in my
+heart and a VMWare instance on my Windows boxes.</p>
+
+<h2>What I&rsquo;ll miss</h2>
+
+<ul>
+<li>shell</li>
+<li>transparency, control</li>
+<li>package management</li>
+<li>lack of viruses, malware</li>
+</ul>
+
+
+<p>Although most common desktop users probably don&rsquo;t use the shell very
+often, I practically live(d) in it. OS X has zsh and bash, so it&rsquo;s a
+long term option for me, but due to the need for new hardware I&rsquo;ll be
+using Windows 7 on the desktop front for now. Hopefully the rumors
+that PowerShell is great will turned out to be true.</p>
+
+<p>The ability to tweak every aspect of the configuration, to build
+custom drivers and kernels will be missed as well, but I don&rsquo;t tend to
+do this as often as I used to. And when something bad happens &ndash; most
+of the time you could do something about it. As a friend of mine used
+to say &ldquo;The single biggest difference between Windows and Linux is
+that in Windows the restart will solve just about any problem, but in
+Linux it&rsquo;s unlikely so solve any problem&rdquo; (this statement was much
+more correct 8 years ago &ndash; modern Linux desktop distro have developed
+some of Windows&rsquo;s old habits).</p>
+
+<p>Probably the biggest loss for me would be the wonderful distro package
+management systems like YUM and APT.</p>
+
+<p>During the time I used Linux I totally forgot that things like viruses
+and malware existed. Now, after I installed Win 7 I was immediately
+encouraged to install an anti-virus program.</p>
+
+<h2>Based on your feedback</h2>
+
+<p>It seems a lot of people misunderstood the purpose of my rant so I&rsquo;d
+like to clarify something for them:</p>
+
+<ul>
+<li><p>I <strong>fuckin'</strong> love Linux. Linux is brilliant. Linux is fun. Linux
+rekindled my interest in computing at a time when I was about to
+give up on computing.</p></li>
+<li><p>I&rsquo;m not spreading FUD, I&rsquo;m telling you a real story, a story that I
+know many have experienced and many will experience.</p></li>
+<li><p>I&rsquo;m trying to raise the awareness of Linux desktop users. They&rsquo;ve
+been told that they have to be thankful for any kind of hardware
+support, no matter how basic, fucked up and all around shitty it
+might be. They&rsquo;ve been told that they have to be grateful for every
+crappy app in existence. The fact that something is free (as in
+beer), doesn&rsquo;t make it wrong for people to criticize it and complain
+about it. Ranting is what drives evolution. Same thing happens in
+life every day &ndash; the media and the people around us proclaim
+mediocrecy, they tell us that mediocrecy is OK, that we should be
+satisfied by what we have and that aspiring for greatness is a
+foolhardy mission. The Linux desktop community should put real
+pressure on hardware and software vendors to be taken seriously,
+instead of just waiting on their mercy. The Linux desktop community
+deserves a great Linux desktop.</p></li>
+<li><p>Fanatics are dangerous. They cannot see past their beliefs, they
+cannot be reasoned with. The Linux community is full of them &ndash;
+zealots that never see any problems with Linux and feel that the
+entire world is on a quest to discredit their (mine) beloved
+OS. They won&rsquo;t ever get this post, but hopefully YOU will.</p></li>
+<li><p>Hardware support is a big part of the Linux desktop problem, but
+it&rsquo;s not the only problem. Half-baked DE like KDE 4.0, Ubuntu&rsquo;s
+Unity and GNOME 3.0 are just as dangerous.</p></li>
+<li><p>Having some hardware support and having great hardware support are
+two different things.</p></li>
+<li><p>I do know how to research hardware compatibility ( :&ndash;) surprising,
+eh?), but I do like
+cutting edge technologies as well (problematic&hellip;). Does it seems
+normal to you to avoid commodity hardware just on the ground that
+it&rsquo;s &ldquo;too new&rdquo; to be properly employed by your OS of choice?</p></li>
+<li><p>I&rsquo;m not claiming that Windows 7 is the greatest thing after hot
+water, I don&rsquo;t even say that I like it. I do, however, say that it
+offers superior desktop experience (when it works, that is).</p></li>
+</ul>
+
+
+<p>I&rsquo;ll include here a great comment from Jan de Vos:</p>
+
+<p>_While I&rsquo;m still using Linux (usually Ubuntu, sometimes Fedora)
+everywhere (at work and at home), I do agree with a lot of points in
+this article; there are a lot of things that could be improved, and
+there are a lot of frustrations that Windows users don&rsquo;t have. Saying so
+is not FUD, it is a simple truth. If someone who clearly likes a lot of
+things in Linux decides to switch to something else, that really is a
+bad thing, and an indication that there are real problems.</p>
+
+<p>In my opinion, ignoring these problems, or even denying they exist, may
+be a lot more harmful than talking about them._</p>
+
+<p>I couldn&rsquo;t agree more!</p>
+
+<h2>Epilogue</h2>
+
+<p>I remember the first time I used Linux. A friend of mine installed
+Fedora 2 on my personal computer and there was a glitch in GRUB that
+prevented me from booting to Windows. My ethernet card wasn&rsquo;t
+supported so I was left without Internet. I asked my friend can I at
+least watch a few movies, while he brought me a patched version of the
+buggy GRUB. He told me &ndash; you need to compile MPlayer from sources with
+several optimization, you need windows video codecs, etc. At the time this
+excited me a lot &ndash; adventure, excitement. I learned A LOT by using
+Linux non-stop for so long time. But at some point you stop learning
+exciting things and are just stuck with tedious things you have to
+keep doing over and over again. And as I already mentioned &ndash; I don&rsquo;t
+want my time wasted, I want to get the job done with minimum hassle.</p>
+
+<p>I&rsquo;ve been hearing each and every year that &ldquo;year 20xx&rdquo; will be the
+year of the Linux desktop. It never came and it&rsquo;s my firm believe that
+it never will (unless something radically changes in the mindset of
+Linux desktop users). Constantly plagued by hardware and software woes Linux
+is doomed to fail. Without major support from hardware and software
+vendors every OS is ultimately doomed to fail.</p>
+
+<p>It&rsquo;s no secret that a lot of money are made by Linux server businesses
+and this naturally drives a lot of the development in the area of
+improving server performance. Nobody put it better than
+<a href="http://apcmag.com/why_i_quit_kernel_developer_con_kolivas.htm">Con Colivas</a>
+&ndash; &ldquo;<em>Linux is burdened with enterprise crap that makes it run poorly on
+  desktop PCs.</em>&rdquo;. Linux will remain the king of the
+  server world, but on the desktop front it will always be an OS for
+  enthusiast and hackers only.</p>
+
+<p>Goodbye, my dear old friend. You&rsquo;ll be missed&hellip; but not that much.</p>
+
+<p>P.S. Btw I&rsquo;m as pro a Linux user as they get &ndash; a professional sys
+admin, a former kernel developer so don&rsquo;t bother me with moronic
+comments from the type &ldquo;you&rsquo;re not doing something right/you should
+try another distro&rdquo;.</p>
+]]></content>
+  </entry>
+  
+</feed>

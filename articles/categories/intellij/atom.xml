@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: IntelliJ | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/intellij/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Emulate the behaviour of Return+Shift(insert new line) from popular IDEs(IDEA, Eclipse) in Emacs]]></title>
+    <link href="http://batsov.com/articles/2009/05/19/emacs-shift-return/"/>
+    <updated>2009-05-19T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2009/05/19/emacs-shift-return</id>
+    <content type="html"><![CDATA[<p>I’m very fond of the ability to insert a new line below the line I’m
+currently at, and to position the cursor at the beginning of that new
+line, offered by most IDEs, such as IntelliJ IDEA, Eclipse. It’s
+usually bound to Return(Enter)+Shift. Emacs(as far as I know) doesn’t
+have a function that does this thing by default, but one can easily
+create one, combining several well known functions in the process and
+bind that new function to the desired key combination. Here’s the
+snippet one might have in his .emacs(or other) “configuration” file:</p>
+
+<p>``` cl
+;; insert an empty line after the current line and position the cursor on its beginning
+(defun insert-empty-line ()
+ (interactive)
+ (move-end-of-line nil)
+ (open-line 1)
+ (next-line 1))</p>
+
+<p>(global-set-key [(shift return)] &lsquo;insert-empty-line)
+```</p>
+]]></content>
+  </entry>
+  
+</feed>

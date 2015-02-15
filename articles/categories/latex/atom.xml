@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: LaTeX | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/latex/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[My professional CV in LaTeX]]></title>
+    <link href="http://batsov.com/articles/2010/09/07/cv-in-latex/"/>
+    <updated>2010-09-07T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2010/09/07/cv-in-latex</id>
+    <content type="html"><![CDATA[<p>After a long period of planning I finally migrated my professional CV
+from Word to LaTeX last weekend. Since I live in the European Union I
+used the <a href="http://www.ctan.org/tex-archive/macros/latex/contrib/europecv/">europecv</a> LaTeX class.</p>
+
+<p>I’ve uploaded the LaTeX code into <a href="http://github.com/bbatsov/cv">GitHub</a> feel free to borrow it for
+your CVs if you like it. You’ll have to compile the <strong>master.tex</strong> file
+with <strong>pdflatex</strong> to get a nicely formatted pdf version of the CV.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Blogging Like a Hacker: Evolution - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude I&rsquo;ve started my personal blog some three years ago. Back then in was
+hosted on wordpress.com and was called
+devcraft.wordpress.com. I &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2011/11/11/blogging-like-a-hacker-evolution">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Blogging Like a Hacker: Evolution</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-11T08:52:00+02:00" pubdate data-updated="true">Nov 11<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Prelude</h2>
+
+<p>I&rsquo;ve started my personal blog some three years ago. Back then in was
+hosted on <a href="http://wordpress.com">wordpress.com</a> and was called
+devcraft.wordpress.com. I had a lot of interesting (at least to me)
+topics to write about on my mind, but I was immediately faced with a
+serious problem &ndash; I felt very uncomfortable writing posts in a small
+text area, using the primitive editing capabilities of a web
+browser. Ordinary decent hackers love and value two tools above all
+else &ndash; their text editor and their shell. And we love solving problems
+automatically with clever programs and scripts, instead of manually.</p>
+
+<p>I knew the only way to ever start writing, like I intended, to was to
+actively involve them in the process. So here my story begins&hellip;</p>
+
+<!--more-->
+
+
+<h2>In Emacs We Trust</h2>
+
+<p>My editor happens to be Emacs and I&rsquo;ve started to look for ways to
+blog without leaving its beloved frame. They were several options:</p>
+
+<ul>
+<li><p>Use some browser extension that fires up Emacs when editing text
+areas. For instance in Google Chrome there is the extension
+<a href="https://chrome.google.com/webstore/detail/ljobjlafonikaiipfkggjbhkghgicgoh">Edit with Emacs</a>.</p></li>
+<li><p>Use <a href="http://orgmode.org/worg/org-blog-wiki.html">org-mode</a> to write my posts.</p></li>
+<li><p><a href="http://mwolson.org/projects/EmacsMuse.html">Emacs Muse</a> was another
+option. Emacs Muse is an authoring and publishing environment for
+Emacs. It simplifies the process of writings documents and
+publishing them to various output formats. Muse uses a very simple
+Wiki-like format as input. Muse consists of two main parts: an
+enhanced text-mode for authoring documents and navigating within
+Muse projects, and a set of publishing styles for generating
+different kinds of output.</p></li>
+<li><p>Use some Emacs mode, like
+<a href="http://www.emacswiki.org/emacs/WebloggerMode">weblogger-mode</a>, that
+allows to write and publish WordPress (amongst others) entries directly from Emacs.</p></li>
+</ul>
+
+
+<p>All these options had their merits, but they also had their
+shortcomings. For one &ndash; there is only one writer&rsquo;s markup that I
+really enjoy and this is <a href="http://daringfireball.net/projects/markdown/">Markdown</a>. This probably has something to do
+with the fact that I&rsquo;ve written quite a lot of stuff in GitHub and
+Assembla using it. I also wanted the ability to easily include syntax
+highlighted code snippets (since I generally write about programming)
+and handy way to manage blog updates &ndash; preferably via git. I push
+something to my repo and voila.</p>
+
+<p>At the time I couldn&rsquo;t make up my mind and my blog was left with a few
+quite short posts, due to my inability to withstand being in wordpress
+for any prolonged period of time.</p>
+
+<p>Then something extraordinary happened in the beginning of this
+year. I&rsquo;ve stumbled upon the post
+<a href="http://tom.preston-werner.com/2008/11/17/blogging-like-a-hacker.html">&ldquo;Blogging Like a Hacker&rdquo;</a>
+by GitHub&rsquo;s co-founder Tom Preston-Werner (aka mojombo). It seemed
+that other people had exactly the same problem as me. It also seemed
+they were more determined to do something about it.</p>
+
+<h2>Along Comes Jekyll</h2>
+
+<p>Long story short, Tom had written a blog aware static site generator,
+called <a href="https://github.com/mojombo/jekyll">Jekyll</a> in Ruby. Jekyll
+posts are simply Markdown or Textile files and the
+<a href="http://liquidmarkup.org/">Liquid templating language</a> is used to
+enhance the posts in their post-processing phase. Code highlighting?
+Jekyll (and pygments) has got your back. Nice, ah? There is
+support for various layouts and here&rsquo;s be best part &ndash; you could put
+your blog in a GitHub repo and deploy automatically to GitHub Pages.</p>
+
+<p>I instantly fell in love with Jekyll and as you can see from my
+archive I&rsquo;ve finally wrote some nice (arguably) &amp; long articles &ndash; like I&rsquo;ve
+originally intended.</p>
+
+<p>While I was mostly happy with Jekyll there were a few things that
+bothered me with it:</p>
+
+<ul>
+<li><p>You have to design your layouts yourself. While this is generally
+fine if you have a sense for design, when you&rsquo;re someone like me
+that could yield some pretty ugly designs. I was so out of ideas
+that I designed my Jekyll layout to look like my Emacs (down to the
+Zenburn color theme) for which I got a lot of flak.</p></li>
+<li><p>Maruku is a really crappy Markdown processor. I wished something
+like RedCarpet was the default and that fenced code blocks (ala
+GitHub) were the default option for code highlighting. Not that you
+can&rsquo;t replace Maruku with Kramdown or RedCarpet, but still. You&rsquo;d
+also have to patch Jekyll to run albino on the markdown files to get
+the highlighting to work with the fenced blocks.</p></li>
+<li><p>You have to do some really boring stuff like Disqus integration,
+twitter integration, etc manually (or at least you have to manually
+install some plugins).</p></li>
+<li><p>You have to unroll your own deployment scripts, since Jekyll doesn&rsquo;t
+bundle any. Trivial task, but annoying non-the-less.</p></li>
+</ul>
+
+
+<p>So there you have it &ndash; Jekyll is very nice, but it&rsquo;s also very
+barebone. My single biggest gripe with Jekyll, however, is that being
+engineered by a GitHub guy it doesn&rsquo;t support out of the box the
+GitHub flavored Markdown. At some point as I was seriously
+contemplating starting a new static site generator, similar to Jekyll,
+that supported only RedCarpet as the Markdown processor and by
+extension &ndash; the GitHub flavoured Markdown. It would have some nice
+default theme and very reasonable default settings for use in a
+blog. Google Analytics, Twitter, Disqus would be supported out of the
+box. But I never got to writing it since just before I started I was
+introduced to Octopress&hellip;</p>
+
+<h2>Octopress is Jekyll with Batteries Included</h2>
+
+<p>Emacs users are typically portrayed like this:</p>
+
+<p><img src="/images/articles/emacs_user.jpg"></p>
+
+<p>I was naturally amused by the Octopress name.</p>
+
+<p>First and foremost Octopress is Jekyll with batteries included. Some
+of the nicer things include:</p>
+
+<ul>
+<li>A semantic HTML5 template</li>
+<li>A Mobile friendly responsive (320 and up) layout (rotate, or resize your browser and see)</li>
+<li>Built in 3rd party support for Twitter, Google Plus One, Disqus Comments, Pinboard, Delicious, and Google Analytics</li>
+<li>An easy deployment strategy using Github pages or Rsync</li>
+<li>Built in support for POW and Rack servers</li>
+<li>Easy theming with Compass and Sass</li>
+<li>A Beautiful Solarized syntax highlighting (though not as beautiful
+as the Zenburn-one I&rsquo;m about to release soon)</li>
+</ul>
+
+
+<p>And did I mention that there are a lot of nice plugins included?</p>
+
+<p>The default theme is quite nice, but you&rsquo;d probably want to tweak it a
+bit (I still haven&rsquo;t &ndash; but my sense of design is nonexistent). It&rsquo;s
+very easy to modify the theme.</p>
+
+<p>I could go on and write a lot about Octopress, but there is no need to
+do so. Go visit the official <a href="http://octopress.org">web site</a> &ndash; it has fantastic
+documentation.</p>
+
+<h2>Moving from Jekyll to Octopress</h2>
+
+<p>Mostly trivial. I&rsquo;ve just copied my old Markdown posts, adjusted the
+headings and the code blocks. And in the end all I had to do was:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rake generate
+</span><span class='line'><span class="nv">$ </span>rake deploy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Epilogue</h2>
+
+<p>I love Octopress! I used to be a sad blogger and now I&rsquo;m a happy
+blogger. If you&rsquo;re feeling like I felt &ndash; you should definitely give it
+a shot. I&rsquo;ll probably do a few follow up articles with some tips &amp;
+tricks I&rsquo;ve picked along the way with Octopress.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-11T08:52:00+02:00" pubdate data-updated="true">Nov 11<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/jekyll/'>Jekyll</a>, <a class='category' href='/articles/categories/octopress/'>Octopress</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2011/11/11/blogging-like-a-hacker-evolution/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2011/11/11/blogging-like-a-hacker-evolution/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2011/10/30/deploying-rails31-apps-on-celadon-cedar/" title="Previous Post: Deploying Rails 3.1 applications on Heroku's Celadon Cedar stack">&laquo; Deploying Rails 3.1 applications on Heroku's Celadon Cedar stack</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2011/11/12/emacs-tip-number-2-open-file-in-external-program/" title="Next Post: Emacs Tip #2: Open File in External Program">Emacs Tip #2: Open File in External Program &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/10/the-road-to-cider-0-dot-8/">The Road to CIDER 0.8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/09/05/clojure-mode-3-dot-0/">Clojure-mode 3.0</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2011/11/11/blogging-like-a-hacker-evolution/';
+        var disqus_url = 'http://batsov.com/articles/2011/11/11/blogging-like-a-hacker-evolution/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

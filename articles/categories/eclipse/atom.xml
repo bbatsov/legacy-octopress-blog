@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Eclipse | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/eclipse/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Java type indicators in Eclipse]]></title>
+    <link href="http://batsov.com/articles/2009/07/13/java-type-indicators-eclipse/"/>
+    <updated>2009-07-13T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2009/07/13/java-type-indicators-eclipse</id>
+    <content type="html"><![CDATA[<p>One of the things that I don’t like about the default Eclipse settings
+for Java development is that in the package explorer all Java files
+appear in the same manner(with the same icon). There is no visual
+distinction between abstract and concrete classes, enums, interfaces&hellip;
+Luckily for us Eclipse supports such a distinction and all you have to
+do is enable it.</p>
+
+<p>Go to <strong>Window &ndash;> Preferences &ndash;> General &ndash;> Appearance &ndash;> Label
+Decorations</strong> and mark the check box saying <strong>Java Type
+Indicator</strong>. I&rsquo;ve tested this on Eclipse 3.5 only, but I guess it is
+included in previous releases as well.</p>
+
+<p>Eclipse, though not as feature rich as IntelliJ IDEA, offers a lot of features that one has to find for himself.</p>
+]]></content>
+  </entry>
+  
+</feed>

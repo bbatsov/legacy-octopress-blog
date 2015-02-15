@@ -1,0 +1,589 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Deploying Rails 3.1 applications on Heroku's Celadon Cedar stack - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude Heroku is an amazing cloud hosting solution. It&rsquo;s extremely well
+documented, very easy to start with, very stable and provides you with &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2011/10/30/deploying-rails31-apps-on-celadon-cedar">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Deploying Rails 3.1 Applications on Heroku's Celadon Cedar Stack</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-30T00:00:00+03:00" pubdate data-updated="true">Oct 30<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Prelude</h2>
+
+<p><a href="http://heroku.com">Heroku</a> is an amazing cloud hosting solution. It&rsquo;s extremely well
+documented, very easy to start with, very stable and provides you with
+the option to use free hosting for some small applications.</p>
+
+<p>While Heroku is generally known as a Ruby on Rails hosting company,
+since their acquisition by SalesForce last year, they&rsquo;ve expanded
+their deployment options a lot. Currently Ruby, Java, Scala, Clojure,
+Python and Node.js are all officially supported (on the Cedar Celadon
+stack) and more will probably come very soon.</p>
+
+<p>All of our company&rsquo;s applications are using
+<a href="http://guides.rubyonrails.org/">Ruby on Rails 3.1.x</a> and are
+targeting the <a href="http://ruby-lang.org">MRI 1.9.2</a>. Those two facts are
+the reason that we&rsquo;re using Heroku&rsquo;s
+<a href="http://devcenter.heroku.com/articles/cedar">Celadon Cedar</a> deployment
+stack. Celadon Cedar is currently in beta, but it offer a lot of
+benefit over the old (stable) Bamboo stack (which also support Rails
+3.1 apps and Ruby 1.9.2). For instance &ndash; Celadon is aware of the Rails
+3.1 asset pipeline and can compile the assets automatically when you
+deploy your apps to Heroku. With Bamboo you have to precompile the
+resources, which is a very tedious task.</p>
+
+<p>While our experience with Heroku has been very positive in
+general, we&rsquo;ve hit some bumps along the road, so I&rsquo;ve decided to share
+some of the problems and their solutions with everyone.</p>
+
+<!--more-->
+
+
+<h2>Background</h2>
+
+<p>There are some things to keep in mind before deploying to Heroku:</p>
+
+<ul>
+<li><p>You can&rsquo;t upload files to Heroku. This means that if you&rsquo;re using a
+gem such as <a href="https://github.com/jnicklas/carrierwave">CarrierWave</a> (or
+<a href="https://github.com/thoughtbot/paperclip">PaperClip</a>) for file uploads
+it should be configured to use some cloud storage (e.g. Amazon
+S3). There is only one writeable folder on Heroku and this is the
+<strong>tmp</strong> folder that you should configure as a tmp folder for your
+uploads as well.</p></li>
+<li><p>Your app should run on Ruby 1.9.2 (the Celadon
+Cedar stack, doesn&rsquo;t support Ruby 1.8.x).</p></li>
+<li><p>Your <code>rake assets:precompile</code> task should (ideally) not invoke any database related
+operations.</p></li>
+<li><p>You should use PostgreSQL as your local development database to
+avoid potential differences between the production and the development
+database.</p></li>
+<li><p>You should add the <code>heroku</code> gem to your <code>Gemfile</code>.</p></li>
+<li><p>You should install the <code>taps</code> gem if you&rsquo;d like to use <code>heroku
+db:pull</code> or <code>heroku db:push</code>.</p></li>
+</ul>
+
+
+<h2>Preparations</h2>
+
+<h4>Configure CarrierWave to use cloud storage</h4>
+
+<p>Here&rsquo;s a sample <strong>carrierwave.rb</strong>, that you can put in <strong>config/initializers/</strong> folder:</p>
+
+<figure class='code'><figcaption><span>config/initializers/carrierwave.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">if</span> <span class="no">Rails</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">test?</span> <span class="c1"># Store the files locally for test environment</span>
+</span><span class='line'>  <span class="no">CarrierWave</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">storage</span> <span class="o">=</span> <span class="ss">:file</span>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">enable_processing</span> <span class="o">=</span> <span class="kp">false</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="no">Rails</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">development?</span> <span class="ow">or</span> <span class="no">Rails</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">production?</span> <span class="c1"># Using Amazon S3 for Development and Production</span>
+</span><span class='line'>  <span class="no">CarrierWave</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="no">Rails</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;tmp&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">cache_dir</span> <span class="o">=</span> <span class="s1">&#39;uploads&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">storage</span> <span class="o">=</span> <span class="ss">:fog</span>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">fog_credentials</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>        <span class="ss">:provider</span> <span class="o">=&gt;</span> <span class="s1">&#39;AWS&#39;</span><span class="p">,</span> <span class="c1"># required</span>
+</span><span class='line'>        <span class="ss">:aws_access_key_id</span> <span class="o">=&gt;</span> <span class="s1">&#39;key_id&#39;</span><span class="p">,</span> <span class="c1"># required</span>
+</span><span class='line'>        <span class="ss">:aws_secret_access_key</span> <span class="o">=&gt;</span> <span class="s1">&#39;access_key&#39;</span><span class="p">,</span> <span class="c1"># required</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">fog_directory</span> <span class="o">=</span> <span class="s1">&#39;empoweronrails&#39;</span> <span class="c1"># required</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Disable db access during rake assets:precompile</h4>
+
+<p>Some gems (like Rails Admin) access the database during the
+initialization of the app. The app initialization is ran by default
+when you invoke:</p>
+
+<p><code>rake assets:precompile</code></p>
+
+<p>This is not a problem on your development machine, but it&rsquo;s
+problematic on Heroku, since the regular database.yml is discarded
+there. Add this:</p>
+
+<p><code>config.assets.initialize_on_precompile = false</code></p>
+
+<p>somewhere near the end of your <strong>application.rb</strong> file and it will
+suppress the initialization on precompile.</p>
+
+<h4>Enable assets compilation</h4>
+
+<p>It&rsquo;s absolutely required to have this line:</p>
+
+<p><code>config.assets.compile = true</code></p>
+
+<p>in your <strong>production.rb</strong> file if you want your assets to be compiled
+automatically by Heroku (which I highly recommend).</p>
+
+<h4>Use thin or unicorn as the application server</h4>
+
+<p>By default, your app&rsquo;s web process runs <code>rails server</code>, which uses
+Webrick. This is fine for testing, but for production apps you`ll want
+to switch to a more robust webserver. I personally use Thin
+(recommended by Heroku). Add this to your Gemfile:</p>
+
+<p><code>gem 'thin'</code></p>
+
+<p>and this to your Procfile (create it if it doesn&rsquo;t already exist):</p>
+
+<p><code>web: bundle exec rails server thin -p $PORT</code></p>
+
+<p>The creation of the Procfile is very important! You can use the
+<a href="https://github.com/ddollar/foreman">foreman</a> gem to test the
+correctness of the Procfile locally.</p>
+
+<p>Alternatively you can use unicorn. While I haven&rsquo;t used Cedar with
+Heroku yet, I&rsquo;ve read some nice articles, like this
+<a href="http://michaelvanrooijen.com/articles/2011/06/01-more-concurrency-on-a-single-heroku-dyno-with-the-new-celadon-cedar-stack/">one</a>,
+according to which one can gain significant performance boost with
+unicorn.</p>
+
+<h4>Optimize your slug&rsquo;s size</h4>
+
+<p>Your slug size is displayed at the end of a successful compile. You
+can roughly estimate slug size locally by doing a fresh checkout of
+your app, deleting the <code>.git</code> directory, and running <code>du -hsc</code>.</p>
+
+<p>Smaller slugs can be transferred across the dyno grid more quickly,
+allowing for a faster spin-up speed on your dynos. Generally speaking,
+any slug under 15MB is small and nimble; 30MB is average; and 40MB or
+above is weighty. If you find your app getting into the 40MB+ range,
+you may want to look into some techniques (such as removing unneeded
+dependencies or excluding files via <code>.slugignore</code>) to reduce the size.</p>
+
+<p>If your repository contains files not necessary to run your app, you
+may wish to add these to a <code>.slugignore</code> file in the root of your
+repository.</p>
+
+<h2>Deployment</h2>
+
+<p>First you should create a Heroku application on the Cedar Celadon stack.</p>
+
+<p><code>heroku create --stack cedar</code></p>
+
+<p>This step will automatically add a git remote called <strong>heroku</strong> to
+your git repo&rsquo;s config. Afterwards the deployment is as simple as
+pushing a branch (e.g. <strong>master</strong>) to this remote:</p>
+
+<p><code>git push heroku master</code></p>
+
+<p>Keep in mind that one Heroku app corresponds to exactly one git
+branch. We keep a <strong>production</strong> branch for production deployments and
+a <strong>master</strong> branch for development deployments.</p>
+
+<p>The last step is to initialize your database. You have two options &ndash;
+you can either load the db schema or push an existing database:</p>
+
+<p><code>heroku run rake db:schema:load</code></p>
+
+<p>or</p>
+
+<p><code>heroku db:push</code></p>
+
+<p><code>db:push</code> takes as an optional parameter the URL of the db to push to
+heroku in the following format
+<code>db://username:password@host/dbname</code>. For example the url for a local
+SomeApp db is probably
+<code>postgres://someapp:someapp@localhost/someapp</code>. If you
+don&rsquo;t supply the URL it will be automatically conjured by inspecting
+the <strong>database.yml</strong> file of the project you were in, while issuing the
+command.</p>
+
+<h2>Troubleshooting</h2>
+
+<p>If you&rsquo;re lucky your deployment will go without a hitch and you
+won&rsquo;t have to ever read this section of the manual. Most people won&rsquo;t
+be so lucky. :&ndash;)</p>
+
+<h4>Errors during deployment</h4>
+
+<p>If you get an error during the deployment process the cause of the
+problem will be in front of your eyes. Never-the-less here are some of
+the most common problems:</p>
+
+<ul>
+<li>missing Gemfile.lock</li>
+<li>Gemfile.lock that doesn&rsquo;t match the project&rsquo;s Gemfile (this happens if you have OS specific gems in your Gemfile)</li>
+<li>db access on <code>assets:precompile</code></li>
+<li>you forgot the run all specs and cucumber scenarios before
+deployment ;&ndash;)</li>
+</ul>
+
+
+<h4>Other errors</h4>
+
+<p>Obviously you need to take a look at the stack trace to gain some
+insight about the nature of the problem. You can do this very easy:</p>
+
+<p><code>heroku logs</code></p>
+
+<p>Some of the most common errors you&rsquo;ll encounter:</p>
+
+<ul>
+<li>you forgot to run some migration(s)</li>
+<li>you forgot to turn on asset compilation</li>
+<li>you forgot to run all specs and cucumber scenarios before the deployment</li>
+</ul>
+
+
+<h2>Misc</h2>
+
+<h4>Dealing with the database on Heroku</h4>
+
+<p>You can easily apply migrations to the production database. Just run:</p>
+
+<p><code>heroku run rake db:migrate</code></p>
+
+<p>If you want to retrieve the production database locally use the following command:</p>
+
+<p><code>heroku db:pull postgres://username:password@localhost/dbname</code></p>
+
+<p>If you want to push your local db to production run the following command:</p>
+
+<p><code>heroku db:push</code></p>
+
+<p>Be very careful about the last command! <strong>It will wipe out and replace the current production database!</strong></p>
+
+<h4>Running a console</h4>
+
+<p>Running the Rails console on Heroku is astonishingly easy. Just run:</p>
+
+<p><code>heroku run rails console</code></p>
+
+<h2>Epilogue</h2>
+
+<p>Heroku and Rails are moving targets, which causes a bit of a headache
+from time to time. Hopefully this short article will save some of you
+some of that headache.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-30T00:00:00+03:00" pubdate data-updated="true">Oct 30<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/heroku/'>Heroku</a>, <a class='category' href='/articles/categories/ruby/'>Ruby</a>, <a class='category' href='/articles/categories/ruby-on-rails/'>Ruby on Rails</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2011/10/30/deploying-rails31-apps-on-celadon-cedar/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2011/10/30/deploying-rails31-apps-on-celadon-cedar/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2011/10/09/getting-started-with-emacs-24/" title="Previous Post: Getting started with Emacs 24">&laquo; Getting started with Emacs 24</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2011/11/11/blogging-like-a-hacker-evolution/" title="Next Post: Blogging Like a Hacker: Evolution">Blogging Like a Hacker: Evolution &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/10/the-road-to-cider-0-dot-8/">The Road to CIDER 0.8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/09/05/clojure-mode-3-dot-0/">Clojure-mode 3.0</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2011/10/30/deploying-rails31-apps-on-celadon-cedar/';
+        var disqus_url = 'http://batsov.com/articles/2011/10/30/deploying-rails31-apps-on-celadon-cedar/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

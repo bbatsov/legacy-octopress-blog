@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: RubyMine | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/rubymine/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[RuboCop plugin for RubyMine]]></title>
+    <link href="http://batsov.com/articles/2014/11/12/rubocop-plugin-for-rubymine/"/>
+    <updated>2014-11-12T14:16:00+02:00</updated>
+    <id>http://batsov.com/articles/2014/11/12/rubocop-plugin-for-rubymine</id>
+    <content type="html"><![CDATA[<p>Good news, RubyMine users!</p>
+
+<p>Yesterday <a href="https://github.com/sirlantis">Marcel Jackwerth</a> released the initial version of a <a href="https://github.com/sirlantis/rubocop-for-rubymine">RuboCop plugin for
+RubyMine/IntelliJ IDEA</a>. Here&rsquo;s the plugin in action:</p>
+
+<p><img class="<a" src="href="https://cloud.githubusercontent.com/assets/56807/5009481/9bbee3b4-6a67-11e4-8bf9-2a32c3bc3d5e.png">https://cloud.githubusercontent.com/assets/56807/5009481/9bbee3b4-6a67-11e4-8bf9-2a32c3bc3d5e.png</a>"></p>
+]]></content>
+  </entry>
+  
+</feed>

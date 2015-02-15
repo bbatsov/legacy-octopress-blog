@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Hardware | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/hardware/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Running Xerox Phaser 3117 under Fedora 15]]></title>
+    <link href="http://batsov.com/articles/2011/06/04/phaser-3117-fedora-15/"/>
+    <updated>2011-06-04T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/06/04/phaser-3117-fedora-15</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve been a GNU/Linux user for quite some time now and a Fedora user
+for just as long. The first distribution that I ever used was Fedora 2
+and even though I&rsquo;ve used extensively other distros I&rsquo;ve always come
+back to Fedora. Recently Fedora 15 was released and I was
+(naturally) one of the first people to install it.</p>
+
+<p>Everything is great in the new release (as ever), but my Xerox Phaser
+3117 printer is unsupported (also as ever) out of the box, so it&rsquo;s
+time for one of those quick articles on how to get it up and running this
+time. First run the following command as root (or with sudo):</p>
+
+<p>``` bash</p>
+
+<h1>yum install gutenprint-foomatic</h1>
+
+<p>```</p>
+
+<p>Now you can run the &ldquo;Printing&rdquo; application. It will autodetect your
+printer and suggest you to use the driver for Xerox Phaser 3110. Just
+accept this suggestion and you should be good to go. Happy printing!</p>
+
+<p>P.S. You might also want to check out my article on
+<a href="/Linux/Fedora/2011/05/31/fedora-15-tips.html">Fedora 15 post installation setup</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Enabling 3D support for Nouveau in Fedora 13]]></title>
+    <link href="http://batsov.com/articles/2010/05/26/3d-support-nouveau-fedora-13/"/>
+    <updated>2010-05-26T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2010/05/26/3d-support-nouveau-fedora-13</id>
+    <content type="html"><![CDATA[<p>Most of you probably have heard that Fedora 13 will feature
+experimental 3D support for the Nouveau open source driver for Nvidia
+cards. This support, however, is not enabled by default. To enable it
+you need to install the mesa-dri-drivers-experimental package. I,
+personally, do it like this(if you haven’t configured sudo, you’ll
+have to perform this as root):</p>
+
+<p><code>bash
+sudo yum install mesa-dri-drivers-experimental
+</code></p>
+
+<p>Afterwards you can enable Compuz, play chromium-bsu or whatever your heart desires.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using Xerox Phaser 3117 on Fedora]]></title>
+    <link href="http://batsov.com/articles/2009/09/25/xerox-phaser-3117-fedora/"/>
+    <updated>2009-09-25T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2009/09/25/xerox-phaser-3117-fedora</id>
+    <content type="html"><![CDATA[<p>The driver selected by default by Fedora 11 is not appropriate for
+Xerox Phaser 3117 &ndash; it will not print with it. However there is a very
+easy solution to the problem.</p>
+
+<p>Go to <strong>System &ndash;> Administration &ndash;> Printing</strong> (In GNOME at least, in KDE
+it’s probably something similar). Right click the Xerox Phaser 3117
+printer icon there and select &ldquo;Properties&rdquo; from the menu. Then in the
+&ldquo;Make and model&rdquo; section choose change and then select Samsung
+ML-1710.</p>
+
+<p>After you apply the change you&rsquo;ve just made, you can start printing
+with your Phaser.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Das Keyboard]]></title>
+    <link href="http://batsov.com/articles/2008/06/16/das-keyboard/"/>
+    <updated>2008-06-16T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2008/06/16/das-keyboard</id>
+    <content type="html"><![CDATA[<p>Every professional developer knows how important to the development
+process the keyboard is, so it is only natural to be on the look for
+some quality piece of hardware. After a long research in the area of
+good keyboards I decided to upgrade my current rig to the recently
+released <a href="http://www.daskeyboard.com/">Das Keyboard 3</a>.</p>
+
+<p><img class="mechanical_keyboard.jpg <a" src="href="http://www.daskeyboard.com/images/products/mechanical_keyboard.jpg">http://www.daskeyboard.com/images/products/mechanical_keyboard.jpg</a>"></p>
+
+<p>Das Keyboard comes in three flavours &ndash; Professional(mechanical
+keyboard with labelled keys), Ultimate(the original mechanical
+keyboard with blank keys) and Silent(mechanical keyboard with labelled
+keys that doesn&rsquo;t produce the trademarked clicking sound of the
+original Das Keyboard).</p>
+
+<p>I bought the Ultimate model, of course. I&rsquo;ve been a touch typist for
+several years now and I didn&rsquo;t really cared about the labelled
+keys(though I did miss them in games). Two words describe this
+keyboard perfectly &ndash; <strong>Bad Ass</strong>. It&rsquo;s without a doubt the single
+finest piece of keyboard hardware that I&rsquo;ve touched, it&rsquo;s very
+comfortable, very solid and I feel that I&rsquo;ve actually improved my
+typing speed with it. My colleagues don&rsquo;t like the noisy work of the
+keyboard very much, but I have no problems with it. I actually have
+grown quite fond of it.</p>
+
+<p>The keyboard also features a two port USB hub, that I didn&rsquo;t really
+consider when I was buying it, but it turned out quite helpful. I&rsquo;ve
+actually stopped using the USB ports of my computer entirely(except
+for input devices) &ndash; I use the keyboard hub to plug-in flash drives
+and charge devices. When your computer is sitting beneath a desk you
+learn to appreciate USB hubs very quickly.</p>
+
+<p>I have long heard stories about Das Keyboard&rsquo;s quality
+and comfort and I it has totally lived up to its hype. They price is
+admittedly a bit steep(I bought two keyboards for home and for work
+each costing 130$), but this is our hands and productivity we&rsquo;re
+talking about so we shouldn&rsquo;t be cheap. So what are
+waiting for &ndash; research the market yourselves and make your pick, your
+hands deserve a quality keyboard(the Das Keyboard)!</p>
+]]></content>
+  </entry>
+  
+</feed>

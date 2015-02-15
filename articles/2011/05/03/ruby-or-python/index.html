@@ -1,0 +1,898 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Ruby or Python? Well, it depends... - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Disclaimer If you&rsquo;re looking for a flame post &ndash; this is not one of them. I love
+both languages and I&rsquo;ll simply compare some of &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2011/05/03/ruby-or-python">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Ruby or Python? Well, It Depends...</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-03T00:00:00+03:00" pubdate data-updated="true">May 3<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><strong>Disclaimer</strong></p>
+
+<p><em>If you&rsquo;re looking for a flame post &ndash; this is not one of them. I love
+both languages and I&rsquo;ll simply compare some of their features and
+possible uses.</em></p>
+
+<h2>Prelude</h2>
+
+<p>Ruby or Python? This is the Question! Well it might not be the
+Question, but it&rsquo;s a common question for many developers looking to
+break free from the statically typed language they know and learn a
+dynamic language. I personally know them both(though I know a bit more
+Ruby, than Python) and in this article I&rsquo;ll share my personal opinion
+on their strengths and weaknesses. You&rsquo;d probably do good to learn
+them both, but my arguments here may lead you to pick only one of the
+languages depending on you preferences.</p>
+
+<h2>Installation</h2>
+
+<p><strong>Linux/Unix installation</strong></p>
+
+<p>If you&rsquo;re using a Linux distribution or some other Unix derivative
+such as *BSD or Solaris you&rsquo;ll probably be able to install Ruby and
+Python through the operating system&rsquo;s software management system. For
+instance on Debian Linux systems(Ubuntu is a popular Debian
+derivative) you can use apt to install them. Run the following
+commands as root or with sudo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>apt-get install ruby
+</span><span class='line'><span class="nv">$ </span>apt-get install python
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On Red Hat based distros like Fedora, CentOS, etc you can use yum
+instead:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>yum install ruby
+</span><span class='line'><span class="nv">$ </span>yum install python
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should keep in mind the fact that both Ruby and Python have two
+version that are commonly used at the moment. Ruby&rsquo;s current version
+is <em>1.9.2</em> and Python&rsquo;s is <em>3.2</em>. For various reasons(like backward
+compatibility for instance), however, the current versions are not
+widely deployed yet(especially Python 3). In most Linux distributions
+the package ruby will actually be Ruby 1.8.x and the package python
+will be Python 2.7.x. If your distribution is one of those &ndash; look for
+packages named ruby19(or similar) and python3:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>apt-get install ruby19
+</span><span class='line'><span class="nv">$ </span>apt-get install python3
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or on a Red Hat system:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>yum install ruby19
+</span><span class='line'><span class="nv">$ </span>yum install python3
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using the distribution package management system is a simple solution,
+but in the case of Ruby it might not be best one. Most Ruby hackers
+favour a powerful bash script called RVM(Ruby Version Manager) that
+allows you to install several different version(or flavours of Ruby)
+and switch easily between them. Please refer to the official
+<a href="https://rvm.beginrescueend.com/">RVM documentation</a> for installation
+and usage instructions.</p>
+
+<p><strong>Windows installation</strong></p>
+
+<p>Installing Ruby on Windows used to be a pretty hard task, but this is
+no longer the case now thanks to
+<a href="http://rubyinstaller.org/">the RubyInstaller for Windows</a>. This is a
+self-contained Windows-based installer that includes the Ruby
+language, an execution environment, important documentation, and
+more. It has two editions one for the older 1.8.x Ruby branch and one
+for the current 1.9.x.</p>
+
+<p>Python has several installation options for Windows &ndash; the most obvious
+being the
+<a href="http://python.org/ftp/python/3.2/python-3.2.msi">official Python installer for Windows</a>. <a href="http://www.activestate.com/activepython">ActiveState&rsquo;s ActivePython</a>
+is another popular option packed with more features, but you should
+keep in mind that although the Community Edition is free ActivePython
+is not an open-source project. Personally I prefer ActivePython. Other
+prebuilt Python binaries for Windows are also available, but are not
+commonly used.</p>
+
+<p><strong>OS X installation</strong></p>
+
+<p>Ruby is generally preinstalled on OSX, but OSX users can also install
+it via <a href="http://mxcl.github.com/homebrew/">homebrew</a> or RVM(as mentioned in the Linux section).</p>
+
+<p>The is an official <a href="http://python.org/ftp/python/3.2/python-3.2-macosx10.6.dmg">Python package for OSX</a> available. Most users
+will probably prefer using homebrew, however.</p>
+
+<h2>Syntax &amp; code structure</h2>
+
+<p>Ruby makes heavy use of braces and keywords(like do/then/end) to
+delimit blocks of code. Python relies simply on indentation.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">fact</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Same thing in Ruby:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">fact</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="mi">1</span><span class="o">.</span><span class="n">.n</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="ss">:*</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I personally prefer the Python approach since it enforces the code
+semantics based on the code structure alone without imposing special
+syntax.</p>
+
+<p>As a side node you might take under consideration that the Ruby method
+definition doesn&rsquo;t have an explicit return value. The value of the
+last expression in the method&rsquo;s body becomes automatically the
+method&rsquo;s return value. Lisp developers will find this familiar. Java
+and C# developers will probably find it a bit confusing. There is a
+<code>return</code> in Ruby, though, it&rsquo;s just rarely used.</p>
+
+<p>Both languages have support for nested function definitions.</p>
+
+<p>Both languages have support for &ldquo;top-level&rdquo; functions &ndash; that live(or
+seem to live) outside classes and modules(something not possible in
+Java for instance). This makes them good for general purpose
+scripting. While I would still prefer to do my system administration
+with shell and Perl scripts &ndash; Ruby and Python offer a solid
+alternative. Python has a richer system administration library so I&rsquo;d
+prefer it over Ruby for such tasks.</p>
+
+<p>Ruby has a lot of crust(&ldquo;heritage&rdquo;) from Perl &ndash; like a myriad of
+special variables that are now more or less deprecated. It also has
+much syntactic sugar &ndash; for instance do/end is commonly replaced by {}
+for blocks that are only one line long, there is special syntax for
+hashtables, whose keys are symbols, etc.</p>
+
+<p>Since special symbols(non alphanumeric) are allowed in Ruby
+identifiers Ruby uses them to impose some naming conventions to make
+the source code a bit more readable in certain scenarios &ndash; for
+instance predicate methods(those that return true or false) have names
+that end with ?(usually) like even?, odd?, prime?, etc. Methods that
+mutate the object on which they were invoked generally have the !
+suffix &ndash; sort!, map!, etc. I find this a nice decision. In Ruby you
+generally have many ways to achieve the same result:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='irb'><span class='line'><span class="go">ruby-1.9.2-p0 &gt; 1.even?</span>
+</span><span class='line'><span class="go"> =&gt; false</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; arr = [1, 2, 3]</span>
+</span><span class='line'><span class="go"> =&gt; [1, 2, 3]</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; arr.map { |x| x * 2 }</span>
+</span><span class='line'><span class="go"> =&gt; [2, 4, 6]</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; arr</span>
+</span><span class='line'><span class="go"> =&gt; [1, 2, 3]</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; arr.map! { |x| x * 2 }</span>
+</span><span class='line'><span class="go"> =&gt; [2, 4, 6]</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; arr</span>
+</span><span class='line'><span class="go"> =&gt; [2, 4, 6]</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; (1..5).reduce(:*)</span>
+</span><span class='line'><span class="go"> =&gt; 120</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; (1..5).reduce { |x, y| x * y }</span>
+</span><span class='line'><span class="go"> =&gt; 120</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; (1..5).reduce do |x, y|</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt;     x * y</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 ?&gt;  end</span>
+</span><span class='line'><span class="go"> =&gt; 120</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>No such things in Python, however. Python&rsquo;s philosophy is one of
+simplicity &ndash; no excessive syntax sugar, one true way of doing things.</p>
+
+<p>Both languages have powerful features for organising code in
+libraries. I would not go into any details on the subject here, but
+I&rsquo;ll share with you the fact that I like Python&rsquo;s more.</p>
+
+<p>Both languages come with a REPL in which you can do some exploratory
+programming. Ruby&rsquo;s REPL(irb)  allows you
+to do TAB smart completion(amongst other things) by default. To get
+TAB completion in the Python REPL you&rsquo;d have to execute this bit of
+code first:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='pycon'><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">readline</span><span class="o">,</span> <span class="nn">rlcompleter</span>
+</span><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="n">readline</span><span class="o">.</span><span class="n">parse_and_bind</span><span class="p">(</span><span class="s">&quot;tab: complete&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Alternative you can just stick this code snippet in the
+<strong>~/.pythonrc.py</strong> file(create it if it doesn&rsquo;t exist). If you are using
+Windows adjust accordingly(you will have to figure out where
+pythonrc.py is located there).</p>
+
+<p>Ruby does not have statements &ndash; only expressions. This
+basically means that everything(objects, method calls) evaluate to
+some value(though the value might not be helpful always).</p>
+
+<p>In Python there are some statements such as assignment and <em>if</em>. One
+thing I dislike about the Python REPL is that it doesn&rsquo;t print None
+values. Compare this bit of Python code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='pycon'><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&quot;this is a test&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="go">this is a test</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>to this Ruby snippet:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='irb'><span class='line'><span class="go">ruby-1.9.2-p0 &gt; puts &quot;this is a test&quot;</span>
+</span><span class='line'><span class="go">this is a test</span>
+</span><span class='line'><span class="go"> =&gt; nil</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the Python version we see only the side-effect(the printing), but
+not the return value.</p>
+
+<p>Python also ships with a minimalistic IDE called IDLE. If you don&rsquo;t
+have it by default after a python installation on Linux probably
+you&rsquo;re vendor decided to package IDLE as a separate package. IDLE
+offers basic features like syntax highlighting, code completion and
+integration with a debugger. It&rsquo;s a good tool for exploratory
+programming, but I advise you to pick another tool for serious development.</p>
+
+<h2>Naming conventions</h2>
+
+<p>The naming conventions for both Ruby and Python are mostly the same
+which is good if you&rsquo;re using them both on a daily basis &ndash; less room
+for confusion.</p>
+
+<ul>
+<li>variable and method names consisting of more then one word are
+written in lowercase with underscores separating the individual
+words like_this.</li>
+<li>Class names start with capital letter and follow the camel case
+naming convention LikeThis. Some of Python&rsquo;s core classes, however,
+violate this convention.</li>
+<li>Constants are generally written in all caps with underscores
+separating the individual words LIKE_THIS.</li>
+</ul>
+
+
+<p>As I mentioned earlier it&rsquo;s customary to add ? as a suffix to
+predicate methods and ! to mutator methods in Ruby. This convention is
+not always followed unfortunately, even in Ruby&rsquo;s standard library.</p>
+
+<h2>OOP support</h2>
+
+<p>Both Ruby and Python are famous members of the family of object
+oriented languages. Unlike languages such as Java and C#, however,
+Ruby and Python are pure OOP languages. There is no distinction
+between primitive types(such as numbers, characters and booleans) and
+reference types(classes). Everything in them is an object and in that
+sense it&rsquo;s an instance of some class:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='pycon'><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="go">&lt;type &#39;int&#39;&gt;</span>
+</span><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="s">&quot;string&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="go">&lt;type &#39;str&#39;&gt;</span>
+</span><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mf">20.07</span><span class="p">)</span>
+</span><span class='line'><span class="go">&lt;type &#39;float&#39;&gt;</span>
+</span><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</span><span class='line'><span class="go">&lt;type &#39;list&#39;&gt;</span>
+</span><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</span><span class='line'><span class="go">&lt;type &#39;tuple&#39;&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And in Ruby:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='irb'><span class='line'><span class="go">ruby-1.9.2-p0 &gt; 10.class</span>
+</span><span class='line'><span class="go"> =&gt; Fixnum</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; &quot;string&quot;.class</span>
+</span><span class='line'><span class="go"> =&gt; String</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; [].class</span>
+</span><span class='line'><span class="go"> =&gt; Array</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see core Ruby classes tend to have a bit more standard and
+descriptive names than their Python counterparts. You can also notice
+that in Python for some task we use built-in functions like type,
+instead of method calls. The built-in function will eventually result
+in a method invocation(like &ldquo;string&rdquo;.<strong>class</strong> in the case of
+type(&ldquo;string&rdquo;)), but I find this irregularity in the syntax a bit
+irritating.</p>
+
+<p>Method invocation is more flexible in Ruby &ndash; you can omit braces in
+some scenarios. This is handy when you&rsquo;re designing a DSL or you&rsquo;re
+trying to implement the uniform access patterns(data should be
+accessed through fields and methods in the same manner(read this as
+with no braces in method invocations)). On the other hand Python&rsquo;s
+uniform syntax makes it easier to spot method invocations.</p>
+
+<p>Both languages don&rsquo;t have operators &ndash; just methods. Ruby&rsquo;s OO support
+seems to be a bit more mature and polished(at least to me), but
+Python&rsquo;s has some touches as well. I particularly like the explicit
+self references that are required when you try to access class
+members. I&rsquo;m not too found of the use of special sigils in Ruby to
+mark instance(@) and class members(@@). Though they make them visually
+distinctive I think we could have lived without them &ndash; I&rsquo;m generally
+not a fan of non-uniform syntax rules(and you guessed it &ndash; my
+favourite language is Lisp).</p>
+
+<p>Ruby&rsquo;s metaprogramming model arguably gives it an edge in the OOP
+department, but I won&rsquo;t be discussing the metaprogramming issues here
+since they are quite lengthy.</p>
+
+<h2>Functional programming support</h2>
+
+<p>Functional programming has been on the rise lately and it&rsquo;s useful to
+examine what kind of support both languages provide for it. Both have
+support for lambda functions and respectively &ndash; higher-order
+functions(functions that accept functions as parameters). Ruby has
+code blocks, Python has list comprehensions(generally favoured over
+higher-order functions). Both languages lack in their standard libs
+the immutable data structures that generally are the code of most
+functional programming languages. Here&rsquo;s a few example related to
+filtering a sequence based on some predicate:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='pycon'><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+</span><span class='line'><span class="go">[2, 4, 6, 8, 10]</span>
+</span><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+</span><span class='line'><span class="go">[2, 4, 6, 8, 10]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ruby:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='irb'><span class='line'><span class="go">ruby-1.9.2-p0 &gt; (1..10).select { |x| x.even? }</span>
+</span><span class='line'><span class="go"> =&gt; [2, 4, 6, 8, 10]</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; (1..10).select &amp;:even?</span>
+</span><span class='line'><span class="go"> =&gt; [2, 4, 6, 8, 10]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ruby&rsquo;s functional programming support seems to be better to me, but
+this is of course subjective.</p>
+
+<h2>GUI programming</h2>
+
+<p>Python has tkinker by default &ndash; a wrapper around the Tk library(which
+sucks in my humble opinion). Ruby doesn&rsquo;t have even this much. Both
+have binding for the popular GUI toolkits such wxwidgets, GTK,
+QT. From my experimentation with them I can tell you that you&rsquo;ll be
+much better off with Python in that department. It&rsquo;s not wonder that
+many GTK+ applications these days are implemented in Python. Most Ruby
+bindings projects seem to be in a state of disarray, abandonment &ndash; I
+guess we have to thank Rails for that. Most people think of Rails as
+the only use of Ruby which is sad&hellip;</p>
+
+<p>Ruby devs shouldn&rsquo;t despair however. JRuby(Ruby&rsquo;s port to the JVM) has
+an excellent support for the superb Swing GUI framework and MacRuby
+has great support for building Cocoa Apps for OS X. I personally think
+that JRuby is the best Ruby distribution out there, but that&rsquo;s the
+point of another post entirely.</p>
+
+<h2>3rd party library availability and installation</h2>
+
+<p>It&rsquo;s not secret that part of Python&rsquo;s philosophy is that it comes with
+batteries included &ndash; meaning that it&rsquo;s standard library is vast and
+covers a lot of common tasks. In case you can&rsquo;t find what you&rsquo;re
+looking for in it you&rsquo;re left with an number of third party libraries
+for Python whose number can only be described by the word epic and
+that cover every task conceivable. <a href="http://pypi.python.org/pypi">PyPi</a>
+maintains an up-to-date list of Python packages.</p>
+
+<p>You have several options in the department of python package
+management. If you&rsquo;re using ActivePython you can use the excellent
+<a href="http://code.activestate.com/pypm/">PyPM</a> tool, which provides quick
+installation of thousands of packages for many Python versions and
+platforms for ActivePython distributions.</p>
+
+<p><a href="http://peak.telecommunity.com/DevCenter/EasyInstall">EasyInstall</a> is another popular solution that works with the standard
+Python distribution. Like PyPM it allows you easily search for and
+install Python packages from the PyPI that are bundled in Python&rsquo;s
+standard egg format(Jave developers might think of eggs as
+jars). EasyInstall has splendid documentation so I won&rsquo;t go into any
+details here.</p>
+
+<p><a href="http://www.pip-installer.org/en/latest/index.html">pip</a> is a
+replacement for easy_install. It uses mostly the same techniques for
+finding packages, so packages that were made easy_installable should
+be pip-installable as well.</p>
+
+<p>pip is meant to improve on EasyInstall. Some of the improvements:</p>
+
+<ul>
+<li>All packages are downloaded before installation. Partially-completed installation doesn’t occur as a result.</li>
+<li>Care is taken to present useful output on the console.</li>
+<li>The reasons for actions are kept track of. For instance, if a package is being installed, pip keeps track of why that package was required.</li>
+<li>Error messages should be useful.</li>
+<li>The code is relatively concise and cohesive, making it easier to use programmatically.</li>
+<li>Packages don’t have to be installed as egg archives, they can be installed flat (while keeping the egg metadata).</li>
+<li>Native support for other version control systems (Git, Mercurial and Bazaar)</li>
+<li>Uninstallation of packages.</li>
+<li>Simple to define fixed sets of requirements and reliably reproduce a set of packages.</li>
+</ul>
+
+
+<p>pip doesn’t do everything that easy_install does. Specifically:</p>
+
+<ul>
+<li>It cannot install from eggs. It only installs from source. (In the future it would be good if it could install binaries from Windows .exe or .msi – binary install on other platforms is not a priority.)</li>
+<li>It doesn’t understand Setuptools extras (like package[test]). This should be added eventually.</li>
+<li>It is incompatible with some packages that extensively customize distutils or setuptools in their setup.py files.</li>
+</ul>
+
+
+<p>Linux users will also find a great selection of Python libraries
+prepackaged for use with the distribution&rsquo;s package manager.</p>
+
+<p>Ruby has an application that is more or less equivalent to EasyInstall
+called <a href="http://rubygems.org/">RubyGems</a>(gems are the standard way to distribute Ruby
+libraries). Linux users can of course install Ruby libraries with the
+distribution&rsquo;s package manager as well.</p>
+
+<p>RubyGems has the following features:</p>
+
+<ul>
+<li>Easy Installation and removal of RubyGems packages and their dependents.</li>
+<li>Management and control of local packages</li>
+<li>Package dependency management</li>
+<li>Query, search and list local and remote packages</li>
+<li>Multiple version support for installed packages</li>
+<li>Web-based interface to view the documentation for your installed gems</li>
+<li>Easy to use interface for building gem packages</li>
+<li>Simple server for distributing your own gem packages</li>
+<li>Easy to use building and publishing of gem packages</li>
+</ul>
+
+
+<p>Using RubyGems, you can:</p>
+
+<ul>
+<li>download and install Ruby libraries easily</li>
+<li>not worry about libraries A and B depending on different versions of library C</li>
+<li>easily remove libraries you no longer use</li>
+<li>have power and control over your Ruby platform!</li>
+</ul>
+
+
+<p>A reader pointed out that about 23000 packages are available for
+installation through RubyGems and 15000 through PyPI. This, however,
+cannot be considered as a certain sign that there are more libraries
+available for Ruby than for Python.</p>
+
+<p>Although tools like EasyInstall and RubyGems are easy to use and quite
+handy, I as a long-time Linux users dislike them a bit, since they
+circumvent the distributions native package handling. Unfortunately
+package maintainers cannot find the time to package every Python and
+Ruby library available so I guess EasyInstall and RubyGems won&rsquo;t be
+going anywhere soon and of course we have to consider Windows users
+for whom such applications are of great value given the lack of
+unified package management on Windows.</p>
+
+<p>One thing to keep in mind about installing eggs and gems is that some
+of them are implemented in C(usually for performance reasons) and are
+locally built prior to their installation &ndash; an operation bound to fail
+if you don&rsquo;t have a C compiler installed.</p>
+
+<h2>Misc</h2>
+
+<p>In terms of performance of the default interpreters CPython and MRI
+Ruby Python is the clear winner. One should note, however, is that there
+are many how quality implementation of Ruby and Python for different
+platforms where the performance situation differs wildly. For instance
+Jython is much slower that JRuby. With the addition of invoke_dynamic
+in JDK7(basically bytecode level support for dynamic method dispatch)
+the performance of JRuby and Jython could potentially be improved
+greatly.</p>
+
+<p>In terms of overall usage, market share, job offers and sheer size of
+the community and available libraries Python is ahead of Ruby as
+well. One of the main supporters of Python is after all none other
+than the mighty Google. Ruby has also the unfortunate luck to be
+living in the shadow of a single application written in Ruby &ndash; Ruby on
+Rails, that is arguably more popular than the language itself.</p>
+
+<p>Tooling for dynamic languages is currently not as advance as the one
+for static languages. People often joke that Python(Ruby) > Java(C#),
+but Python + any python IDE &lt; Java + IntelliJ
+IDEA(Eclipse/NetBeans). Python and Ruby IDEs seem to be mostly on par
+currently. I do all of my Ruby and Python coding in Emacs, but I do
+like RubyMine and PyCharm.</p>
+
+<p>Since they are often used for the creation of webapps one should
+consider the deployment issue. Most web hosting companies provide
+cheap Python hosting, but very few companies provide Ruby hosting.</p>
+
+<h2>The Python 3 problem</h2>
+
+<p>Python 3 was a great undertaking that improved on a lot of aspects of
+the language(for example Unicode support) and the standard library. To
+do this it dropped backward compatibility, an act that slowed it&rsquo;s
+adoption immensely. Three years have passed since it&rsquo;s release and
+still most hosting providers, Linux distros and Python projects hold
+on to the older 2.7.x Python branch.</p>
+
+<p>This is a bit of tragedy since Python 3 is truly a great improvement
+over Python 2. I mention this because most recent books are written
+with Python 3 in mind, but if you land a Python jobs somewhere chances
+are you&rsquo;ll have to use Python 2.x.x for the foreseeable future.</p>
+
+<h2>Epilogue</h2>
+
+<p>Ruby and Python are two beautifully engineered languages capable of
+just about everything. If you don&rsquo;t know any of them you&rsquo;ll do well to
+learn at least one. If you know only one it might not be a terrible
+idea to learn the other.</p>
+
+<p>I haven&rsquo;t touched on many language features(like Python generators and
+Ruby mixins), but to be honest I&rsquo;m just tired of typing. One good
+place to start your journey to Python is
+<a href="http://diveintopython3.org/">&ldquo;Dive into Python 3&rdquo;</a>. For Ruby
+beginners I&rsquo;d recommend a copy of
+<a href="http://www.amazon.com/Ruby-Programming-Language-David-Flanagan/dp/0596516177">&ldquo;The Ruby Programming Language&rdquo;</a>.</p>
+
+<p><em>P.S. If you like exploring different programming languages and you&rsquo;re
+currently shopping for ideas on the subject of which language to learn
+next you might find my recent article
+<a href="/blog/2011/04/27/programming-languages-worth-learning/">&ldquo;Programming languages worth learning&rdquo;</a>
+interesting as well.</em></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-03T00:00:00+03:00" pubdate data-updated="true">May 3<span>rd</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/programming/'>Programming</a>, <a class='category' href='/articles/categories/python/'>Python</a>, <a class='category' href='/articles/categories/ruby/'>Ruby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2011/05/03/ruby-or-python/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2011/05/03/ruby-or-python/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2011/04/30/parsing-numbers-from-string-in-lisp/" title="Previous Post: Parsing numbers from string in Common Lisp">&laquo; Parsing numbers from string in Common Lisp</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2011/05/06/jvm-langs-groovy/" title="Next Post: Java.next() - The Groovy Programming Language">Java.next() - The Groovy Programming Language &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/10/the-road-to-cider-0-dot-8/">The Road to CIDER 0.8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/09/05/clojure-mode-3-dot-0/">Clojure-mode 3.0</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

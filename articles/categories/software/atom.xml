@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Software | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/software/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Changelog vs API diff]]></title>
+    <link href="http://batsov.com/articles/2012/04/07/changelog-vs-api-diff/"/>
+    <updated>2012-04-07T12:22:00+03:00</updated>
+    <id>http://batsov.com/articles/2012/04/07/changelog-vs-api-diff</id>
+    <content type="html"><![CDATA[<p><em>This is a guest post from my friend <a href="http://about.me/atodorov">Alexander Todorov</a>
+who is a QA guru, software engineer and cloud enthusiast!</em></p>
+
+<p><strong>Software changes fast! Open source software even faster!</strong></p>
+
+<p>And once you start to update dependencies, libraries and frameworks it never ends&hellip;
+After all the testing and validation you may have done there is no
+guarantee that the software will keep working afterwards.
+This is no big deal for small and medium sized projects but becomes a full-time
+job for larger projects with longer life span which require constant maintenance
+and enhancements. I&rsquo;ve seen this time and time again during my work on various projects.
+Even a simple <em>Drupal</em> based website pops up an update every couple of weeks.</p>
+
+<p>OTOH back porting fixes and keeping stable APIs can be a big business. This is what
+<em>Red Hat</em> is doing for their <em>Red Hat Enterprise Linux</em> distribution. Nearly all changes
+are backwards compatible and and the software stack remains stable compared
+to upstream <em>Fedora</em> or the more upstream projects which comprise it.</p>
+
+<p>Let me say that I don&rsquo;t like to upgrade. Long ago I was using <em>Debian</em> <strong>stable</strong>
+on my computer. Now I use <em>RHEL</em>. No fancy features, no bells and
+whistles and more important predictable behavior wrt updates and APIs.
+The same approach I take when developing software. I stay away from the latest and
+greatest technology simply because it changes too often. I prefer mature frameworks and
+packages which produce new versions every six months or less frequent.
+This approach allows me to concentrate on writing code and getting the project done
+instead of plumbing bugs introduced by the latest <em>package foo</em> version.</p>
+
+<p>All this said I have a very careful approach to upgrades, especially if I&rsquo;m
+using an upstream package. I will first look at the changelog if any. Luckily
+many of the mature projects provide comprehensive changelog records. This is
+especially true for Perl packages. I&rsquo;m looking for notices about backward
+incompatible changes, API breakage, security notices, major bug fixes,
+changes in behavior and the like.
+When changelog is not available there&rsquo;s the commit log. I admit this is
+not something I usually look at but it happens once in a while. I do this for projects
+I&rsquo;m particularly interested in or otherwise following.
+Doing a content diff is another possibility which usually helps you
+spot (if you look carefully) some API changes as well. I resort to this if I&rsquo;m not able to find the upstream
+source repository or when it is hosted on something ancient like CVS.</p>
+
+<p>Based on all of this I decide to upgrade or not. With careful planning
+of updates (which version, which moment of time) and testing I manage to
+minimize the hassle of breaking my projects and spending days fixing
+bugs afterwards. Instead I use the time to write some code that kicks ass
+(or at least I hope so).</p>
+
+<p>I&rsquo;m curious to know what sort of information folks do prefer to have
+when considering an update? Changelog vs. API diff or seething else?
+I personally prefer well written Changelog and full list of fixed bugs.
+Please cast your vote in the comments or visit the
+<a href="http://www.surveymonkey.com/s/T7YW2MJ">survey</a>! Thank you!</p>
+]]></content>
+  </entry>
+  
+</feed>

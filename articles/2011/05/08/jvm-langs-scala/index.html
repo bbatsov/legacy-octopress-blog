@@ -1,0 +1,1746 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Java.next() - Scala: The Revenge of the Static Typing - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude This is the second post from my series dedicated to modern programming
+languages for the Java platform. Last time we&rsquo;ve discussed the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2011/05/08/jvm-langs-scala">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Java.next() - Scala: The Revenge of the Static Typing</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-08T00:00:00+03:00" pubdate data-updated="true">May 8<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Prelude</h2>
+
+<p>This is the second post from my series dedicated to modern programming
+languages for the Java platform. Last time we&rsquo;ve discussed the
+<a href="/Java/Groovy/2011/05/06/jvm-langs-groovy.html">Groovy programming language</a>, which
+is a member of the ever expanding family of dynamic programming
+languages. The Scala programming language, that is the object of
+today&rsquo;s discussion, is different beast entirely &ndash; not only it uses static
+typing(like Java &amp; C# amongst others), but it also puts a heavy emphasis on the type
+system, functional and parallel programming.</p>
+
+<p>In theory Scala runs both on the JVM and on the CLR(the .NET VM). The
+Java port, however, receives a lot more attention by Scala&rsquo;s developers
+and it probably accounts for close of to all of Scala&rsquo;s
+deployments(especially in production).</p>
+
+<p>This article is extremely hard to write for me. Unlike Groovy, I&rsquo;m
+deeply familiar with the language and would like to share quite a lot
+with you. For obvious reasons I cannot go into much detail (otherwise
+I&rsquo;d have written an on-line book). You&rsquo;re encourage to follow up this
+article by reading some of the excellent resources, mentioned near its end.</p>
+
+<h2>A brief history of Scala</h2>
+
+<p>After having written hundreds of thousands lines of Java himself,
+Martin Odersky, Professor at EPFL, was well aware of the frustrations
+faced by Java programmers. He formed the vision of applying the best
+knowledge of the academic research community to the problem of making
+the Java programming experience better, even fun. His first pragmatic
+step was Java Generics, seen as a major success by the Java
+community (though we should mention that it was C# that first brought
+generic programming to the masses). But for the full vision of scalable concurrent programming
+to be achieved he saw that the basic Java syntax would need to
+change. You simply couldn&rsquo;t get there from here. But a deceptively
+simple shift in syntax gained better uniformity to the object-oriented
+aspects of Java, and this in turn enabled a natural fusion with
+functional programming concepts which are critical for tackling
+concurrency. In 2001 Scala was born. The first official version was
+released in late 2003. This year it celebrates its first
+anniversary in a way (depending on what do you consider the birthday).</p>
+
+<p>Scala stands for a SCAlable LAnguage. What does this mean? Scala is
+designed to tackle solutions of wildly varying sizes &ndash; from small
+scripts (programming in the small) to massive distributed enterprise
+applications (generally programming in the large). Scala also means
+<em>steps</em> in Italian and this is the reason why most Scala books have
+some form of steps on their covers (arguably this is the reason why
+Scala is very popular in Italy and particularly in Milan).</p>
+
+<p>The current production version of Scala is 2.8.1 with 2.9.0 being in
+the release candidate stages.</p>
+
+<h2>Installing Scala</h2>
+
+<h4>Universal installer</h4>
+
+<p>Scala has an <a href="http://www.scala-lang.org/downloads/distrib/files/scala-2.8.1.final-installer.jar">universal installer</a> that could be ran on every platform
+with Java installed. You can run it from the console like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>java -jar scala-2.8.1.final-installer.jar
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Alternatively, on most systems simply double clicking the installer
+jar will run it(assuming you have a GUI environment and assuming that
+the java command is associated with jar files &ndash; something that is
+usually so by default).</p>
+
+<h4>Installing from binary archive</h4>
+
+<p>Just download the Scala distribution for <a href="http://www.scala-lang.org/downloads/distrib/files/scala-2.8.1.final.tgz">Unix, OS X and Cygwin</a> or
+the one for
+<a href="http://www.scala-lang.org/downloads/distrib/files/scala-2.8.1.final.zip">Windows</a>
+and extract it somewhere. I&rsquo;m a GNU/Linux user and I tend to extract
+all third party apps in the /opt folder:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo tar xf scala-2.8.1.final.tgz -C /opt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You&rsquo;d also want to add the folder containing the Scala binaries
+(compiler, REPL, etc) to your PATH environmental variable. Unix users
+might add something like this to their shell startup script (like
+.bashrc):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/java/latest
+</span><span class='line'><span class="nb">export </span><span class="nv">SCALA_HOME</span><span class="o">=</span>/opt/scala-2.8.1
+</span><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$SCALA_HOME</span>/bin:<span class="nv">$PATH</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should now have Scala installed properly. You can test this by
+typing the following in a command shell:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>scala
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which should create an interactive Scala shell where you can type
+Scala expressions.</p>
+
+<p>To run a specific Scala script type:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>scala SomeScript.scala
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Linux installation</h4>
+
+<p>Most Linux distributions provide Scala through their integrated
+package management system. On Debian(and derivatives like Ubuntu) you
+can install it like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install scala
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On Red Hat systems the magic incantation looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install scala
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Personally I&rsquo;d prefer the platform-independent installation method,
+since some distribution package Scala in a non-standard manner, which
+confuses IDEs for instance.</p>
+
+<h2>Scala at a glance</h2>
+
+<blockquote><p>If I were to pick a language to use today other than Java, it would<br/>be Scala&#8230;</p><footer><strong>James Gosling</strong> <cite>Creator of Java</cite></footer></blockquote>
+
+
+
+
+<blockquote><p>If Java programmers want to use features that aren&#8217;t present in the<br/>language, I think they&#8217;re probably best off using another language<br/>that targets the JVM, such a Scala and Groovy.</p><footer><strong>Joshua Bloch</strong> <cite>Author of &#8220;Effective Java&#8221; and Many of Java&#8217;s Core Libraries</cite></footer></blockquote>
+
+
+<p>Scala basically is:</p>
+
+<ul>
+<li>SCAlable LAnguage</li>
+<li>Pure OO language</li>
+<li>Functional language</li>
+<li>Statically typed language</li>
+<li>A language that integrates seamlessly with existing Java code</li>
+<li>A great community</li>
+</ul>
+
+
+<p>Scala&rsquo;s more prominent features are:</p>
+
+<ul>
+<li>Type inference</li>
+<li>Advanced type system</li>
+<li>Improved OO model</li>
+<li>Improved imports system</li>
+<li>Simplified visibility rules</li>
+<li>Suitable for scripting, GUI, enterprise</li>
+<li>Relies on immutable data structures by default</li>
+<li>Great support for building parallel applications</li>
+<li>Pimps (improves) a lot of standard Java classes using a technique
+called <a href="http://www.codecommit.com/blog/ruby/implicit-conversions-more-powerful-than-dynamic-typing">implicit conversion</a>.</li>
+</ul>
+
+
+<h2>Static vs Dynamic typing</h2>
+
+<p>This is one of the oldest debates in computing and everyone with a
+little bit of common sense knows that there is no definitive answer to this
+so fundamental question. Both approaches have merits and drawbacks. In
+recent years we saw a rapid explosion in the rate of growth of
+dynamic languages which lead many people to believe that static typing
+is something of the past and is headed down on the road to oblivion. I ,
+however, very much doubt such a possibility. So, without further ado
+here&rsquo;s my take on their pros and cons:</p>
+
+<h4>Dynamic typing</h4>
+
+<ul>
+<li><p>Pros</p>
+
+<ul>
+<li>Less verbose</li>
+<li>Better metaprogramming capabilities &ndash; it&rsquo;s very easy in a
+language like to Ruby to modify a class at runtime for
+instance. Java developers, on the other side, can only dream for
+such things&hellip;</li>
+<li>Duck typing allows to reduce immensely the coupling between your
+classes</li>
+<li>Reduced development and deployment cycles &ndash; most dynamic
+languages are implemented as interpreters and this way you&rsquo;re
+spared the tedious compilation/redeployment cycles</li>
+</ul>
+</li>
+<li><p>Cons</p>
+
+<ul>
+<li>Some might argue that type declarations serve as an additional
+documentation and their lack (arguably) make the code harder to
+read. Of course, when you&rsquo;re following a decent naming
+convention (and by that I mean that you&rsquo;re using sensible
+identifiers) that hardly matters.</li>
+<li>Slower performance &ndash; knowing all the types in advance,
+naturally, allows the compilers to generate faster code for
+static languages than for dynamic ones. Some Lisp compilers,
+however, offer performance that rivals that of statically typed
+programs, so it&rsquo;s reasonable to expect that the situation in
+this department will improve over time.</li>
+<li>It&rsquo;s hard to create IDEs for dynamic languages that offer the
+same level of assistance as those for static languages. The
+problem stems from the simple fact that in a dynamic language
+the type of an object is known only at runtime and an IDE will have
+a pretty hard type guessing the types because of this fact. In
+my humble opinion the lack of all the fancy IDE features like
+reliable code completion and refactorings is one of the central
+reasons why statically type languages like Java, C# and C++ are
+still enjoying higher popularity than dynamic languages.</li>
+<li>You need to write more unit tests, because many of the simple
+errors that the compiler of statically typed language will detect
+will manifest themselves only at runtime.</li>
+</ul>
+</li>
+</ul>
+
+
+<h4>Static typing</h4>
+
+<ul>
+<li><p>Pros</p>
+
+<ul>
+<li>Mighty development environments, capable of compensating for a
+lot of the languages deficiencies. You always get correct
+completion suggestions (in a decent IDE that is), all type errors
+are caught as you type (except the runtime errors that is).</li>
+<li>Reliable refactoring &ndash; you make some changes, you recompile the
+project, you instantly see whether everything is OK after the
+refactoring. One of the key reasons why enterprise projects are
+often implemented in Java and C#.</li>
+<li>Maximum performance &ndash; when you know all the types in advance it&rsquo;s
+not particularly hard to generate the most efficient in terms of
+performance bytecode/binary
+code.</li>
+<li>You don&rsquo;t need to write unit tests for errors that will be caught
+by compiler.</li>
+<li>The type declarations arguably serve as an up-to-date
+documentation on which you can always rely.</li>
+</ul>
+</li>
+<li><p>Cons</p>
+
+<ul>
+<li>Poor metaprogramming support &ndash; statically typed system limit very
+much the magic you can do in you programs. Metaprogramming is
+actually considered a black art in many statically type
+languages. In a functional statically typed language higher-order
+functions can compensate a lot in that department. Scala happens
+to be one such language, Haskell &ndash; another.</li>
+<li>Generally statically type languages are a bit more verbose &ndash;
+mostly because the code is full of type annotations (languages
+like Scala and Haskell, however, have found the cure for this
+ailment &ndash; <a href="http://www.codecommit.com/blog/scala/what-is-hindley-milner-and-why-is-it-cool">type inference</a>)</li>
+<li>No support (in most statically typed languages) for duck typing
+causes you to often link classes in hierarchies that you&rsquo;d rather
+avoid if you had the chance to. I should point out that languages
+supporting structural types are not suffering from these
+problems. Scala happens to support them from version 2.6.0.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>A whirlwind tour of Scala</h2>
+
+<h4>Scala is expressive</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">romanToArabic</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">(</span><span class="s">&quot;I&quot;</span> <span class="o">-&gt;</span> <span class="mi">1</span><span class="o">,</span> <span class="s">&quot;II&quot;</span> <span class="o">-&gt;</span> <span class="mi">2</span><span class="o">,</span> <span class="s">&quot;III&quot;</span> <span class="o">-&gt;</span> <span class="mi">3</span><span class="o">,</span> <span class="s">&quot;IV&quot;</span> <span class="o">-&gt;</span> <span class="mi">4</span><span class="o">,</span> <span class="s">&quot;V&quot;</span> <span class="o">-&gt;</span> <span class="mi">5</span><span class="o">)</span>
+</span><span class='line'><span class="n">romanToArabic</span><span class="k">:</span> <span class="kt">scala.collection.immutable.Map</span><span class="o">[</span><span class="kt">java.lang.String</span>,<span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">((</span><span class="nc">II</span><span class="o">,</span><span class="mi">2</span><span class="o">),</span> <span class="o">(</span><span class="nc">IV</span><span class="o">,</span><span class="mi">4</span><span class="o">),</span> <span class="o">(</span><span class="n">I</span><span class="o">,</span><span class="mi">1</span><span class="o">),</span> <span class="o">(</span><span class="n">V</span><span class="o">,</span><span class="mi">5</span><span class="o">),</span> <span class="o">(</span><span class="nc">III</span><span class="o">,</span><span class="mi">3</span><span class="o">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">romanToArabic</span><span class="o">(</span><span class="s">&quot;I&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="n">res2</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">romanToArabic</span><span class="o">(</span><span class="s">&quot;II&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="n">res3</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Scala removes the incidental complexity</h4>
+
+<p>Scala removes the incidental complexity and cut right to the core of
+the problem. Imagine that you want to find whether or not a string
+contains uppercase characters. In Java you&rsquo;d write something like
+this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">hasUpperCase</span><span class="o">(</span><span class="n">String</span> <span class="n">word</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">word</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">Character</span><span class="o">.</span><span class="na">isUpperCase</span><span class="o">(</span><span class="n">word</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">)))</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So much boilerplate code (loop, if) to express such a basic idea. In
+Scala you&rsquo;d simply write:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">hasUppercase</span><span class="o">(</span><span class="n">word</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">(</span><span class="n">word</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+</span><span class='line'>    <span class="n">word</span><span class="o">.</span><span class="n">exists</span><span class="o">(</span><span class="n">c</span> <span class="k">=&gt;</span> <span class="n">c</span><span class="o">.</span><span class="n">isUpperCase</span><span class="o">)</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>    <span class="kc">false</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// or more compactly</span>
+</span><span class='line'><span class="k">def</span> <span class="n">hasUppercase</span><span class="o">(</span><span class="n">word</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">word</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="n">word</span><span class="o">.</span><span class="n">exists</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">isUpperCase</span><span class="o">)</span> <span class="k">else</span> <span class="kc">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Scala&rsquo;s code actually reads a lot like English language that makes
+sense to humans &ndash; check if in <em>word</em>
+there exists an uppercase character. Notice that is Scala <em>if</em> is an
+expression yielding a return value, unlike in many other languages.</p>
+
+<h4>Scala is concise</h4>
+
+<p>Consider this simple JavaBean (well, not exactly JavaBean to be
+precise &ndash; it lacks a no param constructor) definition:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Person</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">age</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getAge</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">age</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setAge</span><span class="o">(</span><span class="kt">int</span> <span class="n">age</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In Scala the equivalent definition looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">Person</span><span class="o">(</span><span class="k">var</span> <span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="k">var</span> <span class="n">age</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is what I call a good signal-to-noise ratio.</p>
+
+<h4>Scala supercharges OO programming</h4>
+
+<p>Scala is pure OO language &ndash; everything is an object, operators are
+actually methods, everything yields some result(even constructs such
+as if), there are no static field and methods</p>
+
+<h4>Scala is power overwhelming</h4>
+
+<p>Want to implement a thread-safe mathematical service in Scala? No problem!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">import</span> <span class="nn">scala.actors.Actor._</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">case</span> <span class="k">class</span> <span class="nc">Add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
+</span><span class='line'><span class="k">case</span> <span class="k">class</span> <span class="nc">Sub</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">val</span> <span class="n">mathService</span> <span class="k">=</span> <span class="n">actor</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">loop</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">receive</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">case</span> <span class="nc">Add</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">reply</span><span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">)</span>
+</span><span class='line'>      <span class="k">case</span> <span class="nc">Sub</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">reply</span><span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="o">)</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">mathService</span> <span class="o">!?</span> <span class="nc">Add</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span> <span class="c1">// returns 4</span>
+</span><span class='line'><span class="n">mathService</span> <span class="o">!?</span> <span class="nc">Sub</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="mi">2</span><span class="o">)</span> <span class="c1">// returns 3</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Case classes are out of the scope of this post, but I guess you get
+the basic idea.</p>
+
+<h4>Scala is duck friendly</h4>
+
+<p>Duck typing is nothing new for developers familiar with dynamic
+languages. Its the concept that an objects type is defined not by the
+objects class, but by the objects interface. This allows us to write
+very flexible code that works on unrelated types (in the inheritance
+hierarchy) that happen to share common methods. For instance in Ruby
+we could write this code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Duck</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">walk</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;The duck walks&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">quack</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;The duck quacks&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Dog</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">walk</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;The dog walks&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">quack</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;The dog quacks&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">test_animal</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">animal</span><span class="o">.</span><span class="n">walk</span>
+</span><span class='line'>  <span class="n">animal</span><span class="o">.</span><span class="n">quack</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">test_animal</span><span class="p">(</span><span class="no">Duck</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+</span><span class='line'><span class="n">test_animal</span><span class="p">(</span><span class="no">Dog</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It will work just fine &ndash; trust me. Few statically typed languages can
+boast something similar&hellip; and Scala happens to be one of them:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">Duck</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">quack</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;The duck quacks&quot;</span><span class="o">)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">walk</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;The duck walks&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Dog</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">quack</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;The dog quacks (barks)&quot;</span><span class="o">)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">walk</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;The dog walks&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="n">testDuckTyping</span><span class="o">(</span><span class="n">animal</span><span class="k">:</span> <span class="o">{</span> <span class="kt">def</span> <span class="kt">quack</span><span class="o">;</span> <span class="kt">def</span> <span class="kt">walk</span> <span class="o">})</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">animal</span><span class="o">.</span><span class="n">quack</span>
+</span><span class='line'>  <span class="n">animal</span><span class="o">.</span><span class="n">walk</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">testDuckTyping</span><span class="o">(</span><span class="k">new</span> <span class="nc">Duck</span><span class="o">)</span>
+</span><span class='line'><span class="nc">The</span> <span class="n">duck</span> <span class="n">quacks</span>
+</span><span class='line'><span class="nc">The</span> <span class="n">duck</span> <span class="n">walks</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">testDuckTyping</span><span class="o">(</span><span class="k">new</span> <span class="nc">Dog</span><span class="o">)</span>
+</span><span class='line'><span class="nc">The</span> <span class="n">dog</span> <span class="n">quacks</span> <span class="o">(</span><span class="n">barks</span><span class="o">)</span>
+</span><span class='line'><span class="nc">The</span> <span class="n">dog</span> <span class="n">walks</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is point in the article when Ruby and Python are starting to get
+impressed. :&ndash;) (I should know &ndash; I&rsquo;ve learnt about this feature after
+I&rsquo;ve written the first draft and got some negative feedback due to my
+oversight).</p>
+
+<h4>Pimp my library</h4>
+
+<p>Want to make the compiler convert between types from time to time to
+get access to some richer functionality? Nothing is easier in Scala:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">implicit</span> <span class="k">def</span> <span class="n">intarray2sum</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span> <span class="k">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reduceLeft</span><span class="o">(</span><span class="k">_</span> <span class="o">+</span> <span class="k">_</span><span class="o">)</span>
+</span><span class='line'><span class="n">intarray2sum</span><span class="k">:</span> <span class="o">(</span><span class="kt">x:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span><span class="nc">Int</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">x</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
+</span><span class='line'><span class="n">x</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">y</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">6</span><span class="o">)</span>
+</span><span class='line'><span class="n">y</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">6</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">z</span> <span class="k">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span><span class='line'><span class="n">z</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">21</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Scala arrays don&rsquo;t have a + method, but Scala Ints do. When the
+compiler sees that the + method is invoked on an object that doesn&rsquo;t
+have it, it starts searching for an implicit conversion to a type that
+has it &ndash; like Int. Both arrays are converted to their sums and the
+sums are added together in the end.</p>
+
+<h2>Playing around</h2>
+
+<p>A good way to start exploring Scala is the REPL. Fire it up and type
+along:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;Hello, Scala&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="nc">Hello</span><span class="o">,</span> <span class="nc">Scala</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">name</span> <span class="k">=</span> <span class="s">&quot;Bozhidar&quot;</span>
+</span><span class='line'><span class="n">name</span><span class="k">:</span> <span class="kt">java.lang.String</span> <span class="o">=</span> <span class="nc">Bozhidar</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="nc">Predef</span><span class="o">.</span><span class="n">println</span><span class="o">(</span><span class="s">&quot;My name is &quot;</span><span class="o">+</span><span class="n">name</span><span class="o">)</span>
+</span><span class='line'><span class="nc">My</span> <span class="n">name</span> <span class="n">is</span> <span class="nc">Bozhidar</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">var</span> <span class="n">someNumber</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">5</span>
+</span><span class='line'><span class="n">someNumber</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">5</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">var</span> <span class="n">names</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="s">&quot;Superman&quot;</span><span class="o">,</span> <span class="s">&quot;Batman&quot;</span><span class="o">,</span> <span class="s">&quot;The Flash&quot;</span><span class="o">,</span> <span class="s">&quot;Bozhidar&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="n">names</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">java.lang.String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="nc">Superman</span><span class="o">,</span> <span class="nc">Batman</span><span class="o">,</span> <span class="nc">The</span> <span class="nc">Flash</span><span class="o">,</span> <span class="nc">Bozhidar</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="n">name</span> <span class="k">=&gt;</span> <span class="n">name</span><span class="o">.</span><span class="n">startsWith</span><span class="o">(</span><span class="s">&quot;B&quot;</span><span class="o">))</span>
+</span><span class='line'><span class="n">res6</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">java.lang.String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="nc">Batman</span><span class="o">,</span> <span class="nc">Bozhidar</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">.</span><span class="n">length</span>
+</span><span class='line'><span class="n">res7</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">4</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">name</span><span class="o">.</span><span class="n">length</span><span class="o">()</span>
+</span><span class='line'><span class="n">res8</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">8</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">java.util.Date</span>
+</span><span class='line'><span class="k">import</span> <span class="nn">java.util.Date</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">var</span> <span class="n">currentDate</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Date</span>
+</span><span class='line'><span class="n">currentDate</span><span class="k">:</span> <span class="kt">java.util.Date</span> <span class="o">=</span> <span class="nc">Wed</span> <span class="nc">May</span> <span class="mi">11</span> <span class="mi">15</span><span class="k">:</span><span class="err">03</span><span class="kt">:</span><span class="err">20</span> <span class="kt">EEST</span> <span class="err">2011</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">scala&gt;</span> <span class="kt">println</span><span class="o">(</span><span class="err">&quot;</span><span class="kt">Now</span> <span class="kt">is</span> <span class="err">&quot;</span> <span class="kt">+</span> <span class="kt">currentDate</span><span class="o">)</span>
+</span><span class='line'><span class="kt">Now</span> <span class="kt">is</span> <span class="kt">Wed</span> <span class="kt">May</span> <span class="err">11</span> <span class="err">15</span><span class="kt">:</span><span class="err">03</span><span class="kt">:</span><span class="err">20</span> <span class="kt">EEST</span> <span class="err">2011</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">scala&gt;</span> <span class="kt">currentDate.toString</span>
+</span><span class='line'><span class="n">res10</span><span class="k">:</span> <span class="kt">java.lang.String</span> <span class="o">=</span> <span class="nc">Wed</span> <span class="nc">May</span> <span class="mi">11</span> <span class="mi">15</span><span class="k">:</span><span class="err">03</span><span class="kt">:</span><span class="err">20</span> <span class="kt">EEST</span> <span class="err">2011</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">scala&gt;</span> <span class="kt">currentDate.toString</span><span class="o">()</span>
+</span><span class='line'><span class="kt">res11:</span> <span class="kt">java.lang.String</span> <span class="o">=</span> <span class="nc">Wed</span> <span class="nc">May</span> <span class="mi">11</span> <span class="mi">15</span><span class="k">:</span><span class="err">03</span><span class="kt">:</span><span class="err">20</span> <span class="kt">EEST</span> <span class="err">2011</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">scala&gt;</span> <span class="kt">currentDate</span> <span class="kt">toString</span>
+</span><span class='line'><span class="n">res12</span><span class="k">:</span> <span class="kt">java.lang.String</span> <span class="o">=</span> <span class="nc">Wed</span> <span class="nc">May</span> <span class="mi">11</span> <span class="mi">15</span><span class="k">:</span><span class="err">03</span><span class="kt">:</span><span class="err">20</span> <span class="kt">EEST</span> <span class="err">2011</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The REPL has an excellent TAB completion &ndash; I used it ofter. You&rsquo;ll
+note from these examples the flexibility and the brevity of Scala&rsquo;s
+syntax &ndash; no <strong>;</strong> to terminate statements (though you&rsquo;ll have to use ; to
+separate more than one expression on a single line). The types of the
+variables are inferred by the context, without the need to
+specifically specify them &ndash; if you assign a string literal to some
+variable the compiler will figure out on its own that the variable
+must of type String (also note that Scala strings are Java strings &ndash;
+at least on the JVM). You&rsquo;ve got a lot of flexibility when you&rsquo;re
+calling methods &ndash; you can omit the braces and the dot in some
+scenarios &ndash; this makes it easy to create Domain Specific Languages in Scala.</p>
+
+<p>The REPL outputs both the result of the expression you&rsquo;ve evaluated
+and the output from the evaluation (if any). The result from the
+evaluation is assigned to automatically generated variables named resX
+(res0, res1, res3) and you can refer to them later on.</p>
+
+<h2>Object orientation purification</h2>
+
+<ul>
+<li>Everything is an object &ndash; there are no primitive types in Scala,
+though the compiler will map some Scala types to primitive Java
+types for performance whenever possible</li>
+<li>No operators, just methods
+
+<ul>
+<li><code>1 + 2 === 1.+(2)</code></li>
+</ul>
+</li>
+<li><p>No static fields &amp; methods &ndash; replaced by companion objects (a
+singleton object named the same way as the class). What would be a
+static field of a static method in Java will be a companion object
+field/method in Scala. This makes the Scala OO model purer than that
+of some other languages (of course in languages like Ruby where
+classes are objects class variables and methods have more or less
+the same meaning and the model is just a pure if not purer).</p></li>
+<li><p><a href="http://www.scala-lang.org/node/126">Traits</a> &ndash; the evolution of interfaces</p>
+
+<ul>
+<li>Traits are interfaces on steroids</li>
+<li>They can contain state as well as behaviour</li>
+<li>Think of them more as Ruby&rsquo;s mixins than Java&rsquo;s interfaces</li>
+<li>They can be implemented on the fly by objects</li>
+<li>They are too complex to be properly explained in one short blog post :&ndash;)</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Functional programming</h2>
+
+<p>Functional programming has many aspects, but to get the bulk of it you
+need just two magical ingredients &ndash; support for functions as objects
+and a nice array of immutable data structures. Scala, naturally, has
+both. Traditionally OOP languages have rarely had much support for
+functional programming, which makes it awkward to express some
+problems in them. Steve Yegge wrote an excellent article on the
+subject some time ago &ndash; <a href="http://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html">&ldquo;Execution in the kingdom of the
+nouns&rdquo;</a>.</p>
+
+<h4>Return of the verbs</h4>
+
+<ul>
+<li><p>Functions are first class objects</p>
+
+<ul>
+<li>val inc = (x: Int) => x + 1</li>
+<li>inc(1) // => 2</li>
+</ul>
+</li>
+<li><p>Higher-order functions</p>
+
+<ul>
+<li>List(1, 2, 3).map((x: Int) => x + 1) // => List(2, 3, 4)</li>
+</ul>
+</li>
+<li><p>Sugared functions</p>
+
+<ul>
+<li>List(1, 2, 3).map(x => x + 1)</li>
+<li>List(1, 2, 3).map(_ + 1)</li>
+</ul>
+</li>
+</ul>
+
+
+<h4>Closures</h4>
+
+<p>Closures are basically functions that have captured variables from an
+external scope (variables that were not parameters of the
+functions). Closures are often used as the parameters of higher-order
+functions (functions that take functions as parameters):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">var</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">10</span>
+</span><span class='line'><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">addToX</span> <span class="k">=</span> <span class="o">(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span><span class='line'><span class="n">addToX</span><span class="k">:</span> <span class="o">(</span><span class="kt">Int</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="nc">Int</span> <span class="k">=</span> <span class="o">&lt;</span><span class="n">function1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">addToX</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
+</span><span class='line'><span class="n">res0</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">12</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">addToX</span><span class="o">(</span><span class="mi">6</span><span class="o">)</span>
+</span><span class='line'><span class="n">res1</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">16</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">5</span>
+</span><span class='line'><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">5</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">addToX</span><span class="o">(</span><span class="mi">10</span><span class="o">)</span>
+</span><span class='line'><span class="n">res2</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">15</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Functional data structures</h4>
+
+<p>Functional programming revolves around the concept of immutability &ndash;
+nothing is ever changed &ndash; we have some input, we get some output and
+the input is not changed in the process. Consider a simple operation
+like an addition of an element to a list:</p>
+
+<ul>
+<li>the operation could modify the list to which the element is being
+added</li>
+<li>the operation can return a new list that is the same as the
+original, but has the additional element</li>
+</ul>
+
+
+<p>Functional programming favours the second approach and Scala as a
+functional programming language provides data structures with the
+desired behaviour.</p>
+
+<ul>
+<li>List &ndash; think here of Lisp lists and not Java lists(unless you&rsquo;re
+thinking of Java linked lists that is)</li>
+<li>Maps</li>
+<li>Sets</li>
+<li>Trees</li>
+<li>Stacks</li>
+</ul>
+
+
+<p>Scala doesn&rsquo;t force you into functional programming, though. Apart
+from the List, which is always immutable, we have two types of all the
+core data structures mentioned &ndash; immutable and mutable. The immutable
+data structures are those imported by default to promote a more
+functional programming style, but you can easily switch to the mutable
+versions and program in an imperative manner.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">import</span> <span class="nn">scala.collection.mutable.Map</span>
+</span><span class='line'><span class="k">import</span> <span class="nn">scala.collection.mutable.Map</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">phoneBook</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">(</span><span class="s">&quot;Bozhidar&quot;</span> <span class="o">-&gt;</span> <span class="mi">123</span><span class="o">,</span> <span class="s">&quot;Ivan&quot;</span> <span class="o">-&gt;</span> <span class="mi">456</span><span class="o">)</span>
+</span><span class='line'><span class="n">phoneBook</span><span class="k">:</span> <span class="kt">scala.collection.mutable.Map</span><span class="o">[</span><span class="kt">java.lang.String</span>,<span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">((</span><span class="nc">Ivan</span><span class="o">,</span><span class="mi">456</span><span class="o">),</span> <span class="o">(</span><span class="nc">Bozhidar</span><span class="o">,</span><span class="mi">123</span><span class="o">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">phoneBook</span> <span class="o">+=</span> <span class="s">&quot;Maya&quot;</span> <span class="o">-&gt;</span> <span class="mi">53434</span>
+</span><span class='line'><span class="n">res13</span><span class="k">:</span> <span class="kt">phoneBook.</span><span class="k">type</span> <span class="o">=</span> <span class="nc">Map</span><span class="o">((</span><span class="nc">Maya</span><span class="o">,</span><span class="mi">53434</span><span class="o">),</span> <span class="o">(</span><span class="nc">Ivan</span><span class="o">,</span><span class="mi">456</span><span class="o">),</span> <span class="o">(</span><span class="nc">Bozhidar</span><span class="o">,</span><span class="mi">123</span><span class="o">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>List almighty</h4>
+
+<p>The list is a core data structure in functional programming because it is
+recursively defined and therefore it&rsquo;s very suitable for use in
+recursive algorithms. A list is composed of cons cells, each having
+two components &ndash; the value it holds and a reference to a next cons
+cell. The last cell points to a special value &ndash; Nil (which happens to
+represent an empty list).</p>
+
+<p><code>1 | -&gt; 2 | -&gt; 3 | -&gt; Nil</code></p>
+
+<p>Here&rsquo;s some things you can do with Scala&rsquo;s lists:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="mi">1</span> <span class="o">::</span> <span class="mi">2</span> <span class="o">::</span> <span class="mi">3</span> <span class="o">::</span> <span class="mi">4</span> <span class="o">::</span> <span class="mi">5</span> <span class="o">::</span> <span class="nc">Nil</span>
+</span><span class='line'><span class="n">res3</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">names</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="s">&quot;Neo&quot;</span><span class="o">,</span> <span class="s">&quot;Trinity&quot;</span><span class="o">,</span> <span class="s">&quot;Morpheus&quot;</span><span class="o">,</span> <span class="s">&quot;Tank&quot;</span><span class="o">,</span> <span class="s">&quot;Dozer&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="n">names</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">java.lang.String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Neo</span><span class="o">,</span> <span class="nc">Trinity</span><span class="o">,</span> <span class="nc">Morpheus</span><span class="o">,</span> <span class="nc">Tank</span><span class="o">,</span> <span class="nc">Dozer</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">.</span><span class="n">length</span>
+</span><span class='line'><span class="n">res4</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">5</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="n">println</span><span class="o">)</span>
+</span><span class='line'><span class="nc">Neo</span>
+</span><span class='line'><span class="nc">Trinity</span>
+</span><span class='line'><span class="nc">Morpheus</span>
+</span><span class='line'><span class="nc">Tank</span>
+</span><span class='line'><span class="nc">Dozer</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">toUpperCase</span><span class="o">)</span>
+</span><span class='line'><span class="n">res6</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">java.lang.String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="nc">NEO</span><span class="o">,</span> <span class="nc">TRINITY</span><span class="o">,</span> <span class="nc">MORPHEUS</span><span class="o">,</span> <span class="nc">TANK</span><span class="o">,</span> <span class="nc">DOZER</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">.</span><span class="n">forall</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="o">)</span>
+</span><span class='line'><span class="n">res7</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">false</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">.</span><span class="n">forall</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="o">)</span>
+</span><span class='line'><span class="n">res8</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">startsWith</span><span class="o">(</span><span class="s">&quot;T&quot;</span><span class="o">))</span>
+</span><span class='line'><span class="n">res9</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">java.lang.String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Trinity</span><span class="o">,</span> <span class="nc">Tank</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">.</span><span class="n">exists</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">3</span><span class="o">)</span>
+</span><span class='line'><span class="n">res10</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">.</span><span class="n">drop</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
+</span><span class='line'><span class="n">res11</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">java.lang.String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Morpheus</span><span class="o">,</span> <span class="nc">Tank</span><span class="o">,</span> <span class="nc">Dozer</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">.</span><span class="n">reverse</span>
+</span><span class='line'><span class="n">res12</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">java.lang.String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Dozer</span><span class="o">,</span> <span class="nc">Tank</span><span class="o">,</span> <span class="nc">Morpheus</span><span class="o">,</span> <span class="nc">Trinity</span><span class="o">,</span> <span class="nc">Neo</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">.</span><span class="n">sortBy</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">length</span><span class="o">)</span>
+</span><span class='line'><span class="n">res13</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">java.lang.String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Neo</span><span class="o">,</span> <span class="nc">Tank</span><span class="o">,</span> <span class="nc">Dozer</span><span class="o">,</span> <span class="nc">Trinity</span><span class="o">,</span> <span class="nc">Morpheus</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">.</span><span class="n">sort</span><span class="o">(</span><span class="k">_</span> <span class="o">&gt;</span> <span class="k">_</span><span class="o">)</span>
+</span><span class='line'><span class="n">res14</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">java.lang.String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Trinity</span><span class="o">,</span> <span class="nc">Tank</span><span class="o">,</span> <span class="nc">Neo</span><span class="o">,</span> <span class="nc">Morpheus</span><span class="o">,</span> <span class="nc">Dozer</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">.</span><span class="n">slice</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span>
+</span><span class='line'><span class="n">res16</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">java.lang.String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Morpheus</span><span class="o">,</span> <span class="nc">Tank</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Pattern matching</h4>
+
+<p>You can think of Scala&rsquo;s pattern matching as a super charged version
+of switch, capable of matching on a variety of criteria and of
+destructuring that matched objects. Here&rsquo;s a simple example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">testMatching</span><span class="o">(</span><span class="n">something</span><span class="k">:</span> <span class="kt">Any</span><span class="o">)</span> <span class="k">=</span> <span class="n">something</span> <span class="k">match</span> <span class="o">{</span>
+</span><span class='line'>     <span class="o">|</span>   <span class="k">case</span> <span class="mi">1</span> <span class="k">=&gt;</span> <span class="s">&quot;one&quot;</span>
+</span><span class='line'>     <span class="o">|</span>   <span class="k">case</span> <span class="s">&quot;two&quot;</span> <span class="k">=&gt;</span> <span class="mi">2</span>
+</span><span class='line'>     <span class="o">|</span>   <span class="k">case</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="s">&quot;an integer number&quot;</span>
+</span><span class='line'>     <span class="o">|</span>   <span class="k">case</span> <span class="n">x</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=&gt;</span> <span class="s">&quot;some string&quot;</span>
+</span><span class='line'>     <span class="o">|</span>   <span class="k">case</span> <span class="o">&lt;</span><span class="n">xmltag</span><span class="o">&gt;{</span><span class="n">content</span><span class="o">}&lt;/</span><span class="n">xmltag</span><span class="o">&gt;</span> <span class="k">=&gt;</span> <span class="n">content</span>
+</span><span class='line'>     <span class="o">|</span>   <span class="k">case</span> <span class="n">head</span> <span class="o">::</span> <span class="n">tail</span> <span class="k">=&gt;</span> <span class="n">head</span>
+</span><span class='line'>     <span class="o">|</span>   <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="s">&quot;something else entirely&quot;</span>
+</span><span class='line'>     <span class="o">|</span> <span class="o">}</span>
+</span><span class='line'><span class="n">testMatching</span><span class="k">:</span> <span class="o">(</span><span class="kt">something:</span> <span class="kt">Any</span><span class="o">)</span><span class="kt">Any</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">testMatching</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+</span><span class='line'><span class="n">res18</span><span class="k">:</span> <span class="kt">Any</span> <span class="o">=</span> <span class="n">one</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">testMatching</span><span class="o">(</span><span class="s">&quot;two&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="n">res19</span><span class="k">:</span> <span class="kt">Any</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">testMatching</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
+</span><span class='line'><span class="n">res20</span><span class="k">:</span> <span class="kt">Any</span> <span class="o">=</span> <span class="n">an</span> <span class="n">integer</span> <span class="n">number</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">testMatching</span><span class="o">(</span><span class="s">&quot;matrix&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="n">res21</span><span class="k">:</span> <span class="kt">Any</span> <span class="o">=</span> <span class="n">some</span> <span class="n">string</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">testMatching</span><span class="o">(&lt;</span><span class="n">xmltag</span><span class="o">&gt;</span><span class="k">this</span> <span class="n">is</span> <span class="n">in</span> <span class="n">the</span> <span class="n">tag</span><span class="o">&lt;/</span><span class="n">xmltag</span><span class="o">&gt;)</span>
+</span><span class='line'><span class="n">res22</span><span class="k">:</span> <span class="kt">Any</span> <span class="o">=</span> <span class="k">this</span> <span class="n">is</span> <span class="n">in</span> <span class="n">the</span> <span class="n">tag</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">testMatching</span><span class="o">(</span><span class="nc">List</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">))</span>
+</span><span class='line'><span class="n">res23</span><span class="k">:</span> <span class="kt">Any</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">testMatching</span><span class="o">(</span><span class="mf">3.9</span><span class="o">)</span>
+</span><span class='line'><span class="n">res24</span><span class="k">:</span> <span class="kt">Any</span> <span class="o">=</span> <span class="n">something</span> <span class="k">else</span> <span class="n">entirely</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Pattern matching gives you a new way to implement common programming
+task. For instance consider the following trivial problem &ndash; computing
+the length of a list:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">length</span><span class="o">(</span><span class="n">list</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Any</span><span class="o">])</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">list</span> <span class="k">match</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">case</span> <span class="n">head</span> <span class="o">::</span> <span class="n">tail</span> <span class="k">=&gt;</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">length</span><span class="o">(</span><span class="n">tail</span><span class="o">)</span>
+</span><span class='line'>  <span class="k">case</span> <span class="nc">Nil</span> <span class="k">=&gt;</span> <span class="mi">0</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Sure, it&rsquo;s not tail-recursive, but it&rsquo;s pretty neat. Now that I
+mentioned tail-recursion I should probably say a bit more about
+it. Recursive solutions generally look very nice in source form, but
+performance-wise are not that great because each recursive call
+creates a new stack frame and what&rsquo;s even worse is that stack frames
+are limited &ndash; create too many of them and your program will blow
+up. This doesn&rsquo;t mean that we should start coding everything
+imperatively, of course. Some compilers have the ability to optimize
+away recursive calls if the last thing that happens in the recursive
+function is a call to the function itself. In the case of our function <em>length</em>,
+unfortunately, the last call happens to be of the method <strong>+</strong> of the
+object <strong>1</strong> (of class Int). We can improve the solution this way:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">length</span><span class="o">(</span><span class="n">list</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Any</span><span class="o">])</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">lengthrec</span><span class="o">(</span><span class="n">list</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Any</span><span class="o">],</span> <span class="n">result</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">list</span> <span class="k">match</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">head</span> <span class="o">::</span> <span class="n">tail</span> <span class="k">=&gt;</span> <span class="n">lengthrec</span><span class="o">(</span><span class="n">tail</span><span class="o">,</span> <span class="n">result</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+</span><span class='line'>    <span class="k">case</span> <span class="nc">Nil</span> <span class="k">=&gt;</span> <span class="n">result</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">lengthrec</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notice that we now have a nested helper method with a second parameter,
+an accumulator value. This pattern often recurs when dealing with tail
+recursion &ndash; we take the original recursive definition and introduce a
+helper method using accumulator that is tail recursive. The outer
+method just calls the helper method and waits for the result. The
+Scala compiler will translate internally this recursive function into
+a something like a loop and the performance will be greatly improved,
+while preserving the clarity of the recursive approach.</p>
+
+<p>Some languages (like Scheme) will always optimize tail calls. Because
+of limitations in the JVM not all tail calls can be optimized in Scala
+(for now), but
+some tails recursion is better than none.</p>
+
+<h2>Parallel programming</h2>
+
+<p>With the advent of multi-core processors concurrent programming is
+becoming indispensable. Scala&rsquo;s primary concurrency construct is
+actors. Actors are basically concurrent processes that communicate by
+exchanging messages. Actors can also be seen as a form of active
+objects where invoking a method corresponds to sending a
+message. Actors are not a new idea &ndash; Scala&rsquo;s actor library draws heavy
+inspiration from Erlang &ndash; a programming language notable for its
+support for the development of distributed highly parallel systems.</p>
+
+<p>The Scala Actors library provides both asynchronous and synchronous
+message sends (the latter are implemented by exchanging several
+asynchronous messages). Moreover, actors may communicate using futures
+where requests are handled asynchronously, but return a representation
+(the future) that allows to await the reply.</p>
+
+<p>All actors execute in parallel by their nature. Each actor acts as if
+it contains its own dedicated thread of execution.</p>
+
+<p>Here&rsquo;s a very simple actor example. The echoActor runs forever and
+waits for messages:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">import</span> <span class="nn">scala.actors.Actor._</span>
+</span><span class='line'><span class="k">val</span> <span class="n">echoActor</span> <span class="k">=</span> <span class="n">actor</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">receive</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">case</span> <span class="n">msg</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;received: &quot;</span><span class="o">+</span><span class="n">msg</span><span class="o">)</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">echoActor</span> <span class="o">!</span> <span class="s">&quot;Chuck Norris is the only real actor!&quot;</span>
+</span><span class='line'><span class="n">echoActor</span> <span class="o">!</span> <span class="s">&quot;You don&#39;t find Chuck Norris - Chuck Norris finds you!&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here the actor just waits for messages and responds to them by
+printing them to the console. Since the article&rsquo;s size is already
+quite impressive I won&rsquo;t go into any further details about the actors.</p>
+
+<p>I want you to know that actors are not the only way to write parallel
+programs in Scala. You still have access to the native Java (or .Net)
+primitive like threads, locks, executors, etc. Another option is the
+Scala implementation of Software Transactional Memory(STM) &ndash; a
+parallel programming model made recently popular by the Clojure
+programming language. Scala&rsquo;s implementation is a work in progress and
+you can have a look a it
+<a href="http://nbronson.github.com/scala-stm/">here</a>. STM is basically a
+programming technique that lets you model concurrent operations in a
+way similar to db transactions &ndash; you combine the critical code in a
+transaction and if possible execute it and commit the transaction,
+otherwise just rollback it and maybe try again after a while. Note that this is a
+<em>great</em> oversimplification of what&rsquo;s actually happening &ndash; for all the
+gory details you should read the exhaustive documentation.</p>
+
+<h2>Tools</h2>
+
+<p>We all know that even the best programming language can be rendered
+useless by the lack of good development tools for it &ndash; powerful text
+editors, integrated development environments, profilers, build tools,
+etc. Scala is a relatively young programming language that became
+really popular just recently and as a result there are still no
+development environments for Scala as powerful as those for Java
+(although since both languages use static typing eventually the
+environments will be on par). Most popular Java IDEs features feature
+some form of Scala support and most Java build tools as well.</p>
+
+<ul>
+<li><p>IDE</p>
+
+<ul>
+<li><p><a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a> &ndash; the ultimate
+Scala IDE at the moment. It works quite well, but it&rsquo;s a bit
+buggy that the moment (which is to be expected of something with
+some many beta features).</p></li>
+<li><p><a href="http://www.scala-ide.org/">Eclipse</a> &ndash; the most
+popular Java IDE has a Scala plug-in that
+until recently was mostly useless, but currently is being
+totally reworked and the next stable version will bring usable
+Scala support to the Eclipse users. The development of the new
+Scala plug-in is headed by none other than Martin Odersky
+himself. Don&rsquo;t bother using the older version at all &ndash; just grab
+the latest beta.</p></li>
+<li><p><a href="http://wiki.netbeans.org/Scala69">NetBeans</a> &ndash; Presently the
+Scala support in NetBeans is a bit basic, but it&rsquo;s usable.</p></li>
+<li><p><a href="https://github.com/aemoncannon/ensime">Emacs ENSIME</a> &ndash; Ok, I admit &ndash; Emacs is not actually an IDE
+per se, but it&rsquo;s still much more powerful than most IDEs. Emacs
+happens to have an excellent Scala mode, called ENSIME that
+gives you code completion, instant feedback, an integrated REPL,
+SBT integration, refactorings and other goodies in an Emacs
+package. The project attempts to be the equivalent of the legendary SLIME (
+an Emacs mode for Common Lisp) for Scala. ENSIME is integrated
+into the <a href="https://github.com/bbatsov/emacs-dev-kit">Emacs Dev Kit</a>(maintained by yours truly).</p></li>
+</ul>
+</li>
+<li><p>Scala distribution</p>
+
+<ul>
+<li><p>scala &ndash; A Scala REPL for exploratory programming; it&rsquo;s also the
+Scala &ldquo;interpreter&rdquo; and the Scala class runner</p></li>
+<li><p>scalac &ndash; the Scala compiler</p></li>
+<li><p>fsc &ndash; fast Scala compiler. The Scala compiler is notoriously
+slow to start and fsc is a partial solution to this problem. The fsc runs
+as a daemon and waits to receive files to compile. Maven&rsquo;s
+scala:cc and sbt&rsquo;s ~compile continuous compilation task use fsc internally.</p></li>
+<li><p>sbaz &ndash; The Scala Bazaar System, sbaz for short, is a packaging
+system developed to automate the task of mainaining a Scala
+installation. The program allows you to easily upgrade your
+installation as soon as a new version is available. You can also
+contribute your own packages, and make them easily available to
+other sbaz users.</p></li>
+</ul>
+</li>
+<li><p>Build tools</p>
+
+<ul>
+<li><a href="http://maven.apache.org">Apache Maven</a></li>
+<li><a href="http://buildr.apache.org">Apache Buildr</a></li>
+<li><a href="http://gradle.org">Gradle</a></li>
+<li><a href="http://code.google.com/p/simple-build-tool/">SBT</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Killer apps</h2>
+
+<p>Scala presently doesn&rsquo;t have that many killer apps. Here are the most
+prominent:</p>
+
+<ul>
+<li><p><a href="http://liftweb.net/">Lift web framework</a> &ndash; Lift is a web framework
+that has cherry-picked some of the best ideas from existing frameworks and
+added some novelties of its own to harness the capabilities of the
+Scala programming language.</p>
+
+<ul>
+<li>Lazy page loading</li>
+<li>Parallel rendering</li>
+<li>Comet &amp; Ajax</li>
+<li>Wiring</li>
+<li>Designer friendly templates</li>
+<li>Wizard</li>
+<li>Security</li>
+</ul>
+</li>
+<li><p><a href="http://www.playframework.org/">Play framework</a> &ndash; Play focuses on
+developer productivity and targets RESTful architectures. It has
+both a Java and a Scala API. It&rsquo;s considered by many to be the first
+Java web framework that was actually made by web developers.</p></li>
+<li><p><a href="http://akka.io/">Akka</a> &ndash; A powerful library for writing concurrent applications
+using Actors, STM &amp; Transactors. It has both Scala and Java API.</p></li>
+<li><p><a href="http://code.google.com/p/simple-build-tool/">SBT</a> &ndash; a powerful
+build tool</p></li>
+</ul>
+
+
+<h2>Success stories</h2>
+
+<ul>
+<li><a href="http://www.artima.com/scalazine/articles/twitter_on_scala.html">Twitter</a>  &ndash; you remember how often Twitter used to go down because of
+overloads and suddenly the problems stopped &ndash; no, this was the
+moment in which Twitter&rsquo;s backend was rewritten in Scala (that
+moment never actually came)&hellip; I have it on good authority that the
+problem was actually resolved by great improvements in their Ruby
+code base. But they use Scala there &ndash; Twitter had a Ruby-based
+queueing system that we used for communicating between the Rails
+front ends and the daemons that often crashed under heavy loads, and
+they ended up replacing that with one written in Scala.</li>
+<li><a href="http://www.scala-lang.org/node/5130">Four square</a> &ndash; Four square
+uses Lift as well</li>
+<li><a href="http://www.scala-lang.org/node/6436">LinkedIn</a></li>
+<li>SAP</li>
+<li><a href="http://www.infoq.com/articles/guardian_scala">Guardian.co.uk</a></li>
+</ul>
+
+
+<h2>Comparison to Java</h2>
+
+<p>It&rsquo;s only natural that Java developers are interested in how Scala
+stacks up to Java:</p>
+
+<ul>
+<li>Pros
+
+<ul>
+<li>Scala is fast, just as fast as Java. Some might wonder why this
+is a feature &ndash; they should take a look at the performance of the
+most of the other JVM langs and they&rsquo;ll understand. Granted, all
+of the performance benefits come from the use of static typing
+in Scala, but Scala&rsquo;s code is often as concise as the code
+written in a dynamic language like Ruby or Groovy.</li>
+<li>Great Java interoperability</li>
+<li>Scala removes a lot of the incidental complexity of programming
+and let&rsquo;s you express your thoughts directly in the source code</li>
+<li>The syntax of Scala is mostly uniform and you can usually easily
+create new abstractions that look like language built-ins.</li>
+<li>Scala features great support for parallel programming.</li>
+<li>Runs on both Java and .Net (at least in theory)</li>
+</ul>
+</li>
+<li>Cons
+
+<ul>
+<li>Some aspects of the language are fairly complex like the
+subtyping rules for instance. This will probably scare off some
+people, but I can assure you that this complexity is superficial
+and once you&rsquo;ve grasped enough of Scala everything will fall
+into place and seem to you the most natural thing in the world.</li>
+<li>Calling Scala from Java is not as easy as calling Java from
+Scala.</li>
+<li>The core API is still subject to constant changes and most new
+Scala version are not backward compatible with the old ones
+(unlike in Java).</li>
+<li>Scala&rsquo;s community (albeit very friendly and helpful) is current
+tiny compared to Java&rsquo;s. You might not get an assistance from
+the community as quickly as you&rsquo;d get it for Java related
+problems.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Resources</h2>
+
+<ul>
+<li>Books
+
+<ul>
+<li><a href="http://programming-scala.labs.oreilly.com/">Programming Scala</a>
+
+<ul>
+<li>great free on-line book</li>
+</ul>
+</li>
+<li><a href="http://www.artima.com/pins1ed/">Programming in Scala</a> &ndash; the holy
+bible of Scala. The first edition is available for free on-line.</li>
+</ul>
+</li>
+<li>Blogs &amp; Websites
+
+<ul>
+<li><a href="http://www.scala-lang.org">Official web site</a></li>
+<li><a href="http://www.codecommit.com/blog/">Daniel Spiewak&rsquo;s blog</a></li>
+<li><a href="http://daily-scala.blogspot.com/">Daily Scala</a></li>
+</ul>
+</li>
+<li>Exercises
+
+<ul>
+<li><a href="http://aperiodic.net/phil/scala/s-99/">99 Scala problems</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>Scala&rsquo;s future is nothing but bright. It uses static typing, which is
+familiar to so many Java and C# developers, and is also the
+prerequisite for creating very helpful IDEs. Scala runs on the
+venerable Java platform and easily leverages all of its power while
+adding a lot of magic of its own &ndash; implicits, type inference, pattern
+matching, functional programming support, actors and others.</p>
+
+<p>It&rsquo;s my personal opinion that if any language has the chance to
+displace Java as the king of the world &ndash; that might be Scala. In all
+likelihood this will never happen &ndash; rarely has the greatest solutions
+enjoyed the greatest popularity (remember the Betamax vs VHS?). I do
+believe, however, that Scala will capture a significant market share
+in the coming years &ndash; mainly due to it excellent support for building
+distributed systems.</p>
+
+<p>Until next time and the next chapter of the story, dedicated to the
+rising star of the JVM world &ndash; Clojure.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-08T00:00:00+03:00" pubdate data-updated="true">May 8<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/java/'>Java</a>, <a class='category' href='/articles/categories/scala/'>Scala</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2011/05/08/jvm-langs-scala/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2011/05/08/jvm-langs-scala/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2011/05/06/jvm-langs-groovy/" title="Previous Post: Java.next() - The Groovy Programming Language">&laquo; Java.next() - The Groovy Programming Language</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2011/05/11/zenburn-emacs/" title="Next Post: A new Zenburn theme for Emacs">A new Zenburn theme for Emacs &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/10/the-road-to-cider-0-dot-8/">The Road to CIDER 0.8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/09/05/clojure-mode-3-dot-0/">Clojure-mode 3.0</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

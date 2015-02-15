@@ -1,0 +1,1215 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Java.next() - The Groovy Programming Language - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Java.next() In a series of articles labeled &ldquo;Java.next()&rdquo; I&rsquo;ll be discussing
+modern alternatives to the Java programming language &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2011/05/06/jvm-langs-groovy">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Java.next() - the Groovy Programming Language</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-06T00:00:00+03:00" pubdate data-updated="true">May 6<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Java.next()</h2>
+
+<p>In a series of articles labeled &ldquo;Java.next()&rdquo; I&rsquo;ll be discussing
+modern alternatives to the Java programming language for use with the
+Java Platform. This is the first installment of the series &ndash; &ldquo;The
+Groovy Programming Language&rdquo;.</p>
+
+<h2>Prelude</h2>
+
+<p>We all know and love the Java <em>platform</em>(note the emphasis on
+platform) for a couple of obvious reasons. Most notably it features a
+huge high quality standard library and a legendary execution
+environment &ndash; the Java Virtual Machine(JVM). The JVM is known to
+posses the following qualities:</p>
+
+<ul>
+<li>Runs on all major platforms</li>
+<li>Enterprise ready</li>
+<li>Extremely stable</li>
+<li>Extremely fast</li>
+<li>Highly customizable &ndash; many aspects of its work can easily be
+adjusted such as GC settings, heap settings, etc.</li>
+</ul>
+
+
+<p>There is a terrific community around the Java platform that has
+contributed an immense amount of high quality software vital to the
+success of Java. Hibernate, Spring, Eclipse, NetBeans, the myriad of
+Apache projects are all community efforts.</p>
+
+<p>So far so good, but it&rsquo;s not all rainbows and unicorns in the land of
+Java. The Java programming language is a common source of gripe
+amongst many developers for various reasons. I&rsquo;ll list here some of
+the more notable of them:</p>
+
+<ul>
+<li>It&rsquo;s not a pure OOP language(there is a difference between primitive
+and reference data types)</li>
+<li>It uses static typing(highly subjective topic, but commonly brought up)</li>
+<li>It doesn&rsquo;t have support for closures(which instantly kills half of
+functional&rsquo;s programming ideas such as higher order functions)</li>
+<li>It has limited meta programming capabilities(compared to Ruby and
+Lisp for instance)</li>
+<li>There is no concept of top-level procedures(outside of class
+definitions)(this makes Java unsuitable for creating &ldquo;script&rdquo; programs)</li>
+<li>Its syntax is too verbose</li>
+<li>It&rsquo;s not suitable for the creation of DSLs</li>
+<li>Its development is sluggish and restrained by the corporate promise of backward compatibility</li>
+<li>It&rsquo;s an imperative language</li>
+<li>Its parallel programming model is revolving mostly around locks and
+threads</li>
+</ul>
+
+
+<p>Naturally there are some languages that alleviate some(most) of Java&rsquo;s
+problems such as:</p>
+
+<ul>
+<li>Ruby</li>
+<li>Python</li>
+<li>Lisp</li>
+<li>Erlang</li>
+<li>Haskell</li>
+</ul>
+
+
+<p>They all, however, lack(with their default implementations at least)
+an execution environment that can match the JVM. They also lack Java&rsquo;s
+immense amount of libraries currently available. When enthusiasts
+started porting existing languages to the JVM this came as no surprise
+&ndash; it was only logical. A good language get a good execution
+environment. For instance some folks ported Ruby to Java which
+resulted in JRuby, Python also got a Java port called Jython. Though a
+lot of good has come from such ports they was also a price to pay. In
+the case of Ruby and Python some libraries are not written in
+Ruby/Python, but in C for performance reasons, which naturally leads
+to problems when you factor in a Java implementation of the
+language. There is also the fact that the JVM(currently) doesn&rsquo;t have
+support for dynamic memory dispatching which is feature vital for
+dynamically typed languages to get a decent performance. For this
+reason Jython is notoriously slow. The JRuby team did a much better
+work, circumvented a lot of the JVM limitations and actually managed
+to create a Ruby implementation that in some scenarios beats the
+performance of the standard MRI Ruby 1.9 with it&rsquo;s custom YARV virtual
+machine implemented in C. JRuby will be the object of a further
+discussion down the road. Some of the languages that were ported to
+the JVM suffer from another problem as well &ndash; it&rsquo;s not straightforward
+and efficient in them to reuse existing Java libraries directly.</p>
+
+<p>I&rsquo;d like to lead this discussion in another direction, however &ndash;
+programming languages that were implemented from scratch with the JVM
+as their execution environment. While there are many of those three
+stand out and have gathered a significant momentum in recent
+years. They will be the subject of this post and the following
+two. Without further adieu I&rsquo;d like you to meet Groovy, Scala and
+Clojure.</p>
+
+<p>We&rsquo;ll begin our discussion with Groovy&hellip;</p>
+
+<p><strong>Disclaimer</strong></p>
+
+<p><em>Before I start I&rsquo;d like to point out that my knowledge of Groovy is
+limited compared to my knowledge of Scala and Clojure. Despite this I
+decided to share my thoughts on the language because it&rsquo;s certainly one
+of the most popular JVM languages out there. If I&rsquo;ve made any errors
+in the article I didn&rsquo;t mean to insult anyone with my ignorance and
+I&rsquo;ll certainly be glad to fix them when someone points them out.</em></p>
+
+<h2>A little bit of Groovy history</h2>
+
+<p>James Strachan first talked about the development of Groovy in his
+<a href="http://radio-weblogs.com/0112098/2003/08/29.html">blog</a> in August
+2003. Several versions were released between 2004 and 2006. After the
+JCP(yep, you read that correct &ndash; Groovy is actually a Java standard
+which is great or scary depending on your point of view)
+standardization process began, the version numbering was changed and a
+version called &ldquo;1.0&rdquo; was released on January 2, 2007. After various
+betas and release candidates numbered 1.1, on December 7, 2007, Groovy
+1.1 Final was released and immediately rebranded as Groovy 1.5 as a
+reflection of the many changes that were made.</p>
+
+<p>In July 2009, Strachan wrote on his blog that &ldquo;I can honestly say if
+someone had shown me the Programming in Scala book by Martin Odersky,
+Lex Spoon &amp; Bill Venners back in 2003 I&rsquo;d probably have never created
+Groovy.&rdquo; Strachan left the project silently a year before the
+Groovy 1.0 release in 2007. Leadership of the project was assumed by
+Guillaume Laforge (Project Manager and JSR-241 Spec Lead). Under his
+guidance Groovy thrived and his risen to be arguably the most widely
+used JVM language apart from Java.</p>
+
+<p>Currently the development of Groovy proceeds with a very fast pace and
+the latest major update 1.8.0 was released just a couple of days ago.</p>
+
+<h2>Installation &amp; Getting started</h2>
+
+<p><strong>Platform independent installation</strong>
+These instructions describe how to install a binary distribution of Groovy.</p>
+
+<ul>
+<li>download a <a href="http://groovy.codehaus.org/Download">binary distribution of Groovy</a> and unpack it into some file on your local file system</li>
+<li>set your GROOVY_HOME environment variable to the directory you unpacked the distribution</li>
+<li>add GROOVY_HOME/bin to your PATH environment variable</li>
+<li>set your JAVA_HOME environment variable to point to your JDK. On OS
+X this is /Library/Java/Home, on other unixes its often /usr/java
+etc. If you&rsquo;ve already installed tools like Ant or Maven you&rsquo;ve
+probably already done this step.</li>
+</ul>
+
+
+<p>For instance here&rsquo;s the relevant information of my shell&rsquo;s
+configuration:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/java/latest
+</span><span class='line'><span class="nb">export </span><span class="nv">GROOVY_HOME</span><span class="o">=</span>/opt/groovy-1.8.0
+</span><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$GROOVY_HOME</span>/bin:<span class="nv">$PATH</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should now have Groovy installed properly. You can test this by
+typing the following in a command shell:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>groovysh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which should create an interactive groovy shell where you can type
+Groovy statements. Or to run the Swing interactive console type:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>groovyConsole
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To run a specific Groovy script type:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>groovy SomeScript.groovy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Linux installation</h4>
+
+<p>Most Linux distributions provide Groovy through their integrated
+package management system. On Debian(and derivatives like Ubuntu) you
+can install it like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install groovy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On Red Hat systems the magic incantation looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install groovy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Personally I&rsquo;d prefer the platform-independent installation method,
+since some distribution package Groovy in a non-standard manner which
+confuses IDEs for instance.</p>
+
+<h4>Windows installation</h4>
+
+<p>Groovy features a native <a href="http://dist.codehaus.org/groovy/distributions/installers/windows/nsis/groovy-1.8.0-installer.exe">Windows installer</a>.</p>
+
+<h2>Meet Groovy</h2>
+
+<blockquote><p>&#8220;Groovy is like a super version of Java. It can leverage Java&#8217;s<br/>enterprise capabilities but also has cool productivity features like<br/>closures, builders and dynamic typing. If you are a developer, tester<br/>or script guru, you have to love Groovy.&#8221;</p><footer><strong>Praise for Groovy,</strong> <cite><a href='http://groovy.codehause.org'>groovy.codehause.org/&hellip;</a></cite></footer></blockquote>
+
+
+<p>Groovy is:</p>
+
+<ul>
+<li>is one of the two standard languages for the JVM(the other is Java
+of course)</li>
+<li>is an agile and dynamic language for the Java Virtual Machine</li>
+<li>builds upon the strengths of Java but has additional power features inspired by languages like Python, Ruby and Smalltalk</li>
+<li>makes modern programming features available to Java developers with almost-zero learning curve</li>
+<li>supports Domain-Specific Languages and other compact syntax so your
+code becomes easy to read and maintain</li>
+<li>makes writing shell and build scripts easy with its powerful processing primitives, OO abilities and an Ant DSL</li>
+<li>increases developer productivity by reducing scaffolding code when developing web, GUI, database or console applications</li>
+<li>simplifies testing by supporting unit testing and mocking out-of-the-box</li>
+<li>seamlessly integrates with all existing Java classes and libraries</li>
+<li>compiles straight to Java bytecode so you can use it anywhere you
+can use Java</li>
+</ul>
+
+
+<p>Some of Groovy&rsquo;s most compelling features are:</p>
+
+<ul>
+<li>Pure OOP language</li>
+<li>Mostly Java compatible syntax</li>
+<li>Optional typing</li>
+<li>No need to wait for a future version of Java to get:
+
+<ul>
+<li>Closures</li>
+<li>Attributes</li>
+<li>Smart switch</li>
+</ul>
+</li>
+<li>Duck typing</li>
+<li>BigInteger based arithmetic
+
+<ul>
+<li>This deserves some special explanation because of a rather
+strange design decision in Groovy. Groovy will create a
+BigIntiger out of a large enough number literal, but it won&rsquo;t
+promote the result of an integer operation into BigInteger &ndash;
+the result will actually overflow, in contrast to the semantics of most
+other dynamically typed languages. Multiply 1000 * 1000000000
+and you will end up with -727379968 in Groovy.</li>
+</ul>
+</li>
+<li>SQL, XML &amp; Swing improvements</li>
+<li>Unified data access API</li>
+</ul>
+
+
+<p>A core idea, guiding the design of Groovy, is making it easy to use for
+existing Java developers. Groovy&rsquo;s designers have gone so far in that
+direction that the Groovy compiler will happily compile most Java
+source files without the need for any modifications. Groovy, however,
+builds heavily upon the standard Java&rsquo;s syntax and you&rsquo;ll do well to
+get a grip of Groovy&rsquo;s core idioms. Groovy&rsquo;s syntax in a nutshell:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">// old school Java code, but also valid Groovy code</span>
+</span><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// idiomatic Groovy</span>
+</span><span class='line'><span class="n">println</span> <span class="s">&quot;Hello, world!&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// dynamic variable definition</span>
+</span><span class='line'><span class="n">def</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Bozhidar&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// GString featuring string interpolation</span>
+</span><span class='line'><span class="n">println</span> <span class="s">&quot;Hello, $name&quot;</span>  <span class="c1">// =&gt; &quot;Hello, Bozhidar&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// statically typed variable</span>
+</span><span class='line'><span class="n">String</span> <span class="n">songName</span> <span class="o">=</span> <span class="s">&quot;Coding in the Name of&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">println</span> <span class="s">&quot;Now playing - $songName&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">String</span> <span class="n">multiline</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;this is a multiline</span>
+</span><span class='line'><span class="s">string. There is not need to embed</span>
+</span><span class='line'><span class="s">newline characters in it&quot;&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">println</span> <span class="n">multiline</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// method definition</span>
+</span><span class='line'><span class="n">def</span> <span class="nf">greet</span><span class="o">(</span><span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">println</span> <span class="s">&quot;Hello, $name!&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// method invocation</span>
+</span><span class='line'><span class="n">greet</span> <span class="s">&quot;Bozhidar&quot;</span>
+</span><span class='line'><span class="n">greet</span><span class="o">(</span><span class="s">&quot;Bozhidar&quot;</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// safe dereferencing</span>
+</span><span class='line'><span class="n">def</span> <span class="nf">showSize</span><span class="o">(</span><span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">println</span> <span class="s">&quot;List size is: ${list?.size}&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">showSize</span><span class="o">([</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">])</span>
+</span><span class='line'><span class="c1">// this is the important part</span>
+</span><span class='line'><span class="n">showSize</span><span class="o">(</span><span class="kc">null</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// a list</span>
+</span><span class='line'><span class="n">def</span> <span class="n">beers</span> <span class="o">=</span> <span class="o">[</span><span class="s">&quot;Zagorka&quot;</span><span class="o">,</span> <span class="s">&quot;Bolyarka&quot;</span><span class="o">,</span> <span class="s">&quot;Shumensko&quot;</span><span class="o">,</span> <span class="s">&quot;Ariana&quot;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// list access</span>
+</span><span class='line'><span class="n">println</span> <span class="s">&quot;My favourite beer is ${beers[1]}&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">beers</span><span class="o">.</span><span class="na">each</span> <span class="o">{</span> <span class="n">beer</span> <span class="o">-&gt;</span> <span class="n">println</span> <span class="n">beer</span> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// imports can appear anywhere and support the creation of aliases</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">static</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Calendar</span><span class="o">.</span><span class="na">getInstance</span> <span class="n">as</span> <span class="n">now</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.sql.Date</span> <span class="n">as</span> <span class="n">SDate</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">println</span> <span class="nf">now</span><span class="o">()</span>
+</span><span class='line'><span class="c1">// java.util package is automatically imported in Groovy so this is java.util.Date</span>
+</span><span class='line'><span class="n">println</span> <span class="k">new</span> <span class="nf">Date</span><span class="o">()</span>
+</span><span class='line'><span class="n">println</span> <span class="k">new</span> <span class="nf">SDate</span><span class="o">(</span><span class="mi">2011</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// language support for regular expressions</span>
+</span><span class='line'><span class="k">if</span> <span class="o">(</span><span class="s">&quot;Hello, Groovy&quot;</span> <span class="o">=~</span> <span class="o">/</span><span class="err">\</span><span class="n">w</span><span class="o">+,</span><span class="err">\</span><span class="n">s</span><span class="err">\</span><span class="n">w</span><span class="o">+/)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">println</span> <span class="s">&quot;It matches&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// range filtering with higher-order functions</span>
+</span><span class='line'><span class="o">(</span><span class="mi">1</span><span class="o">..</span><span class="mi">10</span><span class="o">).</span><span class="na">findAll</span> <span class="o">{</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">}.</span><span class="na">each</span> <span class="o">{</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">println</span> <span class="n">n</span> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// map</span>
+</span><span class='line'><span class="n">def</span> <span class="n">capitols</span> <span class="o">=</span> <span class="o">[</span><span class="nl">Bulgaria:</span> <span class="s">&quot;Sofia&quot;</span><span class="o">,</span> <span class="nl">USA:</span> <span class="s">&quot;Washington&quot;</span><span class="o">,</span> <span class="nl">England:</span><span class="s">&quot;London&quot;</span><span class="o">,</span> <span class="nl">France:</span><span class="s">&quot;Paris&quot;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">println</span> <span class="n">capitols</span><span class="o">[</span><span class="s">&quot;Bulgaria&quot;</span><span class="o">]</span> <span class="c1">// =&gt; Sofia</span>
+</span><span class='line'><span class="n">println</span> <span class="n">capitols</span><span class="o">[</span><span class="s">&quot;France&quot;</span><span class="o">]</span>  <span class="c1">// =&gt; Paris</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// class definition</span>
+</span><span class='line'><span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">def</span> <span class="n">name</span>
+</span><span class='line'>    <span class="n">def</span> <span class="n">age</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nf">Person</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">age</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;Name {$name}, age {$age}&quot;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">def</span> <span class="n">me</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Person</span><span class="o">(</span><span class="s">&quot;Bozhidar&quot;</span><span class="o">,</span> <span class="mi">26</span><span class="o">)</span>
+</span><span class='line'><span class="n">println</span> <span class="n">me</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>From the brief overview you might have noticed that like Ruby and
+Python Groovy has language support for commonly used data structures
+such as lists, maps, ranges and regular expressions:</p>
+
+<ul>
+<li>List &ndash; def number = [1, 2, 3]</li>
+<li>Map &ndash; def countries = [BG: “Bulgaria”, DE: “Germany]</li>
+<li>Range &ndash; def range = 1..1000</li>
+<li>Regular expressions &ndash; def whitespace = /\s+/</li>
+</ul>
+
+
+<p>You might have noticed another interesting feature in Groovy &ndash; the
+ability to combine static type(like in Java) with dynamic typing(like
+in Ruby and Python). The keyword <em>def</em> is used to introduce
+dynamically typed variables in Groovy.</p>
+
+<p>Groovy comes with its very own standard library(GDK) which builds upon
+the JDK(for instance the File and String classes are enhanced in
+Groovy) and offer some new features like the Groovy&rsquo;s famous builders.</p>
+
+<h2>OOP in Groovy</h2>
+
+<p>Groovy is a pure object oriented language. Everything is an object,
+operations are methods, etc. Compared the Java the picture looks right
+about this way:</p>
+
+<ul>
+<li><p>Similar capabilities to Java</p>
+
+<ul>
+<li>Define classes, interfaces, enums, annotations</li>
+</ul>
+</li>
+<li><p>Differences to Java</p>
+
+<ul>
+<li>Classes (and interfaces etc.) public by default</li>
+<li>Methods public by default</li>
+<li>Property support within classes (auto-setters/getters)</li>
+<li>Duck typing</li>
+</ul>
+</li>
+</ul>
+
+
+<p>Java developers should feel mostly at home.</p>
+
+<h2>SQL and XML handling</h2>
+
+<p>Groovy offers some nice improvements over JDBC and JAXP for handling
+database queries and XML parsing.</p>
+
+<p>Groovy removes a lot of boilerplate when dealing with SQL queries
+compared to the native JDBC API:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">groovy.sql.Sql</span>
+</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">Sql</span><span class="o">.</span><span class="na">newInstance</span><span class="o">(</span><span class="s">&quot;jdbc:mysql://host/db&quot;</span><span class="o">,</span> <span class="s">&quot;username&quot;</span><span class="o">,</span> <span class="s">&quot;password&quot;</span><span class="o">,</span> <span class="s">&quot;com.mysql.jdbc.Driver&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="n">sql</span><span class="o">.</span><span class="na">eachRow</span><span class="o">(</span><span class="s">&quot;select * from tableName&quot;</span><span class="o">,</span> <span class="o">{</span> <span class="n">println</span> <span class="n">it</span><span class="o">.</span><span class="na">id</span> <span class="o">+</span> <span class="s">&quot; -- ${it.firstName} --&quot;</span><span class="o">}</span> <span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This code is written for a connection to a MySQL database. You will
+need to adjust all the parameters to newInstance to connect to your
+database, especially username and password.  Finally the third line
+calls the eachRow method of sql, passing in two arguments, the first
+being the query string, the second being a closure to print out some
+values.  Notice that in the closure the fields of &ldquo;it&rdquo; are accessed in
+two different ways. The first is as a simple field reference,
+accessing the id field of it. The second is the included Groovy
+expression mentioned above.</p>
+
+<p>So the output from a row might look like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="mi">1</span> <span class="o">--</span> <span class="n">Bozhidar</span> <span class="o">--</span>
+</span><span class='line'><span class="mi">2</span> <span class="o">--</span> <span class="n">Maya</span> <span class="o">--</span>
+</span><span class='line'><span class="mi">3</span> <span class="o">--</span> <span class="n">Kate</span> <span class="o">--</span>
+</span><span class='line'><span class="mi">4</span> <span class="o">--</span> <span class="n">Valentine</span> <span class="o">--</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>XML processing is common enough task in computing and Groovy&rsquo;s
+developers tried to make it simple and straightforward as
+possible. Let&rsquo;s parse the following file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;books&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;book&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;title&gt;</span>Dune<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;author</span> <span class="na">firstname=</span><span class="s">&quot;Frank&quot;</span> <span class="na">lastname=</span><span class="s">&quot;Herbert&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/book&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;book&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;title&gt;</span>Dune Messiah<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;author</span> <span class="na">firstname=</span><span class="s">&quot;Frank&quot;</span> <span class="na">lastname=</span><span class="s">&quot;Herbert&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/book&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;book&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;title&gt;</span>Children of Dune<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;author</span> <span class="na">firstname=</span><span class="s">&quot;Frank&quot;</span> <span class="na">lastname=</span><span class="s">&quot;Herbert&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/book&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;book&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;title&gt;</span>A Game of Thrones<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;author</span> <span class="na">firstname=</span><span class="s">&quot;George&quot;</span> <span class="na">lastname=</span><span class="s">&quot;Martin&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/book&gt;</span>
+</span><span class='line'><span class="nt">&lt;/books&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>All the code we need to write is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">def</span> <span class="n">books</span> <span class="o">=</span> <span class="k">new</span> <span class="n">XmlSlurper</span><span class="o">().</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;books.xml&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="n">books</span><span class="o">.</span><span class="na">book</span><span class="o">.</span><span class="na">each</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">println</span> <span class="s">&quot;Title = ${it.title}, Author: ${it.author.@firstname} ${it.author.@lastname}&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ruby and Python developers probably aren&rsquo;t particularly impressed, but
+I can only imagine the look on the faces of Java developers that are
+generally required to write huge amount of boilerplate code when
+dealing with XML.</p>
+
+<h2>Builders</h2>
+
+<p>Groovy has special syntax support for List and Maps. This is great
+because it gives a concise representation of the actual object being
+defined, so its easier to keep track of what a program or script is
+doing. But what about programs which contain arbitrary nested tree
+structures. Surely, they are the hardest ones to keep track of what is
+going on. Isn&rsquo;t that an area where syntactic help will be most
+beneficial?</p>
+
+<p>The answer is definitely yes and Groovy comes to the party with its
+builder concept. You can use it for DOM-like APIs or Ant tasks or
+Jelly tags or Swing widgets or whatever. Each may have their own
+particular factory mechanism to create the tree of objects &ndash; however
+they can share the same builder syntax to define them &ndash; in a concise
+alternative to XML or lengthy programming code.</p>
+
+<p>One use for builders is the generation of markup:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">groovy.xml.*</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">def</span> <span class="n">page</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MarkupBuilder</span><span class="o">()</span>
+</span><span class='line'><span class="n">page</span><span class="o">.</span><span class="na">html</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">head</span> <span class="o">{</span> <span class="n">title</span> <span class="err">&#39;</span><span class="n">Hello</span><span class="o">,</span> <span class="n">Groovy</span><span class="o">!</span><span class="err">&#39;</span> <span class="o">}</span>
+</span><span class='line'>    <span class="n">body</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">div</span> <span class="o">{</span>
+</span><span class='line'>            <span class="mi">3</span><span class="o">.</span><span class="na">times</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">p</span> <span class="s">&quot;Groovy power!&quot;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Result:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;html&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;head&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;title&gt;</span>Hello, Groovy!<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/head&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;body&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;p&gt;</span>Groovy power!<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;p&gt;</span>Groovy power!<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;p&gt;</span>Groovy power!<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Builders can also be used to create Swing GUIs. Here&rsquo;s a very small example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.awt.FlowLayout</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">groovy</span><span class="o">.</span><span class="na">swing</span><span class="o">.</span><span class="na">SwingBuilder</span><span class="o">()</span>
+</span><span class='line'><span class="n">langs</span> <span class="o">=</span> <span class="o">[</span><span class="s">&quot;Groovy&quot;</span><span class="o">,</span> <span class="s">&quot;Scala&quot;</span><span class="o">,</span> <span class="s">&quot;Clojure&quot;</span><span class="o">]</span>
+</span><span class='line'><span class="n">gui</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="na">frame</span><span class="o">(</span><span class="nl">size:</span> <span class="o">[</span><span class="mi">290</span><span class="o">,</span> <span class="mi">100</span><span class="o">],</span> <span class="nl">title:</span> <span class="err">&#39;</span><span class="n">Groovy</span> <span class="n">Swing</span><span class="err">&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">panel</span><span class="o">(</span><span class="nl">layout:</span> <span class="k">new</span> <span class="n">FlowLayout</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">panel</span><span class="o">(</span><span class="nl">layout:</span> <span class="k">new</span> <span class="n">FlowLayout</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">for</span> <span class="o">(</span><span class="n">lang</span> <span class="n">in</span> <span class="n">langs</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">radioButton</span><span class="o">(</span><span class="nl">text:</span> <span class="n">lang</span><span class="o">)</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">button</span><span class="o">(</span><span class="nl">text:</span> <span class="err">&#39;</span><span class="n">Perform</span> <span class="n">Magic</span><span class="err">&#39;</span><span class="o">,</span> <span class="nl">actionPerformed:</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">builder</span><span class="o">.</span><span class="na">optionPane</span><span class="o">(</span><span class="nl">message:</span> <span class="s">&quot;Feel the power of Groovy!&quot;</span><span class="o">).</span>
+</span><span class='line'>                    <span class="n">createDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="err">&#39;</span><span class="n">Message</span><span class="err">&#39;</span><span class="o">).</span><span class="na">show</span><span class="o">()</span>
+</span><span class='line'>        <span class="o">})</span>
+</span><span class='line'>        <span class="n">button</span><span class="o">(</span><span class="nl">text:</span> <span class="err">&#39;</span><span class="n">Quit</span><span class="err">&#39;</span><span class="o">,</span>
+</span><span class='line'>                <span class="nl">actionPerformed:</span> <span class="o">{</span><span class="n">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">0</span><span class="o">)})</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="n">gui</span><span class="o">.</span><span class="na">show</span><span class="o">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Run the code to see the resulting GUI!</p>
+
+<h2>Groovy tooling</h2>
+
+<ul>
+<li><p>IDE</p>
+
+<ul>
+<li><a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a> &ndash; the ultimate
+Groovy IDE. It&rsquo;s excellent Groovy support is part of its open
+source Community Edition.</li>
+<li><a href="http://groovy.codehaus.org/Eclipse+Plugin">Eclipse</a> &ndash; the most
+popular Java IDE has an actively maintained Groovy plugin</li>
+<li><a href="http://netbeans.org/features/groovy/">NetBeans</a> &ndash; Like IDEA
+NetBeans features built-in Groovy support</li>
+</ul>
+</li>
+<li><p>Groovy distribution</p>
+
+<ul>
+<li>groovysh &ndash; A Groovy REPL for exploratory programming</li>
+<li>groovyConsole &ndash; A GUI groovy shell with extended capabilities,
+that is handy for the development and testing of small Groovy scripts</li>
+<li>groovyc &ndash; the Groovy compiler</li>
+</ul>
+</li>
+<li><p>Build tools</p>
+
+<ul>
+<li><a href="http://maven.apache.org">Apache Maven</a></li>
+<li><a href="http://buildr.apache.org">Apache Buildr</a></li>
+<li><a href="http://gradle.org">Gradle</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Killer apps</h2>
+
+<ul>
+<li><a href="http://grails.org">Grails</a>
+
+<ul>
+<li>Groovy port of Ruby on Rails</li>
+<li>Leverages the best Java technologies
+
+<ul>
+<li>Hibernate</li>
+<li>Spring</li>
+<li>Tomcat</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="http://gradle.org">Gradle</a> &ndash; powerful build tool, considered by many vastly superior to
+Maven. Several high profile projects(such as Hibernate) already
+migrated their builds to Gradle.</li>
+<li><a href="http://griffon.codehaus.org/">Griffon</a> &ndash; a Grails like application
+framework for developing desktop applications</li>
+</ul>
+
+
+<h2>Common use cases</h2>
+
+<p>Groovy is a general purpose language, but it&rsquo;s used for some tasks
+more often than for others. It&rsquo;s extremely suitable for:</p>
+
+<ul>
+<li>web application development(usually with Grails)</li>
+<li>scripting(although you have to factor in the cold startup time of
+the JVM before you start writing all your scripts in Groovy)</li>
+<li>tests development &ndash; it&rsquo;s a common practice in many Java projects to
+have the tests written in Groovy</li>
+<li>GUI development(usually with Griffon)</li>
+<li>Rapid prototyping &ndash; you&rsquo;d do a quick app prototype in Groovy as a
+proof on concept and then you&rsquo;d create a Java application based on
+it</li>
+<li>Exploratory programming &ndash; the groovysh is a great way to test class
+capabilities, methods and ideas with almost zero overhead &ndash; no
+annoying compile/run cycles to slow you down</li>
+</ul>
+
+
+<p>When performance is critical you&rsquo;d probably want to avoid
+Groovy. According to some benchmarks around the Internet(like
+<a href="http://stronglytypedblog.blogspot.com/2010/02/java-vs-scala-vs-groovy-vs-groovy.html">this one</a>)
+Groovy is much slower than Java for certain tasks. I, however, haven&rsquo;t
+read any new benchmarks on the subject and have no idea how reliable
+the old ones are and how relevant they are to the current Groovy
+version.</p>
+
+<h2>Future prospects</h2>
+
+<p>With so many languages being created all the time developers
+naturally ask themselves the same question over and over again &ndash;
+should I waste my time learning this language? Related questions seem
+to be:</p>
+
+<ul>
+<li>Will it endure the test of time?</li>
+<li>Does it have a vibrant and committed community around it?</li>
+<li>Can I find professional support?</li>
+<li>Does it integrate well with out current infrastructure?</li>
+<li>Does it have good tooling?</li>
+</ul>
+
+
+<p>After all most of the currently popular languages like Java, C# and
+PHP are nothing spectacular on their own, but have a combination of
+factors that worked in their favour to get them to the top &ndash; solid
+companies behind them, many deployment options and just the right
+amount of beefing up/simplifying C/C++ make existing developers transition to the
+new languages a relatively easy and painless experience.</p>
+
+<p>SpringSource(the company responsible for the creation of the popular
+Spring framework, now a division of VMWare) employs most of the core
+Groovy developers and offers both <a href="http://www.springsource.com/developer/grails">Groovy and Grails support</a>. The fact
+that a company such as this one believes in the technology is very
+important whey you&rsquo;re trying to sell using Groovy in your current
+company. And if you&rsquo;re existing infrastructure is built around Java &ndash;
+well, you have next to nothing to worry about, except maybe will Java 7
+deliver the promised speed improvement for dynamic languages
+implemented on top of it.</p>
+
+<p>Presently the Groovy community is vast and rapidly growing. The
+language itself &ndash; constantly evolving.</p>
+
+<p>NetBeans and IntelliJ have built-in Groovy support, which is a big
+testament to the language&rsquo;s popularity as well.</p>
+
+<p>In a sentence I don&rsquo;t see Groovy disappearing or dying anytime soon
+even if its original creator has lost faith in it.</p>
+
+<h2>Groovy resources</h2>
+
+<ul>
+<li>Books
+
+<ul>
+<li><a href="http://www.manning.com/koenig2/">&ldquo;Groovy in Action&rdquo;</a></li>
+<li><a href="http://pragprog.com/titles/vslg/programming-groovy">&ldquo;Programming Groovy&rdquo;</a></li>
+</ul>
+</li>
+<li>On-line resources
+
+<ul>
+<li><a href="http://groovy.codehaus.org/User+Guide">Official documentation</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>Groovy is a language aiming to bring dynamic productivity to Java
+developer without introducing them to a steep learning curve. The
+language is beautifully architectured and integrates seamlessly with
+the existing Java libraries and infrastructure. My biggest gripe with
+Groovy was the lack of advanced support for parallel and concurrent
+programming. A few days before I wrote this article, however, Groovy
+1.8.0 was released and it features the excellent library for parallel
+programming <a href="http://gpars.codehaus.org/">GPars</a>. Groovy&rsquo;s performance
+is not stellar at this point, but I guess
+this will be improved upon in Java 7.</p>
+
+<p>With its easy to grasp Java-like syntax Groovy is a solid contender
+for the attention of Java developers. A growing number of Groovy
+related job offerings is a sign of Groovy&rsquo;s acceptance as a industrial
+strength tool.</p>
+
+<p>Some people criticize Groovy for the lack of innovation and claim that
+it&rsquo;s simply an amalgam of ideas borrowed from other languages. I don&rsquo;t
+see nothing bad with that approach as long as the features are
+tastefully combined. Groovy might not be the most elegant language out
+there, but it&rsquo;s one of the most practical ones and will help you get
+the job done.</p>
+
+<hr />
+
+<p><em>P.S. Coming up next is a discussion of the Scala programming
+language.</em></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-06T00:00:00+03:00" pubdate data-updated="true">May 6<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/groovy/'>Groovy</a>, <a class='category' href='/articles/categories/java/'>Java</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2011/05/06/jvm-langs-groovy/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2011/05/06/jvm-langs-groovy/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2011/05/03/ruby-or-python/" title="Previous Post: Ruby or Python? Well, it depends...">&laquo; Ruby or Python? Well, it depends...</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2011/05/08/jvm-langs-scala/" title="Next Post: Java.next() - Scala: The Revenge of the Static Typing">Java.next() - Scala: The Revenge of the Static Typing &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/10/the-road-to-cider-0-dot-8/">The Road to CIDER 0.8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/09/05/clojure-mode-3-dot-0/">Clojure-mode 3.0</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

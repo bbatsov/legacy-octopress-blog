@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Color Theming in Emacs: Reloaded - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude If there is something that people love as much as tweaking their
+editing configurations it&rsquo;s probably the selection of color themes. A &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2012/02/19/color-theming-in-emacs-reloaded">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Color Theming in Emacs: Reloaded</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T12:17:00+02:00" pubdate data-updated="true">Feb 19<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Prelude</h2>
+
+<p>If there is something that people love as much as tweaking their
+editing configurations it&rsquo;s probably the selection of color themes. A
+good color theme can make your work much more pleasant and a bad one
+that literally impair your vision. It&rsquo;s a fact of life that I&rsquo;m a firm
+supporter of low-contrast color themes with dark backgrounds &ndash; I find
+them easy on the eyes and I feel that they don&rsquo;t strain the eyes as
+much as most themes. I&rsquo;ve even ported a couple of popular themes to
+Emacs &ndash; <a href="https://github.com/bbatsov/zenburn-emacs">Zenburn</a> and
+<a href="https://github.com/bbatsov/solarized-emacs">Solarized</a>.</p>
+
+<p>In this short article we&rsquo;ll see how color theming has changed in Emacs
+24 and I&rsquo;ll share with you a few tips on theme creation and
+distribution.</p>
+
+<!--more-->
+
+
+<h2>Color Theming in Emacs 24</h2>
+
+<p>Prior to Emacs 24 the most popular way to incorporate custom color
+themes into Emacs was the
+<a href="http://www.emacswiki.org/emacs/ColorTheme">color-theme package</a>. While
+it usually got the job done it had some problems that I won&rsquo;t be
+discussing here and more importantly &ndash; it&rsquo;s a third-party package,
+that&rsquo;s not part of Emacs proper.</p>
+
+<p><a href="http://batsov.com/articles/2011/08/19/a-peek-at-emacs24/">Emacs 24</a>
+finally introduced a new standard way of dealing with color themes
+(based on Emacs&rsquo;s built-in customize facility). While it doesn&rsquo;t have
+a proper name (as far as I know) it&rsquo;s commonly referred to as the
+<code>deftheme</code> facility, since <code>deftheme</code> is the name of the macro you&rsquo;d
+use to create such a theme. ( <code>deftheme</code> has actually been around
+since Emacs 23, but it was heavily improved in Emacs 24 )</p>
+
+<p>Emacs 24 comes with a selection of built-in themes that you can choose
+from, so you&rsquo;re no longer bound to the default theme (which I find
+quite ugly). To choose a new theme just do a <code>M-x load-theme</code> (tab
+completion is available for the names of the available themes). At
+this point you can give the command a try with the <code>tango</code> theme. If you
+like a theme so much that you&rsquo;d want to use it all the time you can
+put in your Emacs configuration (<code>.emacs</code> or <code>init.el</code> for instance) like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">load-theme</span> <span class="ss">&#39;theme-name</span> <span class="no">t</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you&rsquo;d like to return to the default-theme just do a <code>M-x disable-theme</code>.</p>
+
+<p>How do you create a <code>deftheme</code> theme? Quite simply actually &ndash; just do
+a &ldquo;M-x customize-create-theme&rdquo;. You&rsquo;ll be presented with an UI
+prompting you for a theme name, description and faces. After you save
+the theme a file called <code>name-theme.el</code> will be written on your
+filesystem. Here&rsquo;s its skeleton:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">deftheme</span> <span class="nv">demo</span>
+</span><span class='line'>  <span class="s">&quot;Demo theme&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nv">custom-theme-set-faces</span>
+</span><span class='line'> <span class="ss">&#39;demo</span>
+</span><span class='line'> <span class="c1">;;; list of custom faces</span>
+</span><span class='line'> <span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nv">provide-theme</span> <span class="ss">&#39;demo</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There was also an online theme generator
+<a href="http://elpa.gnu.org/themes/">here</a>, but it seems to be down at the
+moment.</p>
+
+<p>Personally I dislike customize a lot, so when I needed to create a
+Emacs 24 theme for the first time I&rsquo;ve just opened the source code of
+the built-in tango theme and used it as a reference.</p>
+
+<p>Once you&rsquo;ve created the new theme you&rsquo;ll have to drop it in a folder
+that&rsquo;s on the <code>custom-theme-load-path</code>. I&rsquo;d suggest the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;custom-theme-load-path</span> <span class="s">&quot;~/.emacs.d/themes&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you&rsquo;re an <a href="https://github.com/bbatsov/prelude">Emacs Prelude</a>
+user you&rsquo;re already covered. This folder exists and is automatically
+added to <code>custom-theme-load-path</code> by Prelude, so all you have to do is
+drop there the themes you&rsquo;d want to try out.</p>
+
+<p>You may find the
+<a href="http://julien.danjou.info/software/rainbow-mode">rainbow-mode</a> useful
+when developing color themes. If fontifies strings that represent
+color codes according to those colors. The mode is known to be a great
+addition to css-mode, but I find it very helpful with color theme
+development as well. It&rsquo;s also included (and enabled) in Prelude by
+default. Here you can see it in action.</p>
+
+<p><img src="/images/articles/rainbow-mode.png"></p>
+
+<p>The Emacs package manager <code>package.el</code> (formerly known as ELPA) is
+gaining a lot of popularity lately and the community
+<a href="http://marmalade-repo.org/">Marmalade</a> repository already houses a few
+Emacs 24 themes that you can install from there. If you&rsquo;re developing
+a theme that you&rsquo;d like to submit to Marmalade it&rsquo;s imperative that
+the theme modifies the <code>custom-theme-load-path</code> in an <code>autoload</code> &ndash;
+otherwise it won&rsquo;t be of much use. Add the following snippet (or
+something similar) before the <code>provide-theme</code> line if your custom
+theme:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;;;###autoload</span>
+</span><span class='line'><span class="p">(</span><span class="nb">when</span> <span class="nv">load-file-name</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;custom-theme-load-path</span>
+</span><span class='line'>               <span class="p">(</span><span class="nv">file-name-as-directory</span> <span class="p">(</span><span class="nv">file-name-directory</span> <span class="nv">load-file-name</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&rsquo;d also advise you follow the proper naming convention
+<code>name-theme.el</code> so that it&rsquo;s apparent that your theme is <code>deftheme</code>
+compatible.</p>
+
+<p>Oh, and one more thing &ndash; porting themes from color-theme to deftheme is
+really simple (just have a look at the old and the new version of
+Zenburn in its repo), so you should really consider porting all the
+themes you maintain to <code>deftheme</code>.</p>
+
+<h1>Epilogue</h1>
+
+<p>Color theming in Emacs has never been easier. It&rsquo;s time to kill
+<code>color-theme</code> once and for all. If you&rsquo;ve ever developed a color theme
+for it I urge you to convert it to the <code>deftheme</code> format and upload it
+to Marmalade.</p>
+
+<p>And if you&rsquo;ve never developed a color theme for Emacs because you were
+afraid it was too hard &ndash; now is the time to do it.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T12:17:00+02:00" pubdate data-updated="true">Feb 19<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/emacs/'>Emacs</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2012/02/19/color-theming-in-emacs-reloaded/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2012/02/19/color-theming-in-emacs-reloaded/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2011/12/03/solarized-for-emacs/" title="Previous Post: Solarized for Emacs">&laquo; Solarized for Emacs</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/" title="Next Post: Package Management in Emacs: The Good, the Bad and the Ugly">Package Management in Emacs: The Good, the Bad and the Ugly &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/10/the-road-to-cider-0-dot-8/">The Road to CIDER 0.8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/09/05/clojure-mode-3-dot-0/">Clojure-mode 3.0</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2012/02/19/color-theming-in-emacs-reloaded/';
+        var disqus_url = 'http://batsov.com/articles/2012/02/19/color-theming-in-emacs-reloaded/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

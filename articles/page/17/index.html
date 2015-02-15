@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>(think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Sometimes it&rsquo;s useful to be able to open the file you&rsquo;re editing in
+Emacs in an external program. For instance &ndash; you might be &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/page/17">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/11/12/emacs-tip-number-2-open-file-in-external-program/">Emacs Tip #2: Open File in External Program</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-12T11:16:00+02:00" pubdate data-updated="true">Nov 12<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Sometimes it&rsquo;s useful to be able to open the file you&rsquo;re editing in
+Emacs in an external program. For instance &ndash; you might be editing
+some HTML file and you might want to see how is it looking in a
+browser. I use the following handy command to do so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">prelude-open-with</span> <span class="p">()</span>
+</span><span class='line'>  <span class="s">&quot;Simple function that allows us to open the underlying</span>
+</span><span class='line'><span class="s">file of a buffer in an external program.&quot;</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">when</span> <span class="nv">buffer-file-name</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">shell-command</span> <span class="p">(</span><span class="nv">concat</span>
+</span><span class='line'>                    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">eq</span> <span class="nv">system-type</span> <span class="ss">&#39;darwin</span><span class="p">)</span>
+</span><span class='line'>                        <span class="s">&quot;open&quot;</span>
+</span><span class='line'>                      <span class="p">(</span><span class="nv">read-shell-command</span> <span class="s">&quot;Open current file with: &quot;</span><span class="p">))</span>
+</span><span class='line'>                    <span class="s">&quot; &quot;</span>
+</span><span class='line'>                    <span class="nv">buffer-file-name</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On OSX it would use the <code>open</code> program to decide which program to open
+the file with, otherwise you&rsquo;d be prompted to enter the name of the
+program in the minibuffer.</p>
+
+<p>I find it convenient to bind the command to <code>C-c o</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c o&quot;</span><span class="p">)</span> <span class="ss">&#39;prelude-open-with</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This command is naturally part of <a href="https://github.com/bbatsov/prelude">Emacs Prelude</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/11/11/blogging-like-a-hacker-evolution/">Blogging Like a Hacker: Evolution</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-11T08:52:00+02:00" pubdate data-updated="true">Nov 11<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p>I&rsquo;ve started my personal blog some three years ago. Back then in was
+hosted on <a href="http://wordpress.com">wordpress.com</a> and was called
+devcraft.wordpress.com. I had a lot of interesting (at least to me)
+topics to write about on my mind, but I was immediately faced with a
+serious problem &ndash; I felt very uncomfortable writing posts in a small
+text area, using the primitive editing capabilities of a web
+browser. Ordinary decent hackers love and value two tools above all
+else &ndash; their text editor and their shell. And we love solving problems
+automatically with clever programs and scripts, instead of manually.</p>
+
+<p>I knew the only way to ever start writing, like I intended, to was to
+actively involve them in the process. So here my story begins&hellip;</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/articles/2011/11/11/blogging-like-a-hacker-evolution/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/10/30/deploying-rails31-apps-on-celadon-cedar/">Deploying Rails 3.1 Applications on Heroku&#8217;s Celadon Cedar Stack</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-30T00:00:00+03:00" pubdate data-updated="true">Oct 30<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p><a href="http://heroku.com">Heroku</a> is an amazing cloud hosting solution. It&rsquo;s extremely well
+documented, very easy to start with, very stable and provides you with
+the option to use free hosting for some small applications.</p>
+
+<p>While Heroku is generally known as a Ruby on Rails hosting company,
+since their acquisition by SalesForce last year, they&rsquo;ve expanded
+their deployment options a lot. Currently Ruby, Java, Scala, Clojure,
+Python and Node.js are all officially supported (on the Cedar Celadon
+stack) and more will probably come very soon.</p>
+
+<p>All of our company&rsquo;s applications are using
+<a href="http://guides.rubyonrails.org/">Ruby on Rails 3.1.x</a> and are
+targeting the <a href="http://ruby-lang.org">MRI 1.9.2</a>. Those two facts are
+the reason that we&rsquo;re using Heroku&rsquo;s
+<a href="http://devcenter.heroku.com/articles/cedar">Celadon Cedar</a> deployment
+stack. Celadon Cedar is currently in beta, but it offer a lot of
+benefit over the old (stable) Bamboo stack (which also support Rails
+3.1 apps and Ruby 1.9.2). For instance &ndash; Celadon is aware of the Rails
+3.1 asset pipeline and can compile the assets automatically when you
+deploy your apps to Heroku. With Bamboo you have to precompile the
+resources, which is a very tedious task.</p>
+
+<p>While our experience with Heroku has been very positive in
+general, we&rsquo;ve hit some bumps along the road, so I&rsquo;ve decided to share
+some of the problems and their solutions with everyone.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/articles/2011/10/30/deploying-rails31-apps-on-celadon-cedar/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/10/09/getting-started-with-emacs-24/">Getting Started With Emacs 24</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-09T00:00:00+03:00" pubdate data-updated="true">Oct 9<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p>Last month I&rsquo;ve blogged about the
+<a href="/articles/2011/08/19/a-peek-at-emacs24/">exciting things are coming up in Emacs 24</a>. What
+I failed to mention originally is that altough Emacs 24 is slated for
+a Spring 2012 (tentatively) release there is no real reason not to start using it
+now. You should also keep in mind that it&rsquo;s feature complete since it
+officially entered the feature freeze of its development cycle in July 2011.</p>
+
+<p>I&rsquo;ve been using Emacs 24 for several months now and it has been
+nothing but rock solid. I guess the only real obstacle currently is
+that the way to obtain Emacs 24 is not particularly straightfoward/clear,
+hence this post.</p>
+
+<p>I&rsquo;ll discuss here the installation and initial configuration of Emacs
+24 on OSX, GNU/Linux and Windows.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/articles/2011/10/09/getting-started-with-emacs-24/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/08/19/a-peek-at-emacs24/">A Peek at Emacs 24</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-19T00:00:00+03:00" pubdate data-updated="true">Aug 19<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p>Recently I&rsquo;ve decided to have a look at the current development
+version of Emacs &ndash; namely Emacs 24. I was quite impressed with the work done
+by the development team so far so I decided to share some of the cool things
+I&rsquo;ve found in Emacs 24.</p>
+
+<p>It seems to me that this will be the most important Emacs release in
+quite some time.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/articles/2011/08/19/a-peek-at-emacs24/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/articles/page/18/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/articles/page/16/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I&#8217;m a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/10/the-road-to-cider-0-dot-8/">The Road to CIDER 0.8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/09/05/clojure-mode-3-dot-0/">Clojure-mode 3.0</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

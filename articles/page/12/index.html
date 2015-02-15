@@ -1,0 +1,692 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>(think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude In this article I&rsquo;ll share with you a few tips and tricks about
+running Emacs under the Max OSX operating system. Installation While &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/page/12">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/10/14/emacs-on-osx/">Emacs on OSX</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-14T22:03:00+03:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p>In this article I&rsquo;ll share with you a few tips and tricks about
+running Emacs under the Max OSX operating system.</p>
+
+<h2>Installation</h2>
+
+<p>While Emacs is available for installation from
+<a href="http://wikemacs.org/wiki/Installing_Emacs_on_OS_X">various sources</a>
+I personally recommend you to use the
+<a href="http://wikemacs.org/wiki/Installing_Emacs_on_OS_X">Emacs for Mac OSX binary distribution</a>.</p>
+
+<p>Installation via Homebrew is also a decent option, although it more time consuming.</p>
+
+<p>After the installation you might want to wipe out the ancient Emacs 22
+that ships with OSX by default(its presence will only cause headaches, trust me):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo rm /usr/bin/emacs
+</span><span class='line'><span class="nv">$ </span>sudo rm -rf /usr/share/emacs
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Keep in mind that the OSX updates will (unfortunately) bring Emacs 22 back from the dead, so
+you might consider altering your <code>PATH</code> instead.</p>
+
+<p>Alternatively you can just create an alias in your shell and when you
+invoke <code>emacs</code> it will run the newly installed version:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">alias </span><span class="nv">emacs</span><span class="o">=</span><span class="s2">&quot;/Applications/Emacs.app/Contents/MacOS/Emacs&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you installed via Homebrew that path might look like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">alias </span><span class="nv">emacs</span><span class="o">=</span><span class="s2">&quot;/usr/local/Cellar/emacs/24.2/Emacs.app/Contents/MacOS/Emacs -nw&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To make it permanent, if using bash, add that line to
+<code>~/.bash_profile</code>. zsh users will want to update <code>~/.zshrc</code> instead.</p>
+
+<h2>Full-screen support</h2>
+
+<p>The Homebrew Emacs formula includes a patch providing the <code>M-x
+ns-toggle-fullscreen</code> command for switching between normal and
+full-screen modes. It works well, but does not provide the typical OS
+X Lion full-screen app experience. In particular, it remains on the
+desktop, obscuring non-full-screen applications, rather than moving to
+its own space. For OSX Lion style fullscreen support have a look at
+this
+<a href="http://sourcematters.org/2012/04/10/full-screen-emacs-24-for-os-x-lion.html">article</a>.</p>
+
+<p>Another option that you might want to explore is
+the <a href="http://osxdaily.com/2011/07/22/enable-full-screen-support-all-apps-os-x-lion-maximizer/">maximizer</a>
+utility that brings full-screen support for all Cocoa apps under Lion.</p>
+
+<h2>Keybindings</h2>
+
+<p>I heartily recommend you to remap your <em>Caps Lock</em> key to <em>Control</em>. This
+can be easily done via <em>Preferences &ndash;> Keyboard &ndash;> Modifier Keys</em>. If
+you&rsquo;re using a laptop keyboard or the bluetooth keyboard you&rsquo;ll
+definitely want to remap your right Option key to Control as
+well. No one can use effectively Emacs without a right Control
+key. Remapping it is a bit more involved and requires the use of the
+third-party utility
+<a href="http://pqrs.org/macosx/keyremap4macbook/">KeyRemap4MacBook</a>.</p>
+
+<p>On a regular Mac keyboard you&rsquo;ll probably want to map Command to Meta
+and Option to Super. On an external Windows keyboard you&rsquo;ll want to
+map Command to Super and Option to Meta (on Windows keyboard the
+Command and Option keys are swapped). Add this to your <code>init.el</code> (or
+<code>.emacs</code>) file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="k">setq</span> <span class="nv">mac-command-modifier</span> <span class="ss">&#39;super</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="k">setq</span> <span class="nv">mac-option-modifier</span> <span class="ss">&#39;meta</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you often switch between your laptop keyboard and an external
+Windows keyboard (like me) you might want to define this helper
+command and bind it to some key combo (<code>C-c w</code> in the example):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">swap-meta-and-super</span> <span class="p">()</span>
+</span><span class='line'>  <span class="s">&quot;Swap the mapping of meta and super. Very useful for people using their Mac</span>
+</span><span class='line'><span class="s">with a Windows external keyboard from time to time.&quot;</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">eq</span> <span class="nv">mac-command-modifier</span> <span class="ss">&#39;super</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">progn</span>
+</span><span class='line'>        <span class="p">(</span><span class="k">setq</span> <span class="nv">mac-command-modifier</span> <span class="ss">&#39;meta</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">(</span><span class="k">setq</span> <span class="nv">mac-option-modifier</span> <span class="ss">&#39;super</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">(</span><span class="nv">message</span> <span class="s">&quot;Command is now bound to META and Option is bound to SUPER.&quot;</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">(</span><span class="k">progn</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">setq</span> <span class="nv">mac-command-modifier</span> <span class="ss">&#39;super</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">setq</span> <span class="nv">mac-option-modifier</span> <span class="ss">&#39;meta</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nv">message</span> <span class="s">&quot;Command is now bound to SUPER and Option is bound to META.&quot;</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c w&quot;</span><span class="p">)</span> <span class="ss">&#39;swap-meta-and-super</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Setting the PATH variable</h2>
+
+<p>Long story short &ndash; if you&rsquo;re running Emacs from Spotlight (or any
+other launcher for that matter) your <code>PATH</code> and <code>exec-path</code> variables
+won&rsquo;t be same as the ones in your shell (and that&rsquo;s every nasty since
+you want be able to run some external programs from Emacs). The best
+way to handle this would be installing the package
+<a href="https://github.com/purcell/exec-path-from-shell">exec-path-from-shell</a>
+by Steve Purcell.</p>
+
+<h2>Flyspell</h2>
+
+<p>For flyspell to work correctly you&rsquo;ll need to install aspell plus a few dictionaries.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew install aspell --lang<span class="o">=</span>en
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>More goodies</h2>
+
+<p>If you want to spare yourself part of the headache of configuring
+Emacs on OSX and get a lot of extra firepower you might want to install
+<a href="https://github.com/bbatsov/prelude">Emacs Prelude</a> &ndash; an enhanced
+Emacs 24.x configuration (developed by yours truly) that should make
+your experience with Emacs both more pleasant and more powerful.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/10/14/rails-tip-number-1-use-pry-instead-of-irb-for-the-rails-console/">Rails Tip #1: Use Pry Instead of Irb for the Rails Console</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-14T18:06:00+03:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This tip is going to be a really short one. Hopefully by now you&rsquo;ve
+heard about <a href="http://pryrepl.org/">pry</a> &ndash; a fantastic <code>irb</code>
+replacement, that somewhat reminds me of the mighty Lisp REPLs. What
+you might not know is how to hook it into Rails so that the <code>rails
+console</code> (a.k.a. <code>rails c</code>) command would fire a pry shell instead of
+an irb one. There are several ways to do so, but I find one
+particularly straightforward &ndash; the awesome little gem
+<a href="https://github.com/rweng/pry-rails">pry-rails</a>.</p>
+
+<p>So what are you waiting for? Go ahead, install the little sucker and
+enjoy your new pry-powered Rails console.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/10/14/ruby-tip-number-3-matching-on-an-objects-class-in-a-case-expression/">Ruby Tip #3: Matching on an Object&#8217;s Class in a Case Expression</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-14T15:23:00+03:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>From time to time you might want to take different actions depending
+on an object&rsquo;s class. One handy way to do so is with a <code>case</code>
+expression:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">case</span> <span class="n">object</span>
+</span><span class='line'><span class="k">when</span> <span class="no">Fixnum</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is an integer number&#39;</span>
+</span><span class='line'><span class="k">when</span> <span class="nb">String</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is a string&#39;</span>
+</span><span class='line'><span class="k">when</span> <span class="no">Hash</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is a hash&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Behind the scenes this is transformed to:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">if</span> <span class="no">Fixnum</span> <span class="o">===</span> <span class="n">object</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s1">&#39;Object is an integer number&#39;</span>
+</span><span class='line'><span class="k">elsif</span> <span class="nb">String</span> <span class="o">===</span> <span class="n">object</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s1">&#39;Object is a string&#39;</span>
+</span><span class='line'><span class="k">elsif</span> <span class="no">Hash</span> <span class="o">===</span> <span class="n">object</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s1">&#39;Object is a hash&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A lot of people seem to make the following mistake, so beware:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># WRONG - Class === Class will return false</span>
+</span><span class='line'><span class="k">case</span> <span class="n">object</span><span class="o">.</span><span class="n">class</span>
+</span><span class='line'><span class="k">when</span> <span class="no">Fixnum</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is an integer number&#39;</span>
+</span><span class='line'><span class="k">when</span> <span class="nb">String</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is a string&#39;</span>
+</span><span class='line'><span class="k">when</span> <span class="no">Hash</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is a hash&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hopefully you&rsquo;ll find this small tip useful.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/09/12/setting-up-fallback-locale-s-in-rails-3/">Setting Up Fallback Locale(s) in Rails 3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-12T14:56:00+03:00" pubdate data-updated="true">Sep 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I18n(internationalization) and l10n(localization) are topics that are
+covered superbly by the
+<a href="http://guides.rubyonrails.org/i18n.html">Rails Guides</a>. The one thing
+that&rsquo;s left out is the setup of fallback locales in case something is
+missing in the currently selected locale (and mark my words &ndash;
+something probably is). Therefore I&rsquo;m writing this
+post.</p>
+
+<p>Ideally we&rsquo;d have i18n-ed and localized everything perfectly, but
+that&rsquo;s rarely the case. I&rsquo;d rather have the users see things from
+another locale than error messages. So how do we do that in Rails 3?
+It&rsquo;s pretty simple actually. There are three fallback options we can
+select and they all require small changes to the <code>application.rb</code> file.</p>
+
+<ul>
+<li>fallback to the default locale</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># fallback to what&#39;s specified in config.i18n.default_locale</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">i18n</span><span class="o">.</span><span class="n">fallbacks</span> <span class="o">=</span> <span class="kp">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>fallback to a specified locale</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># fallback to en, regardless of what&#39;s in config.i18n.default_locale</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">i18n</span><span class="o">.</span><span class="n">fallbacks</span> <span class="o">=</span> <span class="o">[</span><span class="ss">:en</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>specify a fallback map (different fallback locales for different
+locales)</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># missing translations of es and fr languages will fallback to english</span>
+</span><span class='line'><span class="c1"># missing translations in german will fallback to french</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">i18n</span><span class="o">.</span><span class="n">fallbacks</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;es&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;fr&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;de&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;fr&#39;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Well, that&rsquo;s the gist of it. Happy coding!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/09/09/from-linux-to-osx-1-year-later/">From Linux to OSX - 1 Year Later</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-09T22:11:00+03:00" pubdate data-updated="true">Sep 9<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p>A little more than an year ago I wrote my rant post
+<a href="http://batsov.com/articles/2011/06/11/linux-desktop-experience-killing-linux-on-the-desktop/">The Linux Desktop Experience is Killing Linux on the Desktop</a>
+and for the first time in 8 years I wasn&rsquo;t a desktop Linux user
+anymore. I spent about a month wrestling with Windows 7, but let&rsquo;s
+face it &ndash; Windows is ill suited for professional Ruby programmers like
+me (and it&rsquo;s ill suited for most programmers, except maybe Java &amp; .Net I
+guess).</p>
+
+<p>Anyways, it was never my intention to stick with Windows &ndash; I was just
+doing my Mac due diligence. Now with 1+ year of OSX usage I&rsquo;d
+like to share a few things about my experience thus far with you.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/articles/2012/09/09/from-linux-to-osx-1-year-later/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/articles/page/13/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/articles/page/11/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I&#8217;m a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/10/the-road-to-cider-0-dot-8/">The Road to CIDER 0.8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/09/05/clojure-mode-3-dot-0/">Clojure-mode 3.0</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

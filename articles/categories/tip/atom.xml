@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: tip | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/tip/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs Tip #7: Remap Return to Control in OSX]]></title>
+    <link href="http://batsov.com/articles/2012/12/06/emacs-tip-number-7-remap-return-to-control-in-osx/"/>
+    <updated>2012-12-06T16:06:00+02:00</updated>
+    <id>http://batsov.com/articles/2012/12/06/emacs-tip-number-7-remap-return-to-control-in-osx</id>
+    <content type="html"><![CDATA[<p>One of the major problems when using
+<a href="http://batsov.com/articles/2012/10/14/emacs-on-osx/">Emacs on OSX</a> is
+not related to OSX itself &ndash; the problem has to do with the Mac&rsquo;s
+hardware. Recent Mac keyboards(both laptop and desktop, with the
+exception of the wired full size Mac keyboard) lack a right <code>Control</code>
+key and it happens to be extremely important if you&rsquo;re looking to
+fully leverage the power of Emacs.</p>
+
+<p>The traditional solution to the problem is to use a tool like
+<a href="http://pqrs.org/macosx/keyremap4macbook/">KeyRemap4MacBook</a> to remap
+the right <code>Option</code> key to right <code>Control</code> and to use a snippet like
+this to make <code>Command</code> behave like <code>Meta</code> in Emacs:</p>
+
+<p><code>cl
+(setq mac-command-modifier 'meta)
+</code></p>
+
+<p>This works, but it&rsquo;s hardly ideal since you&rsquo;re remapping <code>Option</code> at
+fairly low level and you won&rsquo;t be able to use it anywhere as <code>Option</code>.</p>
+
+<p>A much better idea would be to leverage a little know capability of
+KeyRemap4MacBook (a great program which despite its name works with
+desktop Macs as well) and map the <code>Return</code> key to <code>Control</code> only
+when it&rsquo;s held down (it will behave like a normal Return key in all
+other situations). The option you&rsquo;ll have to find in KeyRemap4MacBook
+is in the <code>Change Return</code> section and it labeled <code>Return to Control_R
+(+ When you type Return only, send Return)</code>.</p>
+
+<p>This approach has several advantages.  First and foremost you&rsquo;re not
+sacrificing a valuable key like <code>Option</code>. Second &ndash; it&rsquo;s much easier to
+hit <code>Return</code> with your right pinky than it is to hit <code>Option</code>
+(especially if you&rsquo;re using a US layout keyboard &ndash; these have long
+single row <code>Return</code> keys, compared to the short 2 row Returns found on
+European keyboards). Lastly, if you&rsquo;ve already remapped <code>CapsLock</code> to
+<code>Control</code> (like so many people do) you&rsquo;re getting a pretty symmetrical
+mapping on the opposite side of your keyboard.</p>
+
+<p>All in all &ndash; remapping <code>Return</code> to <code>Control</code> is a huge win if you&rsquo;re
+using heavily one of Apple&rsquo;s smaller keyboards. Of course, if you have
+the option to use an external keyboard you&rsquo;d do yourself a solid if you
+obtained a good full size keyboard like the
+<a href="http://batsov.com/articles/2008/06/16/das-keyboard/">Das Keyboard</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs Tip #6: Remove variable &amp; function definitions]]></title>
+    <link href="http://batsov.com/articles/2012/10/20/emacs-tip-number-6-remove-variable-and-function-definitions/"/>
+    <updated>2012-10-20T20:29:00+03:00</updated>
+    <id>http://batsov.com/articles/2012/10/20/emacs-tip-number-6-remove-variable-and-function-definitions</id>
+    <content type="html"><![CDATA[<p>From time to time you might want to void (unbind) a variable or a
+function definition in Emacs. Most often you&rsquo;ll probably be dealing
+with variables created with <code>defvar</code> whose values you&rsquo;ll want to
+update.  The magic functions you need are the following:</p>
+
+<p><code>cl
+;; this will make the symbol my-nasty-variable's value void
+(makunbound 'my-nasty-variable)
+;; this will make the symbol my-nasty-function's
+;; function definition void
+(fmakunbound 'my-nasty-function)
+</code></p>
+
+<p>The names aren&rsquo;t exactly intuitive and even I happen to forget them from time to
+time. Now at least I&rsquo;ll now where to look for them if that happens
+again. :&ndash;)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Tip #1: Use Pry Instead of irb for the Rails Console]]></title>
+    <link href="http://batsov.com/articles/2012/10/14/rails-tip-number-1-use-pry-instead-of-irb-for-the-rails-console/"/>
+    <updated>2012-10-14T18:06:00+03:00</updated>
+    <id>http://batsov.com/articles/2012/10/14/rails-tip-number-1-use-pry-instead-of-irb-for-the-rails-console</id>
+    <content type="html"><![CDATA[<p>This tip is going to be a really short one. Hopefully by now you&rsquo;ve
+heard about <a href="http://pryrepl.org/">pry</a> &ndash; a fantastic <code>irb</code>
+replacement, that somewhat reminds me of the mighty Lisp REPLs. What
+you might not know is how to hook it into Rails so that the <code>rails
+console</code> (a.k.a. <code>rails c</code>) command would fire a pry shell instead of
+an irb one. There are several ways to do so, but I find one
+particularly straightforward &ndash; the awesome little gem
+<a href="https://github.com/rweng/pry-rails">pry-rails</a>.</p>
+
+<p>So what are you waiting for? Go ahead, install the little sucker and
+enjoy your new pry-powered Rails console.</p>
+]]></content>
+  </entry>
+  
+</feed>

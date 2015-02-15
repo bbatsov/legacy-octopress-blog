@@ -1,0 +1,811 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Java.next() - JRuby: The Rubyists Strike Back - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude So far in the Java.next() series I&rsquo;ve discussed only languages that
+were engineered from the start to run on the JVM (Groovy, Scala and &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2011/05/18/jvm-langs-jruby">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Java.next() - JRuby: The Rubyists Strike Back</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-18T00:00:00+03:00" pubdate data-updated="true">May 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Prelude</h2>
+
+<p>So far in the Java.next() series I&rsquo;ve discussed only languages that
+were engineered from the start to run on the JVM (<a href="/Java/Groovy/2011/05/06/jvm-langs-groovy.html">Groovy</a>, <a href="/Java/Scala/2011/05/08/jvm-langs-scala.html">Scala</a> and
+<a href="/Clojure/Java/2011/05/12/jvm-langs-clojure.html">Clojure</a>). However, a lot of good programming languages existed even
+before the inception of the idea to run languages other than Java on top of
+the JVM. Some notable examples are Ruby and Python for instance. Today
+I&rsquo;ll be writing about <a href="http://jruby.org/">JRuby</a> &ndash; the pure Java port of the Ruby
+programming language (and undoubtedly the most advanced and widely
+adopted of the 9 (!) actively maintained Ruby ports).</p>
+
+<p>This post will differ somewhat from the others so far, because I won&rsquo;t
+be spending any time to dwell on the basic Ruby syntax and will only
+highlight the advantages over plain old Ruby that JRuby provides &ndash;
+like calling Java code from a Ruby application and scripting Ruby from a
+Java application.</p>
+
+<h2>Why JRuby?</h2>
+
+<p>Ruby has long been known as one of the most elegant programming
+languages out there. With the rise of the Rails web framework several
+years ago the language was propelled into the mainstream and showed a
+lot of common developers alternative (better) ways to get their jobs done with
+less hassle and more grace. While the language is generally well liked
+(albeit is has some syntax quirks and oddities, mostly courtesy of its
+Perl heritage) its default execution environment MRI (Matz&rsquo;s Ruby
+Interpreter) is not the object of international affection. As an
+application written in C it suffers some portability problems (a few
+years ago it was quite hard to get MRI to run properly on Windows and
+even now you might run into some missing dll error from time to
+time). MRI&rsquo;s performance is not stellar either and it even used to be
+quite terrible before the advent of Ruby 1.9 which incorporated YARV
+(Yet Another Ruby VM), which significantly improved its performance
+(but still left a what to be desired). There is also the problem with
+the missing standard portable GUI development library and the somewhat
+limited deployment options because of MRI&rsquo;s limited
+portability.</p>
+
+<p>Matz&rsquo;s has often said that he&rsquo;s no VM specialist, he&rsquo;s a
+language architect/designer and the beauty of the language concerns
+him more than the performance of the reference implementation. He&rsquo;s
+also said that he loves diversity and is certain that interested
+parties will offer high quality alternatives to the standard Ruby
+runtime.</p>
+
+<p>When it comes down to a high quality runtimes few people don&rsquo;t start
+thinking immediately about the Java platform, known for its infinite
+(not literally infinite of course, but vast enough) libraries,
+rock-solid and secure JVM and great support for compile-time and
+runtime performance
+optimizations. It&rsquo;s not unheard for a Java application to match and
+excel the performance of a native C application by employing
+techniques like <em>just in time</em>(JIT) compilation, hot spot detection and
+optimizations, etc.</p>
+
+<p>So it&rsquo;s only natural that at some point a bunch of people decided to
+create a version of Ruby that could run on top of the acclaimed
+JVM. This version of Ruby is (believe it or not) known as JRuby. With
+JRuby you get the best of both Java and the Ruby worlds. Here are just a few possibilities:</p>
+
+<ul>
+<li>Deploy a Ruby on Rails web application to Google’s App Engine
+service.</li>
+<li>Write a Rails web frontend to your existing Java enterprise
+application.</li>
+<li>Target the latest Android smartphones with your Ruby code using <a href="http://ruboto.org/">Ruboto</a></li>
+<li>Create cross-platform GUIs with Java&rsquo;s Swing (or SWT)</li>
+<li>Build your project on solid libraries written in Java, Scala, Clojure,
+or other JVM languages.</li>
+<li>Use the solid platform independent JDBC database
+drivers. Platform dependent drivers used with MRI Ruby are a common
+source of gripe for developers trying to migrate an application from
+one platform to another.</li>
+</ul>
+
+
+<p>Great prospects indeed! Now it&rsquo;s about time to get that magical piece
+of software called JRuby up and running&hellip;</p>
+
+<h2>Installing JRuby</h2>
+
+<p>There are several options to consider in the department of JRuby
+installation. JRuby requires a Java runtime 5.0+ to be installed. You
+can get one from <a href="http://www.oracle.com/technetwork/java/index.html">here</a>.</p>
+
+<h4>Using an Installer</h4>
+
+<p>The easiest way to install JRuby is to use one of the prebuilt installers
+available from the <a href="http://jruby.org/download">official download site</a>. These will take care of the
+low level of detail, such as setting up your <strong>PATH</strong> environment
+variable to make finding JRuby easier.
+The JRuby team currently maintains installers for Windows and Mac
+machines. If you&rsquo;re on Linux, your distribution may package its own
+JRuby build. For example, on Ubuntu (or any other Debian derived
+distro) you can type this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install jruby
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Red Had distribution users might try this incantation instead:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install jruby
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Most Linux distributions don&rsquo;t upgrade to the latest JRuby release the
+instant it comes out. If you want to stay with the latest and greatest,
+you might prefer installing from an archive instead or RVM instead.</p>
+
+<h4>Using RVM</h4>
+
+<p>Most Ruby hackers
+favour a powerful bash script called RVM(Ruby Version Manager) that
+allows you to install several different version(or flavours of Ruby)
+and switch easily between them. Please refer to the official
+<a href="https://rvm.beginrescueend.com/">RVM documentation</a> for installation
+and usage instructions. After you&rsquo;ve installed RVM getting JRuby
+installed is a child&rsquo;s play:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rvm list known | grep jruby
+</span><span class='line'>jruby-1.2.0
+</span><span class='line'>jruby-1.3.1
+</span><span class='line'>jruby-1.4.0
+</span><span class='line'>jruby-1.6.0
+</span><span class='line'>jruby<span class="o">[</span>-1.6.1<span class="o">]</span>
+</span><span class='line'>jruby-head
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>rvm install jruby
+</span><span class='line'><span class="nv">$ </span>rvm use jruby
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Just for the record &ndash; I personally use RVM and I recommend to all
+*BSD, Linux &amp; OS X hackers to try it out as well &ndash; great piece of
+software. One of the nicer side effects of using RVM is that you won&rsquo;t
+have to run operations like <strong>gem install</strong> as the root user.</p>
+
+<h4>Using prebuilt archive</h4>
+
+<p>If you have a heavily customized setup or just like doing things
+yourself, you can get a .zip or .tar.gz archive from the same download
+page. Extract the archive somewhere convenient on your system, such
+as <strong>C:** or </strong>/opt**. You can run JRuby straight from its own <em>bin</em>
+folder, but you&rsquo;ll probably find it more convenient to add it to
+your PATH. On UNIX (including Linux &amp; Mac OS X), you can do the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/opt/jruby/bin
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Testing the installation</h4>
+
+<p>Type the following commands:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>which jruby
+</span><span class='line'>~/.rvm/rubies/jruby-1.6.1/bin/jruby
+</span><span class='line'><span class="nv">$ </span>jruby -version
+</span><span class='line'>jruby 1.6.1 <span class="o">(</span>ruby-1.8.7-p330<span class="o">)</span> <span class="o">(</span>2011-04-12 85838f6<span class="o">)</span> <span class="o">(</span>Java HotSpot<span class="o">(</span>TM<span class="o">)</span> Server VM 1.6.0_22<span class="o">)</span> <span class="o">[</span>linux-i386-java<span class="o">]</span>
+</span><span class='line'><span class="nv">$ </span>jruby -e <span class="s1">&#39;puts &quot;Hello, JRuby!&quot;&#39;</span>
+</span><span class='line'>Hello, JRuby!
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we can see some of the unique JRuby features in action.</p>
+
+<h2>Common tasks with JRuby</h2>
+
+<p><strong>REPL</strong></p>
+
+<p>JRuby comes with an equivalent of the standard Ruby REPL irb, called
+jirb. To start it simply type:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>jirb
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you can do some interactive Ruby development:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='irb'><span class='line'><span class="go">jruby-1.6.1 :001 &gt; puts &quot;Hello, JRuby&quot;</span>
+</span><span class='line'><span class="go">Hello, JRuby</span>
+</span><span class='line'><span class="go"> =&gt; nil</span>
+</span><span class='line'><span class="go">jruby-1.6.1 :002 &gt; arr = [&quot;Chuck&quot;, &quot;Sarah&quot;, &quot;Morgan&quot;, &quot;Casey&quot;]</span>
+</span><span class='line'><span class="go"> =&gt; [&quot;Chuck&quot;, &quot;Sarah&quot;, &quot;Morgan&quot;, &quot;Casey&quot;]</span>
+</span><span class='line'><span class="go">jruby-1.6.1 :003 &gt; arr.length</span>
+</span><span class='line'><span class="go"> =&gt; 4</span>
+</span><span class='line'><span class="go">jruby-1.6.1 :004 &gt; arr.size</span>
+</span><span class='line'><span class="go"> =&gt; 4</span>
+</span><span class='line'><span class="go">jruby-1.6.1 :005 &gt; arr.size()</span>
+</span><span class='line'><span class="go"> =&gt; 4</span>
+</span><span class='line'><span class="go">jruby-1.6.1 :006 &gt; arr.each { |name| puts name }</span>
+</span><span class='line'><span class="go">Chuck</span>
+</span><span class='line'><span class="go">Sarah</span>
+</span><span class='line'><span class="go">Morgan</span>
+</span><span class='line'><span class="go">Casey</span>
+</span><span class='line'><span class="go"> =&gt; [&quot;Chuck&quot;, &quot;Sarah&quot;, &quot;Morgan&quot;, &quot;Casey&quot;]</span>
+</span><span class='line'><span class="go">jruby-1.6.1 :007 &gt; arr.each_with_index { |name, index| puts &quot;##{index}: #{name}&quot;}</span>
+</span><span class='line'><span class="go">0: Chuck</span>
+</span><span class='line'><span class="go">1: Sarah</span>
+</span><span class='line'><span class="go">2: Morgan</span>
+</span><span class='line'><span class="go">3: Casey</span>
+</span><span class='line'><span class="go"> =&gt; [&quot;Chuck&quot;, &quot;Sarah&quot;, &quot;Morgan&quot;, &quot;Casey&quot;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>jirb is a great tool for exploratory programming and has some nice
+features like TAB completion. Use it often!</p>
+
+<h4>Running scripts</h4>
+
+<p>Same as before (with MRI Ruby):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>jruby some_script.rb
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That was simple, right?</p>
+
+<h4>Running Ruby tools</h4>
+
+<p>You should prefix calls to common Ruby tools like gem and rake with
+<strong>jruby -S</strong> &ndash; otherwise they might get confused which Ruby version
+(if you have more than one Ruby installed, that is) to use:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>jruby -S gem install rails
+</span><span class='line'><span class="nv">$ </span>jruby -S rake install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Using the JRuby compiler</h4>
+
+<p>You can compile Ruby scripts directly to Java bytecode and run the
+resulting class files using the JVM:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>jrubyc hello.rb
+</span><span class='line'>Compiling hello.rb to class example
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The compiler supplies a main method for you, so you can now run the
+program straight from the java command (adjust the path here to point
+to your JRuby installation):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>java -cp .:/opt/jruby/lib/hello.jar example
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that your compiled program still depends on some JRuby-defined
+support routines, so jruby.jar needs to be on your classpath. Also,
+the compiler compiles only the files you specifically pass to it. If
+you reference some_ruby_library.rb from hello.rb, you&rsquo;ll have to
+compile that extra .rb file yourself or ship it in source form
+alongside your .class file. The Java compiler understands dependencies
+between source files and compiles them automatically so Java
+developers should keep this difference in mind.</p>
+
+<h2>Using Java from JRuby</h2>
+
+<p>One of the nicest features of JRuby is undoubtedly the ability to use
+Java libraries directly in your Ruby code. JRuby goes a long way to
+make the Java classes integrate into normal Ruby code as seamlessly as
+possible &ndash; for instance it gives you the ability to call methods using the
+snake_naming_convention, instead of the common in Java
+camelCaseNamingConvention. Let&rsquo;s see the Java integration in action:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;java&#39;</span>
+</span><span class='line'><span class="n">java_import</span> <span class="s1">&#39;java.lang.System&#39;</span>
+</span><span class='line'><span class="n">java_import</span> <span class="s1">&#39;java.util.ArrayList&#39;</span>
+</span><span class='line'><span class="n">java_import</span> <span class="s1">&#39;javax.swing.JOptionPane&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&quot;Feel the power of JRuby&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">## using snake_names for Java method names</span>
+</span><span class='line'><span class="nb">puts</span> <span class="no">System</span><span class="o">.</span><span class="n">current_time_millis</span>
+</span><span class='line'><span class="c1">## regular names work as well</span>
+</span><span class='line'><span class="nb">puts</span> <span class="no">System</span><span class="o">.</span><span class="n">currentTimeMillis</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">array_list</span> <span class="o">=</span> <span class="no">ArrayList</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">## the array list supports some common Ruby idioms</span>
+</span><span class='line'><span class="n">array_list</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+</span><span class='line'><span class="n">array_list</span><span class="o">.</span><span class="n">add</span> <span class="mi">2</span>
+</span><span class='line'><span class="n">array_list</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;List length is #</span><span class="si">#{</span><span class="n">array_list</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">array_list</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">elem</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">elem</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">## a glimpse of Swing</span>
+</span><span class='line'><span class="no">JOptionPane</span><span class="o">.</span><span class="n">show_message_dialog</span><span class="p">(</span><span class="kp">nil</span><span class="p">,</span> <span class="s2">&quot;This is a message from the future of Ruby!&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You shouldn&rsquo;t, of course, use ArrayList unless you&rsquo;re using a Java API
+that is requiring you to do so. Hopefully these simple examples gave
+you an idea how easy it is to access Java code from JRuby.</p>
+
+<p>It might be tempting to think of Java/Ruby integration as nothing more
+than calling from one language to another. That&rsquo;s not the case. In a
+typical project, you&rsquo;re really interacting with both platforms.  You
+might construct a Ruby object, pass it to a Java function, and watch
+the Java code call other Ruby methods you&rsquo;ve defined. All the advanced
+interactions are beyond the scope of this cursory overview, but you&rsquo;re
+definitely encouraged to explore them on your own.</p>
+
+<h2>Using JRuby from Java</h2>
+
+<p>While Java libraries are capable of doing just about anything they are
+generally not as elegant as some of their Ruby counterparts. This might
+make you want to run some Ruby code from a Java program. JRuby allows
+you do this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">org.jruby.embed.InvokeFailedException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.jruby.embed.ScriptingContainer</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RubyFromJava</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">ScriptingContainer</span> <span class="n">container</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ScriptingContainer</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">container</span><span class="o">.</span><span class="na">runScriptlet</span><span class="o">(</span><span class="s">&quot;puts &#39;Ruby bridge established successfully&#39;&quot;</span> <span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This example is quite basic, but you should be able to grasp the basic
+idea from it.</p>
+
+<h2>Compatibility with standard Ruby and performance</h2>
+
+<p>JRuby 1.6 is mostly compatible with MRI Ruby 1.9.2. Since Ruby doesn&rsquo;t
+have a formal standard and is mostly defined in terms of the reference
+implementation (although there are some compatibility test suites)
+alternative implementations like JRuby are bound to be a step behind
+the current reference version from time to time. JRuby, however,
+catches up very quickly and has reached a state in popularity and adoption
+at which I&rsquo;m certain that they (the JRuby team) keep an open communication channel with
+upstream MRI developers and are capable to add the new features with
+very little delay.</p>
+
+<p>In terms of performance JRuby is slightly faster in many tests than
+MRI 1.9.2 and with the inclusion of support for dynamic method
+dispatching in Java 7 (coming up later this year) the performance will
+probably be improved significantly. The only real performance problem
+is the JVM startup time. If you&rsquo;re using JRuby to run very simple
+scripts you might be mislead to believe that JRuby&rsquo;s very slow, when actually the
+delay you&rsquo;re witnessing is caused by the JVM startup (which is not
+very fast). Some Ruby features like ObjectSpace don&rsquo;t perform very
+well on the JVM as well, but they are used rarely.</p>
+
+<p>In a sentence &ndash; JRuby is quite compatible with the standard MRI Ruby
+and one of the fastest Ruby implementations around.</p>
+
+<h2>Deployment options and future prospects</h2>
+
+<p>With JRuby your number of deployment options vastly improves &ndash; now you
+can deploy your Ruby applications anywhere where a JVM can be run (and
+there are lot such places, believe me about that). With JRuby you can
+deploy your Rails applications on the Google App Engine or in a Java
+enterprise container such as Glassfish. You can also write mobile
+applications for the Android operating system.</p>
+
+<p>JRuby&rsquo;s development is funded by a very solid company, called
+<a href="http://www.engineyard.com/">&ldquo;Engine Yard&rdquo;</a> which is famous for its world class Rails hosting
+solutions. The company obviously has a lot at stake here and you
+shouldn&rsquo;t be afraid that JRuby might die anytime soon.</p>
+
+<p>IT consulting companies like
+<a href="http://www.thoughtworks.com/">ThoughtWorks</a> have used JRuby to deliver both products and customer
+applications on far more aggressive schedules than they could
+have with more conventional languages</p>
+
+<h2>The tools of the trade</h2>
+
+<p>Most Ruby hackers tend to program without the aid of sophisticated
+IDEs. Emacs, vim and TextMate are popular choices. Recently
+<a href="http://www.sublimetext.com/">SublimeText</a> has been getting a fair share of attention as well. While
+it&rsquo;s fairly easy to write Ruby code in a text editor it&rsquo;s generally a
+nightmare to write Java code in an editor. Some of the most old-school
+hardcore developers that I know bowed down before the complexity of
+Java and started using Eclipse, NetBeans or IntelliJ to keep their
+sanity intact. When you&rsquo;re working on a project that&rsquo;s a mixture of Ruby
+and Java code it might be a good choice to opt for using some IDE as
+well.</p>
+
+<ul>
+<li><a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a> &ndash; The legendary Java IDE comes with a very capable
+Ruby plug-in, that integrates well with Rails, the common templating
+languages often used with it and most Ruby testing
+frameworks. IntelliJ even has a variant for pure Ruby development
+called <a href="http://www.jetbrains.com/ruby/">RubyMine</a> which is regarded by many devs as the best Ruby
+IDE out there.</li>
+<li><a href="http://wiki.netbeans.org/RubySupport">NetBeans</a> &ndash; At some point the core JRuby team were employed by
+Sun and at that time great Ruby support was added to
+NetBeans. Oracle killed the official Ruby support in NetBeans 7.0,
+but it&rsquo;s still maintained as a community project. It&rsquo;s not as good
+as the one in RubyMine, but it doesn&rsquo;t cost anything either.</li>
+<li><a href="http://www.eclipse.org/dltk/">Eclipse</a> &ndash; Eclipse has an official
+Ruby plug-in(part of DLTK), but most people tend to prefer using
+<a href="http://www.aptana.com/products/studio3">Aptana Studio</a> &ndash; a web
+development IDE built on top of Eclipse.</li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>JRuby is a solid addition to the ranks of JVM languages. Given the
+fact that Ruby served as the principle inspiration for Groovy many
+people will probably do better to use JRuby in preference to Groovy
+(except the ones fond of the Java syntax I guess). I personally love
+both Ruby and the JVM and for me JRuby was a match made in heaven. It
+opens a lot new and exciting possibilities before one of the most
+beautiful languages ever conceived.</p>
+
+<p>I particularly like the ability to create portable GUIs with Swing and
+the extended deployment options that JRuby provides. If Java 7 brings
+the promised speed improvements I&rsquo;m certain that JRuby will have a
+shot at becoming the reigning Ruby implementation.</p>
+
+<p>So what are you waiting for? Go grab a copy of the JRuby Bible
+<a href="http://pragprog.com/titles/jruby/using-jruby">&ldquo;Using JRuby&rdquo;</a> and
+start coding. :&ndash;)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-18T00:00:00+03:00" pubdate data-updated="true">May 18<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/java/'>Java</a>, <a class='category' href='/articles/categories/ruby/'>Ruby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2011/05/18/jvm-langs-jruby/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2011/05/18/jvm-langs-jruby/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2011/05/17/recommended-ruby-books/" title="Previous Post: Recommended Ruby books">&laquo; Recommended Ruby books</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2011/05/31/fedora-15-tips/" title="Next Post: Fedora 15 post installation setup & tips">Fedora 15 post installation setup & tips &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/10/the-road-to-cider-0-dot-8/">The Road to CIDER 0.8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/09/05/clojure-mode-3-dot-0/">Clojure-mode 3.0</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

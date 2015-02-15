@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: JBoss | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/jboss/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mofidy JVM parameters for JBoss AS]]></title>
+    <link href="http://batsov.com/articles/2009/09/03/jboss-jvm-params/"/>
+    <updated>2009-09-03T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2009/09/03/jboss-jvm-params</id>
+    <content type="html"><![CDATA[<p>Most people have been in a situation requiring them to change one or
+more of the parameters passed to the JVM on top of which JBoss AS is
+running. For instance &ndash; you may need a bigger heap, bigger perm gen
+size or something else. The best place to put these parameters is
+probably the following file:</p>
+
+<p><strong>$JBOSS_HOME/bin/run.conf</strong></p>
+
+<p>where <strong>$JBOSS_HOME</strong> refers to the directory in which you’ve unpacked the JBoss AS distribution.</p>
+
+<p>Look for this section:</p>
+
+<p>``` bash
+if [ &ldquo;x$JAVA_OPTS&rdquo; = &ldquo;x&rdquo; ]; then</p>
+
+<pre><code>JAVA_OPTS="..."
+</code></pre>
+
+<p>fi
+```</p>
+
+<p>All you have to do now is adapt it to your needs.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,629 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Fedora 15 post installation setup & tips - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude I&rsquo;ve recently upgraded all my systems to Fedora 15. The default
+installation is not very usable for some tasks for several reasons & &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2011/05/31/fedora-15-tips">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Fedora 15 Post Installation Setup & Tips</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-31T00:00:00+03:00" pubdate data-updated="true">May 31<span>st</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Prelude</h2>
+
+<p>I&rsquo;ve recently upgraded all my systems to Fedora 15. The default
+installation is not very usable for some tasks for several reasons &ndash;
+like CD size limitations and software patents for instance. I also
+happen to disagree with some defaults in Fedora like the fact that
+sudo is not enabled by default (like in Ubuntu) and the use of the
+bash shell. In this article I&rsquo;ll share some of the things I do after a
+fresh Fedora 15 installation to enhance it (at least by my standards).</p>
+
+<!--more-->
+
+
+<h2>Tweak defaults</h2>
+
+<h4>Configure sudo</h4>
+
+<p><code>sudo</code> gives you a way to execute single commands as the superuser. You
+can also do this with <code>su -c</code>, but you have to quote the commands there,
+which I don&rsquo;t like very much. To enable sudo for some account first
+run the command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>su -c <span class="s2">&quot;visudo&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The file <code>/etc/sudoers</code> will open up in a customized vi editor. Append
+somewhere to the end of the file the following line:</p>
+
+<p><code>username ALL=(ALL) ALL</code></p>
+
+<p>You should replace <em>username</em> with your username.</p>
+
+<h4>Configure yum</h4>
+
+<p>yum has a lot of plugins, but one of them is particularly useful &ndash; the
+fastest mirror plug-in. You can install it like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install yum-plugin-fastestmirror
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Disable SELinux</h4>
+
+<p>If you&rsquo;re a desktop Linux user you want to disable SELinux &ndash; trust
+me. Open the file /etc/selinux/config and change this line:</p>
+
+<p><code>SELINUX=enforcing</code></p>
+
+<p>to</p>
+
+<p><code>SELINUX=disabled</code></p>
+
+<p>Restart afterwards.</p>
+
+<h2>Install additional software</h2>
+
+<p>Fedora&rsquo;s default installation medium is a 700MB CD. It&rsquo;s
+understandable that not everything can be fitted in there. Luckily
+adding new software from the vast Fedora on-line repos is child&rsquo;s play.</p>
+
+<h4>Install REAL text editors</h4>
+
+<p>gedit is ok for causal text editing, but professionals like software
+engineers and system administrators will definitely need something more:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install emacs vim
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Personally I use Emacs most of the time and use vim only to edit
+config files that require root access.</p>
+
+<h4>Install Z Shell</h4>
+
+<p>It&rsquo;s no secret that I love the Z Shell &ndash; after all I <a href="/articles/2011/04/29/one-shell-to-rule-them-all/">rave about it</a>
+quite often. It should come as no surprise that I happen to use it
+and probably you should start using it as well:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install zsh
+</span><span class='line'><span class="nv">$ </span>sudo vim /etc/passwd
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Find the line about your account and change there /bin/bash to
+/bin/zsh. Afterwards start a new login shell and a simple wizard will
+fire up asking you some questions to create a default .zshrc file for you.</p>
+
+<h4>Install LibreOffice</h4>
+
+<p>LibreOffice is currently the best Linux option for word processing,
+spreadsheet handling and presentation creation. You can install the
+most common components with the following command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo yum install libreoffice-calc libreoffice-impress libreoffice-draw libreoffice-writer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>LibreOffice uses hunspell to do spellchecking. An English dictionary
+will be installed by default, but you&rsquo;ll need to install additional
+dictionaries manually:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install hunspell-bg
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This command will install the Bulgarian hunspell dictionary. You
+likely don&rsquo;t need it so install some more helpful dictionary instead. :&ndash;)</p>
+
+<h4>Install OpenJDK</h4>
+
+<p>If you need to run Java programs/applets:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install java-1.6.0-openjdk java-1.6.0-openjdk-plugin
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you&rsquo;re planning to do some Java development:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install java-1.6.0-openjdk-devel java-1.6.0-openjdk-javadoc java-1.6.0-openjdk-src
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Install Deluge torrent client</h4>
+
+<p>The default Transmission torrent client is pretty basic. I recommend
+you to replace it with the much more feature-rich deluge:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install deluge
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Install Inconsolata font</h4>
+
+<p>I&rsquo;m a software engineer and I obviously spend a lot of time reading
+and writing source code. I&rsquo;m very picking about the monospace font
+that I use and currently Inconsolata happens to be my favorite:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install levien-inconsolata-fonts
+</span><span class='line'><span class="nv">$ </span>gsettings <span class="nb">set </span>org.gnome.desktop.interface monospace-font-name <span class="s2">&quot;Inconsolata 12&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>These two commands will install the font and make it the default
+monospaced font on your Fedora system.</p>
+
+<h4>Install GIMP</h4>
+
+<p>Fedora does not ship with an image editor. GIMP is generally
+considered the best option so you might want to install it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install gimp
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Install gnome-tweak-tool to customize fonts, themes, etc in GNOME 3.0</h4>
+
+<p>GNOME 3.0 has stripped many configuration options, but luckily most of
+them are available by installing gnome-tweak-tool:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install gnome-tweak-tool
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Run it (by pressing Alt+F2 and typing gnome-tweak-tool) and change the
+settings. It does not have OK or Apply buttons, but simply selecting the
+options performs the changes. Some changes may require logging out and
+logging back in.</p>
+
+<h2>Install additional patent encumbered/proprietary software</h2>
+
+<h4>Enable RPMFusion</h4>
+
+<p>RPMFusion is the most popular third party repository for Fedora. It&rsquo;s
+full of goodness like audio/video codecs, proprietary drivers, etc. To
+enable it just run the following command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum localinstall --nogpgcheck <span class="se">\</span>
+</span><span class='line'>http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-stable.noarch.rpm <span class="se">\</span>
+</span><span class='line'>http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-stable.noarch.rpm
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Install proprietary codecs</h4>
+
+<p>No MP3 support in Fedora by default? And almost no video codecs?
+RPMFusion to the rescue! Type this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install gstreamer-plugins-ugly gstreamer-plugins-bad gstreamer-ffmpeg
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Install VLC</h4>
+
+<p>With MPlayer&rsquo;s development in stagnation VLC has established itself as
+the best video player for Linux recently. It&rsquo;s in RPMFusion, so if you
+enabled it installing it is as easy as typing the following command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install vlc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Install Adobe Flash Player</h4>
+
+<p>Love it or hate it &ndash; you probably need it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo rpm -Uvh http://linuxdownload.adobe.com/adobe-release/adobe-release-i386-1.0-1.noarch.rpm
+</span><span class='line'><span class="nv">$ </span>sudo yum install flash-plug-in
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can omit this if you&rsquo;re planning to use Google Chrome, since it
+comes with Flash Player built-in.</p>
+
+<h4>Install Skype</h4>
+
+<p>Download Skype from the
+<a href="http://www.skype.com/intl/en/get-skype/on-your-computer/linux/downloading.fedora">official site</a>. Assuming
+you&rsquo;ve downloaded it to ~/Downloads, you can install it like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum localinstall Downloads/skype-2.2.0.25-fedora.i586.rpm
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Yum will automatically installed any dependencies required by skype.</p>
+
+<h4>Install Oracle JDK</h4>
+
+<p>OpenJDK is great, but due to licensing problems it&rsquo;s not quite the
+same as the Oracle JDK. If you start experiencing strange problems
+(mostly in Swing programs) you&rsquo;d probably do well to try the Oracle
+JDK instead. Download Oracle&rsquo;s JDK from the
+<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">official site</a>. Select
+&ldquo;Linux x86 &ndash; RPM Installer&rdquo; or &ldquo;Linux x64 &ndash; RPM Installer&rdquo; depending
+on your distribution and install the JDK like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo sh jre-6u25-linux-i586-rpm.bin
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Fedora uses OpenJDK by default, so you&rsquo;ll have to do some more work to
+tell it to start using Oracle JDK. The <strong>alternatives</strong> program allows
+you to select between multiple installed versions of a program:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo alternatives --install /usr/bin/java java /usr/java/default/bin/java 1000
+</span><span class='line'><span class="nv">$ </span>sudo alternatives --install /usr/bin/javac javac /usr/java/default/bin/javac 1000
+</span><span class='line'><span class="nv">$ </span>sudo alternatives --install /usr/bin/javaws javaws /usr/java/default/bin/javaws 1000
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>These commands will make alternative aware of the java binaries and
+set high priorities to them which will make them the default Java
+binaries. You can use &ldquo;alternatives &mdash;config binaryname&rdquo; to select
+active binaries manually.</p>
+
+<h4>Install Google Chrome</h4>
+
+<p>Firefox is dying, Google Chrome is the new king of the
+browsers. Download it from the <a href="http://www.google.com/chrome">official site</a> and install it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum localinstall ~/Downloads/google-chrome-stable_current_i386.rpm
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Google Chrome will install a yum repository as well, so you&rsquo;ll receive
+updates as soon as they arrive.</p>
+
+<h4>Install DropBox</h4>
+
+<p><a href="http://www.dropbox.com">DropBox</a> is a great file sharing service
+which allows you to sync files between all of your computers and
+mobile devices(Android, iPhone, iPad, etc). It has a great Linux
+client which I use all the time. Download it from
+<a href="http://www.dropbox.com/downloading?os=lnx">here</a> and install it like
+this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum localinstall --nogpgcheck nautilus-dropbox-0.6.7-1.fedora.i386.rpm
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Epilogue</h2>
+
+<p>Hopefully some of my setup has made your setup more enjoyable and more
+productive. I&rsquo;ll update this article along the way if I stumble upon
+other things that I consider to be generally helpful.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-31T00:00:00+03:00" pubdate data-updated="true">May 31<span>st</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/fedora/'>Fedora</a>, <a class='category' href='/articles/categories/linux/'>Linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2011/05/31/fedora-15-tips/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2011/05/31/fedora-15-tips/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2011/05/18/jvm-langs-jruby/" title="Previous Post: Java.next() - JRuby: The Rubyists Strike Back">&laquo; Java.next() - JRuby: The Rubyists Strike Back</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2011/06/04/phaser-3117-fedora-15/" title="Next Post: Running Xerox Phaser 3117 under Fedora 15">Running Xerox Phaser 3117 under Fedora 15 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/10/the-road-to-cider-0-dot-8/">The Road to CIDER 0.8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/09/05/clojure-mode-3-dot-0/">Clojure-mode 3.0</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2011/05/31/fedora-15-tips/';
+        var disqus_url = 'http://batsov.com/articles/2011/05/31/fedora-15-tips/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

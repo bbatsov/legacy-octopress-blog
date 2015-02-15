@@ -1,0 +1,601 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>One shell to rule them all... - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude I&rsquo;ve been using zsh for about three years now and continue to be
+impressed the its immense power and flexibility. Switching from bash &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2011/04/29/one-shell-to-rule-them-all">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">One Shell to Rule Them All...</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-29T00:00:00+03:00" pubdate data-updated="true">Apr 29<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Prelude</h2>
+
+<p>I&rsquo;ve been using zsh for about three years now and continue to be
+impressed the its immense power and flexibility. Switching from bash
+to zsh was a decision as good as switching from Windows to GNU/Linux,
+from vim to Emacs, from Eclipse to IntelliJ IDEA. In other words &ndash; it
+was an extremely good decision. :&ndash;)</p>
+
+<p>So I want to finally get the word out, showcase some nice zsh features
+and probably persuade a couple of bash users to try it. Be warned,
+however &ndash; after you try it there is no going back&hellip;</p>
+
+<h2>Getting started</h2>
+
+<p>Most distros come with bash by default so you&rsquo;ll probably need to
+install zsh first and configure it as your user&rsquo;s shell. On Fedora
+you&rsquo;d do:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install zsh
+</span><span class='line'><span class="nv">$ </span>chsh -s /bin/zsh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The next time you login a terminal wizard with start up asking you
+about some basic zsh options that you might want to enable. I suggest
+you to enable them all except the beep option. In the end the wizard
+will save the new configuration to the file .zshrc in your user&rsquo;s home
+folder.</p>
+
+<p>Alternatively you may just use a preconfigured .zshrc, like this one:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Lines configured by zsh-newuser-install</span>
+</span><span class='line'><span class="nv">HISTFILE</span><span class="o">=</span>~/.histfile
+</span><span class='line'><span class="nv">HISTSIZE</span><span class="o">=</span>1000
+</span><span class='line'><span class="nv">SAVEHIST</span><span class="o">=</span>1000
+</span><span class='line'>setopt appendhistory autocd extendedglob nomatch notify correct_all
+</span><span class='line'>unsetopt beep
+</span><span class='line'>bindkey -e
+</span><span class='line'><span class="c"># End of lines configured by zsh-newuser-install</span>
+</span><span class='line'><span class="c"># The following lines were added by compinstall</span>
+</span><span class='line'>zstyle :compinstall filename <span class="s1">&#39;/home/bozhidar/.zshrc&#39;</span>
+</span><span class='line'>
+</span><span class='line'>autoload -Uz compinit
+</span><span class='line'>compinit
+</span><span class='line'><span class="c"># End of lines added by compinstall</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I don&rsquo;t like very much the default zsh prompt and I generally change
+it right away. Have a look at my other
+<a href="/Z%20Shell/Linux/2008/07/27/zsh-prompt.html">short article</a> on the topic.</p>
+
+<p>There a couple of configuration files related to zsh that you should
+know about:</p>
+
+<ul>
+<li>.zshrc &ndash; runs for each new shell(roughly equivalent to .bashrc)</li>
+<li>.zprofile &ndash; runs only for login shells(like .bash_profile)</li>
+<li>.zlogout &ndash; runs on logout</li>
+<li>.zshenv &ndash; holds environmental variables</li>
+</ul>
+
+
+<p>Here&rsquo;s an example .zshenv file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/java/latest
+</span><span class='line'>
+</span><span class='line'><span class="nb">export </span><span class="nv">SCALA_HOME</span><span class="o">=</span>/opt/scala-2.8.1.final
+</span><span class='line'>
+</span><span class='line'><span class="nb">export </span><span class="nv">M2_HOME</span><span class="o">=</span>/opt/apache-maven-3.0.2
+</span><span class='line'>
+</span><span class='line'><span class="nb">export </span><span class="nv">EDITOR</span><span class="o">=</span><span class="s2">&quot;emacsclient -t&quot;</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">ALTERNATE_EDITOR</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">#needed to properly display complex color-themes in Emacs and vim</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">TERM</span><span class="o">=</span>xterm-256color
+</span><span class='line'>
+</span><span class='line'><span class="nb">typeset</span> -U path
+</span><span class='line'><span class="nv">path</span><span class="o">=(</span><span class="nv">$M2_HOME</span>/bin <span class="nv">$SCALA_HOME</span>/bin ~/bin ~/Projects/work/bin <span class="nv">$path</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Please note the way in which the PATH variable is set in zsh, which
+differs substantially from bash(it&rsquo;s just exported there as any other variable).</p>
+
+<h2>Playing around</h2>
+
+<p>At this point you have the legendary zsh autocompletion configured and
+you have enabled many of the zsh core features.</p>
+
+<p><strong>autocd</strong> allows you to navigate to folders only with their name
+without the cd command. One of my favourite features. Now you can do
+things like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>bozhidar@bozhidar ~<span class="o">]</span><span class="nv">$ </span>Downloads
+</span><span class='line'><span class="o">[</span>bozhidar@bozhidar ~/Downloads<span class="o">]</span><span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instead of:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>bozhidar@bozhidar ~<span class="o">]</span><span class="nv">$ </span><span class="nb">cd </span>Downloads
+</span><span class='line'><span class="o">[</span>bozhidar@bozhidar ~/Downloads<span class="o">]</span><span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By the way autocd was added in bash 4.0 as well. You can enable it there with:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>bozhidar@bozhidar ~<span class="o">]</span><span class="nv">$ </span><span class="nb">shopt</span> -s autocd
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>appendhistory</strong> all your open shells share the same history which is
+handy if you want to refer commands from one shell in another with
+say Ctrl+R(reverse-history-search)</p>
+
+<p><strong>extendedglob</strong> allows you to recursive look for files in folders:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>bozhidar@bozhidar ~<span class="o">]</span><span class="nv">$ </span>ls somedir/**/Makefile
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>is equivalent to:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>bozhidar@bozhidar ~<span class="o">]</span><span class="nv">$ </span>find somedir -name Makefile
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Most zsh users never use find for simple file look up. This feature
+was also added to bash 4.0 but it works in a slightly different
+manner.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">shopt</span> -s extglob
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>correct</strong> &ndash; autocorrects mistyped commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>bozhidar@bozhidar<span class="o">]</span><span class="nv">$ </span>cta ~/.zshrc
+</span><span class='line'>zsh: correct <span class="s1">&#39;cta&#39;</span> to <span class="s1">&#39;cat&#39;</span> <span class="o">[</span>nyae<span class="o">]</span>?
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Keybindings</h2>
+
+<p>By default zsh uses Emacs keybindings which is perfect for a long time
+Emacs user like me. zsh doesn&rsquo;t use readline, instead it has its own
+line editing library called zle, which is much more powerful. vi users
+are not forgotten and can switch zsh to vi keybindings with the
+command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bindkey -v
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Mind that by default you&rsquo;ll be in &ldquo;insert&rdquo; mode and have to press ESC
+to go into command mode.</p>
+
+<p>You can also create custom keybindings like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bindkey <span class="s1">&#39;^[[H&#39;</span> beginning-of-line
+</span><span class='line'>bindkey <span class="s1">&#39;^[[F&#39;</span> end-of-line
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will bind the Home and End keys to the commands beginning-of-line and end-of-line.</p>
+
+<h2>Aliases</h2>
+
+<p>Zsh has three different kinds of shell aliases.</p>
+
+<p><strong>Regular</strong> &ndash; same as in bash:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">alias </span><span class="nv">ll</span><span class="o">=</span><span class="s1">&#39;ls -l&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Suffix</strong> &ndash; suffix aliases are supported in zsh since version
+4.2.0. Some examples:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">alias</span> -s <span class="nv">tex</span><span class="o">=</span>emacs
+</span><span class='line'><span class="nb">alias</span> -s <span class="nv">html</span><span class="o">=</span>google-chrome
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now when you type in the console</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>somefile.tex
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>it will be opened automatically with Emacs. Similarly somefile.html
+would be opened by google-chrome. As you might imagine this feature is
+quite handy.</p>
+
+<p><strong>Global</strong> &ndash; global aliases can be used anywhere in the command line(as
+opposed to regular aliases that can used only in the beginning). Example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">alias</span> -g ...<span class="o">=</span><span class="s1">&#39;../..&#39;</span>
+</span><span class='line'><span class="nb">cd</span> ...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Some tips and tricks</h2>
+
+<ul>
+<li><p>press Alt+q in the middle of a command you&rsquo;re typing. This will clear
+the console prompt and allow you execute another command(like a man lookup). Afterwards
+the things you&rsquo;ve typed before the Alt+q will magically reappear.</p></li>
+<li><p>Imagine you&rsquo;re in the folder <strong>project/4.0/module</strong>. Typing:</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>4.0 5.0
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Will take you to a folder named project/5.0/module(assuming that it exists of course). In general
+the command has the format <code>cd old new</code>.</p>
+
+<ul>
+<li>zsh comes with a built-in pager(similar to less). To try it just type &lt;somefilename. This is
+more or less equivalent to typing <code>less somefilename</code>.</li>
+</ul>
+
+
+<h2>Useful resources</h2>
+
+<ul>
+<li><a href="http://www.bash2zsh.com/zsh_refcard/refcard.pdf">zsh reference card</a></li>
+<li><a href="http://zsh.sourceforge.net/Doc/zsh_a4.pdf">zsh manual</a></li>
+<li><a href="http://zsh.sourceforge.net/Guide/zshguide.html">&ldquo;A User&rsquo;s Guide to Z-Shell&rdquo;</a></li>
+<li><a href="http://zshwiki.org/home/">zsh wiki</a></li>
+<li><a href="http://grml.org/zsh/zsh-lovers.html">zsh lovers</a> &ndash; collection of
+tips and tricks</li>
+<li><a href="http://www.bash2zsh.com/">&ldquo;From Bash to Z Shell &ndash; Conquering the Command Line&rdquo;</a></li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>There is no easy way to sum up everything that makes zsh great in a single blog post. I&rsquo;ll try to
+expand and improve it in time. I hope I&rsquo;ve whetted your appetite to try out zsh. If you like it
+well enough(of which I&rsquo;m most certain you should have a look at the resources in the end as well).</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-29T00:00:00+03:00" pubdate data-updated="true">Apr 29<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/z-shell/'>Z Shell</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2011/04/29/one-shell-to-rule-them-all/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2011/04/29/one-shell-to-rule-them-all/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2011/04/29/career-development/" title="Previous Post: Career development - Should I stay or should I go?">&laquo; Career development - Should I stay or should I go?</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2011/04/30/parsing-numbers-from-string-in-lisp/" title="Next Post: Parsing numbers from string in Common Lisp">Parsing numbers from string in Common Lisp &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/10/the-road-to-cider-0-dot-8/">The Road to CIDER 0.8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/09/05/clojure-mode-3-dot-0/">Clojure-mode 3.0</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,524 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>(think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="RuboCop 0.8.0 is out! While the version bump is minor, this release represents an almost
+total rewrite of the code. We&rsquo;ve moved away from MRI& &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/page/9">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2013/05/28/rubocop-0-dot-8-0-is-out/">RuboCop 0.8.0 Is Out, Support for JRuby and Rubinius Is In!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-28T12:11:00+03:00" pubdate data-updated="true">May 28<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://github.com/bbatsov/rubocop">RuboCop</a> 0.8.0 is out!</p>
+
+<p>While the version bump is minor, this release represents an almost
+total rewrite of the code. We&rsquo;ve moved away from MRI&rsquo;s <code>Ripper</code> parser
+and ported RuboCop to <a href="https://github.com/whitequark">Peter Zotov</a>&rsquo;s
+fantastic <a href="https://github.com/whitequark/parser">Parser</a>.</p>
+
+<p>What does this mean for users of RuboCop? It means that now both
+Rubinius and JRuby are supported (in 1.9 and 2.0 modes). I&rsquo;d say this
+is kind of a big deal! The support for the them should be considered
+beta at this point, since they have not yet received extensive field
+testing.</p>
+
+<p>And what does the change mean for developers? It&rsquo;s now a lot easier to
+comprehend RuboCop&rsquo;s source code, lowering the bar for contributions
+immensely.</p>
+
+<p>What&rsquo;s coming down the road for 0.9.0? We have two big changes
+planned &ndash; providing an auto-fix functionality(meaning RuboCop will be
+able to fix on its own some of the problems detected) and providing
+more precise diagnostic messages(a-la <code>clang</code>).</p>
+
+<p>The changelog for 0.8.0 is available <a href="https://github.com/bbatsov/rubocop/blob/master/CHANGELOG.md">here</a>.</p>
+
+<p>Stay tuned for more!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2013/04/24/wikemacs-lives-on-under-new-stewardship/">WikEmacs Lives on Under New Stewardship</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-24T11:36:00+03:00" pubdate data-updated="true">Apr 24<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Several months passed since I stated my intent
+<a href="articles/2013/01/27/the-wikemacs-experiment-is-over-long-live-emacswiki/">to shutdown WikEmacs</a>. While
+I still consider the project a failed experiment and stand by
+everything I wrote in that post, I have received since lots of messages from
+people who were sad to see WikEmacs go. One person in particular,
+<a href="https://twitter.com/holocronweaver">Jesse Johnson</a>, was committed to
+seeing the project move forward and offered to take over its stewardship.</p>
+
+<p>In the end I&rsquo;ve decided that in spirit of the FOSS ideals I don&rsquo;t have
+the right to take away something people like and want to use(especially
+given the fact that they contributed most of the content there) and
+handed over the domain and the data to Jesse.</p>
+
+<p><a href="http://wikemacs.org/index.php/Main_Page">WikEmacs</a> has been running
+for a couple of weeks now under his management and will continue to
+exist for a long time. If you liked the project I guess this is a good
+moment to show you love and spread the word.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2013/04/23/rubocop-0-dot-6-0-released/">RuboCop 0.6.0 Released</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-23T14:46:00+03:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/bbatsov/rubocop">RuboCop</a> 0.6.0 was just released!
+It&rsquo;s RuboCop&rsquo;s biggest and most ambitious release yet.  Here&rsquo;s the
+highlights:</p>
+
+<ul>
+<li>15 new cops(checks)</li>
+<li>Support for disabling cops locally in a file with <code>rubocop:disable</code> comments</li>
+<li>Half a dozen bugs squashed</li>
+<li>Small improvements across the board</li>
+</ul>
+
+
+<p>I guess the support for disabling cops locally deserves a bit of special treatment.</p>
+
+<p>So here&rsquo;s the basics &ndash; you&rsquo;re now allowed to enable/disable certain cops
+(checks) and to alter their behavior if they accept any parameters.</p>
+
+<p>One or more individual cops can be disabled locally in a section of a
+file by adding a comment such as:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># rubocop:disable LineLength, StringLiterals</span>
+</span><span class='line'><span class="o">[.</span><span class="n">.</span><span class="o">.]</span>
+</span><span class='line'><span class="c1"># rubocop:enable LineLength, StringLiterals</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can also disable <em>all</em> cops with:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># rubocop:disable all</span>
+</span><span class='line'><span class="o">[.</span><span class="n">.</span><span class="o">.]</span>
+</span><span class='line'><span class="c1"># rubocop:enable all</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>One or more cops can be disabled on a single line with an end-of-line
+comment:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">19</span><span class="p">)</span> <span class="c1"># rubocop:disable AvoidFor</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can see all the gory details in the
+<a href="https://github.com/bbatsov/rubocop/blob/master/CHANGELOG.md">changelog</a>. I hope you&rsquo;ll enjoy RuboCop 0.6.0!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2013/04/15/rubocop/">RuboCop</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-15T17:22:00+03:00" pubdate data-updated="true">Apr 15<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>After I launched the
+<a href="https://github.com/bbatsov/ruby-style-guide">Ruby Style Guide</a> I
+often received requests to create a tool enforcing the rules in the guide
+automatically.</p>
+
+<p>Today this tool is a reality &ndash; meet
+<a href="https://github.com/bbatsov/rubocop">RuboCop</a>. RuboCop already covers
+a significant portion of the Guide, supports both MRI 1.9 and MRI 2.0
+and has pretty neat Emacs integration(via
+<a href="https://github.com/bbatsov/rubocop-emacs">rubocop.el</a> and
+<a href="https://github.com/lunaryorn/flycheck">flycheck</a>).</p>
+
+<p>I&rsquo;d love to see more Ruby hackers check out RuboCop!</p>
+
+<p>I&rsquo;d love to thank all the great people who contributed code, issue
+reports and ideas to RuboCop&rsquo;s development and I sincerely hope many
+Ruby hackers will find it useful!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2013/04/15/emacs-redux/">Emacs Redux</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-15T17:10:00+03:00" pubdate data-updated="true">Apr 15<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;ve recently launched a new blog dedicated to Emacs &ndash;
+<a href="http://emacsredux.com/">Emacs Redux</a>.</p>
+
+<p>There I’ll be sharing with you (hopefully) useful tips and tricks to
+make your experience with Emacs more productive and more enjoyable.</p>
+
+<p>I hope you&rsquo;ll like it!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/articles/page/10/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/articles/page/8/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I&#8217;m a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/10/the-road-to-cider-0-dot-8/">The Road to CIDER 0.8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/09/05/clojure-mode-3-dot-0/">Clojure-mode 3.0</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

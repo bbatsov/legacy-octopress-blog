@@ -1,0 +1,676 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The Linux desktop experience is killing Linux on the desktop, Part II - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Read this with an open mind. Prelude A few days back I wrote a somewhat controversial article called,
+&ldquo;The Linux desktop experience is killing &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2011/06/14/linux-desktop-part-2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">The Linux Desktop Experience Is Killing Linux on the Desktop, Part II</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-14T00:00:00+03:00" pubdate data-updated="true">Jun 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><em>Read this with an open mind.</em></p>
+
+<h2>Prelude</h2>
+
+<p>A few days back I wrote a somewhat controversial article called,
+<a href="/Linux/Windows/Rant/2011/06/11/linux-desktop-experience-killing-linux-on-the-desktop.html">&ldquo;The Linux desktop experience is killing Linux on the desktop&rdquo;</a>. While
+many readers seem to have grasped the true purpose of the article, a
+lot of people claimed that it was nothing but FUD (a favorite term
+of many people in the Linux community, who would rather ignore
+existing problems than face/acknowledge them).</p>
+
+<p>If you&rsquo;ve read my last post and generally agree with it &ndash; don&rsquo;t bother
+reading this one. It&rsquo;s basically more of the same &ndash; in greater detail
+and with less profanities.</p>
+
+<p>In this article I&rsquo;ll have a look at the state of the Linux desktop,
+it&rsquo;s usability, strengths and weaknesses.</p>
+
+<h2>Let&rsquo;s get some facts straight</h2>
+
+<p>I&rsquo;m writing this post from my Emacs 23.2 client (in Markdown, to
+publish it via git to my jekyll powered blog) connected to my Emacs
+daemon, running on my Fedora 15 GNOME 3.0 desktop at home. This
+machine has its every part carefully selected for maximum Linux
+compatibility (the machine is a bit old, but that wasn&rsquo;t always the case) &ndash;
+a GeForce 9600GT known to work &ldquo;great&rdquo; with the open-source nouveau
+driver, an Asus Xonar DX sound card, supported by the great Oxygen HD
+audio driver, etc. I do know how to buy hardware (contrary to popular
+belief). Actually I&rsquo;ve been a hardware
+enthusiast for most of my life and I know much more about the inner
+workings of computer components than most people. That said &ndash; the hardware that
+I bought for my home PC was not the hardware that I wanted to buy, but
+the one I had to buy.</p>
+
+<p>Even the ill-fated T520 Sandy Bridge laptop was supposed to work very
+well with Linux &ndash; after all Intel and Nvidia video cards are the
+safest bet in town.</p>
+
+<p>One of the great things about using a free (as in speech) OS like
+Linux is that you get to do things exactly the way you want to do
+them. You&rsquo;re in control. Everything is transparent. Nothing magically
+happens behind the scenes. It&rsquo;s sad that this
+doesn&rsquo;t extend to the ability to pick any piece of fairly generic
+hardware and properly enjoy it. Often you just have to hope
+and pray &ndash; and sometimes you might get lucky.</p>
+
+<p>A reader pointed me to
+<a href="http://blog.eracc.com/2011/06/14/the-century-of-the-linux-desktop/">this piece</a>
+&ndash; a rebuttal of my article. Here&rsquo;s an excerpt:</p>
+
+<p><em>Here we go again. Some fellow has gotten all whiny about being such a
+big Linux fan, &ldquo;… hardcore Linux user …&rdquo;, but he just had to go back
+to Microsoft to get things done. Why? Because he is tired of having to
+tinker with Fedora Linux to make things work, or fail to work, with
+cutting edge hardware … and 64-bit Flash on 64-bit Linux is sucky …
+and Skype on Linux is sucky … and … and … and. It was all just so
+painful and time consuming he could not take it any longer and went
+back to the safe arms of Microsoft to escape the horror that is
+Linux. Good grief.
+Okay, first and foremost, a true &ldquo;hardcore Linux user&rdquo;, in my mind a
+fan of Linux, is unlikely to switch from Linux to anything else. Oh
+yes, he or she will switch Linux distributions in a heartbeat, or
+maybe three heartbeats, if a distribution fails to work as needed. But
+switching to Microsoft and leaving the Linux desktop behind? Not
+likely, my friends. I consider myself a true &ldquo;hardcore Linux user&rdquo; and
+I see no voluntary switch from Linux in my future … ever.</em></p>
+
+<p>This bit produced a sad smile on my face. Had to go back to Microsoft?
+Absolutely not! Chose to use Windows 7 (for the time
+being)&hellip; If I was to go back to something it should have been FreeBSD
+since it was the OS I was using before Linux (and of course Windows
+before that indeed). I actually switched quite reluctantly from
+FreeBSD to Linux for a simple reason &ndash; Linux supported wider hardware
+variety and there were more native apps for it.</p>
+
+<p>All Unix-derived OSes are more or less the same from an user&rsquo;s
+perspective &ndash; mostly the same environment, the same applications. The
+only thing that really makes the difference is the hardware support
+and Linux is clearly far ahead of its competition.</p>
+
+<p>Hardcore user? You bet! But hardcore doesn&rsquo;t mean an &lsquo;unreasonable
+idiot, blinded by zealously&rsquo;. It&rsquo;s not always that someone&rsquo;s favorite
+technologies are the best solution to a problem. The section &ldquo;the shit
+I&rsquo;ve endured&rdquo; had a dual purpose &ndash; list a &ldquo;few&rdquo; problems and show how
+resilient I am.</p>
+
+<p>Distro hopping is something that mostly newbies do, because they fail
+to grasp a fundamental thing in the land of Linux &ndash; 95% of the stuff
+that comprises a distribution is generic stuff found in most other
+distros. You cannot seriously expect that the same drivers in a
+different distro will yield wildly different results&hellip; Sure, bugs do
+tend to occur, and sometimes they are truly distribution
+specific. Sure, some distros happen to patch the stuff they ship
+heavily, while others favor shipping vanilla versions of both software ant
+the kernel.</p>
+
+<h2>The process of driver development</h2>
+
+<p>My former post placed a heavy emphasis on existing driver
+issues. While I abhor some Linux drivers I&rsquo;ve never ever blamed the
+authors of open source drivers. Here&rsquo;s why:</p>
+
+<p>The year and a half I&rsquo;ve spent writing Linux drivers for a proprietary
+Austrian company was some of the hardest time in my professional
+career. Writing drivers is fairly hard task for two reasons &ndash; you have
+to have very intimate knowledge of the hardware at hand and you have
+to write very safe code (and carefully test it), because otherwise you might bring the whole
+kernel down. I was basically reading tech specs (most boring read in
+the world) most of the day and
+writing very little code in end. Debugging drivers is not a pleasant
+task either.</p>
+
+<p>Linux certainly has some of the best developers in the world. I have
+little doubt in that. The problem is that these same developers spent
+their days working other jobs and you cannot seriously expect them to
+have the time or the energy (not to mention the specs required) to
+produce drivers that are on par with commercial counterparts developed
+for OSX and Windows by big team with vast resources at their disposal.</p>
+
+<p>This is the actual problem as I see it &ndash; we&rsquo;re expecting individuals
+to create good drivers for us out the kindness of their hearts in
+their little spare time with little or no hardware specs on which to
+rely for absolutely no money.</p>
+
+<p>I&rsquo;ve read the source code of many network layer drivers in the Linux
+kernel and I&rsquo;ve noticed a common trend &ndash; a lot of the drivers were
+actually written by hardware engineers (instead of software engineers)
+&ndash; they are filled with copy/paste segments from other drivers, lots of
+  useless/dubious/dangerous code. This doesn&rsquo;t surprise me &ndash; few
+  software engineers have solid grasp of hardware and/or the will to
+  take part in driver development. This is a big problem with no easy solution.</p>
+
+<p>The hardware vendors are the only party that deserves blame for the
+sorry state of many drivers. I cannot believe how hard it is for a
+company with the size of AMD to deliver a decent Linux driver
+for so many years. Their driver is a monument of everything that is
+wrong with hardware vendors as far as Linux is concerned &ndash; no support
+for latest kernels/X, no support for current state-of-the-art Linux
+video technologies, notorious instability and performance. Nvidia fare
+a lot better but still &ndash; their driver lacks the support basic stuff
+such as KMS&hellip;</p>
+
+<p>So what can we do? Obviously not everyone can start writing better
+drivers, but still everyone could try to help&hellip;</p>
+
+<p>For most desktop hardware vendors Linux is a non-existing OS. Linux
+truly has a small market share, but that is not the actual
+problem. The actual problem is that Linux desktop user would rather
+wait for someone from the community to come up with a solution instead
+of the pressure the vendors into action. Fill their mailboxes with angry
+letters, write blog posts about their inadequacy to properly support
+the third largest desktop OS in the world. Companies love to make
+money and hate bad press&hellip;</p>
+
+<h2>The desktop software stack</h2>
+
+<p>The Linux desktop stack has some great qualities &ndash; for instance it
+often comes with batteries included. You have most of your day to day
+need covered as soon as you install your distro &ndash; a decent browser, a
+good email client, an office suit, disk burning utility, torrent
+downloader, IM client, text editors, photo organizers, image editors,
+etc. When I installed Windows 7 I was a bit surprised how bare the
+initial installation is and how many third party apps I needed to
+install. And of course most of the Linux desktop apps coming from the
+same environment (KDE, GNOME, XFCE, etc) have a very uniform look and
+feel to them which I personally value a lot.</p>
+
+<p>Unfortunately not everything is great&hellip;</p>
+
+<p>The Linux desktop application stack suffers from a few serious
+problems:</p>
+
+<ul>
+<li>a few individuals make crucial decisions without taking any input
+from the user community</li>
+<li>many projects have only one principle developer that happens to do
+things his way without regard for anyone else</li>
+<li>often highly unstable beta quality software is pushed as stable to
+the end users</li>
+<li>a lot of prominent apps that are multi-platform seem to undergo
+sub-par testing/QA process under Linux and experience common problems
+like crashes and memory leaks that don&rsquo;t manifest that often on
+other platforms</li>
+</ul>
+
+
+<p>In more details&hellip;</p>
+
+<p><strong>Is it really better for the users?</strong></p>
+
+<p>Often a new feature arrives that is marketed as a huge improvement for
+the end-users. Most of the time the end-users are never inquired about
+their opinion of the feature. PulseAudio is a great example. I was
+pretty happy using ALSA directly, but nobody asked me what I thought
+about the change. Initially it was fairly easy to disable pulse audio,
+but as it became more and more integrated into the desktops the
+process became harder (luckily pulse audio improved in the
+process). While I&rsquo;m perfectly aware of the technical reasoning that
+lead to pulse audio&rsquo;s creation I do find it rather useless. With only
+one major architecture left (almost no one uses OSS on Linux these
+days) the introduction of intermediate sound layer of dubious quality
+never made that much sense to me. Sure, ALSA needed a simpler API, but
+we didn&rsquo;t deserve to be punished with pulse audio&hellip;</p>
+
+<p><strong>It&rsquo;s my way or the highway</strong></p>
+
+<p>Most of you probably remember that Pidgin (formerly Gaim) used to be
+the default IM client in GNOME based distros. At some point this
+quickly changed and Empathy became the default client. Part of the
+reason for the switch was the unwillingness of the lead developer in the
+Pidgin project to collaborate with the GNOME developers. I still
+remember the controversial fix that made the input area non-resizable
+with no option to go back to the previous setting. I guess GNOME&rsquo;s
+devs were really pissed about something since they replaced the all around great
+Pidgin with a vastly inferior and immensely buggy (at least for the
+first year and a half) product.</p>
+
+<p>Too much power of the hands of a single person with no overseer is
+dangerous. In the open-source world one can easily fork a project, but
+this is a dangerous path as well that is often likely to wreak havoc
+into the development of the project.</p>
+
+<p><strong>Are we your users or your beta testers?</strong></p>
+
+<p>A few examples from recent years:</p>
+
+<p>KDE 4.0</p>
+
+<p>GNOME 3.0</p>
+
+<p>Empathy</p>
+
+<p>PulseAudio</p>
+
+<p>NetworkManager</p>
+
+<p>Beagle</p>
+
+<p>The list could go on and on&hellip; Microsoft and Apple have certainly had
+their fair share of mistakes (Win ME, Win Vista, OS X Leopard), but
+nothing on a scale as epic as KDE 4.0 or GNOME 3.0&hellip;</p>
+
+<p><strong>Some users are more important then others it seems&hellip;</strong></p>
+
+<p>All those programs run on all major OS, but they perform worst on Linux:</p>
+
+<p>Firefox</p>
+
+<p>OpenOffice</p>
+
+<p>Flash Player</p>
+
+<p>Obviously writing great multi-platform apps is possible as illustrated
+by software such as VLC and Google Chrome. But what about all the
+rest. I feel that Firefox&rsquo;s days as the dominant browser on the Linux
+desktop are numbered &ndash; most of my friends that use Linux have already
+switched to Chrome (or the open source Chromium). Firefox on Linux is
+like a bad joke &ndash; slow, memory hungry and unstable. I keep hearing
+that it runs a lot better on OSX and Windows, probably because it got
+a lot more testing on those platforms. I understand their reasoning &ndash;
+most of their clients use those two OSes so it makes sense to make them
+important in the dev/testing phases. But they should remember
+something &ndash; Firefox is (for now) the default
+browser only in most Linux distros and it&rsquo;s never going to be the
+default in Windows or OSX&hellip;</p>
+
+<p>Same goes for OpenOffice to the letter.</p>
+
+<p>And flash is well &ndash;
+flash. It&rsquo;s not the greatest piece of software on any platform, but
+it&rsquo;s absolutely horrible in Linux. When I open a flash intensive web
+site my CPU load generally spikes up to the sky (thank God for AdBlock
+&amp; FlashBlock).</p>
+
+<p>Skype was not even mentioned here (until now obviously) since the Linux version is so far behind
+the one for OSX and Windows that I wouldn&rsquo;t even consider it a
+port. It&rsquo;s just some pile of crap compiled to be able to list Linux as
+a supported OS on their website&hellip; They promised improvements, they
+promised an open-source Linux client &ndash; two years later we&rsquo;re still
+using Skype 2.1 BETA. I wish more people had the sense to use a
+service like Google Talk so I wouldn&rsquo;t have to put up with skype at all.</p>
+
+<h2>The community (communist) model</h2>
+
+<p>I live in a country from the former Soviet block (Bulgaria) and I&rsquo;ve seen first
+hand what Communism leads to. I&rsquo;ve also seen first-hand why Communism
+doesn&rsquo;t actually work &ndash; few people actually live and abide by it and
+the rest of society simply practices the fine art of &ldquo;getting by&rdquo; and
+lives on their shoulders. The Communism can only really work if
+everyone is pulling their own weight in it (which sounds a bit absurd indeed).</p>
+
+<p>Something similar is happening on the Linux desktop ship &ndash; everybody
+says he&rsquo;s on board, but very few people are actually rowing and
+bringing the Linux desktop to it&rsquo;s designated port.</p>
+
+<p>I&rsquo;ve written only two desktop project for Linux from scratch (an
+English-Bulgarian dictionary utility and a GUI front-end for pacman on
+Arch Linux), but I&rsquo;ve contributed bug reports and patches to lots of
+projects. No matter what your opinion about me is &ndash; I&rsquo;ve done
+something for the Linux desktop and I&rsquo;m doing something for the desktop now
+as well &ndash; writing this article&hellip;</p>
+
+<p>What have you done? Sure, very few users are software engineers, but
+that doesn&rsquo;t mean they can&rsquo;t help. Bug reports are just as important
+as patches. Ideas and suggestions for improvements are highly valued
+as well. Don&rsquo;t sit in the shadows doing nothing &ndash; step into the light
+and do something to help your favorite project get a little bit
+better.</p>
+
+<p>Step by step. Fix by fix. Improvement by improvement. This is how good
+software gets created.</p>
+
+<p>The bottom line is &ndash; the more of us that pitch in the fight for a
+proper Linux desktop experience, the bigger the chances of the dream
+becoming reality become.</p>
+
+<h2>Future</h2>
+
+<p>Unless something radically changes in the near future I don&rsquo;t see how
+Linux can rise up to be a mainstream desktop OS. With very few
+companies having any stakes in the Linux desktop that isn&rsquo;t happening
+any time soon. I find a somewhat troubling trend in recent years &ndash; a
+lot of companies that worked for a better desktop experience are now
+gone. Ximian (the company behind GNOME) was purchased by Novell and
+later Novell crumbled, making the future of one of the most popular
+desktop distributions OpenSUSE doubtful. Mandrake was once one of the
+most powerful Linux companies and Mandrake Linux was widely
+used. Currently Mandriva is constantly on the brink of
+bankruptcy. There are many other examples &ndash; Xandros, VidaLinux,
+etc&hellip; Even the &ldquo;mighty&rdquo; Canonical struggles to build a successful
+business model around their widely successful Ubuntu OS.</p>
+
+<p>Desktop Linux has to be made somehow profitable for companies to start
+investing more heavily in it. This is the hard, but honest truth. As
+long as the primarily development is carried out with little (or no
+funding), mostly by volunteers the hour of the desktop Linux will
+never come.</p>
+
+<p>There is one more serious problem &ndash; diversity. There are two many
+distributions bring too little value to the table. The time spent
+repacking the same software for a hundred distros could be better
+utilized developing new applications/drivers and improving existing
+ones. We need to have at least a couple rock solid desktop
+distros/environments, otherwise the whole diversity thing means
+basically nothing.</p>
+
+<p>Few good options are worth more than a million half-baked options!</p>
+
+<h2>Epilogue</h2>
+
+<p>This article (and the one before it) was never about jumping the
+ship, claiming that Windows or OSX are better than Linux or spreading
+&ldquo;FUD&rdquo; (if I totally hate a term this is the one). It was always about
+raising the awareness of existing issues in the land of desktop
+Linux. After all just a few days before <a href="/Linux/Fedora/2011/05/31/fedora-15-tips.html">I had written a post
+installation guide for Fedora 15</a>.</p>
+
+<p>While I was writing the last paragraph I got another GNOME 3 shell corruption (time
+for killall gnome-shell to take the stage) on my totally supported
+hardware&hellip; A skype sound notification interrupted the song I was
+listening to (thanks a lot, PulseAudio)&hellip; And yet I&rsquo;m still here. I
+did switch to Windows 7 on my laptop and I do intend to use Window 7
+at least for a while there. It&rsquo;s not perfect either, trust me about
+that. Poor terminal emulator (though great PowerShell), a few random
+application crashes (but these happen in Linux as well in recent
+years) just to name a few.</p>
+
+<p>The Linux desktop is at the edge of a cliff now. It&rsquo;s up to us to
+decide whether we would save it or push it over the edge.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-14T00:00:00+03:00" pubdate data-updated="true">Jun 14<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/linux/'>Linux</a>, <a class='category' href='/articles/categories/rant/'>Rant</a>, <a class='category' href='/articles/categories/windows/'>Windows</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2011/06/14/linux-desktop-part-2/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2011/06/14/linux-desktop-part-2/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2011/06/11/linux-desktop-experience-killing-linux-on-the-desktop/" title="Previous Post: The Linux desktop experience is killing Linux on the desktop">&laquo; The Linux desktop experience is killing Linux on the desktop</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2011/06/19/django-vs-rails/" title="Next Post: Django 1.3 vs Rails 3: A not so final showdown">Django 1.3 vs Rails 3: A not so final showdown &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/10/the-road-to-cider-0-dot-8/">The Road to CIDER 0.8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/09/05/clojure-mode-3-dot-0/">Clojure-mode 3.0</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

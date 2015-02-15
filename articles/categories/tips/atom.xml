@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Tips | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/tips/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby Tip #1: Demystifying the Difference Between == and eql?]]></title>
+    <link href="http://batsov.com/articles/2011/11/28/ruby-tip-number-1-demystifying-the-difference-between-equals-equals-and-eql/"/>
+    <updated>2011-11-28T16:54:00+02:00</updated>
+    <id>http://batsov.com/articles/2011/11/28/ruby-tip-number-1-demystifying-the-difference-between-equals-equals-and-eql</id>
+    <content type="html"><![CDATA[<p>Newcomers to Ruby are often confused by the fact the <code>Object</code> class
+defines three methods related to equality &ndash; <code>==</code>, <code>eql?</code> and
+<code>equal?</code>. Of the three the one that it&rsquo;s easiest to describe is
+<code>equal?</code> &ndash; it implements what&rsquo;s commonly known as reference equality
+check. The method returns <code>true</code> only if its receiver (the object upon
+the method was invoked) and parameter (the object we&rsquo;re comparing to) are
+the same object (Java developers should think of the <code>==</code> operator
+there).</p>
+
+<p>``` ruby
+some_word = &ldquo;word&rdquo;
+some_other_word = some_word</p>
+
+<p>some_word.equal? some_other_word # true
+```</p>
+
+<p>Both <code>==</code> and <code>eql?</code> implement value equality checks &ndash; they are not
+interested in whether two variables point to the same object in
+memory, but whether two objects are equal in terms of their
+values. For instance &ldquo;cat&rdquo; and &ldquo;cat&rdquo; might very well be two completely
+different <code>String</code> objects, but they are quite obviously the same as
+far as their value is concerned.</p>
+
+<p><code>ruby
+"cat".equal? "cat"     # false
+"cat" == "cat"         # true
+"cat".eql? "cat"       # true
+</code></p>
+
+<p>What&rsquo;s not immediately obvious is why are there two different
+methods that seem to be doing exactly the same thing. The answer is
+simple &ndash; <code>eql?</code> is meant to be used as a stricter version of <code>==</code>, if
+there is a need for such stricter version.<code>eql?</code> most prominent usage
+is probably in the <code>Hash</code> class, where it&rsquo;s used to test members for equality.</p>
+
+<p>In the <code>Object</code> class <code>eql?</code> is synonym with <code>==</code>. Most subclasses
+continue this tradition, but there are a few classes that provide a
+different implementation for <code>eql?</code>.  Numeric types, for example,
+perform type conversion across <code>==</code>, but not across <code>eql?</code>, so:</p>
+
+<p><code>ruby
+1 == 1       # true
+1.eql? 1     # true
+1 == 1.0     # true
+1.eql? 1.0   # false
+1.0.eql? 1.0 # true
+</code></p>
+
+<p>As you can see clearly from this example &ndash; <code>eql?</code> for <code>Numeric</code> classes
+requires both objects to be instances of the same class, apart from
+having equal values, to return <code>true</code>.</p>
+
+<p>If you&rsquo;re wondering about the origins of that convention I should probably
+refer you to Common Lisp (one of the languages cited as principle
+inspiration for Ruby). Common Lisp has <a href="http://eli.thegreenplace.net/2004/08/08/equality-in-lisp/">quite a few equality
+predicates</a>,
+dealing with various aspects of equality. I guess I never found <code>==</code>
+and <code>eql?</code> in Ruby particularly confusing, because I knew Common Lisp,
+before I started playing with Ruby.</p>
+
+<p>Hopefully, I&rsquo;ve managed to make the difference between <code>==</code> and <code>eql?</code>
+clear. That&rsquo;s some fairly esoteric matter that&rsquo;s not totally
+understood by even some fairly experienced Ruby developers.</p>
+]]></content>
+  </entry>
+  
+</feed>

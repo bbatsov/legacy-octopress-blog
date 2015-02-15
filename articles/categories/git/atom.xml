@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: git | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/git/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Deleting Remote Git Branches]]></title>
+    <link href="http://batsov.com/articles/2012/12/16/deleting-remote-git-branches/"/>
+    <updated>2012-12-16T10:10:00+02:00</updated>
+    <id>http://batsov.com/articles/2012/12/16/deleting-remote-git-branches</id>
+    <content type="html"><![CDATA[<p>This post is mostly a note to myself, since I constantly forget how to
+delete remote Git branches.</p>
+
+<p>The classic way to do so (introduced in Git 1.5) would be:</p>
+
+<p><code>bash
+$ git push origin :branch-to-delete
+</code></p>
+
+<p>So, if I were migrating an application from MySQL to PostgreSQL I might want to delete
+the <code>postgres</code> branch when I&rsquo;m done:</p>
+
+<p><code>bash
+$ git push origin :postgres
+</code></p>
+
+<p>You have to agree this syntax is hardly something one can easily
+remember(and I&rsquo;m extra certain nobody would have guessed it on their
+own). Fortunately in Git 1.7 a nicer alternative to the above command
+was introduced:</p>
+
+<p><code>bash
+$ git push origin --delete branch-to-delete
+</code></p>
+
+<p>That&rsquo;s all from me for today. Now go ahead and delete those unneeded Git branches.</p>
+
+<p>P.S. GitHub users might also want to take a look at this
+<a href="https://github.com/blog/1335-tidying-up-after-pull-requests">article</a>
+describing recently added functionality to clean up after pull
+requests.</p>
+]]></content>
+  </entry>
+  
+</feed>

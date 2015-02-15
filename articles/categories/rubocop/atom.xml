@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: RuboCop | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/rubocop/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[RuboCop plugin for RubyMine]]></title>
+    <link href="http://batsov.com/articles/2014/11/12/rubocop-plugin-for-rubymine/"/>
+    <updated>2014-11-12T14:16:00+02:00</updated>
+    <id>http://batsov.com/articles/2014/11/12/rubocop-plugin-for-rubymine</id>
+    <content type="html"><![CDATA[<p>Good news, RubyMine users!</p>
+
+<p>Yesterday <a href="https://github.com/sirlantis">Marcel Jackwerth</a> released the initial version of a <a href="https://github.com/sirlantis/rubocop-for-rubymine">RuboCop plugin for
+RubyMine/IntelliJ IDEA</a>. Here&rsquo;s the plugin in action:</p>
+
+<p><img class="<a" src="href="https://cloud.githubusercontent.com/assets/56807/5009481/9bbee3b4-6a67-11e4-8bf9-2a32c3bc3d5e.png">https://cloud.githubusercontent.com/assets/56807/5009481/9bbee3b4-6a67-11e4-8bf9-2a32c3bc3d5e.png</a>"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RuboCop Logo]]></title>
+    <link href="http://batsov.com/articles/2014/09/05/rubocop-logo/"/>
+    <updated>2014-09-05T14:16:00+03:00</updated>
+    <id>http://batsov.com/articles/2014/09/05/rubocop-logo</id>
+    <content type="html"><![CDATA[<p>Meet <a href="https://github.com/bbatsov/rubocop">RuboCop</a>&rsquo;s brand new official logo!</p>
+
+<p><img src="/images/articles/rubocop-logo.png"></p>
+
+<p>RuboCop&rsquo;s logo was created by
+<a href="https://www.chadomoto.com/">Dimiter Petrov</a> (the best designer I&rsquo;ve
+ever worked with!). You can find the logo in various formats
+<a href="https://github.com/bbatsov/rubocop/tree/master/logo">here</a>.</p>
+
+<p>The logo is licensed under a
+<a href="http://creativecommons.org/licenses/by-nc/4.0/deed.en_GB">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RuboCop 0.14: Beyond the Ruby Style Guide]]></title>
+    <link href="http://batsov.com/articles/2013/10/07/rubocop-0-dot-14-beyond-the-ruby-style-guide/"/>
+    <updated>2013-10-07T14:56:00+03:00</updated>
+    <id>http://batsov.com/articles/2013/10/07/rubocop-0-dot-14-beyond-the-ruby-style-guide</id>
+    <content type="html"><![CDATA[<p>Good news, everyone &ndash; <a href="https://github.com/bbatsov/rubocop">RuboCop</a> 0.14 was just released!</p>
+
+<p>Generally I announce RuboCop releases in only <a href="https://twitter.com/bbatsov">140 characters</a>,
+but this time I&rsquo;ll make an exception. This release is more significant
+than most of our recent releases for one particular reason &ndash; we&rsquo;ve
+made an effort to make more aspects of RuboCop configurable than ever
+before. For instance now you can make RuboCop enforce the use of
+double-quoted strings, hashes that only use hash rockets, no spaces
+inside block parentheses and more of that sort.</p>
+
+<p>I&rsquo;ve started the project with the simple goal of creating a tool to help you follow the
+<a href="https://github.com/bbatsov/ruby-style-guide">Ruby Style Guide</a> to the
+letter &ndash; originally it didn&rsquo;t even have configuration options for that very reason :&ndash;)
+The project, however, quickly outgrew its humble origin and became much more popular than I could have envisioned.
+Today we have a core team of RuboCop hackers, dozens of contributors and thousands of users.
+Having received a lot of feedback over the past year from people who use slightly
+modified version of the style guide, I&rsquo;ve come to realize that the initial
+approach was hardly optimal and now supporting various popular coding
+practices is one of the core values of RuboCop.</p>
+
+<p>If you&rsquo;ve abstained from trying out RuboCop, because you don&rsquo;t agree
+with portions of the style guide &ndash; now it&rsquo;s a good time to take it out
+for a spin. A list of all changes in 0.14 can be found
+<a href="https://github.com/bbatsov/rubocop/blob/master/CHANGELOG.md">here</a>.
+All configurable aspects of RuboCop are listed <a href="https://github.com/bbatsov/rubocop/blob/master/config/default.yml">here</a>.</p>
+
+<p>P.S. As usual &ndash; suggestions for new features and improvements are always welcome! We can make RuboCop only as good as you want it to be!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RuboCop 0.9 is now patrolling the streets!]]></title>
+    <link href="http://batsov.com/articles/2013/07/01/rubocop-0-dot-9-is-now-patrolling-the-streets/"/>
+    <updated>2013-07-01T17:06:00+03:00</updated>
+    <id>http://batsov.com/articles/2013/07/01/rubocop-0-dot-9-is-now-patrolling-the-streets</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/bbatsov/rubocop">RuboCop</a> 0.9 is finally out! This
+was one of our most ambitious releases &ndash; over a month of work, ~250
+commits, lots of new cops and features and a lot less bugs (OK, I&rsquo;m
+not sure about this, but I sincerely hope it&rsquo;s true). Here&rsquo;s the
+highlights.</p>
+
+<h2>Portable Linting</h2>
+
+<p>This is a big deal! Prior to 0.9, RuboCop piggybacked on MRI&rsquo;s <code>ruby
+-wc</code> to find syntax errors and lint warnings. Obviously apart from
+being unportable &ndash; this wasn&rsquo;t particularly fast (spawning processes
+never is) either.</p>
+
+<p>That&rsquo;s no longer the case &ndash; errors are now reported directly by
+<a href="https://github.com/whitequark/parser">Parser</a> and we&rsquo;ve reimplemented
+MRI&rsquo;s linting in pure Ruby into RuboCop itself. Now you&rsquo;ll get the
+same errors and warnings on MRI, JRuby and Rubinius. And to top it
+off &ndash; we&rsquo;ve added much nicer warning messages and we report even
+column information for those (MRI doesn&rsquo;t). This brings me to the next
+point.</p>
+
+<h2>Column information</h2>
+
+<p>All RuboCop diagnostics now feature column information as well. Now
+you&rsquo;ll be able to jump to a problem in your code even faster. But that&rsquo;s not all&hellip;</p>
+
+<h2>Formatter Support</h2>
+
+<p>We&rsquo;ve introduced the concept of formatters (similar the to RSpec
+formatter concept) and we&rsquo;ve bundled a few formatters. We&rsquo;ve also
+changed the default output format &ndash; it now pretty similar to <code>clang</code>&rsquo;s
+and features extra context information:</p>
+
+<p><code>``
+spec/models/authentication_spec.rb:12:44: W:</code>&ndash;&lsquo; interpreted as argument prefix</p>
+
+<pre><code>}.to change(Authentication, :count).by -1
+                                       ^
+</code></pre>
+
+<p>```</p>
+
+<p>Pretty sure most of you will love this :&ndash;)</p>
+
+<h2>Auto-correction Support</h2>
+
+<p>Running <code>rubocop -a</code> will now correct certain problems automatically. This
+feature is alpha quality and just a few cops have support for it right
+now. It goes without saying that you shouldn&rsquo;t use it on projects not under
+version control (who doesn&rsquo;t use version control?) and without
+an excellent test suite (that you undoubtedly have).</p>
+
+<h2>Rails Support</h2>
+
+<p><code>rubocop -R</code> will run additional Rails specific code checks. This
+feature is also alpha at this point (meaning there&rsquo;s just one Rails
+specific check at this point).</p>
+
+<h2>The Road to 1.0</h2>
+
+<p>We plan 1.0 to be the next RuboCop major release. No new features are in
+the pipeline for 1.0 &ndash; we already have so many features that require extra
+work and polish anyways. If all goes well expect 1.0 by summer&rsquo;s end with:</p>
+
+<ul>
+<li>performance optimizations</li>
+<li>refined formatters</li>
+<li>enhanced auto-correction support</li>
+<li>lots of Rails specific checks</li>
+</ul>
+
+
+<p>I hope you&rsquo;ll enjoy RuboCop 0.9. For the gory details, please take a
+look at the epic
+<a href="https://github.com/bbatsov/rubocop/blob/master/CHANGELOG.md">Changelog</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>

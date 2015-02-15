@@ -1,0 +1,3627 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Java | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/java/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-15T11:05:28+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Java.next() - JRuby: The Rubyists Strike Back]]></title>
+    <link href="http://batsov.com/articles/2011/05/18/jvm-langs-jruby/"/>
+    <updated>2011-05-18T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/05/18/jvm-langs-jruby</id>
+    <content type="html"><![CDATA[<h2>Prelude</h2>
+
+<p>So far in the Java.next() series I&rsquo;ve discussed only languages that
+were engineered from the start to run on the JVM (<a href="/Java/Groovy/2011/05/06/jvm-langs-groovy.html">Groovy</a>, <a href="/Java/Scala/2011/05/08/jvm-langs-scala.html">Scala</a> and
+<a href="/Clojure/Java/2011/05/12/jvm-langs-clojure.html">Clojure</a>). However, a lot of good programming languages existed even
+before the inception of the idea to run languages other than Java on top of
+the JVM. Some notable examples are Ruby and Python for instance. Today
+I&rsquo;ll be writing about <a href="http://jruby.org/">JRuby</a> &ndash; the pure Java port of the Ruby
+programming language (and undoubtedly the most advanced and widely
+adopted of the 9 (!) actively maintained Ruby ports).</p>
+
+<p>This post will differ somewhat from the others so far, because I won&rsquo;t
+be spending any time to dwell on the basic Ruby syntax and will only
+highlight the advantages over plain old Ruby that JRuby provides &ndash;
+like calling Java code from a Ruby application and scripting Ruby from a
+Java application.</p>
+
+<h2>Why JRuby?</h2>
+
+<p>Ruby has long been known as one of the most elegant programming
+languages out there. With the rise of the Rails web framework several
+years ago the language was propelled into the mainstream and showed a
+lot of common developers alternative (better) ways to get their jobs done with
+less hassle and more grace. While the language is generally well liked
+(albeit is has some syntax quirks and oddities, mostly courtesy of its
+Perl heritage) its default execution environment MRI (Matz&rsquo;s Ruby
+Interpreter) is not the object of international affection. As an
+application written in C it suffers some portability problems (a few
+years ago it was quite hard to get MRI to run properly on Windows and
+even now you might run into some missing dll error from time to
+time). MRI&rsquo;s performance is not stellar either and it even used to be
+quite terrible before the advent of Ruby 1.9 which incorporated YARV
+(Yet Another Ruby VM), which significantly improved its performance
+(but still left a what to be desired). There is also the problem with
+the missing standard portable GUI development library and the somewhat
+limited deployment options because of MRI&rsquo;s limited
+portability.</p>
+
+<p>Matz&rsquo;s has often said that he&rsquo;s no VM specialist, he&rsquo;s a
+language architect/designer and the beauty of the language concerns
+him more than the performance of the reference implementation. He&rsquo;s
+also said that he loves diversity and is certain that interested
+parties will offer high quality alternatives to the standard Ruby
+runtime.</p>
+
+<p>When it comes down to a high quality runtimes few people don&rsquo;t start
+thinking immediately about the Java platform, known for its infinite
+(not literally infinite of course, but vast enough) libraries,
+rock-solid and secure JVM and great support for compile-time and
+runtime performance
+optimizations. It&rsquo;s not unheard for a Java application to match and
+excel the performance of a native C application by employing
+techniques like <em>just in time</em>(JIT) compilation, hot spot detection and
+optimizations, etc.</p>
+
+<p>So it&rsquo;s only natural that at some point a bunch of people decided to
+create a version of Ruby that could run on top of the acclaimed
+JVM. This version of Ruby is (believe it or not) known as JRuby. With
+JRuby you get the best of both Java and the Ruby worlds. Here are just a few possibilities:</p>
+
+<ul>
+<li>Deploy a Ruby on Rails web application to Google’s App Engine
+service.</li>
+<li>Write a Rails web frontend to your existing Java enterprise
+application.</li>
+<li>Target the latest Android smartphones with your Ruby code using <a href="http://ruboto.org/">Ruboto</a></li>
+<li>Create cross-platform GUIs with Java&rsquo;s Swing (or SWT)</li>
+<li>Build your project on solid libraries written in Java, Scala, Clojure,
+or other JVM languages.</li>
+<li>Use the solid platform independent JDBC database
+drivers. Platform dependent drivers used with MRI Ruby are a common
+source of gripe for developers trying to migrate an application from
+one platform to another.</li>
+</ul>
+
+
+<p>Great prospects indeed! Now it&rsquo;s about time to get that magical piece
+of software called JRuby up and running&hellip;</p>
+
+<h2>Installing JRuby</h2>
+
+<p>There are several options to consider in the department of JRuby
+installation. JRuby requires a Java runtime 5.0+ to be installed. You
+can get one from <a href="http://www.oracle.com/technetwork/java/index.html">here</a>.</p>
+
+<h4>Using an Installer</h4>
+
+<p>The easiest way to install JRuby is to use one of the prebuilt installers
+available from the <a href="http://jruby.org/download">official download site</a>. These will take care of the
+low level of detail, such as setting up your <strong>PATH</strong> environment
+variable to make finding JRuby easier.
+The JRuby team currently maintains installers for Windows and Mac
+machines. If you&rsquo;re on Linux, your distribution may package its own
+JRuby build. For example, on Ubuntu (or any other Debian derived
+distro) you can type this:</p>
+
+<p><code>bash
+$ sudo apt-get install jruby
+</code></p>
+
+<p>Red Had distribution users might try this incantation instead:</p>
+
+<p><code>bash
+$ sudo yum install jruby
+</code></p>
+
+<p>Most Linux distributions don&rsquo;t upgrade to the latest JRuby release the
+instant it comes out. If you want to stay with the latest and greatest,
+you might prefer installing from an archive instead or RVM instead.</p>
+
+<h4>Using RVM</h4>
+
+<p>Most Ruby hackers
+favour a powerful bash script called RVM(Ruby Version Manager) that
+allows you to install several different version(or flavours of Ruby)
+and switch easily between them. Please refer to the official
+<a href="https://rvm.beginrescueend.com/">RVM documentation</a> for installation
+and usage instructions. After you&rsquo;ve installed RVM getting JRuby
+installed is a child&rsquo;s play:</p>
+
+<p>``` bash
+$ rvm list known | grep jruby
+jruby-1.2.0
+jruby-1.3.1
+jruby-1.4.0
+jruby-1.6.0
+jruby[-1.6.1]
+jruby-head</p>
+
+<p>$ rvm install jruby
+$ rvm use jruby
+```</p>
+
+<p>Just for the record &ndash; I personally use RVM and I recommend to all
+*BSD, Linux &amp; OS X hackers to try it out as well &ndash; great piece of
+software. One of the nicer side effects of using RVM is that you won&rsquo;t
+have to run operations like <strong>gem install</strong> as the root user.</p>
+
+<h4>Using prebuilt archive</h4>
+
+<p>If you have a heavily customized setup or just like doing things
+yourself, you can get a .zip or .tar.gz archive from the same download
+page. Extract the archive somewhere convenient on your system, such
+as <strong>C:** or </strong>/opt**. You can run JRuby straight from its own <em>bin</em>
+folder, but you&rsquo;ll probably find it more convenient to add it to
+your PATH. On UNIX (including Linux &amp; Mac OS X), you can do the following:</p>
+
+<p><code>bash
+$ export PATH=$PATH:/opt/jruby/bin
+</code></p>
+
+<h4>Testing the installation</h4>
+
+<p>Type the following commands:</p>
+
+<p><code>bash
+$ which jruby
+~/.rvm/rubies/jruby-1.6.1/bin/jruby
+$ jruby -version
+jruby 1.6.1 (ruby-1.8.7-p330) (2011-04-12 85838f6) (Java HotSpot(TM) Server VM 1.6.0_22) [linux-i386-java]
+$ jruby -e 'puts "Hello, JRuby!"'
+Hello, JRuby!
+</code></p>
+
+<p>Now we can see some of the unique JRuby features in action.</p>
+
+<h2>Common tasks with JRuby</h2>
+
+<p><strong>REPL</strong></p>
+
+<p>JRuby comes with an equivalent of the standard Ruby REPL irb, called
+jirb. To start it simply type:</p>
+
+<p><code>bash
+$ jirb
+</code></p>
+
+<p>Now you can do some interactive Ruby development:</p>
+
+<p><code>irb
+jruby-1.6.1 :001 &gt; puts "Hello, JRuby"
+Hello, JRuby
+ =&gt; nil
+jruby-1.6.1 :002 &gt; arr = ["Chuck", "Sarah", "Morgan", "Casey"]
+ =&gt; ["Chuck", "Sarah", "Morgan", "Casey"]
+jruby-1.6.1 :003 &gt; arr.length
+ =&gt; 4
+jruby-1.6.1 :004 &gt; arr.size
+ =&gt; 4
+jruby-1.6.1 :005 &gt; arr.size()
+ =&gt; 4
+jruby-1.6.1 :006 &gt; arr.each { |name| puts name }
+Chuck
+Sarah
+Morgan
+Casey
+ =&gt; ["Chuck", "Sarah", "Morgan", "Casey"]
+jruby-1.6.1 :007 &gt; arr.each_with_index { |name, index| puts "##{index}: #{name}"}
+0: Chuck
+1: Sarah
+2: Morgan
+3: Casey
+ =&gt; ["Chuck", "Sarah", "Morgan", "Casey"]
+</code></p>
+
+<p>jirb is a great tool for exploratory programming and has some nice
+features like TAB completion. Use it often!</p>
+
+<h4>Running scripts</h4>
+
+<p>Same as before (with MRI Ruby):</p>
+
+<p><code>bash
+$ jruby some_script.rb
+</code></p>
+
+<p>That was simple, right?</p>
+
+<h4>Running Ruby tools</h4>
+
+<p>You should prefix calls to common Ruby tools like gem and rake with
+<strong>jruby -S</strong> &ndash; otherwise they might get confused which Ruby version
+(if you have more than one Ruby installed, that is) to use:</p>
+
+<p><code>bash
+$ jruby -S gem install rails
+$ jruby -S rake install
+</code></p>
+
+<h4>Using the JRuby compiler</h4>
+
+<p>You can compile Ruby scripts directly to Java bytecode and run the
+resulting class files using the JVM:</p>
+
+<p><code>bash
+$ jrubyc hello.rb
+Compiling hello.rb to class example
+</code></p>
+
+<p>The compiler supplies a main method for you, so you can now run the
+program straight from the java command (adjust the path here to point
+to your JRuby installation):</p>
+
+<p><code>bash
+$ java -cp .:/opt/jruby/lib/hello.jar example
+</code></p>
+
+<p>Note that your compiled program still depends on some JRuby-defined
+support routines, so jruby.jar needs to be on your classpath. Also,
+the compiler compiles only the files you specifically pass to it. If
+you reference some_ruby_library.rb from hello.rb, you&rsquo;ll have to
+compile that extra .rb file yourself or ship it in source form
+alongside your .class file. The Java compiler understands dependencies
+between source files and compiles them automatically so Java
+developers should keep this difference in mind.</p>
+
+<h2>Using Java from JRuby</h2>
+
+<p>One of the nicest features of JRuby is undoubtedly the ability to use
+Java libraries directly in your Ruby code. JRuby goes a long way to
+make the Java classes integrate into normal Ruby code as seamlessly as
+possible &ndash; for instance it gives you the ability to call methods using the
+snake_naming_convention, instead of the common in Java
+camelCaseNamingConvention. Let&rsquo;s see the Java integration in action:</p>
+
+<p>``` ruby
+require &lsquo;java&rsquo;
+java_import &lsquo;java.lang.System&rsquo;
+java_import &lsquo;java.util.ArrayList&rsquo;
+java_import &lsquo;javax.swing.JOptionPane&rsquo;</p>
+
+<p>System.out.println(&ldquo;Feel the power of JRuby&rdquo;)</p>
+
+<h2>using snake_names for Java method names</h2>
+
+<p>puts System.current_time_millis</p>
+
+<h2>regular names work as well</h2>
+
+<p>puts System.currentTimeMillis</p>
+
+<p>array_list = ArrayList.new</p>
+
+<h2>the array list supports some common Ruby idioms</h2>
+
+<p>array_list &lt;&lt; 1
+array_list.add 2
+array_list &lt;&lt; 3</p>
+
+<p>puts &ldquo;List length is ##{array_list.length}&rdquo;</p>
+
+<p>array_list.each { |elem| puts elem }</p>
+
+<h2>a glimpse of Swing</h2>
+
+<p>JOptionPane.show_message_dialog(nil, &ldquo;This is a message from the future of Ruby!&rdquo;)
+```</p>
+
+<p>You shouldn&rsquo;t, of course, use ArrayList unless you&rsquo;re using a Java API
+that is requiring you to do so. Hopefully these simple examples gave
+you an idea how easy it is to access Java code from JRuby.</p>
+
+<p>It might be tempting to think of Java/Ruby integration as nothing more
+than calling from one language to another. That&rsquo;s not the case. In a
+typical project, you&rsquo;re really interacting with both platforms.  You
+might construct a Ruby object, pass it to a Java function, and watch
+the Java code call other Ruby methods you&rsquo;ve defined. All the advanced
+interactions are beyond the scope of this cursory overview, but you&rsquo;re
+definitely encouraged to explore them on your own.</p>
+
+<h2>Using JRuby from Java</h2>
+
+<p>While Java libraries are capable of doing just about anything they are
+generally not as elegant as some of their Ruby counterparts. This might
+make you want to run some Ruby code from a Java program. JRuby allows
+you do this:</p>
+
+<p>``` java
+import org.jruby.embed.InvokeFailedException;
+import org.jruby.embed.ScriptingContainer;</p>
+
+<p>public class RubyFromJava {</p>
+
+<pre><code>public static void main(String[] args) {
+    ScriptingContainer container = new ScriptingContainer();
+    container.runScriptlet("puts 'Ruby bridge established successfully'" );
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>This example is quite basic, but you should be able to grasp the basic
+idea from it.</p>
+
+<h2>Compatibility with standard Ruby and performance</h2>
+
+<p>JRuby 1.6 is mostly compatible with MRI Ruby 1.9.2. Since Ruby doesn&rsquo;t
+have a formal standard and is mostly defined in terms of the reference
+implementation (although there are some compatibility test suites)
+alternative implementations like JRuby are bound to be a step behind
+the current reference version from time to time. JRuby, however,
+catches up very quickly and has reached a state in popularity and adoption
+at which I&rsquo;m certain that they (the JRuby team) keep an open communication channel with
+upstream MRI developers and are capable to add the new features with
+very little delay.</p>
+
+<p>In terms of performance JRuby is slightly faster in many tests than
+MRI 1.9.2 and with the inclusion of support for dynamic method
+dispatching in Java 7 (coming up later this year) the performance will
+probably be improved significantly. The only real performance problem
+is the JVM startup time. If you&rsquo;re using JRuby to run very simple
+scripts you might be mislead to believe that JRuby&rsquo;s very slow, when actually the
+delay you&rsquo;re witnessing is caused by the JVM startup (which is not
+very fast). Some Ruby features like ObjectSpace don&rsquo;t perform very
+well on the JVM as well, but they are used rarely.</p>
+
+<p>In a sentence &ndash; JRuby is quite compatible with the standard MRI Ruby
+and one of the fastest Ruby implementations around.</p>
+
+<h2>Deployment options and future prospects</h2>
+
+<p>With JRuby your number of deployment options vastly improves &ndash; now you
+can deploy your Ruby applications anywhere where a JVM can be run (and
+there are lot such places, believe me about that). With JRuby you can
+deploy your Rails applications on the Google App Engine or in a Java
+enterprise container such as Glassfish. You can also write mobile
+applications for the Android operating system.</p>
+
+<p>JRuby&rsquo;s development is funded by a very solid company, called
+<a href="http://www.engineyard.com/">&ldquo;Engine Yard&rdquo;</a> which is famous for its world class Rails hosting
+solutions. The company obviously has a lot at stake here and you
+shouldn&rsquo;t be afraid that JRuby might die anytime soon.</p>
+
+<p>IT consulting companies like
+<a href="http://www.thoughtworks.com/">ThoughtWorks</a> have used JRuby to deliver both products and customer
+applications on far more aggressive schedules than they could
+have with more conventional languages</p>
+
+<h2>The tools of the trade</h2>
+
+<p>Most Ruby hackers tend to program without the aid of sophisticated
+IDEs. Emacs, vim and TextMate are popular choices. Recently
+<a href="http://www.sublimetext.com/">SublimeText</a> has been getting a fair share of attention as well. While
+it&rsquo;s fairly easy to write Ruby code in a text editor it&rsquo;s generally a
+nightmare to write Java code in an editor. Some of the most old-school
+hardcore developers that I know bowed down before the complexity of
+Java and started using Eclipse, NetBeans or IntelliJ to keep their
+sanity intact. When you&rsquo;re working on a project that&rsquo;s a mixture of Ruby
+and Java code it might be a good choice to opt for using some IDE as
+well.</p>
+
+<ul>
+<li><a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a> &ndash; The legendary Java IDE comes with a very capable
+Ruby plug-in, that integrates well with Rails, the common templating
+languages often used with it and most Ruby testing
+frameworks. IntelliJ even has a variant for pure Ruby development
+called <a href="http://www.jetbrains.com/ruby/">RubyMine</a> which is regarded by many devs as the best Ruby
+IDE out there.</li>
+<li><a href="http://wiki.netbeans.org/RubySupport">NetBeans</a> &ndash; At some point the core JRuby team were employed by
+Sun and at that time great Ruby support was added to
+NetBeans. Oracle killed the official Ruby support in NetBeans 7.0,
+but it&rsquo;s still maintained as a community project. It&rsquo;s not as good
+as the one in RubyMine, but it doesn&rsquo;t cost anything either.</li>
+<li><a href="http://www.eclipse.org/dltk/">Eclipse</a> &ndash; Eclipse has an official
+Ruby plug-in(part of DLTK), but most people tend to prefer using
+<a href="http://www.aptana.com/products/studio3">Aptana Studio</a> &ndash; a web
+development IDE built on top of Eclipse.</li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>JRuby is a solid addition to the ranks of JVM languages. Given the
+fact that Ruby served as the principle inspiration for Groovy many
+people will probably do better to use JRuby in preference to Groovy
+(except the ones fond of the Java syntax I guess). I personally love
+both Ruby and the JVM and for me JRuby was a match made in heaven. It
+opens a lot new and exciting possibilities before one of the most
+beautiful languages ever conceived.</p>
+
+<p>I particularly like the ability to create portable GUIs with Swing and
+the extended deployment options that JRuby provides. If Java 7 brings
+the promised speed improvements I&rsquo;m certain that JRuby will have a
+shot at becoming the reigning Ruby implementation.</p>
+
+<p>So what are you waiting for? Go grab a copy of the JRuby Bible
+<a href="http://pragprog.com/titles/jruby/using-jruby">&ldquo;Using JRuby&rdquo;</a> and
+start coding. :&ndash;)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java.next() - Clojure: The Return of the Lispers]]></title>
+    <link href="http://batsov.com/articles/2011/05/12/jvm-langs-clojure/"/>
+    <updated>2011-05-12T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/05/12/jvm-langs-clojure</id>
+    <content type="html"><![CDATA[<h2>Prelude</h2>
+
+<p>This is the third part of the series of <strong>Java.next()</strong>. Last time
+we&rsquo;ve discussed the merits of <a href="/Java/Scala/2011/05/08/jvm-langs-scala.html">Scala</a> &ndash; an OO language with a strong
+emphasis on functional and parallel programming. Today we&rsquo;ll be
+discussing Clojure &ndash; a language that pushes the envelop a lot further
+than Scala as far as functional and parallel programming are
+concerned. You&rsquo;ll see that Clojure is radically different from Scala
+and Groovy in many aspects &ndash; it&rsquo;s not an OO language, it doesn&rsquo;t have
+Algol-derived syntax and it introduces a few rather radical ideas on
+subjects such as <a href="http://clojure.org/state">identity and state</a>.</p>
+
+<p>Clojure&rsquo;s approach to concurrency is characterized by the concept of
+identities, which represent a series of immutable states over
+time. Since states are immutable values, any number of workers can
+operate on them in parallel, and concurrency becomes a question of
+managing changes from one state to another. For this purpose, Clojure
+provides several mutable reference types, each having well-defined
+semantics for the transition between states. This is a pretty complex
+topic for a language overview so I&rsquo;ll discuss it here only cursory.</p>
+
+<p>Clojure was initially conceived as targeting both the JVM and the
+CLR. For various reason currently the core development team is targeting mainly
+the JVM and the <a href="https://github.com/richhickey/clojure-clr">CLR port</a>
+is receiving less attention (though it&rsquo;s not abandoned and it&rsquo;s
+regularly being updated). Like Scala it&rsquo;s not technically correct to
+call it a JVM languages, because it&rsquo;s both a JVM and a .Net language,
+but since it&rsquo;s used a lot more often with Java it doesn&rsquo;t make that
+much of a difference.</p>
+
+<h2>A brief history of Clojure</h2>
+
+<p>Clojure is a very young project (compared to most popular
+programming languages at least). It was created in 2007 by Rich
+Hickey (project leader and benevolent dictator for life). He developed
+Clojure because he wanted a modern Lisp for functional programming,
+symbiotic with the established Java platform, and designed for
+concurrency. What started as a hobby project turned into some much
+bigger with Rich getting so excited about the project that left his
+job to work full-time on the project, effectively through burning his life&rsquo;s
+savings in the process. This was quite the gamble, but it turned out
+to be a lucky one, since Clojure&rsquo;s popularity rapidly spiked and
+loyal and energetic community was quickly formed around the project.</p>
+
+<p>Clojure became the new language of choice for many well respected
+hackers from different communities. I&rsquo;ve noticed something of a trend
+in that department &ndash; most Clojure hackers used to be Ruby hackers. I
+guess some of the Ruby hackers were not satisfied by partial subset of
+Lisp features, available in Ruby, and wanted to gain access to all of
+Lisp&rsquo;s power.</p>
+
+<p>The current Clojure version is 1.2 with 1.3 being just around the
+corner.</p>
+
+<h2>Installing Clojure</h2>
+
+<p><em>Before installing Clojure make sure you have Java installed. Java 5.0
+SE will do, but Java 6 SE is highly recommended.</em></p>
+
+<p>Installing Clojure is just a matter of downloading and extracting a
+single archive &ndash;
+<a href="http://github.com/downloads/clojure/clojure/clojure-1.2.0.zip">clojure.zip</a>. Many
+high quality Clojure libraries come prepackaged in another archived
+named
+<a href="http://github.com/downloads/clojure/clojure-contrib/clojure-contrib-1.2.0.zip">Clojure Contrib</a>. Clojure
+Contrib is kind of a staging area for Clojure development &ndash; it&rsquo;s a
+common practice to move some of the best parts of contrib into core.</p>
+
+<p>In the directory in which you expanded clojure.zip, run:</p>
+
+<p><code>bash
+$ java -cp clojure.jar clojure.main
+</code></p>
+
+<p>This will bring up a simple read-eval-print loop (REPL) a.k.a. an
+interactive console. Much of
+Clojure is defined in Clojure itself (in the <strong>core.clj</strong> file included in
+the src directory of distribution), which is automatically loaded from
+the .jar file when Clojure starts. The file <strong>user.clj</strong>, if found in the
+classpath, will be auto-loaded as well. You can leverage this to cause
+code to run when Clojure starts. Reading the code in core.clj is a
+very good way to get started with language and see how real Clojure
+hackers work.</p>
+
+<p>When core.clj is loaded you will have the language as described herein fully available.
+Try:</p>
+
+<p><code>clojure
+user=&gt; (+ 1 2 3)
+6
+user=&gt; (println "Hello, Clojure!")
+Hello, Clojure!
+nil
+user=&gt; (javax.swing.JOptionPane/showMessageDialog nil "Hello World")
+</code></p>
+
+<p>The REPL has very rudimentary editing. For a better experience, try running it via the <a href="http://jline.sourceforge.net/">JLine</a> ConsoleRunner:</p>
+
+<p><code>bash
+java -cp jline-0_9_5.jar:clojure.jar jline.ConsoleRunner clojure.main
+</code></p>
+
+<p>This will give you left/right arrow key navigation and up/down arrow
+command history.</p>
+
+<p>Later on we&rsquo;ll see how to setup a real Clojure development environment
+in which you&rsquo;ll be able to leverage the full power of the Clojure REPL
+and interactive programming.</p>
+
+<h2>Did you say Clojure was a Lisp???</h2>
+
+<p>Most developers tend to have a very negative attitude towards the word
+<strong>Lisp</strong> in general. I guess it spawns all kinds of nasty associations in
+their brains &ndash; like prefix syntax notation, tons of parentheses and a
+lot of crap they heard about Lisp from their 70 year-old professor,
+teaching introduction to functional programming in college, whose
+notion of functional programming is that in Lisp everything is a
+function (believe me when I tell you this &ndash; such professors do exist).</p>
+
+<p>You know, I wasn&rsquo;t born coding in Lisp myself. I was initially
+exposed to Lisp when I tried to learn the Emacs text editor and I was
+baffled by many things &ndash; the strange syntax, the talk about atoms and
+lists, code as data, macros, continuation, tail-call optimizations,
+what to quote and that to evaluate, what is a s-expression and what
+isa form. To put it shortly &ndash; I was like
+Alice down the rabbit whole or like Neo when he found out what the
+Matrix is&hellip; The world of programming that I was familiar with was
+turned upside down.</p>
+
+<p>The interesting thing is that I felt similarly when I learnt my first
+programming language Pascal in the 8th grade. It&rsquo;s not that Lisp is
+any harder than the other programming languages &ndash; it&rsquo;s just that it&rsquo;s
+different and you&rsquo;re usually approaching it from a position in which
+you know one or several programming languages, using the much more
+widespread Algol syntax. I advise you to simply keep an open mind while
+you read this article and don&rsquo;t just dismiss Clojure because of its
+Lisp heritage.</p>
+
+<p>You likely know at least one person who constantly keeps telling
+you how Lisp is the one true programming language, how everything
+pales next to it and how Lisp is the actual answer to that fundamental
+question about the life, the universe and everything else (not
+42). These people might very well be telling the truth, but their
+zealous rants tend to create a negative attitude towards the Lisp
+community as well. Please, ignore them.</p>
+
+<p>Now it&rsquo;s time to take the red pill&hellip; So fasten your seat-belt
+Dorothy, &lsquo;cause Kansas is going bye-bye!</p>
+
+<h2>Clojure at a glance</h2>
+
+<p><blockquote><p>Mutable state is the new spaghetti code!</p><footer><strong>Rich Hickey</strong> <cite>Creator of Clojure</cite></footer></blockquote></p>
+
+<p><blockquote><p>Time is the new memory!</p><footer><strong>Rich Hickey</strong> <cite>Creator of Clojure</cite></footer></blockquote></p>
+
+<p><blockquote><p>Clojure feels like a general-purpose language beamed back from the<br/>near future. Its support for functional programming and software<br/>transactional memory is well beyond current practice and is well<br/>suited for multicore hardware. At the same time, Clojure is well<br/>grounded in the past and the present. It brings together Lisp and the<br/>Java Virtual Machine. Lisp brings wisdom spanning most of the history<br/>of programming, and Java brings the robustness, extensive libraries,<br/>and tooling of the dominant platform available today.</p><footer><strong>Stuart Halloway</strong> <cite>Author of &ldquo;Programming Clojure&rdquo;</cite></footer></blockquote></p>
+
+<p>If I had only a few minutes to describe Clojure this would be the gist
+of it:</p>
+
+<ul>
+<li>Dynamic language for the JVM
+
+<ul>
+<li>Clojure uses dynamic typing like languages such Ruby and Python
+and a very smart compiler that will generally generate very
+efficient bytecode. If you want to push the performance envelope even
+further you can add some explicit type hints in your Clojure
+code to ensure the generation of even faster bytecode.</li>
+</ul>
+</li>
+<li>Lisp reloaded
+
+<ul>
+<li>Clojure is Lisp down to its core &ndash; it has all the features that
+are known and loved, and in the same time it improves upon them in
+several ways &ndash; for instance we have a literal syntax for most
+common collection types. Sure &ndash; with Common Lisp&rsquo;s reader macros
+one can do this as well, but nobody bothers to&hellip;</li>
+</ul>
+</li>
+<li>Elegant
+
+<ul>
+<li>Clojure code tends to be very concise, but very readable non the
+less. A core idea in Clojure is to strip the incidental
+complexity of problems solving and to be able to just solve the
+problems straight away without much ceremony.</li>
+</ul>
+</li>
+<li>Functional
+
+<ul>
+<li>Clojure puts heavy emphasis on functional programming, but it&rsquo;s
+a practical functional programming language &ndash; not a pure one
+like Haskell. Clojure acknowledges that some stuff simply change
+and operations have to generally produce some effects, and makes
+those things easy to model. Clojure has a library full of
+rock-solid immutable data structures, relies heavily on lazy
+evaluation, tail-recursion and higher-order functions.</li>
+</ul>
+</li>
+<li>Designed with concurrency in mind
+
+<ul>
+<li>Clojure has an extensive built-in high-level facilities to deal
+with concurrent access to data and parallel programming in general.</li>
+</ul>
+</li>
+<li>Fast
+
+<ul>
+<li>Unlike many dynamic languages (even those running on top the
+JVM) Clojure is quite fast &ndash; it some scenarios it&rsquo;s performance
+can rival that of a statically type language. You can browse a
+long list of
+<a href="http://stackoverflow.com/questions/2186709/are-there-any-good-clojure-benchmarks">benchmark comparisons</a>
+to verify this statement. Given the fact that performance if
+often cited as a big drawback of dynamic languages, this is
+quite the win for Clojure.</li>
+</ul>
+</li>
+<li>Capable of easily leveraging existing Java code
+
+<ul>
+<li>Using Java code from Clojure is direct, easy and
+idiomatic. There are no intermediate layers or the need to
+write wrapper for everything.</li>
+</ul>
+</li>
+</ul>
+
+
+<p>I&rsquo;ll discuss in greater detail some of those features as I moving along.</p>
+
+<h2>A whirlwind tour of Clojure</h2>
+
+<h4>Clojure is elegant</h4>
+
+<ul>
+<li>Removes a lot of accidental complexity</li>
+<li>Clojure programs are generally expressive and concise</li>
+<li>Concise programs are naturally easier to understand and maintain</li>
+</ul>
+
+
+<p>Consider this Java example from our Scala discussion:</p>
+
+<p>``` clojure
+public boolean hasUpperCase(String word) {</p>
+
+<pre><code>if (word == null) {
+    return false;
+}
+int len = word.length();
+for (int i = 0; i &lt; len; i++) {
+    if (Character.isUpperCase(word.charAt(i))) {
+        return true;
+    }
+}
+return false;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>As a reader pointed out using the third party Guava library the code
+can be reduced to:</p>
+
+<p>``` clojure
+public boolean hasUpperCase(String word) {</p>
+
+<pre><code>if (null != word)
+    return any(charactersOf(word), new Predicate() {
+            public boolean apply(Character c) {
+                return isUpperCase(c);
+            }
+        })
+    else
+        return false;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>It still looks quite ugly to me. For the sake of comparison here&rsquo;s the
+Clojure version:</p>
+
+<p><code>clojure
+(defn has-uppercase? [string]
+  (some #(Character/isUpperCase %) string))
+</code></p>
+
+<p>The definition of the problems is &ldquo;A string has an uppercase character if
+some of the characters in it is uppercase&rdquo; (doesn&rsquo;t sound good, but
+will do). The Clojure code reads more or less like the definition of
+the problem. A finer point is that it will work correctly even if you
+pass <strong>nil</strong> to the has-uppercase? function.</p>
+
+<h4>Clojure is concise</h4>
+
+<p>We already saw in the previous example the conciseness of Clojure
+code, but here we&rsquo;ll add another example. This is Java:</p>
+
+<p>``` java
+class Person {</p>
+
+<pre><code>private String name;
+private int age;
+
+Person(String name, int age) {
+    this.name = name;
+    this.age = age;
+}
+
+public String getName() {
+    return name;
+}
+
+public void setName(String name) {
+    this.name = name;
+}
+
+public int getAge() {
+    return age;
+}
+
+public void setAge(int age) {
+    this.age = age;
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>In Clojure you&rsquo;d probably model this class like this:</p>
+
+<p>``` clojure
+user> (defrecord person [name age])
+user.person
+user> (person. &ldquo;Bozhidar&rdquo; 26)</p>
+
+<h1>:user.person{:name &ldquo;Bozhidar&rdquo;, :age 26}</h1>
+
+<p>user> (def me (person. &ldquo;Bozhidar&rdquo; 26))</p>
+
+<h1>&lsquo;user/me</h1>
+
+<p>user> (:name me)
+&ldquo;Bozhidar&rdquo;
+user> (:age me)
+26
+```</p>
+
+<p>Clojure&rsquo;s version of the type is a one liner and remain shorter even
+with a few examples of its usage. It&rsquo;s not equivalent to Java
+definition, however &ndash; the Clojure version of the structure is
+immutable.</p>
+
+<h4>Clojure is a Lisp</h4>
+
+<p>For better or for worse Clojure is a Lisp dialect and we should accept
+this. I have always viewed Lisp as weapon from a more elegant era when
+people were more concerned with elements of style and empowering the
+developers to easily translate their thoughts into programs. For one
+reason or another every Lisp dialect has failed to capture the
+attention of a critical mass of developers that may propel it into the
+mainstream. This, of course, doesn&rsquo;t mean that existing Lisp dialects
+should be considered a failure. Scheme (the dialect that has probably
+had the greatest impact on Clojure&rsquo;s design) was designed to be as
+simple as possible so it could be appropriate as a teaching tool &ndash; in
+that area Scheme certainly excelled. Common Lisp was created to bring
+together the various Lisp dialects under a common denominator and it
+also excelled in that endeavour. I guess that its creators hoped that
+it would capture a significant market share at some point as well, but alas &ndash;
+that never happened.</p>
+
+<p>The syntax and programming model of Lisp so far have been too much for
+a typical developer to absorb. Yet, there’s something special about
+Lisp that’s worth revisiting, so the new dialects continue to
+emerge. Some of the best programming universities start teaching
+programming with the Lisp language to form young minds while they are
+still open. I have witnessed something of a cycle &ndash; every 5 or so
+years the interest in Lisp spikes because of something major that
+happened in the land of Lisp. In the beginning of the nineties the
+work on Common Lisp excited a lot of developers. Five years later Paul
+Graham took the stage &ndash; he showed the world how Lisp can empower small
+teams and make real money (if you haven&rsquo;t heard of Viaweb fire up
+google now). Five years ago Peter Seibel published the
+&ldquo;Practical Common Lisp&rdquo; book that appeared on Amazon&rsquo;s bestseller list
+and got a lot of new developers excited about Lisp. A now&hellip; well I
+guess you can figure that one out on your own.</p>
+
+<p>Lisp just won&rsquo;t let go and die. There is something magical about
+it. And there is this inexplicable smugness on the face of Lisp
+developers&hellip;</p>
+
+<p>So let&rsquo;s review the typical Lisp features that are present in Clojure:</p>
+
+<ul>
+<li>Lisp-1 dialect
+
+<ul>
+<li>This means that functions and variables share the same
+namespace, unlike in dialects like Common Lisp. Both approaches
+have their merits and drawbacks as usual. In Clojure you cannot
+have a variable named the say way as a function, but you can
+pass function names around without any special syntax. In Common
+Lisp you can have function and variables sharing the same name,
+but you have to mark functions explicitly when you&rsquo;re passing
+them around (with the #&lsquo; reader macro or the <strong>function</strong> function).</li>
+</ul>
+</li>
+<li>Dynamic &ndash; both in term of dynamic typing and dynamic
+development. Lisp is the language that made popular the technique of
+incremental interactive development (we&rsquo;ll talk about it more in a bit)</li>
+<li>Code is data
+
+<ul>
+<li>List code is defined in term of Lisp data structures. When the
+reader read the source code of the application it converts it to
+standard Lisp objects and they represent the program. No special
+transformations, no AST. This is the heart of Lisp macros and a
+centrepiece in Lisp philosophy.</li>
+</ul>
+</li>
+<li>Reader
+
+<ul>
+<li>The reader can read valid Clojure forms and translate them into
+Clojure objects &ndash; object, function call, everything that has a
+readable representation</li>
+</ul>
+</li>
+<li>Small core, next to none syntax
+
+<ul>
+<li>In terms of compact syntax and uniformity of the syntax it has
+always been hard to beat Lisp. Most programming languages are
+full of special syntax constructs, keywords, etc. In lisp
+programs are just lists and the low-level plumbing comes in the
+form of special functions called special forms. Everything else
+is implemented in terms of those special forms.</li>
+</ul>
+</li>
+<li>Sequences
+
+<ul>
+<li>Clojure abstracts common collection traits into an abstraction
+called seq which allows you to use a similar API for many tasks</li>
+</ul>
+</li>
+<li>Macros
+
+<ul>
+<li>Forget about C macros, Word macros, editor macros. Lisp macros
+are the most powerful metaprogramming technique out there &ndash; they
+enable you generate new syntax abstractions unlike anything
+else. If you need a new operator in Java you&rsquo;d have a hard time
+convincing the guys in Oracle to add it for you. With Lisp
+you&rsquo;re in charge and you can define any syntax abstractions that
+you wish. As an appetiser consider the <strong>and</strong> boolean
+statement. In most languages it&rsquo;s built into the language
+itself. In Clojure it&rsquo;s just a short macro:</li>
+</ul>
+</li>
+</ul>
+
+
+<p><code>`` clojure
+(defmacro and
+  "Evaluates exprs one at a time, from left to right. If a form
+  returns logical false (nil or false), and returns that value and
+  doesn't evaluate any of the other expressions, otherwise it returns
+  the value of the last expr. (and) returns true."
+  {:added "1.0"}
+  ([] true)
+  ([x] x)
+  ([x &amp; next]
+  </code>(let [and# ~x]</p>
+
+<pre><code>  (if and# (and ~@next) and#))))
+</code></pre>
+
+<p>```</p>
+
+<p>I hope this example gives you an idea about the power that Clojure
+offers you &ndash; you can be more than just a programmer; you can be the
+language designer.</p>
+
+<h2>Persistent data structures</h2>
+
+<p>Data structures in Clojure are immutable. Operations executed on them
+return a new data structure of the same type instead of modifying the
+structure in place. Understandably most people are immediately
+concerned about the performance implications of such a technique &ndash;
+this seems like quite a lot of overhead. They needn&rsquo;t worry, though.</p>
+
+<p>Data structures in Clojure happen to be persistent as well. A persistent data
+structure is a data structure which always preserves the previous
+version of itself when it is modified &ndash;  such data structures are
+effectively immutable, as their operations do not (visibly) update the
+structure in-place, but instead always yield a new updated
+structure. A persistent data structure is not a data structure
+committed to persistent storage, such as a disk; this is a different
+and unrelated sense of the word &ldquo;persistent&rdquo;.</p>
+
+<p>Persistent data structures save a lot of copying around and improve
+greatly the performance. Knowing this should be enough for most
+developers, those that are more curious can find a lot of interesting
+articles on the subject on-line.</p>
+
+<p>The core data structures in Clojure are:</p>
+
+<ul>
+<li>List</li>
+<li>Set &ndash; all the items in it are unique</li>
+<li>Map &ndash; also known as associative array and dictionary in other languages</li>
+<li>Vector &ndash; also know as one dimensional array</li>
+</ul>
+
+
+<p>Let&rsquo;s see them in action:</p>
+
+<p>``` clojure
+;;; Lists
+;; list creation
+user> (list 1 2 3)
+(1 2 3)
+;; quoted list creation
+user> (def a-list &lsquo;(1 2 3 4 5 6 7 8 9 10))</p>
+
+<h1>&lsquo;user/a-list</h1>
+
+<p>;; find the size of a list
+user> (count a-list)
+10
+user> (first a-list)
+1
+user> (rest a-list)
+(2 3 4 5 6 7 8 9 10)
+user> (last a-list)
+10
+;; find the elements of the list matching a predicate(boolean function)
+user> (filter even? a-list)
+(2 4 6 8 10)
+user> (filter odd? a-list)
+(1 3 5 7 9)
+;; map an anonymous(lambda) function to all elements of the list
+user> (map #(* % 2) a-list)
+(2 4 6 8 10 12 14 16 18 20)
+;; add an element to the beginning of the list
+user> (cons 0 a-list)
+(0 1 2 3 4 5 6 7 8 9 10)
+;; cons in a list specific function, conj is a general purpose one and
+;; works on all collection (but in a different manner)
+user> (conj a-list 0)
+(0 1 2 3 4 5 6 7 8 9 10)
+;; retrieve the first five items in a list
+user> (take 5 a-list)
+(1 2 3 4 5)
+;; retrieve all but the first five items in a list
+user> (drop 5 a-list)
+(6 7 8 9 10)
+user> (take-while #(&lt; % 3) a-list)
+(1 2)
+user> (drop-while #(> % 3) a-list)
+(1 2 3 4 5 6 7 8 9 10)
+user> (drop-while #(&lt; % 3) a-list)
+(3 4 5 6 7 8 9 10)</p>
+
+<p>;;; Sets</p>
+
+<p>user> (set &lsquo;(1 2 3 4 5 1 2 3 4))</p>
+
+<h1>{1 2 3 4 5}</h1>
+
+<p>user> (def a-set #{1 2 3 4 5})</p>
+
+<h1>&lsquo;user/a-set</h1>
+
+<p>user> (contains? a-set 3)
+true
+user> (contains? a-set 7)
+false
+user> (conj a-set 5)</p>
+
+<h1>{1 2 3 4 5}</h1>
+
+<p>user> (conj a-set 6)</p>
+
+<h1>{1 2 3 4 5 6}</h1>
+
+<p>user> (disj a-set 1)</p>
+
+<h1>{2 3 4 5}</h1>
+
+<p>user> (get a-set 1)
+1
+user> (get a-set 7)
+nil
+;; most set functions live in the clojure.set namespace
+user> (use &lsquo;clojure.set)
+nil
+user> (difference #{1 2 3} #{1 3 5})</p>
+
+<h1>{2}</h1>
+
+<p>user> (intersection #{1 2 3} #{1 3 5})</p>
+
+<h1>{1 3}</h1>
+
+<p>user> (union #{1 2 3} #{1 3 5})</p>
+
+<h1>{1 2 3 5}</h1>
+
+<p>;;; Maps
+user> (hash-map :Bozhidar :Batsov :Bruce :Wayne :Selina :Kyle)
+{:Selina :Kyle, :Bozhidar :Batsov, :Bruce :Wayne}
+user> (def a-map {:Bozhidar :Batsov, :Bruce :Wayne, :Selina :Kyle})</p>
+
+<h1>&lsquo;user/a-map</h1>
+
+<p>user> a-map
+{:Bozhidar :Batsov, :Bruce :Wayne, :Selina :Kyle}
+user> (get a-map :Bozhidar)
+:Batsov
+user> (contains? a-map :Bozhidar)
+true
+user> (contains? a-map :Clark)
+false
+user> (:Bozhidar a-map)
+:Batsov
+user> (assoc a-map :Lois :Lane)
+{:Lois :Lane, :Bozhidar :Batsov, :Bruce :Wayne, :Selina :Kyle}
+user> (keys a-map)
+(:Bozhidar :Bruce :Selina)
+user> (vals a-map)
+(:Batsov :Wayne :Kyle)
+user> (dissoc a-map :Bruce)
+{:Bozhidar :Batsov, :Selina :Kyle}
+user> (merge a-map {:Alia :Atreides, :Arya :Stark})
+{:Arya :Stark, :Alia :Atreides, :Bozhidar :Batsov, :Bruce :Wayne, :Selina :Kyle}</p>
+
+<p>;;; Vectors</p>
+
+<p>user> (vector 1 2 3 4)
+[1 2 3 4]
+user> [1 2 3 4]
+[1 2 3 4]
+user> (def a-vector [1 2 3 4 5])</p>
+
+<h1>&lsquo;user/a-vector</h1>
+
+<p>user> (count a-vector)
+5
+user> (conj a-vector 13)
+[1 2 3 4 5 13]
+;; random access is a constant time operation in vectors
+user> (nth a-vector 3)
+4
+user> (pop a-vector)
+[1 2 3 4]
+user> (peek a-vector)
+5
+```</p>
+
+<p>Most data structures in Clojure are part of a common Sequence API,
+that we&rsquo;ll briefly discuss shortly.</p>
+
+<h2>The Seq API</h2>
+
+<p>Clojure defines many algorithms in terms of sequences (seqs). A seq is
+a logical list, and unlike most Lisps where the list is represented by
+a concrete, 2-slot structure, Clojure uses the ISeq interface to allow
+many data structures to provide access to their elements as
+sequences. The <strong>seq</strong> function yields an implementation of ISeq
+appropriate to the collection. Seqs differ from iterators in that they
+are persistent and immutable, not stateful cursors into a
+collection. As such, they are useful for much more than foreach &ndash;
+functions can consume and produce seqs, they are thread safe, they can
+share structure, etc.</p>
+
+<p>Most of the sequence library functions are lazy, i.e. functions that
+return seqs do so incrementally, as they are consumed, and thus
+consume any seq arguments incrementally as well. Functions returning
+lazy seqs can be implemented using the <strong>lazy-seq</strong> macro. The laziness
+allows us to deal with infinite data structures easily (as long as we
+don&rsquo;t try to act on all of their elements that is):</p>
+
+<p><div>
+  <pre><code class='clojure'>user&gt; (take 10 (filter even? (iterate inc 1)))
+(2 4 6 8 10 12 14 16 18 20)</code></pre>
+</div>
+</p>
+
+<p><strong>iterate</strong> returns an infinite lazy sequence. <strong>filter</strong> returns a lazy
+sequence as well. With <strong>take</strong> we can take only the elements we need
+without have to process the entire infinite collection.</p>
+
+<h2>Functional programing with Clojure</h2>
+
+<p>Clojure is a functional programming language and as such it offers quite
+the selection of features that make it easy to leverage the functional
+programming techniques.</p>
+
+<ul>
+<li>functions are objects</li>
+<li>all built-in data structures are immutable</li>
+<li>most functions in the core library are pure (they don&rsquo;t produce any
+side results and they don&rsquo;t interact with the outside world in any
+manner other than just receiving their parameters from it)</li>
+<li>there are no iteration constructs like <strong>for</strong> and <strong>while</strong> in
+other languages. In place of iteration list comprehensions and
+recursion are commonly used.</li>
+<li>everything is an expression that yields some result &ndash; even things
+that are traditionally statements in other languages such as <strong>if</strong> and
+<strong>print</strong> (although the return value of print is not particularly useful)</li>
+</ul>
+
+
+<h2>Parallel programming</h2>
+
+<p>Functional programming and parallel programming complement each
+other. When most of your code is contained in pure functions it&rsquo;s
+naturally tread safe (not to mention much easier to test). Since you
+don&rsquo;t have any mutable state there, it&rsquo;s absolutely safe to fire those
+pure functions in as many threads as you wish and you&rsquo;ll have
+absolutely nothing to worry about.</p>
+
+<p>Programs, however, eventually produce side effects and often they
+really have to have some mutable state. Clojure makes it easy to model
+such situations in your programs in a way that doesn&rsquo;t compromise the
+ability to parallelize the programs.</p>
+
+<h4>Refs and transactions</h4>
+
+<p>Transactional references (known as refs in Clojure) ensure safe shared use of mutable
+storage locations via a software transactional memory (STM)
+system. Refs are bound to a single storage location for their
+lifetime, and only allow mutation of that location to occur within a
+transaction.</p>
+
+<p>Clojure transactions should be easy to understand if you&rsquo;ve ever used
+database transactions &ndash; they ensure that all actions on refs are
+atomic, consistent, and isolated. Atomic means that every change to
+refs made within a transaction occurs or none do. Consistent means
+that each new value can be checked with a validator function before
+allowing the transaction to commit. Isolated means that no transaction
+sees the effects of any other transaction while it is running. Another
+feature common to STMs is that, should a transaction have a conflict
+while running, it is automatically retried.</p>
+
+<p>There are many ways to do STMs (locking/pessimistic,
+lock-free/optimistic and hybrids) and it is still a research
+problem. The Clojure STM uses multiversion concurrency control with
+adaptive history queues for snapshot isolation, and provides a
+distinct commute operation. Here&rsquo;s a short example:</p>
+
+<p>``` clojure
+(def picked-numbers (ref #{})</p>
+
+<p>(def secret-num (.nextInt (java.util.Random.) 10))</p>
+
+<p>(defn guess-number [n]</p>
+
+<pre><code>    (print "Enter a guess between 1 and 10: ")
+    (flush)
+    (let [guess (java.lang.Integer/parseInt (read-line)) ]
+         (cond
+           (= guess n) (println "You guessed correctly")
+           (contains? (deref picked-numbers) n) (println "Pick another number! You already tried that one.")
+           :else (dosync
+                  (alter picked-numbers conj guess)))))
+</code></pre>
+
+<p>user=> (guess-number secret-num)
+Enter a guess between 1 and 10: 1</p>
+
+<h1>{1}</h1>
+
+<p>user=> (guess-number secret-num)
+Enter a guess between 1 and 10: 3</p>
+
+<h1>{1 3}</h1>
+
+<p>user=> (guess-number secret-num)
+Enter a guess between 1 and 10: 5</p>
+
+<h1>{1 3 5}</h1>
+
+<p>```</p>
+
+<p>I hope you got the basic idea from this simple, but mostly useless
+snippet. Generally when we have only one object that we&rsquo;ll be changing
+in this manner an atom is a more appropriate choice as we&rsquo;ll see shortly.</p>
+
+<h4>Agents</h4>
+
+<p>Like <em>refs</em>, <em>agents</em> provide shared access to mutable state. Where refs
+support coordinated, synchronous change of multiple locations, agents
+provide independent, asynchronous change of individual
+locations (to put it into simpler term you&rsquo;d use refs if you had to
+updated several things and wait for the update to happen and agents if
+you need to update only one thing and don&rsquo;t really care when the
+update will happen &ndash; only that it will happen). Agents are bound to a single storage location for their
+lifetime, and only allow mutation of that location (to a new state) to
+occur as a result of an action. Actions are functions (with,
+optionally, additional arguments) that are asynchronously applied to
+an agent&rsquo;s state and whose return value becomes the agent&rsquo;s new
+state. Let&rsquo;s see an agent (Smith maybe?) in action:</p>
+
+<p><div>
+  <pre><code class='clojure'>user&gt; (def some-agent (agent 0))&lt;/p&gt;
+
+&lt;h1&gt;&amp;lsquo;user/some-agent&lt;/h1&gt;
+
+&lt;p&gt;user&gt; (dotimes [i 100]&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;           (send some-agent inc))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;nil
+user&gt; some-agent&lt;/p&gt;
+
+&lt;h1&gt;&amp;lt;Agent@15c024c: 100&gt;&lt;/h1&gt;
+
+&lt;p&gt;user&gt; @some-agent
+100</code></pre>
+</div>
+</p>
+
+<h4>Atoms</h4>
+
+<p>Atoms provide a way to manage shared, synchronous, independent
+state. They are a reference type like refs and vars. You create an
+atom with atom, and can access its state with deref (or @). Let&rsquo;s
+rework the refs example to use an atom:</p>
+
+<p>``` clojure
+(def picked-numbers (atom #{})</p>
+
+<p>(def secret-num (.nextInt (java.util.Random.) 10))</p>
+
+<p>(defn guess-number [n]</p>
+
+<pre><code>    (print "Enter a guess between 1 and 10: ")
+    (flush)
+    (let [guess (java.lang.Integer/parseInt (read-line)) ]
+         (cond
+           (= guess n) (println "You guessed correctly")
+           (contains? (deref picked-numbers) n) (println "Pick another number! You already tried that one.")
+           :else (swap! picked-numbers conj guess))))
+</code></pre>
+
+<p>user=> (guess-number secret-num)
+Enter a guess between 1 and 10: 1</p>
+
+<h1>{1}</h1>
+
+<p>user=> (guess-number secret-num)
+Enter a guess between 1 and 10: 3</p>
+
+<h1>{1 3}</h1>
+
+<p>user=> (guess-number secret-num)
+Enter a guess between 1 and 10: 5</p>
+
+<h1>{1 3 5}</h1>
+
+<p>```</p>
+
+<h4>Vars</h4>
+
+<p>Bindings created with the <strong>binding</strong> macro cannot be seen by any other
+thread. Bindings created with binding can be assigned to, which
+provides a means for a nested context to communicate with code before
+it on the call stack.</p>
+
+<p>I&rsquo;ll not be discussing them further, because Vars are a vast subject
+deserving its own post.</p>
+
+<h2>OOP, Lisp style</h2>
+
+<p>Object oriented programming in most programming languages is based on
+a single dispatch message passing. The object on which we invoke a
+method (poor choice of words, but easier to comprehend) is the
+receiver, the method name and it&rsquo;s arguments are the message. The
+method&rsquo;s invoked solely on the base of the type of the receiver
+object.</p>
+
+<p>Lisps have traditionally implemented OOP with generic methods, that
+don&rsquo;t have a receiver and are dispatched on the basis of the types of
+all of their arguments. In the world of multiple dispatch the more
+traditional single dispatch is just a special case in which only the
+type of the first method argument matters. Here&rsquo;s a taste of
+multimethods in Clojure:</p>
+
+<p>``` clojure
+(defmulti my-add (fn [x y] (and (string? x) (string? y))))</p>
+
+<p>(defmethod my-add true [x y]</p>
+
+<pre><code>(str x y))
+</code></pre>
+
+<p>(defmethod my-add false [x y]</p>
+
+<pre><code>(+ x y))
+</code></pre>
+
+<p>user=> (my-add 3 4) ; => 7
+user=> (my-add &ldquo;3&rdquo; &ldquo;4&rdquo;) ; => &ldquo;34&rdquo;
+```</p>
+
+<p>Here we defined a multi-method that behaves differently for string and
+numeric arguments &ndash; strings args are concatenated and numeric args are
+added together.</p>
+
+<h2>Interactive development</h2>
+
+<p>Traditional programming languages have more or less the following work
+flow:</p>
+
+<ul>
+<li>write the unit tests (power to TDD)</li>
+<li>write the source file</li>
+<li>compile the source file (if needed)</li>
+<li>run the source file with an interpreter or run the binary file that
+resulted from the compilation step</li>
+<li>if you need to modify something you edit the code and repeat the
+other steps</li>
+</ul>
+
+
+<p>Those programs naturally have some entry points. Alternative you can
+simple use the test suite you&rsquo;ve initially developed.</p>
+
+<p>A Lisp developers generally has a very different work flow:</p>
+
+<ul>
+<li>start a REPL</li>
+<li>write some unit tests</li>
+<li>write a few functions definitions in a source file</li>
+<li>compile them interactively and load them in a REPL</li>
+<li>test these functions directly from the REPL</li>
+<li>if you need to modify a function &ndash; just edit it and reload in the
+REPL</li>
+</ul>
+
+
+<p>I&rsquo;ve been a C/C++ and Java developer for a long time and I didn&rsquo;t see
+anything wrong with first model. In fact &ndash; I had been practising it
+for so very long that it felt quite natural to me. After I&rsquo;ve started
+hacking with Lisp, however, my old work flow started to feel very
+unproductive to me (especially with statically typed languages). Here
+are some key aspects of the interactive (and iterative) development
+that is so common in Lisp (not only in Common Lisp ;&ndash;) ):</p>
+
+<ul>
+<li>The REPL is an integral process of the coding process. Ruby and
+Python developers generally tend to use it only for exploratory
+programming although many of the techniques common for Lisp could be
+applied for Ruby and Python as well.</li>
+<li>Functions can be defined (and redefined) in real time</li>
+<li>Loading &amp; compilation of code at runtime</li>
+<li>Powerful introspection features</li>
+<li>Interactive development</li>
+<li>Iterative development &ndash; you know the old saying &ldquo;Lather, rinse,
+repeat&hellip;&rdquo; (probably one of the oldest examples of recursion).</li>
+</ul>
+
+
+<h2>The tools of the trade</h2>
+
+<p>The single biggest problem with Clojure in the moment (at least in my
+opinion) has nothing to do with the language itself. The problem is
+the lack of decent tooling and infrastructure around it. Lisp hackers
+have traditionally favoured the SLIME development environment for
+Emacs. Unfortunately the maintainers are not especially interested in
+having Clojure support (since SLIME targets Common Lisp) and nobody in
+Clojure community seems to be capable of writing an adequate swank
+component for Clojure that can be used with an up-to-date version of
+SLIME. The existing one is quite rudimentary and doesn&rsquo;t work with
+stock SLIME distributions. But this is not the worst part &ndash; the worst
+part is that even this crippled SLIME is still the best development
+tool for Clojure. IntelliJ&rsquo;s plug-in is almost unusable, Eclipse&rsquo;s is
+barely usable and NetBeans&rsquo;s cannot be installed half the time&hellip;</p>
+
+<ul>
+<li>IDEs
+
+<ul>
+<li><a href="http://plugins.intellij.net/plugin/?id=4050">IntelliJ IDEA</a> &ndash;
+everyone knows how much I love IntelliJ IDEA. Sadly I cannot say
+a good word about the La Clojure plug-in. Its mostly unmaintained
+(and often broken), has pretty limited features and is generally
+good for&hellip; nothing. It&rsquo;s sad to see it&rsquo;s so far back in
+JetBrains&rsquo;s priority list &ndash; they are doing wonderful things in
+their Groovy and Scala plugins.</li>
+<li><a href="http://code.google.com/p/counterclockwise/">Eclipse</a> &ndash; Eclipse
+certainly boasts the best IDE Clojure plug-in at the moment (Counter
+clock-wise). It has a lot of features found otherwise only in
+SLIME. It even features partial paredit support. Being the best
+in such a sorry bunch is not quite an achievement, but at least
+the guys there are trying really hard and I&rsquo;m sure that within one
+or two releases they&rsquo;ll have a great product.</li>
+<li><a href="http://www.enclojure.org/">NetBeans</a> &ndash; The Enclojure plug-in
+seems to be abandoned currently. It has no released a new version
+in over an year and the old one were buggy as hell (when they the
+decency to get themselves installed, that is).</li>
+<li><a href="https://github.com/technomancy/swank-clojure">SLIME</a> &ndash; The Ultimate Clojure programming environment. Even though
+it&rsquo;s lacking a few features of the Common Lisp counterpart, SLIME
+still is the best option for Clojure development, uniquely
+attuned to the Lisp philosophy of interactive and incremental development.</li>
+</ul>
+</li>
+</ul>
+
+
+<p>Luckily there&rsquo;s no lack of good build tools that one can use with Clojure.</p>
+
+<ul>
+<li>Build tools
+
+<ul>
+<li><a href="http://maven.Apache.org">Apache Maven</a> &ndash; Maven has a nice
+Clojure plugin</li>
+<li><a href="https://github.com/technomancy/leiningen">Leiningen</a> &ndash; probably
+the most popular Clojure-specific build tool</li>
+<li><a href="https://github.com/ninjudd/cake">Cake</a> &ndash; a solid alternative to Leiningen</li>
+<li><a href="http://www.gradle.org/">Gradle</a> &ndash; a build system for Java-based
+applications, written in Groovy, that supports Clojure</li>
+<li><a href="http://buildr.apache.org/">Apache Builder</a> &ndash; a build system for
+Java-based applications, written in Ruby , that supports Clojure</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Resources</h2>
+
+<ul>
+<li>Books
+
+<ul>
+<li><a href="http://pragprog.com/titles/shcloj/programming-clojure">&ldquo;Programming Clojure&rdquo;</a></li>
+<li><a href="http://www.apress.com/9781430272311">&ldquo;Practical Clojure&rdquo;</a></li>
+<li><a href="http://joyofclojure.com/">&ldquo;The Joy of Clojure&rdquo;</a></li>
+</ul>
+</li>
+<li>Screencasts &amp; Video lectures
+
+<ul>
+<li><a href="http://clojure.blip.tv/">&ldquo;Clojure&rsquo;s channel&rdquo;</a></li>
+</ul>
+</li>
+<li>Websites &amp; Blogs
+
+<ul>
+<li><a href="http://blog.fogus.me/">Official website</a></li>
+<li><a href="http://disclojure.org/">Disclojure</a> &ndash; a clojure news aggregator</li>
+</ul>
+</li>
+<li>Exercises
+
+<ul>
+<li><a href="/blog/2011/05/04/lisp-problems/">Lisp problems</a> &ndash; a work in progress, I&rsquo;ll add Clojure
+solutions next to the Common Lisp ones when I have some thime</li>
+<li><a href="http://foognostic.net/labrepl-summary/">Labrepl</a></li>
+<li><a href="http://projecteuler.net/">Project Euler</a></li>
+<li><a href="https://github.com/functional-koans/clojure-koans">Clojure Koans</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>Clojure is a radical departure from both traditional Algol-derived
+languages and existing Lisp dialects. Its advanced support for
+functional programming, combined with a state of the art concurrency
+support make it attractive language for the development of heavy duty
+enterprise grade systems. Coupled with the seamless Java integration
+the sky seems to be the limit for Clojure&hellip;</p>
+
+<p>Unfortunately Clojure has to face several problems if it&rsquo;s to
+succeed. First of all it has to attract a critical mass of developers
+that are not afraid of the syntactic difference with common
+languages. Then there is the concept of functional thinking &ndash; a way of
+thinking quite foreign to most developers. To be able to properly
+leverage the full power of Clojure developers have to be ready to
+overcome a steep learning curve, but rest assured, the prize at the
+end of the journey is well worth it.</p>
+
+<p>Another gripe with Clojure at this point is the lack of decent
+tooling. Sure, we have the <em>supported</em> SLIME, available in ELPA, but
+even Emacs users are not particularly happy with it. And let&rsquo;s face
+reality &ndash; it&rsquo;s quite unlikely that many developers will be willing to
+give up the comfort of their beloved IDEs just to be able to code in
+Clojure. Eclipse, IntelliJ &amp; NetBeans are unfortunately nowhere near
+providing a good Clojure experience. Hopefully, this will change
+soon&hellip;</p>
+
+<p>I&rsquo;m a very big fan of Lisp in general, that is no secret. I&rsquo;ve tried
+to be as objective as possible and abstained myself from over
+extolling some of Clojure&rsquo;s virtues. I&rsquo;d like to say, however, that
+I&rsquo;m very excited that we finally have a Lisp dialect that is modern,
+simple, powerful, elegant and most of all &ndash; capable of getting the job
+done. I really hope that Clojure will be instrument of Lisp return on
+the centre stage of programming, where it deserves to be.</p>
+
+<p>As usual the article is very shallow overview and doesn&rsquo;t even
+mention some important features of the language. Be sure to check out
+some of the resources mentioned.</p>
+
+<p><em>P.S. This is the last of the articles that I&rsquo;d originally intended to
+write. I&rsquo;m considering the possibility to write a couple of more
+chapter of the Java.next() series if people are interested to read
+them. JRuby will probably make an appearance, but I&rsquo;d like to hear
+some reader input as well. So, what JVM language do you think is
+worthy enough to make an appearance in the Java.next() series?</em></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java.next() - Scala: The Revenge of the Static Typing]]></title>
+    <link href="http://batsov.com/articles/2011/05/08/jvm-langs-scala/"/>
+    <updated>2011-05-08T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/05/08/jvm-langs-scala</id>
+    <content type="html"><![CDATA[<h2>Prelude</h2>
+
+<p>This is the second post from my series dedicated to modern programming
+languages for the Java platform. Last time we&rsquo;ve discussed the
+<a href="/Java/Groovy/2011/05/06/jvm-langs-groovy.html">Groovy programming language</a>, which
+is a member of the ever expanding family of dynamic programming
+languages. The Scala programming language, that is the object of
+today&rsquo;s discussion, is different beast entirely &ndash; not only it uses static
+typing(like Java &amp; C# amongst others), but it also puts a heavy emphasis on the type
+system, functional and parallel programming.</p>
+
+<p>In theory Scala runs both on the JVM and on the CLR(the .NET VM). The
+Java port, however, receives a lot more attention by Scala&rsquo;s developers
+and it probably accounts for close of to all of Scala&rsquo;s
+deployments(especially in production).</p>
+
+<p>This article is extremely hard to write for me. Unlike Groovy, I&rsquo;m
+deeply familiar with the language and would like to share quite a lot
+with you. For obvious reasons I cannot go into much detail (otherwise
+I&rsquo;d have written an on-line book). You&rsquo;re encourage to follow up this
+article by reading some of the excellent resources, mentioned near its end.</p>
+
+<h2>A brief history of Scala</h2>
+
+<p>After having written hundreds of thousands lines of Java himself,
+Martin Odersky, Professor at EPFL, was well aware of the frustrations
+faced by Java programmers. He formed the vision of applying the best
+knowledge of the academic research community to the problem of making
+the Java programming experience better, even fun. His first pragmatic
+step was Java Generics, seen as a major success by the Java
+community (though we should mention that it was C# that first brought
+generic programming to the masses). But for the full vision of scalable concurrent programming
+to be achieved he saw that the basic Java syntax would need to
+change. You simply couldn&rsquo;t get there from here. But a deceptively
+simple shift in syntax gained better uniformity to the object-oriented
+aspects of Java, and this in turn enabled a natural fusion with
+functional programming concepts which are critical for tackling
+concurrency. In 2001 Scala was born. The first official version was
+released in late 2003. This year it celebrates its first
+anniversary in a way (depending on what do you consider the birthday).</p>
+
+<p>Scala stands for a SCAlable LAnguage. What does this mean? Scala is
+designed to tackle solutions of wildly varying sizes &ndash; from small
+scripts (programming in the small) to massive distributed enterprise
+applications (generally programming in the large). Scala also means
+<em>steps</em> in Italian and this is the reason why most Scala books have
+some form of steps on their covers (arguably this is the reason why
+Scala is very popular in Italy and particularly in Milan).</p>
+
+<p>The current production version of Scala is 2.8.1 with 2.9.0 being in
+the release candidate stages.</p>
+
+<h2>Installing Scala</h2>
+
+<h4>Universal installer</h4>
+
+<p>Scala has an <a href="http://www.scala-lang.org/downloads/distrib/files/scala-2.8.1.final-installer.jar">universal installer</a> that could be ran on every platform
+with Java installed. You can run it from the console like this:</p>
+
+<p><code>bash
+$ java -jar scala-2.8.1.final-installer.jar
+</code></p>
+
+<p>Alternatively, on most systems simply double clicking the installer
+jar will run it(assuming you have a GUI environment and assuming that
+the java command is associated with jar files &ndash; something that is
+usually so by default).</p>
+
+<h4>Installing from binary archive</h4>
+
+<p>Just download the Scala distribution for <a href="http://www.scala-lang.org/downloads/distrib/files/scala-2.8.1.final.tgz">Unix, OS X and Cygwin</a> or
+the one for
+<a href="http://www.scala-lang.org/downloads/distrib/files/scala-2.8.1.final.zip">Windows</a>
+and extract it somewhere. I&rsquo;m a GNU/Linux user and I tend to extract
+all third party apps in the /opt folder:</p>
+
+<p><code>bash
+$ sudo tar xf scala-2.8.1.final.tgz -C /opt
+</code></p>
+
+<p>You&rsquo;d also want to add the folder containing the Scala binaries
+(compiler, REPL, etc) to your PATH environmental variable. Unix users
+might add something like this to their shell startup script (like
+.bashrc):</p>
+
+<p><code>bash
+export JAVA_HOME=/usr/java/latest
+export SCALA_HOME=/opt/scala-2.8.1
+export PATH=$SCALA_HOME/bin:$PATH
+</code></p>
+
+<p>You should now have Scala installed properly. You can test this by
+typing the following in a command shell:</p>
+
+<p><code>bash
+$ scala
+</code></p>
+
+<p>Which should create an interactive Scala shell where you can type
+Scala expressions.</p>
+
+<p>To run a specific Scala script type:</p>
+
+<p><code>bash
+$ scala SomeScript.scala
+</code></p>
+
+<h4>Linux installation</h4>
+
+<p>Most Linux distributions provide Scala through their integrated
+package management system. On Debian(and derivatives like Ubuntu) you
+can install it like this:</p>
+
+<p><code>bash
+$ sudo apt-get install scala
+</code></p>
+
+<p>On Red Hat systems the magic incantation looks like this:</p>
+
+<p><code>bash
+$ sudo yum install scala
+</code></p>
+
+<p>Personally I&rsquo;d prefer the platform-independent installation method,
+since some distribution package Scala in a non-standard manner, which
+confuses IDEs for instance.</p>
+
+<h2>Scala at a glance</h2>
+
+<p><blockquote><p>If I were to pick a language to use today other than Java, it would<br/>be Scala&hellip;</p><footer><strong>James Gosling</strong> <cite>Creator of Java</cite></footer></blockquote></p>
+
+<p><blockquote><p>If Java programmers want to use features that aren&rsquo;t present in the<br/>language, I think they&rsquo;re probably best off using another language<br/>that targets the JVM, such a Scala and Groovy.</p><footer><strong>Joshua Bloch</strong> <cite>Author of &ldquo;Effective Java&rdquo; and Many of Java&rsquo;s Core Libraries</cite></footer></blockquote></p>
+
+<p>Scala basically is:</p>
+
+<ul>
+<li>SCAlable LAnguage</li>
+<li>Pure OO language</li>
+<li>Functional language</li>
+<li>Statically typed language</li>
+<li>A language that integrates seamlessly with existing Java code</li>
+<li>A great community</li>
+</ul>
+
+
+<p>Scala&rsquo;s more prominent features are:</p>
+
+<ul>
+<li>Type inference</li>
+<li>Advanced type system</li>
+<li>Improved OO model</li>
+<li>Improved imports system</li>
+<li>Simplified visibility rules</li>
+<li>Suitable for scripting, GUI, enterprise</li>
+<li>Relies on immutable data structures by default</li>
+<li>Great support for building parallel applications</li>
+<li>Pimps (improves) a lot of standard Java classes using a technique
+called <a href="http://www.codecommit.com/blog/ruby/implicit-conversions-more-powerful-than-dynamic-typing">implicit conversion</a>.</li>
+</ul>
+
+
+<h2>Static vs Dynamic typing</h2>
+
+<p>This is one of the oldest debates in computing and everyone with a
+little bit of common sense knows that there is no definitive answer to this
+so fundamental question. Both approaches have merits and drawbacks. In
+recent years we saw a rapid explosion in the rate of growth of
+dynamic languages which lead many people to believe that static typing
+is something of the past and is headed down on the road to oblivion. I ,
+however, very much doubt such a possibility. So, without further ado
+here&rsquo;s my take on their pros and cons:</p>
+
+<h4>Dynamic typing</h4>
+
+<ul>
+<li><p>Pros</p>
+
+<ul>
+<li>Less verbose</li>
+<li>Better metaprogramming capabilities &ndash; it&rsquo;s very easy in a
+language like to Ruby to modify a class at runtime for
+instance. Java developers, on the other side, can only dream for
+such things&hellip;</li>
+<li>Duck typing allows to reduce immensely the coupling between your
+classes</li>
+<li>Reduced development and deployment cycles &ndash; most dynamic
+languages are implemented as interpreters and this way you&rsquo;re
+spared the tedious compilation/redeployment cycles</li>
+</ul>
+</li>
+<li><p>Cons</p>
+
+<ul>
+<li>Some might argue that type declarations serve as an additional
+documentation and their lack (arguably) make the code harder to
+read. Of course, when you&rsquo;re following a decent naming
+convention (and by that I mean that you&rsquo;re using sensible
+identifiers) that hardly matters.</li>
+<li>Slower performance &ndash; knowing all the types in advance,
+naturally, allows the compilers to generate faster code for
+static languages than for dynamic ones. Some Lisp compilers,
+however, offer performance that rivals that of statically typed
+programs, so it&rsquo;s reasonable to expect that the situation in
+this department will improve over time.</li>
+<li>It&rsquo;s hard to create IDEs for dynamic languages that offer the
+same level of assistance as those for static languages. The
+problem stems from the simple fact that in a dynamic language
+the type of an object is known only at runtime and an IDE will have
+a pretty hard type guessing the types because of this fact. In
+my humble opinion the lack of all the fancy IDE features like
+reliable code completion and refactorings is one of the central
+reasons why statically type languages like Java, C# and C++ are
+still enjoying higher popularity than dynamic languages.</li>
+<li>You need to write more unit tests, because many of the simple
+errors that the compiler of statically typed language will detect
+will manifest themselves only at runtime.</li>
+</ul>
+</li>
+</ul>
+
+
+<h4>Static typing</h4>
+
+<ul>
+<li><p>Pros</p>
+
+<ul>
+<li>Mighty development environments, capable of compensating for a
+lot of the languages deficiencies. You always get correct
+completion suggestions (in a decent IDE that is), all type errors
+are caught as you type (except the runtime errors that is).</li>
+<li>Reliable refactoring &ndash; you make some changes, you recompile the
+project, you instantly see whether everything is OK after the
+refactoring. One of the key reasons why enterprise projects are
+often implemented in Java and C#.</li>
+<li>Maximum performance &ndash; when you know all the types in advance it&rsquo;s
+not particularly hard to generate the most efficient in terms of
+performance bytecode/binary
+code.</li>
+<li>You don&rsquo;t need to write unit tests for errors that will be caught
+by compiler.</li>
+<li>The type declarations arguably serve as an up-to-date
+documentation on which you can always rely.</li>
+</ul>
+</li>
+<li><p>Cons</p>
+
+<ul>
+<li>Poor metaprogramming support &ndash; statically typed system limit very
+much the magic you can do in you programs. Metaprogramming is
+actually considered a black art in many statically type
+languages. In a functional statically typed language higher-order
+functions can compensate a lot in that department. Scala happens
+to be one such language, Haskell &ndash; another.</li>
+<li>Generally statically type languages are a bit more verbose &ndash;
+mostly because the code is full of type annotations (languages
+like Scala and Haskell, however, have found the cure for this
+ailment &ndash; <a href="http://www.codecommit.com/blog/scala/what-is-hindley-milner-and-why-is-it-cool">type inference</a>)</li>
+<li>No support (in most statically typed languages) for duck typing
+causes you to often link classes in hierarchies that you&rsquo;d rather
+avoid if you had the chance to. I should point out that languages
+supporting structural types are not suffering from these
+problems. Scala happens to support them from version 2.6.0.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>A whirlwind tour of Scala</h2>
+
+<h4>Scala is expressive</h4>
+
+<p>``` scala
+scala> val romanToArabic = Map(&ldquo;I&rdquo; &ndash;> 1, &ldquo;II&rdquo; &ndash;> 2, &ldquo;III&rdquo; &ndash;> 3, &ldquo;IV&rdquo; &ndash;> 4, &ldquo;V&rdquo; &ndash;> 5)
+romanToArabic: scala.collection.immutable.Map[java.lang.String,Int] = Map((II,2), (IV,4), (I,1), (V,5), (III,3))</p>
+
+<p>scala> romanToArabic(&ldquo;I&rdquo;)
+res2: Int = 1</p>
+
+<p>scala> romanToArabic(&ldquo;II&rdquo;)
+res3: Int = 2
+```</p>
+
+<h4>Scala removes the incidental complexity</h4>
+
+<p>Scala removes the incidental complexity and cut right to the core of
+the problem. Imagine that you want to find whether or not a string
+contains uppercase characters. In Java you&rsquo;d write something like
+this:</p>
+
+<p>``` java
+public boolean hasUpperCase(String word) {</p>
+
+<pre><code>if (word == null) {
+    return false;
+}
+int len = word.length();
+for (int i = 0; i &lt; len; i++) {
+    if (Character.isUpperCase(word.charAt(i))) {
+        return true;
+    }
+}
+return false;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>So much boilerplate code (loop, if) to express such a basic idea. In
+Scala you&rsquo;d simply write:</p>
+
+<p>``` scala
+def hasUppercase(word: String): Boolean = {
+  if (word != null)</p>
+
+<pre><code>word.exists(c =&gt; c.isUpperCase)
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>false
+</code></pre>
+
+<p>}</p>
+
+<p>// or more compactly
+def hasUppercase(word: String) = if (word != null) word.exists(_.isUpperCase) else false
+```</p>
+
+<p>Scala&rsquo;s code actually reads a lot like English language that makes
+sense to humans &ndash; check if in <em>word</em>
+there exists an uppercase character. Notice that is Scala <em>if</em> is an
+expression yielding a return value, unlike in many other languages.</p>
+
+<h4>Scala is concise</h4>
+
+<p>Consider this simple JavaBean (well, not exactly JavaBean to be
+precise &ndash; it lacks a no param constructor) definition:</p>
+
+<p>``` java
+class Person {</p>
+
+<pre><code>private String name;
+private int age;
+
+Person(String name, int age) {
+    this.name = name;
+    this.age = age;
+}
+
+public String getName() {
+    return name;
+}
+
+public void setName(String name) {
+    this.name = name;
+}
+
+public int getAge() {
+    return age;
+}
+
+public void setAge(int age) {
+    this.age = age;
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>In Scala the equivalent definition looks like this:</p>
+
+<p><code>scala
+class Person(var name: String, var age: Int)
+</code></p>
+
+<p>This is what I call a good signal-to-noise ratio.</p>
+
+<h4>Scala supercharges OO programming</h4>
+
+<p>Scala is pure OO language &ndash; everything is an object, operators are
+actually methods, everything yields some result(even constructs such
+as if), there are no static field and methods</p>
+
+<h4>Scala is power overwhelming</h4>
+
+<p>Want to implement a thread-safe mathematical service in Scala? No problem!</p>
+
+<p>``` scala
+import scala.actors.Actor._</p>
+
+<p>case class Add(x: Int, y: Int)
+case class Sub(x: Int, y: Int)</p>
+
+<p>val mathService = actor {
+  loop {</p>
+
+<pre><code>receive {
+  case Add(x, y) =&gt; reply(x + y)
+  case Sub(x, y) =&gt; reply(x - y)
+}
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>mathService !? Add(1, 3) // returns 4
+mathService !? Sub(5, 2) // returns 3
+```</p>
+
+<p>Case classes are out of the scope of this post, but I guess you get
+the basic idea.</p>
+
+<h4>Scala is duck friendly</h4>
+
+<p>Duck typing is nothing new for developers familiar with dynamic
+languages. Its the concept that an objects type is defined not by the
+objects class, but by the objects interface. This allows us to write
+very flexible code that works on unrelated types (in the inheritance
+hierarchy) that happen to share common methods. For instance in Ruby
+we could write this code:</p>
+
+<p>``` ruby
+class Duck
+  def walk</p>
+
+<pre><code>puts "The duck walks"
+</code></pre>
+
+<p>  end</p>
+
+<p>  def quack</p>
+
+<pre><code>puts "The duck quacks"
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>class Dog
+  def walk</p>
+
+<pre><code>puts "The dog walks"
+</code></pre>
+
+<p>  end</p>
+
+<p>  def quack</p>
+
+<pre><code>puts "The dog quacks"
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>def test_animal(animal)
+  animal.walk
+  animal.quack
+end</p>
+
+<p>test_animal(Duck.new)
+test_animal(Dog.new)
+```</p>
+
+<p>It will work just fine &ndash; trust me. Few statically typed languages can
+boast something similar&hellip; and Scala happens to be one of them:</p>
+
+<p>``` scala
+class Duck {
+  def quack = println(&ldquo;The duck quacks&rdquo;)
+  def walk = println(&ldquo;The duck walks&rdquo;)
+}</p>
+
+<p>class Dog {
+  def quack = println(&ldquo;The dog quacks (barks)&rdquo;)
+  def walk = println(&ldquo;The dog walks&rdquo;)
+}</p>
+
+<p>def testDuckTyping(animal: { def quack; def walk }) = {
+  animal.quack
+  animal.walk
+}</p>
+
+<p>scala> testDuckTyping(new Duck)
+The duck quacks
+The duck walks</p>
+
+<p>scala> testDuckTyping(new Dog)
+The dog quacks (barks)
+The dog walks
+```</p>
+
+<p>This is point in the article when Ruby and Python are starting to get
+impressed. :&ndash;) (I should know &ndash; I&rsquo;ve learnt about this feature after
+I&rsquo;ve written the first draft and got some negative feedback due to my
+oversight).</p>
+
+<h4>Pimp my library</h4>
+
+<p>Want to make the compiler convert between types from time to time to
+get access to some richer functionality? Nothing is easier in Scala:</p>
+
+<p>``` scala
+scala> implicit def intarray2sum(x: Array[Int]) = x.reduceLeft(<em> + </em>)
+intarray2sum: (x: Array[Int])Int</p>
+
+<p>scala> val x = Array(1, 2, 3)
+x: Array[Int] = Array(1, 2, 3)</p>
+
+<p>scala> val y = Array(4, 5, 6)
+y: Array[Int] = Array(4, 5, 6)</p>
+
+<p>scala> val z = x + y
+z: Int = 21
+```</p>
+
+<p>Scala arrays don&rsquo;t have a + method, but Scala Ints do. When the
+compiler sees that the + method is invoked on an object that doesn&rsquo;t
+have it, it starts searching for an implicit conversion to a type that
+has it &ndash; like Int. Both arrays are converted to their sums and the
+sums are added together in the end.</p>
+
+<h2>Playing around</h2>
+
+<p>A good way to start exploring Scala is the REPL. Fire it up and type
+along:</p>
+
+<p>``` scala
+scala> println(&ldquo;Hello, Scala&rdquo;)
+Hello, Scala</p>
+
+<p>scala> val name = &ldquo;Bozhidar&rdquo;
+name: java.lang.String = Bozhidar</p>
+
+<p>scala> Predef.println(&ldquo;My name is &rdquo;+name)
+My name is Bozhidar</p>
+
+<p>scala> var someNumber: Int = 5
+someNumber: Int = 5</p>
+
+<p>scala> var names = Array(&ldquo;Superman&rdquo;, &ldquo;Batman&rdquo;, &ldquo;The Flash&rdquo;, &ldquo;Bozhidar&rdquo;)
+names: Array[java.lang.String] = Array(Superman, Batman, The Flash, Bozhidar)</p>
+
+<p>scala> names.filter(name => name.startsWith(&ldquo;B&rdquo;))
+res6: Array[java.lang.String] = Array(Batman, Bozhidar)</p>
+
+<p>scala> names.length
+res7: Int = 4</p>
+
+<p>scala> name.length()
+res8: Int = 8</p>
+
+<p>scala> import java.util.Date
+import java.util.Date</p>
+
+<p>scala> var currentDate = new Date
+currentDate: java.util.Date = Wed May 11 15:03:20 EEST 2011</p>
+
+<p>scala> println(&ldquo;Now is &rdquo; + currentDate)
+Now is Wed May 11 15:03:20 EEST 2011</p>
+
+<p>scala> currentDate.toString
+res10: java.lang.String = Wed May 11 15:03:20 EEST 2011</p>
+
+<p>scala> currentDate.toString()
+res11: java.lang.String = Wed May 11 15:03:20 EEST 2011</p>
+
+<p>scala> currentDate toString
+res12: java.lang.String = Wed May 11 15:03:20 EEST 2011
+```</p>
+
+<p>The REPL has an excellent TAB completion &ndash; I used it ofter. You&rsquo;ll
+note from these examples the flexibility and the brevity of Scala&rsquo;s
+syntax &ndash; no <strong>;</strong> to terminate statements (though you&rsquo;ll have to use ; to
+separate more than one expression on a single line). The types of the
+variables are inferred by the context, without the need to
+specifically specify them &ndash; if you assign a string literal to some
+variable the compiler will figure out on its own that the variable
+must of type String (also note that Scala strings are Java strings &ndash;
+at least on the JVM). You&rsquo;ve got a lot of flexibility when you&rsquo;re
+calling methods &ndash; you can omit the braces and the dot in some
+scenarios &ndash; this makes it easy to create Domain Specific Languages in Scala.</p>
+
+<p>The REPL outputs both the result of the expression you&rsquo;ve evaluated
+and the output from the evaluation (if any). The result from the
+evaluation is assigned to automatically generated variables named resX
+(res0, res1, res3) and you can refer to them later on.</p>
+
+<h2>Object orientation purification</h2>
+
+<ul>
+<li>Everything is an object &ndash; there are no primitive types in Scala,
+though the compiler will map some Scala types to primitive Java
+types for performance whenever possible</li>
+<li>No operators, just methods
+
+<ul>
+<li><code>1 + 2 === 1.+(2)</code></li>
+</ul>
+</li>
+<li><p>No static fields &amp; methods &ndash; replaced by companion objects (a
+singleton object named the same way as the class). What would be a
+static field of a static method in Java will be a companion object
+field/method in Scala. This makes the Scala OO model purer than that
+of some other languages (of course in languages like Ruby where
+classes are objects class variables and methods have more or less
+the same meaning and the model is just a pure if not purer).</p></li>
+<li><p><a href="http://www.scala-lang.org/node/126">Traits</a> &ndash; the evolution of interfaces</p>
+
+<ul>
+<li>Traits are interfaces on steroids</li>
+<li>They can contain state as well as behaviour</li>
+<li>Think of them more as Ruby&rsquo;s mixins than Java&rsquo;s interfaces</li>
+<li>They can be implemented on the fly by objects</li>
+<li>They are too complex to be properly explained in one short blog post :&ndash;)</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Functional programming</h2>
+
+<p>Functional programming has many aspects, but to get the bulk of it you
+need just two magical ingredients &ndash; support for functions as objects
+and a nice array of immutable data structures. Scala, naturally, has
+both. Traditionally OOP languages have rarely had much support for
+functional programming, which makes it awkward to express some
+problems in them. Steve Yegge wrote an excellent article on the
+subject some time ago &ndash; <a href="http://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html">&ldquo;Execution in the kingdom of the
+nouns&rdquo;</a>.</p>
+
+<h4>Return of the verbs</h4>
+
+<ul>
+<li><p>Functions are first class objects</p>
+
+<ul>
+<li>val inc = (x: Int) => x + 1</li>
+<li>inc(1) // => 2</li>
+</ul>
+</li>
+<li><p>Higher-order functions</p>
+
+<ul>
+<li>List(1, 2, 3).map((x: Int) => x + 1) // => List(2, 3, 4)</li>
+</ul>
+</li>
+<li><p>Sugared functions</p>
+
+<ul>
+<li>List(1, 2, 3).map(x => x + 1)</li>
+<li>List(1, 2, 3).map(_ + 1)</li>
+</ul>
+</li>
+</ul>
+
+
+<h4>Closures</h4>
+
+<p>Closures are basically functions that have captured variables from an
+external scope (variables that were not parameters of the
+functions). Closures are often used as the parameters of higher-order
+functions (functions that take functions as parameters):</p>
+
+<p>``` scala
+scala> var x = 10
+x: Int = 10</p>
+
+<p>scala> val addToX = (y: Int) => x + y
+addToX: (Int) => Int = <function1></p>
+
+<p>scala> addToX(2)
+res0: Int = 12</p>
+
+<p>scala> addToX(6)
+res1: Int = 16</p>
+
+<p>scala> x = 5
+x: Int = 5</p>
+
+<p>scala> addToX(10)
+res2: Int = 15
+```</p>
+
+<h4>Functional data structures</h4>
+
+<p>Functional programming revolves around the concept of immutability &ndash;
+nothing is ever changed &ndash; we have some input, we get some output and
+the input is not changed in the process. Consider a simple operation
+like an addition of an element to a list:</p>
+
+<ul>
+<li>the operation could modify the list to which the element is being
+added</li>
+<li>the operation can return a new list that is the same as the
+original, but has the additional element</li>
+</ul>
+
+
+<p>Functional programming favours the second approach and Scala as a
+functional programming language provides data structures with the
+desired behaviour.</p>
+
+<ul>
+<li>List &ndash; think here of Lisp lists and not Java lists(unless you&rsquo;re
+thinking of Java linked lists that is)</li>
+<li>Maps</li>
+<li>Sets</li>
+<li>Trees</li>
+<li>Stacks</li>
+</ul>
+
+
+<p>Scala doesn&rsquo;t force you into functional programming, though. Apart
+from the List, which is always immutable, we have two types of all the
+core data structures mentioned &ndash; immutable and mutable. The immutable
+data structures are those imported by default to promote a more
+functional programming style, but you can easily switch to the mutable
+versions and program in an imperative manner.</p>
+
+<p>``` scala
+scala> import scala.collection.mutable.Map
+import scala.collection.mutable.Map</p>
+
+<p>scala> val phoneBook = Map(&ldquo;Bozhidar&rdquo; &ndash;> 123, &ldquo;Ivan&rdquo; &ndash;> 456)
+phoneBook: scala.collection.mutable.Map[java.lang.String,Int] = Map((Ivan,456), (Bozhidar,123))</p>
+
+<p>scala> phoneBook += &ldquo;Maya&rdquo; &ndash;> 53434
+res13: phoneBook.type = Map((Maya,53434), (Ivan,456), (Bozhidar,123))
+```</p>
+
+<h4>List almighty</h4>
+
+<p>The list is a core data structure in functional programming because it is
+recursively defined and therefore it&rsquo;s very suitable for use in
+recursive algorithms. A list is composed of cons cells, each having
+two components &ndash; the value it holds and a reference to a next cons
+cell. The last cell points to a special value &ndash; Nil (which happens to
+represent an empty list).</p>
+
+<p><code>1 | -&gt; 2 | -&gt; 3 | -&gt; Nil</code></p>
+
+<p>Here&rsquo;s some things you can do with Scala&rsquo;s lists:</p>
+
+<p>``` scala
+scala> 1 :: 2 :: 3 :: 4 :: 5 :: Nil
+res3: List[Int] = List(1, 2, 3, 4, 5)</p>
+
+<p>scala> val names = List(&ldquo;Neo&rdquo;, &ldquo;Trinity&rdquo;, &ldquo;Morpheus&rdquo;, &ldquo;Tank&rdquo;, &ldquo;Dozer&rdquo;)
+names: List[java.lang.String] = List(Neo, Trinity, Morpheus, Tank, Dozer)</p>
+
+<p>scala> names.length
+res4: Int = 5</p>
+
+<p>scala> names.foreach(println)
+Neo
+Trinity
+Morpheus
+Tank
+Dozer</p>
+
+<p>scala> names.map(_.toUpperCase)
+res6: List[java.lang.String] = List(NEO, TRINITY, MORPHEUS, TANK, DOZER)</p>
+
+<p>scala> names.forall(_.length > 5)
+res7: Boolean = false</p>
+
+<p>scala> names.forall(_.length > 2)
+res8: Boolean = true</p>
+
+<p>scala> names.filter(_.startsWith(&ldquo;T&rdquo;))
+res9: List[java.lang.String] = List(Trinity, Tank)</p>
+
+<p>scala> names.exists(_.length == 3)
+res10: Boolean = true</p>
+
+<p>scala> names.drop(2)
+res11: List[java.lang.String] = List(Morpheus, Tank, Dozer)</p>
+
+<p>scala> names.reverse
+res12: List[java.lang.String] = List(Dozer, Tank, Morpheus, Trinity, Neo)</p>
+
+<p>scala> names.sortBy(_.length)
+res13: List[java.lang.String] = List(Neo, Tank, Dozer, Trinity, Morpheus)</p>
+
+<p>scala> names.sort(<em> > </em>)
+res14: List[java.lang.String] = List(Trinity, Tank, Neo, Morpheus, Dozer)</p>
+
+<p>scala> names.slice(2, 4)
+res16: List[java.lang.String] = List(Morpheus, Tank)
+```</p>
+
+<h4>Pattern matching</h4>
+
+<p>You can think of Scala&rsquo;s pattern matching as a super charged version
+of switch, capable of matching on a variety of criteria and of
+destructuring that matched objects. Here&rsquo;s a simple example:</p>
+
+<p>``` scala
+scala> def testMatching(something: Any) = something match {</p>
+
+<pre><code> |   case 1 =&gt; "one"
+ |   case "two" =&gt; 2
+ |   case x: Int =&gt; "an integer number"
+ |   case x: String =&gt; "some string"
+ |   case &lt;xmltag&gt;{content}&lt;/xmltag&gt; =&gt; content
+ |   case head :: tail =&gt; head
+ |   case _ =&gt; "something else entirely"
+ | }
+</code></pre>
+
+<p>testMatching: (something: Any)Any</p>
+
+<p>scala> testMatching(1)
+res18: Any = one</p>
+
+<p>scala> testMatching(&ldquo;two&rdquo;)
+res19: Any = 2</p>
+
+<p>scala> testMatching(2)
+res20: Any = an integer number</p>
+
+<p>scala> testMatching(&ldquo;matrix&rdquo;)
+res21: Any = some string</p>
+
+<p>scala> testMatching(<xmltag>this is in the tag</xmltag>)
+res22: Any = this is in the tag</p>
+
+<p>scala> testMatching(List(1, 2, 3))
+res23: Any = 1</p>
+
+<p>scala> testMatching(3.9)
+res24: Any = something else entirely
+```</p>
+
+<p>Pattern matching gives you a new way to implement common programming
+task. For instance consider the following trivial problem &ndash; computing
+the length of a list:</p>
+
+<p><code>scala
+def length(list: List[Any]): Int = list match {
+  case head :: tail =&gt; 1 + length(tail)
+  case Nil =&gt; 0
+}
+</code></p>
+
+<p>Sure, it&rsquo;s not tail-recursive, but it&rsquo;s pretty neat. Now that I
+mentioned tail-recursion I should probably say a bit more about
+it. Recursive solutions generally look very nice in source form, but
+performance-wise are not that great because each recursive call
+creates a new stack frame and what&rsquo;s even worse is that stack frames
+are limited &ndash; create too many of them and your program will blow
+up. This doesn&rsquo;t mean that we should start coding everything
+imperatively, of course. Some compilers have the ability to optimize
+away recursive calls if the last thing that happens in the recursive
+function is a call to the function itself. In the case of our function <em>length</em>,
+unfortunately, the last call happens to be of the method <strong>+</strong> of the
+object <strong>1</strong> (of class Int). We can improve the solution this way:</p>
+
+<p>``` scala
+def length(list: List[Any]): Int = {
+  def lengthrec(list: List[Any], result: Int): Int = list match {</p>
+
+<pre><code>case head :: tail =&gt; lengthrec(tail, result + 1)
+case Nil =&gt; result
+</code></pre>
+
+<p>  }</p>
+
+<p>  lengthrec(list, 0)
+}
+```</p>
+
+<p>Notice that we now have a nested helper method with a second parameter,
+an accumulator value. This pattern often recurs when dealing with tail
+recursion &ndash; we take the original recursive definition and introduce a
+helper method using accumulator that is tail recursive. The outer
+method just calls the helper method and waits for the result. The
+Scala compiler will translate internally this recursive function into
+a something like a loop and the performance will be greatly improved,
+while preserving the clarity of the recursive approach.</p>
+
+<p>Some languages (like Scheme) will always optimize tail calls. Because
+of limitations in the JVM not all tail calls can be optimized in Scala
+(for now), but
+some tails recursion is better than none.</p>
+
+<h2>Parallel programming</h2>
+
+<p>With the advent of multi-core processors concurrent programming is
+becoming indispensable. Scala&rsquo;s primary concurrency construct is
+actors. Actors are basically concurrent processes that communicate by
+exchanging messages. Actors can also be seen as a form of active
+objects where invoking a method corresponds to sending a
+message. Actors are not a new idea &ndash; Scala&rsquo;s actor library draws heavy
+inspiration from Erlang &ndash; a programming language notable for its
+support for the development of distributed highly parallel systems.</p>
+
+<p>The Scala Actors library provides both asynchronous and synchronous
+message sends (the latter are implemented by exchanging several
+asynchronous messages). Moreover, actors may communicate using futures
+where requests are handled asynchronously, but return a representation
+(the future) that allows to await the reply.</p>
+
+<p>All actors execute in parallel by their nature. Each actor acts as if
+it contains its own dedicated thread of execution.</p>
+
+<p>Here&rsquo;s a very simple actor example. The echoActor runs forever and
+waits for messages:</p>
+
+<p>``` scala
+import scala.actors.Actor._
+val echoActor = actor {</p>
+
+<pre><code>while (true) {
+    receive {
+        case msg =&gt; println("received: "+msg)
+    }
+}
+</code></pre>
+
+<p>}</p>
+
+<p>echoActor ! &ldquo;Chuck Norris is the only real actor!&rdquo;
+echoActor ! &ldquo;You don&rsquo;t find Chuck Norris &ndash; Chuck Norris finds you!&rdquo;
+```</p>
+
+<p>Here the actor just waits for messages and responds to them by
+printing them to the console. Since the article&rsquo;s size is already
+quite impressive I won&rsquo;t go into any further details about the actors.</p>
+
+<p>I want you to know that actors are not the only way to write parallel
+programs in Scala. You still have access to the native Java (or .Net)
+primitive like threads, locks, executors, etc. Another option is the
+Scala implementation of Software Transactional Memory(STM) &ndash; a
+parallel programming model made recently popular by the Clojure
+programming language. Scala&rsquo;s implementation is a work in progress and
+you can have a look a it
+<a href="http://nbronson.github.com/scala-stm/">here</a>. STM is basically a
+programming technique that lets you model concurrent operations in a
+way similar to db transactions &ndash; you combine the critical code in a
+transaction and if possible execute it and commit the transaction,
+otherwise just rollback it and maybe try again after a while. Note that this is a
+<em>great</em> oversimplification of what&rsquo;s actually happening &ndash; for all the
+gory details you should read the exhaustive documentation.</p>
+
+<h2>Tools</h2>
+
+<p>We all know that even the best programming language can be rendered
+useless by the lack of good development tools for it &ndash; powerful text
+editors, integrated development environments, profilers, build tools,
+etc. Scala is a relatively young programming language that became
+really popular just recently and as a result there are still no
+development environments for Scala as powerful as those for Java
+(although since both languages use static typing eventually the
+environments will be on par). Most popular Java IDEs features feature
+some form of Scala support and most Java build tools as well.</p>
+
+<ul>
+<li><p>IDE</p>
+
+<ul>
+<li><p><a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a> &ndash; the ultimate
+Scala IDE at the moment. It works quite well, but it&rsquo;s a bit
+buggy that the moment (which is to be expected of something with
+some many beta features).</p></li>
+<li><p><a href="http://www.scala-ide.org/">Eclipse</a> &ndash; the most
+popular Java IDE has a Scala plug-in that
+until recently was mostly useless, but currently is being
+totally reworked and the next stable version will bring usable
+Scala support to the Eclipse users. The development of the new
+Scala plug-in is headed by none other than Martin Odersky
+himself. Don&rsquo;t bother using the older version at all &ndash; just grab
+the latest beta.</p></li>
+<li><p><a href="http://wiki.netbeans.org/Scala69">NetBeans</a> &ndash; Presently the
+Scala support in NetBeans is a bit basic, but it&rsquo;s usable.</p></li>
+<li><p><a href="https://github.com/aemoncannon/ensime">Emacs ENSIME</a> &ndash; Ok, I admit &ndash; Emacs is not actually an IDE
+per se, but it&rsquo;s still much more powerful than most IDEs. Emacs
+happens to have an excellent Scala mode, called ENSIME that
+gives you code completion, instant feedback, an integrated REPL,
+SBT integration, refactorings and other goodies in an Emacs
+package. The project attempts to be the equivalent of the legendary SLIME (
+an Emacs mode for Common Lisp) for Scala. ENSIME is integrated
+into the <a href="https://github.com/bbatsov/emacs-dev-kit">Emacs Dev Kit</a>(maintained by yours truly).</p></li>
+</ul>
+</li>
+<li><p>Scala distribution</p>
+
+<ul>
+<li><p>scala &ndash; A Scala REPL for exploratory programming; it&rsquo;s also the
+Scala &ldquo;interpreter&rdquo; and the Scala class runner</p></li>
+<li><p>scalac &ndash; the Scala compiler</p></li>
+<li><p>fsc &ndash; fast Scala compiler. The Scala compiler is notoriously
+slow to start and fsc is a partial solution to this problem. The fsc runs
+as a daemon and waits to receive files to compile. Maven&rsquo;s
+scala:cc and sbt&rsquo;s ~compile continuous compilation task use fsc internally.</p></li>
+<li><p>sbaz &ndash; The Scala Bazaar System, sbaz for short, is a packaging
+system developed to automate the task of mainaining a Scala
+installation. The program allows you to easily upgrade your
+installation as soon as a new version is available. You can also
+contribute your own packages, and make them easily available to
+other sbaz users.</p></li>
+</ul>
+</li>
+<li><p>Build tools</p>
+
+<ul>
+<li><a href="http://maven.apache.org">Apache Maven</a></li>
+<li><a href="http://buildr.apache.org">Apache Buildr</a></li>
+<li><a href="http://gradle.org">Gradle</a></li>
+<li><a href="http://code.google.com/p/simple-build-tool/">SBT</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Killer apps</h2>
+
+<p>Scala presently doesn&rsquo;t have that many killer apps. Here are the most
+prominent:</p>
+
+<ul>
+<li><p><a href="http://liftweb.net/">Lift web framework</a> &ndash; Lift is a web framework
+that has cherry-picked some of the best ideas from existing frameworks and
+added some novelties of its own to harness the capabilities of the
+Scala programming language.</p>
+
+<ul>
+<li>Lazy page loading</li>
+<li>Parallel rendering</li>
+<li>Comet &amp; Ajax</li>
+<li>Wiring</li>
+<li>Designer friendly templates</li>
+<li>Wizard</li>
+<li>Security</li>
+</ul>
+</li>
+<li><p><a href="http://www.playframework.org/">Play framework</a> &ndash; Play focuses on
+developer productivity and targets RESTful architectures. It has
+both a Java and a Scala API. It&rsquo;s considered by many to be the first
+Java web framework that was actually made by web developers.</p></li>
+<li><p><a href="http://akka.io/">Akka</a> &ndash; A powerful library for writing concurrent applications
+using Actors, STM &amp; Transactors. It has both Scala and Java API.</p></li>
+<li><p><a href="http://code.google.com/p/simple-build-tool/">SBT</a> &ndash; a powerful
+build tool</p></li>
+</ul>
+
+
+<h2>Success stories</h2>
+
+<ul>
+<li><a href="http://www.artima.com/scalazine/articles/twitter_on_scala.html">Twitter</a>  &ndash; you remember how often Twitter used to go down because of
+overloads and suddenly the problems stopped &ndash; no, this was the
+moment in which Twitter&rsquo;s backend was rewritten in Scala (that
+moment never actually came)&hellip; I have it on good authority that the
+problem was actually resolved by great improvements in their Ruby
+code base. But they use Scala there &ndash; Twitter had a Ruby-based
+queueing system that we used for communicating between the Rails
+front ends and the daemons that often crashed under heavy loads, and
+they ended up replacing that with one written in Scala.</li>
+<li><a href="http://www.scala-lang.org/node/5130">Four square</a> &ndash; Four square
+uses Lift as well</li>
+<li><a href="http://www.scala-lang.org/node/6436">LinkedIn</a></li>
+<li>SAP</li>
+<li><a href="http://www.infoq.com/articles/guardian_scala">Guardian.co.uk</a></li>
+</ul>
+
+
+<h2>Comparison to Java</h2>
+
+<p>It&rsquo;s only natural that Java developers are interested in how Scala
+stacks up to Java:</p>
+
+<ul>
+<li>Pros
+
+<ul>
+<li>Scala is fast, just as fast as Java. Some might wonder why this
+is a feature &ndash; they should take a look at the performance of the
+most of the other JVM langs and they&rsquo;ll understand. Granted, all
+of the performance benefits come from the use of static typing
+in Scala, but Scala&rsquo;s code is often as concise as the code
+written in a dynamic language like Ruby or Groovy.</li>
+<li>Great Java interoperability</li>
+<li>Scala removes a lot of the incidental complexity of programming
+and let&rsquo;s you express your thoughts directly in the source code</li>
+<li>The syntax of Scala is mostly uniform and you can usually easily
+create new abstractions that look like language built-ins.</li>
+<li>Scala features great support for parallel programming.</li>
+<li>Runs on both Java and .Net (at least in theory)</li>
+</ul>
+</li>
+<li>Cons
+
+<ul>
+<li>Some aspects of the language are fairly complex like the
+subtyping rules for instance. This will probably scare off some
+people, but I can assure you that this complexity is superficial
+and once you&rsquo;ve grasped enough of Scala everything will fall
+into place and seem to you the most natural thing in the world.</li>
+<li>Calling Scala from Java is not as easy as calling Java from
+Scala.</li>
+<li>The core API is still subject to constant changes and most new
+Scala version are not backward compatible with the old ones
+(unlike in Java).</li>
+<li>Scala&rsquo;s community (albeit very friendly and helpful) is current
+tiny compared to Java&rsquo;s. You might not get an assistance from
+the community as quickly as you&rsquo;d get it for Java related
+problems.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Resources</h2>
+
+<ul>
+<li>Books
+
+<ul>
+<li><a href="http://programming-scala.labs.oreilly.com/">Programming Scala</a>
+
+<ul>
+<li>great free on-line book</li>
+</ul>
+</li>
+<li><a href="http://www.artima.com/pins1ed/">Programming in Scala</a> &ndash; the holy
+bible of Scala. The first edition is available for free on-line.</li>
+</ul>
+</li>
+<li>Blogs &amp; Websites
+
+<ul>
+<li><a href="http://www.scala-lang.org">Official web site</a></li>
+<li><a href="http://www.codecommit.com/blog/">Daniel Spiewak&rsquo;s blog</a></li>
+<li><a href="http://daily-scala.blogspot.com/">Daily Scala</a></li>
+</ul>
+</li>
+<li>Exercises
+
+<ul>
+<li><a href="http://aperiodic.net/phil/scala/s-99/">99 Scala problems</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>Scala&rsquo;s future is nothing but bright. It uses static typing, which is
+familiar to so many Java and C# developers, and is also the
+prerequisite for creating very helpful IDEs. Scala runs on the
+venerable Java platform and easily leverages all of its power while
+adding a lot of magic of its own &ndash; implicits, type inference, pattern
+matching, functional programming support, actors and others.</p>
+
+<p>It&rsquo;s my personal opinion that if any language has the chance to
+displace Java as the king of the world &ndash; that might be Scala. In all
+likelihood this will never happen &ndash; rarely has the greatest solutions
+enjoyed the greatest popularity (remember the Betamax vs VHS?). I do
+believe, however, that Scala will capture a significant market share
+in the coming years &ndash; mainly due to it excellent support for building
+distributed systems.</p>
+
+<p>Until next time and the next chapter of the story, dedicated to the
+rising star of the JVM world &ndash; Clojure.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java.next() - The Groovy Programming Language]]></title>
+    <link href="http://batsov.com/articles/2011/05/06/jvm-langs-groovy/"/>
+    <updated>2011-05-06T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/05/06/jvm-langs-groovy</id>
+    <content type="html"><![CDATA[<h2>Java.next()</h2>
+
+<p>In a series of articles labeled &ldquo;Java.next()&rdquo; I&rsquo;ll be discussing
+modern alternatives to the Java programming language for use with the
+Java Platform. This is the first installment of the series &ndash; &ldquo;The
+Groovy Programming Language&rdquo;.</p>
+
+<h2>Prelude</h2>
+
+<p>We all know and love the Java <em>platform</em>(note the emphasis on
+platform) for a couple of obvious reasons. Most notably it features a
+huge high quality standard library and a legendary execution
+environment &ndash; the Java Virtual Machine(JVM). The JVM is known to
+posses the following qualities:</p>
+
+<ul>
+<li>Runs on all major platforms</li>
+<li>Enterprise ready</li>
+<li>Extremely stable</li>
+<li>Extremely fast</li>
+<li>Highly customizable &ndash; many aspects of its work can easily be
+adjusted such as GC settings, heap settings, etc.</li>
+</ul>
+
+
+<p>There is a terrific community around the Java platform that has
+contributed an immense amount of high quality software vital to the
+success of Java. Hibernate, Spring, Eclipse, NetBeans, the myriad of
+Apache projects are all community efforts.</p>
+
+<p>So far so good, but it&rsquo;s not all rainbows and unicorns in the land of
+Java. The Java programming language is a common source of gripe
+amongst many developers for various reasons. I&rsquo;ll list here some of
+the more notable of them:</p>
+
+<ul>
+<li>It&rsquo;s not a pure OOP language(there is a difference between primitive
+and reference data types)</li>
+<li>It uses static typing(highly subjective topic, but commonly brought up)</li>
+<li>It doesn&rsquo;t have support for closures(which instantly kills half of
+functional&rsquo;s programming ideas such as higher order functions)</li>
+<li>It has limited meta programming capabilities(compared to Ruby and
+Lisp for instance)</li>
+<li>There is no concept of top-level procedures(outside of class
+definitions)(this makes Java unsuitable for creating &ldquo;script&rdquo; programs)</li>
+<li>Its syntax is too verbose</li>
+<li>It&rsquo;s not suitable for the creation of DSLs</li>
+<li>Its development is sluggish and restrained by the corporate promise of backward compatibility</li>
+<li>It&rsquo;s an imperative language</li>
+<li>Its parallel programming model is revolving mostly around locks and
+threads</li>
+</ul>
+
+
+<p>Naturally there are some languages that alleviate some(most) of Java&rsquo;s
+problems such as:</p>
+
+<ul>
+<li>Ruby</li>
+<li>Python</li>
+<li>Lisp</li>
+<li>Erlang</li>
+<li>Haskell</li>
+</ul>
+
+
+<p>They all, however, lack(with their default implementations at least)
+an execution environment that can match the JVM. They also lack Java&rsquo;s
+immense amount of libraries currently available. When enthusiasts
+started porting existing languages to the JVM this came as no surprise
+&ndash; it was only logical. A good language get a good execution
+environment. For instance some folks ported Ruby to Java which
+resulted in JRuby, Python also got a Java port called Jython. Though a
+lot of good has come from such ports they was also a price to pay. In
+the case of Ruby and Python some libraries are not written in
+Ruby/Python, but in C for performance reasons, which naturally leads
+to problems when you factor in a Java implementation of the
+language. There is also the fact that the JVM(currently) doesn&rsquo;t have
+support for dynamic memory dispatching which is feature vital for
+dynamically typed languages to get a decent performance. For this
+reason Jython is notoriously slow. The JRuby team did a much better
+work, circumvented a lot of the JVM limitations and actually managed
+to create a Ruby implementation that in some scenarios beats the
+performance of the standard MRI Ruby 1.9 with it&rsquo;s custom YARV virtual
+machine implemented in C. JRuby will be the object of a further
+discussion down the road. Some of the languages that were ported to
+the JVM suffer from another problem as well &ndash; it&rsquo;s not straightforward
+and efficient in them to reuse existing Java libraries directly.</p>
+
+<p>I&rsquo;d like to lead this discussion in another direction, however &ndash;
+programming languages that were implemented from scratch with the JVM
+as their execution environment. While there are many of those three
+stand out and have gathered a significant momentum in recent
+years. They will be the subject of this post and the following
+two. Without further adieu I&rsquo;d like you to meet Groovy, Scala and
+Clojure.</p>
+
+<p>We&rsquo;ll begin our discussion with Groovy&hellip;</p>
+
+<p><strong>Disclaimer</strong></p>
+
+<p><em>Before I start I&rsquo;d like to point out that my knowledge of Groovy is
+limited compared to my knowledge of Scala and Clojure. Despite this I
+decided to share my thoughts on the language because it&rsquo;s certainly one
+of the most popular JVM languages out there. If I&rsquo;ve made any errors
+in the article I didn&rsquo;t mean to insult anyone with my ignorance and
+I&rsquo;ll certainly be glad to fix them when someone points them out.</em></p>
+
+<h2>A little bit of Groovy history</h2>
+
+<p>James Strachan first talked about the development of Groovy in his
+<a href="http://radio-weblogs.com/0112098/2003/08/29.html">blog</a> in August
+2003. Several versions were released between 2004 and 2006. After the
+JCP(yep, you read that correct &ndash; Groovy is actually a Java standard
+which is great or scary depending on your point of view)
+standardization process began, the version numbering was changed and a
+version called &ldquo;1.0&rdquo; was released on January 2, 2007. After various
+betas and release candidates numbered 1.1, on December 7, 2007, Groovy
+1.1 Final was released and immediately rebranded as Groovy 1.5 as a
+reflection of the many changes that were made.</p>
+
+<p>In July 2009, Strachan wrote on his blog that &ldquo;I can honestly say if
+someone had shown me the Programming in Scala book by Martin Odersky,
+Lex Spoon &amp; Bill Venners back in 2003 I&rsquo;d probably have never created
+Groovy.&rdquo; Strachan left the project silently a year before the
+Groovy 1.0 release in 2007. Leadership of the project was assumed by
+Guillaume Laforge (Project Manager and JSR-241 Spec Lead). Under his
+guidance Groovy thrived and his risen to be arguably the most widely
+used JVM language apart from Java.</p>
+
+<p>Currently the development of Groovy proceeds with a very fast pace and
+the latest major update 1.8.0 was released just a couple of days ago.</p>
+
+<h2>Installation &amp; Getting started</h2>
+
+<p><strong>Platform independent installation</strong>
+These instructions describe how to install a binary distribution of Groovy.</p>
+
+<ul>
+<li>download a <a href="http://groovy.codehaus.org/Download">binary distribution of Groovy</a> and unpack it into some file on your local file system</li>
+<li>set your GROOVY_HOME environment variable to the directory you unpacked the distribution</li>
+<li>add GROOVY_HOME/bin to your PATH environment variable</li>
+<li>set your JAVA_HOME environment variable to point to your JDK. On OS
+X this is /Library/Java/Home, on other unixes its often /usr/java
+etc. If you&rsquo;ve already installed tools like Ant or Maven you&rsquo;ve
+probably already done this step.</li>
+</ul>
+
+
+<p>For instance here&rsquo;s the relevant information of my shell&rsquo;s
+configuration:</p>
+
+<p><code>bash
+export JAVA_HOME=/usr/java/latest
+export GROOVY_HOME=/opt/groovy-1.8.0
+export PATH=$GROOVY_HOME/bin:$PATH
+</code></p>
+
+<p>You should now have Groovy installed properly. You can test this by
+typing the following in a command shell:</p>
+
+<p><code>bash
+$ groovysh
+</code></p>
+
+<p>Which should create an interactive groovy shell where you can type
+Groovy statements. Or to run the Swing interactive console type:</p>
+
+<p><code>bash
+$ groovyConsole
+</code></p>
+
+<p>To run a specific Groovy script type:</p>
+
+<p><code>bash
+$ groovy SomeScript.groovy
+</code></p>
+
+<h4>Linux installation</h4>
+
+<p>Most Linux distributions provide Groovy through their integrated
+package management system. On Debian(and derivatives like Ubuntu) you
+can install it like this:</p>
+
+<p><code>bash
+$ sudo apt-get install groovy
+</code></p>
+
+<p>On Red Hat systems the magic incantation looks like this:</p>
+
+<p><code>bash
+$ sudo yum install groovy
+</code></p>
+
+<p>Personally I&rsquo;d prefer the platform-independent installation method,
+since some distribution package Groovy in a non-standard manner which
+confuses IDEs for instance.</p>
+
+<h4>Windows installation</h4>
+
+<p>Groovy features a native <a href="http://dist.codehaus.org/groovy/distributions/installers/windows/nsis/groovy-1.8.0-installer.exe">Windows installer</a>.</p>
+
+<h2>Meet Groovy</h2>
+
+<p><blockquote><p>&ldquo;Groovy is like a super version of Java. It can leverage Java&rsquo;s<br/>enterprise capabilities but also has cool productivity features like<br/>closures, builders and dynamic typing. If you are a developer, tester<br/>or script guru, you have to love Groovy.&rdquo;</p><footer><strong>Praise for Groovy</strong> <cite><a href="http://groovy.codehause.org">http://groovy.codehause.org</a></cite></footer></blockquote></p>
+
+<p>Groovy is:</p>
+
+<ul>
+<li>is one of the two standard languages for the JVM(the other is Java
+of course)</li>
+<li>is an agile and dynamic language for the Java Virtual Machine</li>
+<li>builds upon the strengths of Java but has additional power features inspired by languages like Python, Ruby and Smalltalk</li>
+<li>makes modern programming features available to Java developers with almost-zero learning curve</li>
+<li>supports Domain-Specific Languages and other compact syntax so your
+code becomes easy to read and maintain</li>
+<li>makes writing shell and build scripts easy with its powerful processing primitives, OO abilities and an Ant DSL</li>
+<li>increases developer productivity by reducing scaffolding code when developing web, GUI, database or console applications</li>
+<li>simplifies testing by supporting unit testing and mocking out-of-the-box</li>
+<li>seamlessly integrates with all existing Java classes and libraries</li>
+<li>compiles straight to Java bytecode so you can use it anywhere you
+can use Java</li>
+</ul>
+
+
+<p>Some of Groovy&rsquo;s most compelling features are:</p>
+
+<ul>
+<li>Pure OOP language</li>
+<li>Mostly Java compatible syntax</li>
+<li>Optional typing</li>
+<li>No need to wait for a future version of Java to get:
+
+<ul>
+<li>Closures</li>
+<li>Attributes</li>
+<li>Smart switch</li>
+</ul>
+</li>
+<li>Duck typing</li>
+<li>BigInteger based arithmetic
+
+<ul>
+<li>This deserves some special explanation because of a rather
+strange design decision in Groovy. Groovy will create a
+BigIntiger out of a large enough number literal, but it won&rsquo;t
+promote the result of an integer operation into BigInteger &ndash;
+the result will actually overflow, in contrast to the semantics of most
+other dynamically typed languages. Multiply 1000 * 1000000000
+and you will end up with -727379968 in Groovy.</li>
+</ul>
+</li>
+<li>SQL, XML &amp; Swing improvements</li>
+<li>Unified data access API</li>
+</ul>
+
+
+<p>A core idea, guiding the design of Groovy, is making it easy to use for
+existing Java developers. Groovy&rsquo;s designers have gone so far in that
+direction that the Groovy compiler will happily compile most Java
+source files without the need for any modifications. Groovy, however,
+builds heavily upon the standard Java&rsquo;s syntax and you&rsquo;ll do well to
+get a grip of Groovy&rsquo;s core idioms. Groovy&rsquo;s syntax in a nutshell:</p>
+
+<p>``` java
+// old school Java code, but also valid Groovy code
+System.out.println(&ldquo;Hello, world!&rdquo;);</p>
+
+<p>// idiomatic Groovy
+println &ldquo;Hello, world!&rdquo;</p>
+
+<p>// dynamic variable definition
+def name = &ldquo;Bozhidar&rdquo;</p>
+
+<p>// GString featuring string interpolation
+println &ldquo;Hello, $name&rdquo;  // => &ldquo;Hello, Bozhidar&rdquo;</p>
+
+<p>// statically typed variable
+String songName = &ldquo;Coding in the Name of&rdquo;</p>
+
+<p>println &ldquo;Now playing &ndash; $songName&rdquo;</p>
+
+<p>String multiline = &ldquo;&rdquo;&ldquo;this is a multiline
+string. There is not need to embed
+newline characters in it&rdquo;&ldquo;&rdquo;</p>
+
+<p>println multiline</p>
+
+<p>// method definition
+def greet(name) {</p>
+
+<pre><code>println "Hello, $name!"
+</code></pre>
+
+<p>}</p>
+
+<p>// method invocation
+greet &ldquo;Bozhidar&rdquo;
+greet(&ldquo;Bozhidar&rdquo;)</p>
+
+<p>// safe dereferencing
+def showSize(list) {</p>
+
+<pre><code>println "List size is: ${list?.size}"
+</code></pre>
+
+<p>}</p>
+
+<p>showSize([1, 2, 3])
+// this is the important part
+showSize(null)</p>
+
+<p>// a list
+def beers = [&ldquo;Zagorka&rdquo;, &ldquo;Bolyarka&rdquo;, &ldquo;Shumensko&rdquo;, &ldquo;Ariana&rdquo;]</p>
+
+<p>// list access
+println &ldquo;My favourite beer is ${beers[1]}&rdquo;</p>
+
+<p>beers.each { beer &ndash;> println beer }</p>
+
+<p>// imports can appear anywhere and support the creation of aliases
+import static java.util.Calendar.getInstance as now
+import java.sql.Date as SDate</p>
+
+<p>println now()
+// java.util package is automatically imported in Groovy so this is java.util.Date
+println new Date()
+println new SDate(2011, 5, 5)</p>
+
+<p>// language support for regular expressions
+if (&ldquo;Hello, Groovy&rdquo; =~ /\w+,\s\w+/) {</p>
+
+<pre><code>println "It matches"
+</code></pre>
+
+<p>}</p>
+
+<p>// range filtering with higher-order functions
+(1..10).findAll { n &ndash;> n % 2 == 0}.each { n &ndash;> println n }</p>
+
+<p>// map
+def capitols = [Bulgaria: &ldquo;Sofia&rdquo;, USA: &ldquo;Washington&rdquo;, England:&ldquo;London&rdquo;, France:&ldquo;Paris&rdquo;]</p>
+
+<p>println capitols[&ldquo;Bulgaria&rdquo;] // => Sofia
+println capitols[&ldquo;France&rdquo;]  // => Paris</p>
+
+<p>// class definition
+class Person {</p>
+
+<pre><code>def name
+def age
+
+Person(name, age) {
+    this.name = name
+    this.age = age
+}
+
+@Override
+String toString() {
+    return "Name {$name}, age {$age}"
+}
+</code></pre>
+
+<p>}</p>
+
+<p>def me = new Person(&ldquo;Bozhidar&rdquo;, 26)
+println me
+```</p>
+
+<p>From the brief overview you might have noticed that like Ruby and
+Python Groovy has language support for commonly used data structures
+such as lists, maps, ranges and regular expressions:</p>
+
+<ul>
+<li>List &ndash; def number = [1, 2, 3]</li>
+<li>Map &ndash; def countries = [BG: “Bulgaria”, DE: “Germany]</li>
+<li>Range &ndash; def range = 1..1000</li>
+<li>Regular expressions &ndash; def whitespace = /\s+/</li>
+</ul>
+
+
+<p>You might have noticed another interesting feature in Groovy &ndash; the
+ability to combine static type(like in Java) with dynamic typing(like
+in Ruby and Python). The keyword <em>def</em> is used to introduce
+dynamically typed variables in Groovy.</p>
+
+<p>Groovy comes with its very own standard library(GDK) which builds upon
+the JDK(for instance the File and String classes are enhanced in
+Groovy) and offer some new features like the Groovy&rsquo;s famous builders.</p>
+
+<h2>OOP in Groovy</h2>
+
+<p>Groovy is a pure object oriented language. Everything is an object,
+operations are methods, etc. Compared the Java the picture looks right
+about this way:</p>
+
+<ul>
+<li><p>Similar capabilities to Java</p>
+
+<ul>
+<li>Define classes, interfaces, enums, annotations</li>
+</ul>
+</li>
+<li><p>Differences to Java</p>
+
+<ul>
+<li>Classes (and interfaces etc.) public by default</li>
+<li>Methods public by default</li>
+<li>Property support within classes (auto-setters/getters)</li>
+<li>Duck typing</li>
+</ul>
+</li>
+</ul>
+
+
+<p>Java developers should feel mostly at home.</p>
+
+<h2>SQL and XML handling</h2>
+
+<p>Groovy offers some nice improvements over JDBC and JAXP for handling
+database queries and XML parsing.</p>
+
+<p>Groovy removes a lot of boilerplate when dealing with SQL queries
+compared to the native JDBC API:</p>
+
+<p><code>java
+import groovy.sql.Sql
+sql = Sql.newInstance("jdbc:mysql://host/db", "username", "password", "com.mysql.jdbc.Driver")
+sql.eachRow("select * from tableName", { println it.id + " -- ${it.firstName} --"} )
+</code></p>
+
+<p>This code is written for a connection to a MySQL database. You will
+need to adjust all the parameters to newInstance to connect to your
+database, especially username and password.  Finally the third line
+calls the eachRow method of sql, passing in two arguments, the first
+being the query string, the second being a closure to print out some
+values.  Notice that in the closure the fields of &ldquo;it&rdquo; are accessed in
+two different ways. The first is as a simple field reference,
+accessing the id field of it. The second is the included Groovy
+expression mentioned above.</p>
+
+<p>So the output from a row might look like:</p>
+
+<p><code>
+1 -- Bozhidar --
+2 -- Maya --
+3 -- Kate --
+4 -- Valentine --
+</code></p>
+
+<p>XML processing is common enough task in computing and Groovy&rsquo;s
+developers tried to make it simple and straightforward as
+possible. Let&rsquo;s parse the following file:</p>
+
+<p>``` xml
+<books></p>
+
+<pre><code>&lt;book&gt;
+    &lt;title&gt;Dune&lt;/title&gt;
+    &lt;author firstname="Frank" lastname="Herbert"/&gt;
+&lt;/book&gt;
+&lt;book&gt;
+    &lt;title&gt;Dune Messiah&lt;/title&gt;
+    &lt;author firstname="Frank" lastname="Herbert"/&gt;
+&lt;/book&gt;
+&lt;book&gt;
+    &lt;title&gt;Children of Dune&lt;/title&gt;
+    &lt;author firstname="Frank" lastname="Herbert"/&gt;
+&lt;/book&gt;
+&lt;book&gt;
+    &lt;title&gt;A Game of Thrones&lt;/title&gt;
+    &lt;author firstname="George" lastname="Martin"/&gt;
+&lt;/book&gt;
+</code></pre>
+
+<p></books>
+```</p>
+
+<p>All the code we need to write is:</p>
+
+<p>``` java
+def books = new XmlSlurper().parse(&ldquo;books.xml&rdquo;)
+books.book.each {</p>
+
+<pre><code>println "Title = ${it.title}, Author: ${it.author.@firstname} ${it.author.@lastname}"
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Ruby and Python developers probably aren&rsquo;t particularly impressed, but
+I can only imagine the look on the faces of Java developers that are
+generally required to write huge amount of boilerplate code when
+dealing with XML.</p>
+
+<h2>Builders</h2>
+
+<p>Groovy has special syntax support for List and Maps. This is great
+because it gives a concise representation of the actual object being
+defined, so its easier to keep track of what a program or script is
+doing. But what about programs which contain arbitrary nested tree
+structures. Surely, they are the hardest ones to keep track of what is
+going on. Isn&rsquo;t that an area where syntactic help will be most
+beneficial?</p>
+
+<p>The answer is definitely yes and Groovy comes to the party with its
+builder concept. You can use it for DOM-like APIs or Ant tasks or
+Jelly tags or Swing widgets or whatever. Each may have their own
+particular factory mechanism to create the tree of objects &ndash; however
+they can share the same builder syntax to define them &ndash; in a concise
+alternative to XML or lengthy programming code.</p>
+
+<p>One use for builders is the generation of markup:</p>
+
+<p>``` java
+import groovy.xml.*</p>
+
+<p>def page = new MarkupBuilder()
+page.html {</p>
+
+<pre><code>head { title 'Hello, Groovy!' }
+body {
+    div {
+        3.times {
+            p "Groovy power!"
+        }
+    }
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Result:</p>
+
+<p>``` xml
+<html>
+  <head></p>
+
+<pre><code>&lt;title&gt;Hello, Groovy!&lt;/title&gt;
+</code></pre>
+
+<p>  </head>
+  <body></p>
+
+<pre><code>&lt;div&gt;
+  &lt;p&gt;Groovy power!&lt;/p&gt;
+  &lt;p&gt;Groovy power!&lt;/p&gt;
+  &lt;p&gt;Groovy power!&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>  </body>
+</html>
+```</p>
+
+<p>Builders can also be used to create Swing GUIs. Here&rsquo;s a very small example:</p>
+
+<p>``` java
+import java.awt.FlowLayout</p>
+
+<p>builder = new groovy.swing.SwingBuilder()
+langs = [&ldquo;Groovy&rdquo;, &ldquo;Scala&rdquo;, &ldquo;Clojure&rdquo;]
+gui = builder.frame(size: [290, 100], title: &lsquo;Groovy Swing&rsquo;) {</p>
+
+<pre><code>panel(layout: new FlowLayout()) {
+    panel(layout: new FlowLayout()) {
+        for (lang in langs) {
+            radioButton(text: lang)
+        }
+    }
+    button(text: 'Perform Magic', actionPerformed: {
+        builder.optionPane(message: "Feel the power of Groovy!").
+                createDialog(null, 'Message').show()
+    })
+    button(text: 'Quit',
+            actionPerformed: {System.exit(0)})
+}
+</code></pre>
+
+<p>}
+gui.show()
+```</p>
+
+<p>Run the code to see the resulting GUI!</p>
+
+<h2>Groovy tooling</h2>
+
+<ul>
+<li><p>IDE</p>
+
+<ul>
+<li><a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a> &ndash; the ultimate
+Groovy IDE. It&rsquo;s excellent Groovy support is part of its open
+source Community Edition.</li>
+<li><a href="http://groovy.codehaus.org/Eclipse+Plugin">Eclipse</a> &ndash; the most
+popular Java IDE has an actively maintained Groovy plugin</li>
+<li><a href="http://netbeans.org/features/groovy/">NetBeans</a> &ndash; Like IDEA
+NetBeans features built-in Groovy support</li>
+</ul>
+</li>
+<li><p>Groovy distribution</p>
+
+<ul>
+<li>groovysh &ndash; A Groovy REPL for exploratory programming</li>
+<li>groovyConsole &ndash; A GUI groovy shell with extended capabilities,
+that is handy for the development and testing of small Groovy scripts</li>
+<li>groovyc &ndash; the Groovy compiler</li>
+</ul>
+</li>
+<li><p>Build tools</p>
+
+<ul>
+<li><a href="http://maven.apache.org">Apache Maven</a></li>
+<li><a href="http://buildr.apache.org">Apache Buildr</a></li>
+<li><a href="http://gradle.org">Gradle</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Killer apps</h2>
+
+<ul>
+<li><a href="http://grails.org">Grails</a>
+
+<ul>
+<li>Groovy port of Ruby on Rails</li>
+<li>Leverages the best Java technologies
+
+<ul>
+<li>Hibernate</li>
+<li>Spring</li>
+<li>Tomcat</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="http://gradle.org">Gradle</a> &ndash; powerful build tool, considered by many vastly superior to
+Maven. Several high profile projects(such as Hibernate) already
+migrated their builds to Gradle.</li>
+<li><a href="http://griffon.codehaus.org/">Griffon</a> &ndash; a Grails like application
+framework for developing desktop applications</li>
+</ul>
+
+
+<h2>Common use cases</h2>
+
+<p>Groovy is a general purpose language, but it&rsquo;s used for some tasks
+more often than for others. It&rsquo;s extremely suitable for:</p>
+
+<ul>
+<li>web application development(usually with Grails)</li>
+<li>scripting(although you have to factor in the cold startup time of
+the JVM before you start writing all your scripts in Groovy)</li>
+<li>tests development &ndash; it&rsquo;s a common practice in many Java projects to
+have the tests written in Groovy</li>
+<li>GUI development(usually with Griffon)</li>
+<li>Rapid prototyping &ndash; you&rsquo;d do a quick app prototype in Groovy as a
+proof on concept and then you&rsquo;d create a Java application based on
+it</li>
+<li>Exploratory programming &ndash; the groovysh is a great way to test class
+capabilities, methods and ideas with almost zero overhead &ndash; no
+annoying compile/run cycles to slow you down</li>
+</ul>
+
+
+<p>When performance is critical you&rsquo;d probably want to avoid
+Groovy. According to some benchmarks around the Internet(like
+<a href="http://stronglytypedblog.blogspot.com/2010/02/java-vs-scala-vs-groovy-vs-groovy.html">this one</a>)
+Groovy is much slower than Java for certain tasks. I, however, haven&rsquo;t
+read any new benchmarks on the subject and have no idea how reliable
+the old ones are and how relevant they are to the current Groovy
+version.</p>
+
+<h2>Future prospects</h2>
+
+<p>With so many languages being created all the time developers
+naturally ask themselves the same question over and over again &ndash;
+should I waste my time learning this language? Related questions seem
+to be:</p>
+
+<ul>
+<li>Will it endure the test of time?</li>
+<li>Does it have a vibrant and committed community around it?</li>
+<li>Can I find professional support?</li>
+<li>Does it integrate well with out current infrastructure?</li>
+<li>Does it have good tooling?</li>
+</ul>
+
+
+<p>After all most of the currently popular languages like Java, C# and
+PHP are nothing spectacular on their own, but have a combination of
+factors that worked in their favour to get them to the top &ndash; solid
+companies behind them, many deployment options and just the right
+amount of beefing up/simplifying C/C++ make existing developers transition to the
+new languages a relatively easy and painless experience.</p>
+
+<p>SpringSource(the company responsible for the creation of the popular
+Spring framework, now a division of VMWare) employs most of the core
+Groovy developers and offers both <a href="http://www.springsource.com/developer/grails">Groovy and Grails support</a>. The fact
+that a company such as this one believes in the technology is very
+important whey you&rsquo;re trying to sell using Groovy in your current
+company. And if you&rsquo;re existing infrastructure is built around Java &ndash;
+well, you have next to nothing to worry about, except maybe will Java 7
+deliver the promised speed improvement for dynamic languages
+implemented on top of it.</p>
+
+<p>Presently the Groovy community is vast and rapidly growing. The
+language itself &ndash; constantly evolving.</p>
+
+<p>NetBeans and IntelliJ have built-in Groovy support, which is a big
+testament to the language&rsquo;s popularity as well.</p>
+
+<p>In a sentence I don&rsquo;t see Groovy disappearing or dying anytime soon
+even if its original creator has lost faith in it.</p>
+
+<h2>Groovy resources</h2>
+
+<ul>
+<li>Books
+
+<ul>
+<li><a href="http://www.manning.com/koenig2/">&ldquo;Groovy in Action&rdquo;</a></li>
+<li><a href="http://pragprog.com/titles/vslg/programming-groovy">&ldquo;Programming Groovy&rdquo;</a></li>
+</ul>
+</li>
+<li>On-line resources
+
+<ul>
+<li><a href="http://groovy.codehaus.org/User+Guide">Official documentation</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>Groovy is a language aiming to bring dynamic productivity to Java
+developer without introducing them to a steep learning curve. The
+language is beautifully architectured and integrates seamlessly with
+the existing Java libraries and infrastructure. My biggest gripe with
+Groovy was the lack of advanced support for parallel and concurrent
+programming. A few days before I wrote this article, however, Groovy
+1.8.0 was released and it features the excellent library for parallel
+programming <a href="http://gpars.codehaus.org/">GPars</a>. Groovy&rsquo;s performance
+is not stellar at this point, but I guess
+this will be improved upon in Java 7.</p>
+
+<p>With its easy to grasp Java-like syntax Groovy is a solid contender
+for the attention of Java developers. A growing number of Groovy
+related job offerings is a sign of Groovy&rsquo;s acceptance as a industrial
+strength tool.</p>
+
+<p>Some people criticize Groovy for the lack of innovation and claim that
+it&rsquo;s simply an amalgam of ideas borrowed from other languages. I don&rsquo;t
+see nothing bad with that approach as long as the features are
+tastefully combined. Groovy might not be the most elegant language out
+there, but it&rsquo;s one of the most practical ones and will help you get
+the job done.</p>
+
+<hr />
+
+<p><em>P.S. Coming up next is a discussion of the Scala programming
+language.</em></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Incremental development with Scala and JRebel]]></title>
+    <link href="http://batsov.com/articles/2011/04/26/jrebel-with-scala/"/>
+    <updated>2011-04-26T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/04/26/jrebel-with-scala</id>
+    <content type="html"><![CDATA[<p>One of the things I love most about Lisp development is the ability to
+develop applications in an incremental interactive manner &ndash; you write
+one function, compile it, load into your current REPL session, make
+some adjustments and repeat this process until you get satisfactory
+results. You never stop to compile your project, you never have to
+restart your application server. Without those distractions it&rsquo;s
+easier to maintain your concentration and to remain in the <em>flow</em>.</p>
+
+<p>With languages like Scala and Java, however, you cannot do this &ndash; at
+least without a bit of external help. This help comes in the form of an
+application called <a href="http://www.zeroturnaround.com/jrebel/">JRebel</a>, which basically reloads the classes in your
+program as you make changes to them and recompile them. JRebel is a commercial
+application and generally you have to pay to use it&hellip; unless you want
+to you use it for Scala development, that is. ZeroTurnaround(the
+company that makes JRebel) offers
+<a href="http://sales.zeroturnaround.com/wp-content/themes/zeroturnaround4.0/modals/applyForLicense.php">free licences to Scala developers</a>
+and if you&rsquo;re one of them you should definitely get one.</p>
+
+<p>Installing JRebel is trivial &ndash; generally you have to only extract a
+zip file(or use an installer) somewhere and drop in the JRebel folder
+the licence file that they have e-mail you. Afterwards you simply have
+to integrate JRebel with your build system. JRebel can also be
+integrated with IDEs, but I want cover this here. I use mostly
+<a href="http://maven.apache.org">Maven 3</a> and
+<a href="http://code.google.com/p/simple-build-tool/">SBT</a> so I&rsquo;ll show you
+what to do for them. With Maven you have to add the following to the
+<em>$MAVEN_OPTS</em> environmental variable:</p>
+
+<p><code>bash
+export MAVEN_OPTS=-noverify -javaagent:/home/bozhidar/work/jrebel/jrebel.jar
+</code></p>
+
+<p>Since most people use JRebel for web development to avoid the need to
+restart their application containers and Scala&rsquo;s most prominent
+framework is <a href="http://liftweb.net">Lift</a> you&rsquo;d probably want to enable
+the JRebel Lift plug-in as well:</p>
+
+<p><code>bash
+export MAVEN_OPTS=-noverify -javaagent:/home/bozhidar/work/jrebel/jrebel.jar
+ -Drebel.lift_plugin=true
+</code></p>
+
+<p>Stick this in your shell&rsquo;s init file and source it to make it
+available in the shell.</p>
+
+<p>Now when you start your web app with</p>
+
+<p><code>bash
+mvn jetty:run
+</code></p>
+
+<p>And the continuous Scala compilation with</p>
+
+<p><code>bash
+mvn scala:cc
+</code></p>
+
+<p>The compiler with pickup the changes you made and JRebel will reload
+the changed classes behind the scenes. The development process this
+way starts to feel a bit like using a scripting language such as Ruby
+or PHP.</p>
+
+<p>If you&rsquo;re using SBT you should modify the sbt startup script to
+include the same options that I mentioned in the section about Maven
+configuration. Mine sbt script looks like this:</p>
+
+<p>``` bash</p>
+
+<h1>!/bin/bash</h1>
+
+<p>java -noverify -javaagent:/home/bozhidar/work/jrebel/jrebel.jar
+ -Drebel.lift_plugin=true -XX:+CMSClassUnloadingEnabled
+ -XX:MaxPermSize=512m -Xmx512M -Xss2M -jar <code>dirname $0</code>/sbt-launch.jar
+ &ldquo;$@&rdquo;
+```</p>
+
+<p>Another use for JRebel is the Scala REPL itself. When you start the
+REPL from inside SBT for instance with the command:</p>
+
+<p><code>bash
+sbt console
+</code></p>
+
+<p>changes to the imported classes will be reflected automatically
+without the need to do a <em>:replay</em> or restart the REPL &ndash; something
+reminiscent of the interactive Lisp programming I mentioned earlier.</p>
+
+<p>So what are you waiting for? Go grab JRebel and speed up your Scala
+development process.</p>
+]]></content>
+  </entry>
+  
+</feed>
