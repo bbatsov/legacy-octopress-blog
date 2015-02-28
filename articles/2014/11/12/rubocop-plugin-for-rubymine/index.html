@@ -5,14 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>(think)</title>
+  <title>RuboCop plugin for RubyMine - (think)</title>
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Can&rsquo;t wait for
-Octopress 3.0
-to be released! Octopress 2 is killing me and I was seriously
-considering going back to a plain Jekyll blog, &hellip;">
+  <meta name="description" content="Good news, RubyMine users! Yesterday Marcel Jackwerth released the initial version of a RuboCop plugin for
+RubyMine/IntelliJ IDEA. Here&rsquo;s the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +19,7 @@ considering going back to a plain Jekyll blog, &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://batsov.com">
+  <link rel="canonical" href="http://batsov.com/articles/2014/11/12/rubocop-plugin-for-rubymine">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
@@ -80,213 +78,12 @@ considering going back to a plain Jekyll blog, &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-02-15T13:24:00+02:00" pubdate data-updated="true">Feb 15<span>th</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Can&rsquo;t wait for
-<a href="http://octopress.org/2015/01/15/octopress-3.0-is-coming/">Octopress 3.0</a>
-to be released! Octopress 2 is killing me and I was seriously
-considering going back to a plain Jekyll blog, before I saw 3.0 is right around the corner.</p>
-
-<p>Any day now&hellip;</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-12-04T12:45:00+02:00" pubdate data-updated="true">Dec 4<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>At <a href="http://clojure-conj.org/">Clojure/conj</a> I had the chance to shake
-Rich Hickey’s hand and exchange a few words with him. When I asked him
-whether he currently uses CIDER or Cursive for Clojure development he
-replied that he preferred a simpler solution – <code>clojure-mode</code> &amp;
-<code>inferior-lisp-mode</code>. I was a bit surprised because <code>clojure-mode</code>’s
-integration with <code>inferior-lisp-mode</code> sucks (big time). It has always
-been extremely limited and was never really improved/extended. It has
-no Clojure specific features and no code completion. I felt that Rich
-and all the people using inferior-lisp-mode deserved something better,
-so I quickly put together <a href="https://github.com/clojure-emacs/inf-clojure">inf-clojure</a>.</p>
-
-<p><code>inf-clojure</code> provides some Clojure specific features like showing a
-var’s doc or source, derives some core functionality from <code>clojure-mode</code>
-and even features basic code-completion (and <code>company-mode</code>
-support). That’s not much admittedly, but it’s a good start. Extending
-<code>inf-clojure</code> is super easy and I expect that we’ll add a bit more
-features to it along the way (e.g. macroexpansion).</p>
-
-<p><code>inf-clojure</code> is available in MELPA and will eventually replace
-completely <code>inferior-lisp-mode</code> when <code>clojure-mode</code> 4.0 is released.</p>
-
-<p>Keep in mind that <code>inf-clojure</code> is nothing like CIDER and will never
-be. CIDER will always be the powertool for Clojure programming in
-Emacs. I do understand, however, that some people are overwhelmed by
-CIDER and some people simply don’t need anything sophisticated. I hope
-they’ll enjoy <code>inf-clojure</code>!</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-15T20:17:00+02:00" pubdate data-updated="true">Nov 15<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&rsquo;ll be talking about the evolution of CIDER at the
-<a href="http://clojure-conj.org/">conj</a>, but I won&rsquo;t be able to show much (in
-terms of features) during my talk. Luckily, however, beside the talks
-we also have the option for <a href="https://github.com/cognitect/clojure-conj/wiki/Clojure-conj-2014-Unsessions">unsessions</a>. Here&rsquo;s my proposal for one such unsession&hellip;</p>
-
-<p>I&rsquo;d like to do a more extensive demonstration of the general
-workflow with CIDER and all the cool things we&rsquo;ve done recently and
-I&rsquo;d also like discuss with our users (and potential users) existing
-problems, ideas for improvements and the future direction of the
-project. If you like my idea you can show your support for it
-<a href="https://github.com/cognitect/clojure-conj/wiki/Clojure-conj-2014-Unsessions#cider-demoqa">here</a>.</p>
-
-<p>Feedback is important and I&rsquo;d like to get as much as possible
-to make CIDER better!</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-15T20:16:00+02:00" pubdate data-updated="true">Nov 15<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://github.com/edw">Edwin Watkeys</a> has just released a
-<a href="https://github.com/thunknyc/nrepl-profile">profiling extension for CIDER</a>,
-based on his library
-<a href="http://github.com/thunknyc/profile">profile</a>. The profiling data you&rsquo;ll get
-is rather crude, but it&rsquo;s still better than nothing and is certainly nicer
-than what you&rsquo;d get by using <code>time</code>.</p>
-
-<p>Here you can see the extension in action:</p>
-
-<p><img src="https://camo.githubusercontent.com/636b6897b279bb761f3377f6e002bbdb8b474937/68747470733a2f2f7261772e6769746875622e636f6d2f7468756e6b6e79632f6e7265706c2d70726f66696c652f6d61737465722f646f632f70726f66696c652d73637265656e73686f742e706e67"></p>
-
-<p>Check out the documentation of both projects for more details.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a></h1>
+      <h1 class="entry-title">RuboCop Plugin for RubyMine</h1>
     
     
       <p class="meta">
@@ -309,32 +106,81 @@ than what you&rsquo;d get by using <code>time</code>.</p>
   </header>
 
 
-  <div class="entry-content"><p>Good news, RubyMine users!</p>
+<div class="entry-content"><p>Good news, RubyMine users!</p>
 
 <p>Yesterday <a href="https://github.com/sirlantis">Marcel Jackwerth</a> released the initial version of a <a href="https://github.com/sirlantis/rubocop-for-rubymine">RuboCop plugin for
 RubyMine/IntelliJ IDEA</a>. Here&rsquo;s the plugin in action:</p>
 
 <p><img src="https://cloud.githubusercontent.com/assets/56807/5009481/9bbee3b4-6a67-11e4-8bf9-2a32c3bc3d5e.png"></p>
 </div>
+
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
   
 
 
-    </article>
+<time datetime="2014-11-12T14:16:00+02:00" pubdate data-updated="true">Nov 12<span>th</span>, 2014</time>
+      
+
+<span class="categories">
   
-  <div class="pagination">
+    <a class='category' href='/articles/categories/rubocop/'>RuboCop</a>, <a class='category' href='/articles/categories/ruby/'>Ruby</a>, <a class='category' href='/articles/categories/rubymine/'>RubyMine</a>
+  
+</span>
+
+
+    </p>
     
-      <a class="prev" href="/articles/page/2/">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2014/11/12/rubocop-plugin-for-rubymine/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2014/11/12/rubocop-plugin-for-rubymine/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
 </div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2014/11/10/the-road-to-cider-0-dot-8/" title="Previous Post: The Road to CIDER 0.8">&laquo; The Road to CIDER 0.8</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2014/11/15/a-profiling-extension-for-cider/" title="Next Post: A Profiling Extension for CIDER">A Profiling Extension for CIDER &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
   <h1>About Bozhidar</h1>
-  <p>My name is Bozhidar Batsov and I&#8217;m a Ruby/Clojure/Emacs hacker
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
   from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
 </section>
 <section>
@@ -375,7 +221,7 @@ RubyMine/IntelliJ IDEA</a>. Here&rsquo;s the plugin in action:</p>
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
@@ -417,6 +263,7 @@ RubyMine/IntelliJ IDEA</a>. Here&rsquo;s the plugin in action:</p>
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -431,7 +278,10 @@ RubyMine/IntelliJ IDEA</a>. Here&rsquo;s the plugin in action:</p>
       var disqus_shortname = 'batsov';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2014/11/12/rubocop-plugin-for-rubymine/';
+        var disqus_url = 'http://batsov.com/articles/2014/11/12/rubocop-plugin-for-rubymine/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

@@ -1,0 +1,755 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>lisp problems - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Lisp Problems Prelude This is a remake of the P-99: Ninety-Nine Prolog Problems collection
+that Werner Hett assembled over several years of teaching &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/lisp-problems">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article role="article">
+  
+  <header>
+    <h1 class="entry-title">Lisp Problems</h1>
+    
+  </header>
+  
+  <h2>Prelude</h2>
+
+<p>This is a remake of the P-99: Ninety-Nine Prolog Problems collection
+that Werner Hett assembled over several years of teaching at the University of
+Applied Sciences (Berner Fachhochschule) at Biel-Bienne,
+Switzerland. The collection is structured into seven sections. I have
+renumbered the problems in order to get more freedom to rearrange
+things within the sections.</p>
+
+<p>The purpose of this problem collection is to give you the opportunity
+to practice your skills in logic programming. Your goal should be to
+find the most elegant solution of the given problems. Efficiency is
+important, but logical clarity is even more crucial. Some of the
+(easy) problems can be trivially solved using built-in
+functions. However, in these cases, you learn more if you try to find
+your own solution.</p>
+
+<p>The problems have different levels of difficulty. Those marked with a
+single asterisk (*) are easy. If you have successfully solved the
+preceeding problems you should be able to solve them within a few (say
+15) minutes. Problems marked with two asterisks (**) are of
+intermediate difficulty. If you are a skilled Prolog programmer it
+shouldn&rsquo;t take you more than 30-90 minutes to solve them. Problems
+marked with three asterisks (***) are more difficult. You may need
+more time (i.e. a few hours or more) to find a good solution.</p>
+
+<h2>Lisp Lists</h2>
+
+<h4>1.01 (*) Find the last element of a list.</h4>
+
+<p><em>Do not use the built-in LAST function.</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">my-last</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+</span><span class='line'><span class="mi">3</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p101.lisp">View solution</a></p>
+
+<h4>1.02 (*) Find the penultimate(last but one) element of a list.</h4>
+
+<p><em>Do not use a combination of LAST and BUTLAST.</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">penultimate</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+</span><span class='line'><span class="mi">2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p102.lisp">View solution</a></p>
+
+<p>1.03 (*) Find the nth element of a list.</p>
+
+<p><em>Do not use the built-in function NTH. The first element in the list is number 0.</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">my-nth</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="mi">2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p103.lisp">View solution</a></p>
+
+<h4>1.04 (*) Find the number of elements of a list.</h4>
+
+<p><em>Do not use the built-in function LENGTH.</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">my-length</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+</span><span class='line'><span class="mi">3</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p104.lisp">View solution</a></p>
+
+<h4>1.05 (*) Reverse a list.</h4>
+
+<p><em>Do not use the built-in function REVERSE.</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">my-reverse</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p105.lisp">View solution</a></p>
+
+<h4>1.06 (*) Find out whether a list is a palindrome.</h4>
+
+<p><em>A palindrome can be read forward or backward; e.g. (1 2 3 2 1).</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">palindrome-p</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+</span><span class='line'><span class="no">NIL</span>
+</span><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">palindrome-p</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">))</span>
+</span><span class='line'><span class="no">T</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p106.lisp">View solution</a></p>
+
+<h4>1.07 (**) Flatten a nested list structure.</h4>
+
+<p><em>Transform a list, possibly holding lists as elements into a &lsquo;flat&rsquo;
+list by replacing each list with its elements (recursively).</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">flatten</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">a</span> <span class="p">(</span><span class="nv">b</span> <span class="nv">c</span><span class="p">)</span> <span class="p">((</span><span class="nv">d</span> <span class="nv">e</span><span class="p">)</span> <span class="nv">f</span><span class="p">)))</span>
+</span><span class='line'><span class="p">(</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span> <span class="nv">d</span> <span class="nv">e</span> <span class="nv">f</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p107.lisp">View solution</a></p>
+
+<h4>1.08 (**) Eliminate consecutive duplicates of list elements.</h4>
+
+<p><em>If a list contains repeated elements they should be replaced with a
+single copy of the element. The order of the elements should not be
+changed.</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">compress</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">a</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span> <span class="nv">c</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">d</span> <span class="nv">e</span> <span class="nv">e</span> <span class="nv">e</span> <span class="nv">e</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span> <span class="nv">a</span> <span class="nv">d</span> <span class="nv">e</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p108.lisp">View solution</a></p>
+
+<h4>1.09 (**) Pack consecutive duplicates of list elements into sublists.</h4>
+
+<p><em>If a list contains repeated elements they should be placed in
+separate sublists.</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">pack</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">a</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span> <span class="nv">c</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">d</span> <span class="nv">e</span> <span class="nv">e</span> <span class="nv">e</span> <span class="nv">e</span><span class="p">))</span>
+</span><span class='line'><span class="p">((</span><span class="nv">a</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">a</span><span class="p">)</span> <span class="p">(</span><span class="nv">b</span><span class="p">)</span> <span class="p">(</span><span class="nv">c</span> <span class="nv">c</span><span class="p">)</span> <span class="p">(</span><span class="nv">a</span> <span class="nv">a</span><span class="p">)</span> <span class="p">(</span><span class="nv">d</span><span class="p">)</span> <span class="p">(</span><span class="nv">e</span> <span class="nv">e</span> <span class="nv">e</span> <span class="nv">e</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p109.lisp">View solution</a></p>
+
+<h4>1.10 (*) Run-length encoding of a list.</h4>
+
+<p><em>Use the result of problem 1.09 to implement the so-called run-length
+encoding data compression method. Consecutive duplicates of elements
+are encoded as terms [N,E] where N is the number of duplicates of the
+element E.</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">encode</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">a</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span> <span class="nv">c</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">d</span> <span class="nv">e</span> <span class="nv">e</span> <span class="nv">e</span> <span class="nv">e</span><span class="p">))</span>
+</span><span class='line'><span class="p">((</span><span class="mi">4</span> <span class="nv">a</span><span class="p">)</span> <span class="p">(</span><span class="mi">1</span> <span class="nv">b</span><span class="p">)</span> <span class="p">(</span><span class="mi">2</span> <span class="nv">c</span><span class="p">)</span> <span class="p">(</span><span class="mi">2</span> <span class="nv">a</span><span class="p">)</span> <span class="p">(</span><span class="mi">1</span> <span class="nv">d</span><span class="p">)</span> <span class="p">(</span><span class="mi">4</span> <span class="nv">e</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p110.lisp">View solution</a></p>
+
+<h4>1.11 (*) Modified run-length encoding.</h4>
+
+<p><em>Modify the result of problem 1.10 in such a way that if an element has
+no duplicates it is simply copied into the result list. Only elements
+with duplicates are transferred as (number element) terms.</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">encode-modified</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">a</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span> <span class="nv">c</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">d</span> <span class="nv">e</span> <span class="nv">e</span> <span class="nv">e</span> <span class="nv">e</span><span class="p">))</span>
+</span><span class='line'><span class="p">((</span><span class="mi">4</span> <span class="nv">a</span><span class="p">)</span> <span class="nv">b</span> <span class="p">(</span><span class="mi">2</span> <span class="nv">c</span><span class="p">)</span> <span class="p">(</span><span class="mi">2</span> <span class="nv">a</span><span class="p">)</span> <span class="nv">d</span> <span class="p">(</span><span class="mi">4</span> <span class="nv">e</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p111.lisp">View solution</a></p>
+
+<h4>1.12 (**) Decode a run-length encoded list.</h4>
+
+<p><em>Given a run-length code list generated as specified in problem
+1.11. Construct its uncompressed version.</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span>
+</span><span class='line'><span class="p">(</span><span class="nv">decode</span> <span class="o">&#39;</span><span class="p">((</span><span class="mi">4</span> <span class="nv">a</span><span class="p">)</span> <span class="nv">b</span> <span class="p">(</span><span class="mi">2</span> <span class="nv">c</span><span class="p">)</span> <span class="p">(</span><span class="mi">2</span> <span class="nv">a</span><span class="p">)</span> <span class="nv">d</span> <span class="p">(</span><span class="mi">4</span> <span class="nv">e</span><span class="p">)))</span>
+</span><span class='line'><span class="p">(</span><span class="nv">a</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span> <span class="nv">c</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">d</span> <span class="nv">e</span> <span class="nv">e</span> <span class="nv">e</span> <span class="nv">e</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p112.lisp">View solution</a></p>
+
+<h4>1.13 (**) Run-length encoding of a list (direct solution).</h4>
+
+<p><em>Implement the so-called run-length encoding data compression method
+directly. I.e. don&rsquo;t explicitly create the sublists containing the
+duplicates, as in problem 1.09, but only count them. As in problem
+1.11, simplify the result list by replacing the singleton terms (1 X)
+by X.</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">encode-direct</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">a</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span> <span class="nv">c</span> <span class="nv">a</span> <span class="nv">a</span> <span class="nv">d</span> <span class="nv">e</span> <span class="nv">e</span> <span class="nv">e</span> <span class="nv">e</span><span class="p">))</span>
+</span><span class='line'><span class="p">((</span><span class="mi">4</span> <span class="nv">a</span><span class="p">)</span> <span class="nv">b</span> <span class="p">(</span><span class="mi">2</span> <span class="nv">c</span><span class="p">)</span> <span class="p">(</span><span class="mi">2</span> <span class="nv">a</span><span class="p">)</span> <span class="nv">d</span> <span class="p">(</span><span class="mi">4</span> <span class="nv">e</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p113.lisp">View solution</a></p>
+
+<h4>1.14 (*) Duplicate the elements of a list.</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">duplicate-elems</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">3</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p114.lisp">View solution</a></p>
+
+<h4>1.15 (**) Duplicate the elements of a list a given number of times.</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">duplicate-elems</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">3</span> <span class="mi">3</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p115.lisp">View solution</a></p>
+
+<h4>1.16 (**) Drop every N&#8217;th element from a list.</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">LISP-PROBLEMS&gt;</span> <span class="p">(</span><span class="nv">drop</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span><span class="p">)</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="mi">3</span> <span class="mi">5</span> <span class="mi">7</span> <span class="mi">9</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p116.lisp">View solution</a></p>
+
+<h4>1.17 (*) Split a list into two parts; the length of the first part is given.</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">LISP-PROBLEMS&gt;</span> <span class="p">(</span><span class="nv">split</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">)</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'><span class="p">((</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="mi">4</span> <span class="mi">5</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p117.lisp">View solution</a></p>
+
+<h4>1.18 (**) Extract a slice from a list.</h4>
+
+<p><em>Given two indices, START and END, the slice is the list containing the elements between them in the original list (both limits included). Start counting the elements with 0.</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span>  <span class="p">(</span><span class="nv">slice</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">9</span><span class="p">)</span> <span class="mi">3</span> <span class="mi">6</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p118.lisp">View solution</a></p>
+
+<h4>1.19 (**) Rotate a list N places to the left.</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">rotate</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">)</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">rotate</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">)</span> <span class="mi">-2</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p119.lisp">View solution</a></p>
+
+<p><em>Hint: Use the predefined functions LENGTH and APPEND, as well as the result of problem 1.17.</em></p>
+
+<h4>1.20 (*) Remove the n&#8217;th element from a list.</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">remove-nth</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">4</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p120.lisp">View solution</a></p>
+
+<h4>1.21 (*) Insert an element at a given position into a list.</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">insert</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">)</span> <span class="mi">3</span> <span class="mi">10</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">10</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p121.lisp">View solution</a></p>
+
+<h4>1.22 (*) Create a list containing all integers within a given range.</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">range</span> <span class="mi">3</span> <span class="mi">10</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p122.lisp">View solution</a></p>
+
+<h4>1.23 (**) Extract a given number of randomly selected elements from a list.</h4>
+
+<p><em>The selected items shall be put into a result list.</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">rnd-select</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">)</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="mi">6</span> <span class="mi">5</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">rnd-select</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">)</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="mi">6</span> <span class="mi">6</span> <span class="mi">1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p123.lisp">View solution</a></p>
+
+<p><em>Hint: Use the built-in random number generator RANDOM and MY-NTH.</em></p>
+
+<h4>1.24 (*) Lotto: Draw N different random numbers from the set 1..M.</h4>
+
+<p><em>The selected numbers shall be put into a result list.</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">lotto-select</span> <span class="mi">6</span> <span class="mi">49</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="mi">8</span> <span class="mi">15</span> <span class="mi">19</span> <span class="mi">5</span> <span class="mi">2</span> <span class="mi">13</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p124.lisp">View solution</a></p>
+
+<p><em>Hint: Combine the solutions of problems 1.22 and 1.23.</em></p>
+
+<h4>1.25 (*) Generate a random permutation of the elements of a list.</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">compress</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+</span><span class='line'><span class="mi">2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p125.lisp">View solution</a></p>
+
+<p>Example:
+?&ndash; rnd_permu([a,b,c,d,e,f],L).
+L = [b,a,d,c,e,f]</p>
+
+<p>Hint: Use the solution of problem 1.23.</p>
+
+<h4>1.26 (**) Generate the combinations of K distinct objects chosen from the N elements of a list</h4>
+
+<p>In how many ways can a committee of 3 be chosen from a group of 12 people? We all know that there are C(12,3) = 220 possibilities (C(N,K) denotes the well-known binomial coefficients). For pure mathematicians, this result may be great. But we want to really generate all the possibilities (via backtracking).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">compress</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+</span><span class='line'><span class="mi">2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p126.lisp">View solution</a></p>
+
+<p>Example:
+?&ndash; combination(3,[a,b,c,d,e,f],L).
+L = [a,b,c] ;
+L = [a,b,d] ;
+L = [a,b,e] ;
+&hellip;</p>
+
+<h4>1.27 (**) Group the elements of a set into disjoint subsets.</h4>
+
+<p>a) In how many ways can a group of 9 people work in 3 disjoint subgroups of 2, 3 and 4 persons? Write a predicate that generates all the possibilities via backtracking.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">compress</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+</span><span class='line'><span class="mi">2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p127.lisp">View solution</a></p>
+
+<p>Example:
+?&ndash; group3([aldo,beat,carla,david,evi,flip,gary,hugo,ida],G1,G2,G3).
+G1 = [aldo,beat], G2 = [carla,david,evi], G3 = [flip,gary,hugo,ida]</p>
+
+<p>b) Generalize the above predicate in a way that we can specify a list of group sizes and the predicate will return a list of groups.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">compress</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+</span><span class='line'><span class="mi">2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p127.lisp">View solution</a></p>
+
+<p>Example:
+?&ndash; group([aldo,beat,carla,david,evi,flip,gary,hugo,ida],[2,2,5],Gs).
+Gs = [[aldo,beat],[carla,david],[evi,flip,gary,hugo,ida]]
+&hellip;</p>
+
+<p>Note that we do not want permutations of the group members; i.e. [[aldo,beat],&hellip;] is the same solution as [[beat,aldo],&hellip;]. However, we make a difference between [[aldo,beat],[carla,david],&hellip;] and [[carla,david],[aldo,beat],&hellip;].</p>
+
+<p>You may find more about this combinatorial problem in a good book on discrete mathematics under the term &ldquo;multinomial coefficients&rdquo;.</p>
+
+<h4>1.28 (**) Sorting a list of lists according to length of sublists</h4>
+
+<p>a) We suppose that a list (InList) contains elements that are lists themselves. The objective is to sort the elements of InList according to their length. E.g. short lists first, longer lists later, or vice versa.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">compress</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+</span><span class='line'><span class="mi">2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p128.lisp">View solution</a></p>
+
+<p>Example:
+?&ndash; lsort([[a,b,c],[d,e],[f,g,h],[d,e],[i,j,k,l],[m,n],[o]],L).
+L = [[o], [d, e], [d, e], [m, n], [a, b, c], [f, g, h], [i, j, k, l]]</p>
+
+<p>b) Again, we suppose that a list (InList) contains elements that are lists themselves. But this time the objective is to sort the elements of InList according to their length frequency; i.e. in the default, where sorting is done ascendingly, lists with rare lengths are placed first, others with a more frequent length come later.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">compress</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+</span><span class='line'><span class="mi">2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p128.lisp">View solution</a></p>
+
+<p>Example:
+?&ndash; lfsort([[a,b,c],[d,e],[f,g,h],[d,e],[i,j,k,l],[m,n],[o]],L).
+L = [[i, j, k, l], [o], [a, b, c], [f, g, h], [d, e], [d, e], [m, n]]</p>
+
+<p>Note that in the above example, the first two lists in the result L have length 4 and 1, both lengths appear just once. The third and forth list have length 3; there are two list of this length. And finally, the last three lists have length 2. This is the most frequent length.</p>
+
+<h2>Arithmetic</h2>
+
+<h4>2.01 (**) Determine whether a given integer number is prime.</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">prime-p</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'><span class="no">T</span>
+</span><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">prime-p</span> <span class="mi">9</span><span class="p">)</span>
+</span><span class='line'><span class="no">NIL</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://github.com/bbatsov/cl-99-problems/blob/master/p201.lisp">View solution</a></p>
+
+<p><em>The Sieve of Eratosthenes is an algorithm for finding prime numbers,
+that you might find helpful.</em></p>
+
+<h2>Logic and Codes</h2>
+
+<h2>Binary Trees</h2>
+
+<h2>Multiway Trees</h2>
+
+<h2>Graphs</h2>
+
+<h2>Misc</h2>
+
+  
+    <footer>
+      
+      
+        <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/lisp-problems/index.html" data-via="bbatsov" data-counturl="http://batsov.com/lisp-problems/index.html" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+      
+    </footer>
+  
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/lisp-problems/index.html';
+        var disqus_url = 'http://batsov.com/lisp-problems/index.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: NetBeans | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/netbeans/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-28T09:00:23+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Changing the look & feel in NetBeans 6.8]]></title>
+    <link href="http://batsov.com/articles/2010/04/19/changing-laf-in-netbeans/"/>
+    <updated>2010-04-19T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2010/04/19/changing-laf-in-netbeans</id>
+    <content type="html"><![CDATA[<p>Recently I’ve been trying to switch my work environment theme to
+something with lower contrast(notably the excellent zenburn theme for
+emacs, vim, gnome terminal, gnome, etc). Swing
+applications however have difficulties with GTK themes when they are
+using the GTK+ look &amp; feel so I’ve decided to go to Nimbus – the new
+default look &amp; feel for Java apps since Java 6 Update 10.</p>
+
+<p>The only problem with the plan was that there is no way to change the
+look and feel inside NetBeans – it had to be done by changing its
+configuration. This is done fairly easy. Just find the file
+/etc/netbeans.conf in NetBeans’s installation folder and append this to
+the netbeans_default_options section:</p>
+
+<p><code>--laf Nimbus</code></p>
+
+<p>Now you just have to (re)start NetBeans and you can enjoy Nimbus. More
+information about look &amp; feels in NetBeans can be found here.</p>
+]]></content>
+  </entry>
+  
+</feed>

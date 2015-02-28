@@ -1,0 +1,890 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>(think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="One of the problems newcomers to Ruby experience is that there are
+often quite a few ways to do same thing. For instance &ndash; you can obtain
+the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/page/4">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2014/02/17/the-elements-of-style-in-ruby-number-13-length-vs-size-vs-count/">The Elements of Style in Ruby #13: Length vs Size vs Count</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-17T18:55:00+02:00" pubdate data-updated="true">Feb 17<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>One of the problems newcomers to Ruby experience is that there are
+often quite a few ways to do same thing. For instance &ndash; you can obtain
+the number of items in <code>Enumerable</code> objects (instances of classes
+using the <code>Enumerable</code> mixin, which would often be collections like
+<code>Array</code>, <code>Hash</code>, <code>Set</code>, etc) by either using <code>Enumerable#count</code> or the
+methods <code>length</code> and its alias <code>size</code> that such classes often
+provide.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">arr</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">arr</span><span class="o">.</span><span class="n">length</span> <span class="c1"># =&gt; 3</span>
+</span><span class='line'><span class="n">arr</span><span class="o">.</span><span class="n">size</span> <span class="c1"># =&gt; 3</span>
+</span><span class='line'><span class="n">arr</span><span class="o">.</span><span class="n">count</span> <span class="c1"># =&gt; 3</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">h</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">b</span><span class="p">:</span> <span class="mi">2</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">h</span><span class="o">.</span><span class="n">length</span> <span class="c1"># =&gt; 2</span>
+</span><span class='line'><span class="n">h</span><span class="o">.</span><span class="n">size</span> <span class="c1"># =&gt; 2</span>
+</span><span class='line'><span class="n">h</span><span class="o">.</span><span class="n">count</span> <span class="c1"># =&gt; 2</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">str</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span>
+</span><span class='line'><span class="n">str</span><span class="o">.</span><span class="n">length</span> <span class="c1"># =&gt; 4</span>
+</span><span class='line'><span class="n">str</span><span class="o">.</span><span class="n">size</span> <span class="c1"># =&gt; 4</span>
+</span><span class='line'><span class="c1"># str.count won&#39;t work as String does not include Enumerable</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which one should you use? Let me help with this choice.</p>
+
+<p><code>length</code> is a method that&rsquo;s not part of <code>Enumerable</code> &ndash; it&rsquo;s part of a
+concrete class (like <code>String</code> or <code>Array</code>) and it&rsquo;s usually running in
+<code>O(1)</code> (constant) time. That&rsquo;s as fast as it gets, which means that
+using it is probably a good idea.</p>
+
+<p>Whether you should use <code>length</code> or <code>size</code> is mostly a matter of
+personal preference.  Personally I use <code>size</code> for collections (hashes,
+arrays, etc) and <code>length</code> for strings, since for me objects like
+hashes and stacks don&rsquo;t have a length, but a size (defined in terms of
+the elements they contain). Conversely, it&rsquo;s perfectly normal to
+assume that some text has some length. Anyways, in the end you&rsquo;re
+invoking the same method, so the semantic distinction is not
+important.</p>
+
+<p><code>Enumerable#count</code>, on the other hand, is a totally different
+beast. It&rsquo;s usually meant to be used with a block or an argument and
+will return the number of matches in an <code>Enumerable</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">arr</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">arr</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:even?</span><span class="p">)</span> <span class="c1"># =&gt; 3</span>
+</span><span class='line'><span class="n">arr</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># =&gt; 2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can, however, invoke it without any arguments and it will return the size of the enumerable on which it was invoked:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">arr</span><span class="o">.</span><span class="n">count</span> <span class="c1"># =&gt; 7</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There&rsquo;s a performance implication with this, though &ndash; to calculate the
+size of the enumerable the <code>count</code> method will traverse it, which is
+not particularly fast (especially for huge collections). Some classes
+(like <code>Array</code>) implement an optimized version of <code>count</code> in terms of
+<code>length</code>, but many don&rsquo;t.</p>
+
+<p>The takeaway for you is that you should
+avoid using the <code>count</code> method if you can use <code>length</code> or <code>size</code>.</p>
+
+<p>A note to Rails developers &ndash; <code>ActiveRecord::Relation</code>&rsquo;s <code>length</code>,
+<code>size</code> and <code>count</code> methods have a totally different meaning, but that&rsquo;s
+irrelevant to our current discussion. (<code>Sean Griffin</code> has written
+<a href="http://batsov.com/articles/2014/02/17/the-elements-of-style-in-ruby-number-13-length-vs-size-vs-count/#comment-1248998887">a comment regarding it</a>).</p>
+
+<p>That&rsquo;s all for now, folks! As usual I&rsquo;m looking forward to hearing your thoughts here and on
+<a href="http://twitter.com/bbatsov">Twitter</a>!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2014/02/05/a-list-of-deprecated-stuff-in-ruby/">A List of Deprecated Stuff in Ruby</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-05T18:37:00+02:00" pubdate data-updated="true">Feb 5<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As APIs evolve it&rsquo;s inevitable that portions of them will be deprecated. Generally it&rsquo;s fairly
+easy to find out what&rsquo;s deprecated, but for several reasons that&rsquo;s not the case in Ruby:</p>
+
+<ul>
+<li>Deprecation is done through the use of C functions such as <code>rb_warn</code> &amp; <code>rb_warning</code> (as opposed to some more
+transparent methods as Java&rsquo;s <code>@deprecated</code> annotation). To see the deprecation messages from those functions
+you&rsquo;ll have to run Ruby with <code>-w</code>. Consider this example code:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">string</span><span class="o">.</span><span class="n">lines</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">line</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">ruby</span> <span class="o">-</span><span class="n">w</span> <span class="nb">test</span><span class="o">.</span><span class="n">rb</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">/</span><span class="nb">test</span><span class="o">.</span><span class="n">rb</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span> <span class="ss">warning</span><span class="p">:</span> <span class="n">passing</span> <span class="n">a</span> <span class="n">block</span> <span class="n">to</span> <span class="nb">String</span><span class="c1">#lines is deprecated</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Alternative Ruby implementations (like <code>JRuby</code> and <code>Rubinius</code>)
+generally don&rsquo;t produce the same deprecation warnings. For instance &ndash;
+<code>JRuby</code> doesn&rsquo;t produce any warnings for the code listed above. One
+can say that currently deprecations are an MRI implementation detail
+(although they shouldn&rsquo;t be).</p></li>
+<li><p>Deprecations are rarely mentioned in the API docs.</p></li>
+<li><p>There&rsquo;s no easy way to find out in which version of Ruby
+something got deprecated as <code>rb_warn</code> is a generic instrumentation for
+producing all sorts of warnings, as opposed to something created specifically to handle
+deprecations.</p></li>
+<li><p>Some APIs are deprecated only informally (like
+<a href="http://batsov.com/articles/2013/08/21/the-elements-of-style-in-ruby-number-9-hash-number-has-key-and-hash-number-has-value-are-deprecated/"><code>Hash#has_key?</code> and <code>Hash#has_value?</code></a>).</p></li>
+<li><p>Some APIs are deprecated with <code>Kernel#warn</code> (like <code>Digest::Digest</code>).</p></li>
+</ul>
+
+
+<p>All of the above makes it fairly hard to compile a precise list of deprecations, but we&rsquo;ll go
+only for a rough cut here. Let see what we can do&hellip;</p>
+
+<p>Grepping in Ruby 2.1&rsquo;s code base reveals the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">dir</span><span class="o">.</span><span class="n">c</span>
+</span><span class='line'><span class="mi">2174</span><span class="p">:</span>    <span class="n">rb_warning</span><span class="p">(</span><span class="s2">&quot;Dir.exists? is a deprecated name, use Dir.exist? instead&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">enumerator</span><span class="o">.</span><span class="n">c</span>
+</span><span class='line'><span class="mi">355</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;Enumerator.new without a block is deprecated; use Object#to_enum&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ext</span><span class="o">/</span><span class="n">dbm</span><span class="o">/</span><span class="n">dbm</span><span class="o">.</span><span class="n">c</span>
+</span><span class='line'><span class="mi">338</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;DBM#index is deprecated; use DBM#key&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ext</span><span class="o">/</span><span class="n">gdbm</span><span class="o">/</span><span class="n">gdbm</span><span class="o">.</span><span class="n">c</span>
+</span><span class='line'><span class="mi">453</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;GDBM#index is deprecated; use GDBM#key&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ext</span><span class="o">/</span><span class="n">openssl</span><span class="o">/</span><span class="n">ossl_cipher</span><span class="o">.</span><span class="n">c</span>
+</span><span class='line'><span class="mi">217</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;arguments for %s#encrypt and %s#decrypt were deprecated; &quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ext</span><span class="o">/</span><span class="n">sdbm</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">c</span>
+</span><span class='line'><span class="mi">331</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;SDBM#index is deprecated; use SDBM#key&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ext</span><span class="o">/</span><span class="n">stringio</span><span class="o">/</span><span class="n">stringio</span><span class="o">.</span><span class="n">c</span>
+</span><span class='line'><span class="mi">656</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;StringIO#bytes is deprecated; use #each_byte instead&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">876</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;StringIO#chars is deprecated; use #each_char instead&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">920</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;StringIO#codepoints is deprecated; use #each_codepoint instead&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">1124</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;StringIO#lines is deprecated; use #each_line instead&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ext</span><span class="o">/</span><span class="n">zlib</span><span class="o">/</span><span class="n">zlib</span><span class="o">.</span><span class="n">c</span>
+</span><span class='line'><span class="mi">3892</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;Zlib::GzipReader#bytes is deprecated; use #each_byte instead&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">4174</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;Zlib::GzipReader#lines is deprecated; use #each_line instead&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">file</span><span class="o">.</span><span class="n">c</span>
+</span><span class='line'><span class="mi">1413</span><span class="p">:</span>    <span class="n">rb_warning</span><span class="p">(</span><span class="s2">&quot;%sexists? is a deprecated name, use %sexist? instead&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">hash</span><span class="o">.</span><span class="n">c</span>
+</span><span class='line'><span class="mi">529</span><span class="p">:</span>            <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;ignoring wrong elements is deprecated, remove them explicitly&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">934</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;Hash#index is deprecated; use Hash#key&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">3470</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;ENV.index is deprecated; use ENV.key&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">io</span><span class="o">.</span><span class="n">c</span>
+</span><span class='line'><span class="mi">3385</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;IO#lines is deprecated; use #each_line instead&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">3436</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;IO#bytes is deprecated; use #each_byte instead&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">3590</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;IO#chars is deprecated; use #each_char instead&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">3697</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;IO#codepoints is deprecated; use #each_codepoint instead&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">11196</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;ARGF#lines is deprecated; use #each_line instead&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">11243</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;ARGF#bytes is deprecated; use #each_byte instead&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">11282</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;ARGF#chars is deprecated; use #each_char instead&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">11321</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;ARGF#codepoints is deprecated; use #each_codepoint instead&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">object</span><span class="o">.</span><span class="n">c</span>
+</span><span class='line'><span class="mi">991</span><span class="p">:</span>    <span class="n">rb_warning</span><span class="p">(</span><span class="s2">&quot;untrusted? is deprecated and its behavior is same as tainted?&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">1005</span><span class="p">:</span>    <span class="n">rb_warning</span><span class="p">(</span><span class="s2">&quot;untrust is deprecated and its behavior is same as taint&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">1020</span><span class="p">:</span>    <span class="n">rb_warning</span><span class="p">(</span><span class="s2">&quot;trust is deprecated and its behavior is same as untaint&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">proc</span><span class="o">.</span><span class="n">c</span>
+</span><span class='line'><span class="mi">663</span><span class="p">:</span>    <span class="n">rb_warn</span><span class="p">(</span><span class="s2">&quot;rb_f_lambda() is deprecated; use rb_block_proc() instead&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">string</span><span class="o">.</span><span class="n">c</span>
+</span><span class='line'><span class="mi">6407</span><span class="p">:</span>       <span class="n">rb_warning</span><span class="p">(</span><span class="s2">&quot;passing a block to String#lines is deprecated&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">6576</span><span class="p">:</span>       <span class="n">rb_warning</span><span class="p">(</span><span class="s2">&quot;passing a block to String#bytes is deprecated&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">6665</span><span class="p">:</span>       <span class="n">rb_warning</span><span class="p">(</span><span class="s2">&quot;passing a block to String#chars is deprecated&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="mi">6769</span><span class="p">:</span>       <span class="n">rb_warning</span><span class="p">(</span><span class="s2">&quot;passing a block to String#codepoints is deprecated&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">vm_method</span><span class="o">.</span><span class="n">c</span>
+</span><span class='line'><span class="mi">54</span><span class="p">:</span>    <span class="n">rb_warning</span><span class="p">(</span><span class="s2">&quot;rb_clear_cache() is deprecated.&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Below is a cleaned up list of the output shown above. I&rsquo;ve removed everything
+that&rsquo;s unlikely to be of general interest.</p>
+
+<ul>
+<li><code>Dir.exists?</code> is a deprecated name, use <code>Dir.exist?</code> instead</li>
+<li><code>Enumerator.new</code> without a block is deprecated; use <code>Object#to_enum</code></li>
+<li><code>StringIO#bytes</code> is deprecated; use <code>StringIO#each_byte</code> instead</li>
+<li><code>StringIO#chars</code> is deprecated; use <code>StringIO#each_char</code> instead</li>
+<li><code>StringIO#codepoints</code> is deprecated; use <code>StringIO#each_codepoint</code> instead</li>
+<li><code>StringIO#lines</code> is deprecated; use <code>StringIO#each_line</code> instead</li>
+<li><code>File.exists?</code> is a deprecated name, use <code>File.exist?</code> instead</li>
+<li><code>Hash#index</code> is deprecated; use <code>Hash#key</code></li>
+<li><code>ENV.index</code> is deprecated; use <code>ENV.key</code></li>
+<li><code>IO#lines</code> is deprecated; use <code>IO#each_line</code> instead</li>
+<li><code>IO#bytes</code> is deprecated; use <code>IO#each_byte</code> instead</li>
+<li><code>IO#chars</code> is deprecated; use <code>IO#each_char</code> instead</li>
+<li><code>IO#codepoints</code> is deprecated; use <code>IO#each_codepoint</code> instead</li>
+<li><code>ARGF#lines</code> is deprecated; use <code>ARGF#each_line</code> instead</li>
+<li><code>ARGF#bytes</code> is deprecated; use <code>ARGF#each_byte</code> instead</li>
+<li><code>ARGF#chars</code> is deprecated; use <code>ARGF#each_char</code> instead</li>
+<li><code>ARGF#codepoints</code> is deprecated; use <code>ARGF#each_codepoint</code> instead</li>
+<li><code>Object#untrusted?</code> is deprecated and its behavior is same as <code>Object#tainted?</code></li>
+<li><code>Object#untrust</code> is deprecated and its behavior is same as <code>Object#taint</code></li>
+<li><code>Object#trust</code> is deprecated and its behavior is same as <code>Object#untaint</code></li>
+<li>passing a block to <code>String#lines</code> is deprecated</li>
+<li>passing a block to <code>String#bytes</code> is deprecated</li>
+<li>passing a block to <code>String#chars</code> is deprecated</li>
+<li>passing a block to <code>String#codepoints</code> is deprecated</li>
+</ul>
+
+
+<p>Unfortunately there&rsquo;s no way to know in which version of Ruby
+something got deprecated. Obviously most of the things on the list
+were deprecated before Ruby 2.1. Ideally in the future we&rsquo;ll get a
+better deprecation mechanism that actually keeps track of such data.</p>
+
+<p>Hopefully some of you will find this information useful!</p>
+
+<p>We&rsquo;re planning to get some deprecation tracking in <a href="https://github.com/bbatsov/rubocop">RuboCop</a>, but
+due to Ruby&rsquo;s dynamic nature implementing such a feature reliably in a static code analyzer is an
+impossible task.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2014/02/04/the-elements-of-style-in-ruby-number-12-proc-vs-proc-dot-new/">The Elements of Style in Ruby #12: Proc vs Proc.new</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-04T16:20:00+02:00" pubdate data-updated="true">Feb 4<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>People are often confused about the fact that there are two ways to created <code>proc</code>s in Ruby &ndash;
+via <code>Kernel#proc</code> and <code>Proc.new</code>. Let&rsquo;s see them in action:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Proc</span><span class="o">.</span><span class="n">new</span> <span class="p">{</span> <span class="kp">true</span> <span class="p">}</span>
+</span><span class='line'><span class="c1"># =&gt; #&lt;Proc:0x007fe35440a058&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">proc</span> <span class="p">{</span> <span class="kp">true</span> <span class="p">}</span>
+</span><span class='line'><span class="c1"># =&gt; #&lt;Proc:0x007fe35440a059&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hmmm, it seems we get exactly the same results&hellip; While this is true
+on Ruby 1.9+, this was not always the case.</p>
+
+<p>In Ruby 1.8, <code>Kernel#proc</code> is actually a synonym for <code>Kernel#lambda</code>
+which was extremely confusing, since as we all know <code>lambda</code>s an
+<code>proc</code>s differ in
+<a href="http://stackoverflow.com/questions/626/when-to-use-lambda-when-to-use-proc-new">subtle ways</a>. Luckily
+sanity prevailed and Ruby 1.9 made <code>Kernel#proc</code> a synonym for
+<code>Proc.new</code> instead.</p>
+
+<p>At this point, however, people couldn&rsquo;t use <code>Kernel#proc</code> anymore if they
+wanted to write code that&rsquo;s behaving in the same way on both Ruby 1.8
+and Ruby 1.9 and the use of <code>Kernel#proc</code> was generally discouraged.
+Thankfully Ruby 1.8 is now dead and buried and there&rsquo;s no reason to prefer
+<code>Proc.new</code> over <code>Kernel#proc</code> anymore.  As a matter of fact &ndash; you
+should probably be using only <code>Kernel#proc</code> as it&rsquo;s more concise and
+it&rsquo;s symmetrical to <code>Kernel#lambda</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">lambda</span> <span class="p">{</span> <span class="kp">true</span> <span class="p">}</span>
+</span><span class='line'><span class="c1"># =&gt; #&lt;Proc:0x007fe35440a058 (lambda)&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">proc</span> <span class="p">{</span> <span class="kp">true</span> <span class="p">}</span>
+</span><span class='line'><span class="c1"># =&gt; #&lt;Proc:0x007fe35440a059&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By the way, given <code>proc</code>&rsquo;s fairly counter-intuitive behavior regarding <code>return</code>, you should probably
+use <code>lambda</code>s most of the time.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2014/01/01/looking-back-at-2013/">Looking Back at 2013</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-01T12:30:00+02:00" pubdate data-updated="true">Jan 1<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>2013 was a good year for me in many aspects. I&rsquo;ll share here some of
+the programming related achievements of mine over the year that made
+me somewhat proud of myself.</p>
+
+<h2>Achievements</h2>
+
+<h3>Ruby</h3>
+
+<h4>RuboCop</h4>
+
+<p>I&rsquo;ve made great headway with the
+<a href="https://github.com/bbatsov/rubocop">RuboCop</a> static code analyzer
+over the year. Working on a big non-Rails Ruby project reminded me
+why I fell in love with Ruby in the first place. I was also amazed by
+great community that quickly formed around RuboCop and propelled it to
+popularity. I hope that in 2014 I&rsquo;ll be able to deliver a 1.0 release.</p>
+
+<h4>Blogging</h4>
+
+<p>I finally did some Ruby-related blogging this year &ndash; mostly regarding
+good programming style. I enjoyed it, although I noticed it&rsquo;s much
+harder for me to blog, than it is to code. Good thing I became a
+programmer and not a writer I guess!</p>
+
+<h3>Emacs</h3>
+
+<p>I spent a lot of time working on Emacs-related stuff over the year:</p>
+
+<ul>
+<li>I started a new Emacs blog called <a href="http://emacsredux.com">EmacsRedux</a></li>
+<li>I improved a lot <a href="https://github.com/bbatsov/prelude">Prelude</a>
+and <a href="https://github.com/bbatsov/projectile">Projectile</a></li>
+<li>I contributed code to Emacs for the first time</li>
+<li>I took over the maintenance of <a href="https://github.com/clojure-emacs/cider">CIDER</a></li>
+<li>I was involved in a lesser role in the development of many cool Emacs extensions</li>
+</ul>
+
+
+<h3>Clojure</h3>
+
+<p>I wrote a
+<a href="https://github.com/bbatsov/clojure-style-guide">Clojure Style Guide</a>
+at the beginning of the year. I also hoped I&rsquo;d be able to work on
+static code analyzer for Clojure similar to RuboCop, but I got
+sidetracked and this did not happen. I did lots of CIDER-related work
+over the year and I hope I&rsquo;ll be able improve CIDER significantly in
+2014 (I have so many great ideas about it!).</p>
+
+<p>Clojure is still my favorite programming language and hope in 2014 I&rsquo;ll be
+able to work on more Clojure projects.</p>
+
+<h3>Misc</h3>
+
+<p>I spent some time playing with algorithms and math for the first time
+in a long while (inspired by Coursera).  This was lots of fun! I hope
+that in 2014 I&rsquo;ll be able to allocate even more time to studying them
+properly.</p>
+
+<h2>Epilogue</h2>
+
+<p>In previous years I generally spent a lot of time studying/researching new
+programming related stuff &ndash; new languages, new frameworks, new tools,
+new paradigms, etc. Conversely, I spent relatively little time hacking
+on open-source projects. 2013 was quite different for me &ndash; very little
+research, lots of open-source hacking. It was pretty tiresome at times, but
+also extremely enjoyable and gratifying experience.</p>
+
+<p>No idea how 2014 will turn out, but I hope it will be at least as fun
+as 2013 was!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2013/12/09/projectile-0-dot-10-is-out/">Projectile 0.10 Is Out!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-09T15:26:00+02:00" pubdate data-updated="true">Dec 9<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/bbatsov/projectile">Projectile</a> 0.10.0 is out!</p>
+
+<p>This might come as a surprise for people tracking Projectile&rsquo;s
+development, since recent snapshots were using 1.0 as the version
+number, so allow me to explain. I&rsquo;ve been wanting to release
+Projectile 1.0 for a while now, but I felt that without the addition
+of <em>per-project settings</em> support and some refinements to the way
+<em>ignoring of files &amp; folders</em> currently work, such moniker would be
+unjustified. Unfortunately, lately I&rsquo;ve been quite busy working on
+other projects like <a href="https://github.com/clojure-emacs/cider">cider</a>
+and <a href="https://github.com/bbatsov/rubocop">RuboCop</a> and I don&rsquo;t have
+that much time to work on Projectile, so I kept delaying the 1.0
+version.</p>
+
+<p>Recently I decided to release version 0.10 instead, for the benefit of
+users of package repos like Marmalade. The minor bump in the version
+doesn&rsquo;t mean that 0.10 is not a noteworthy update, though. 5 months of
+development and more than a hundred commits from almost a dozen of
+developers have really improved the Projectile experience.  It&rsquo;s
+easily the biggest update of Projectile, since the project was
+conceived.</p>
+
+<p>Some of the highlights include:</p>
+
+<ul>
+<li><code>.projectile</code> is always taken into account (previously it was consulted only when doing <code>native</code> indexing)</li>
+<li>There&rsquo;s now the ability to search for files in a specific directory</li>
+<li>More project types are recognized</li>
+<li>You can search for etags (ctags) in a project</li>
+<li><strong>The Commander</strong> (a really cool feature inspired from CIDER &amp; SLIME, that I&rsquo;ll show in a bit)</li>
+<li>Dozens of (mostly undocumented in the Changelog) bugfixes</li>
+</ul>
+
+
+<p>Have a look at the <a href="https://github.com/bbatsov/projectile/blob/master/CHANGELOG.md">changelog</a> for more details.</p>
+
+<p>And here&rsquo;s the new <strong>Commander</strong> in action:</p>
+
+<p><img src="/images/articles/projectile-commander.gif"></p>
+
+<p>Basically it gives you a way to invoke many of the Projectile commands
+with a single key &ndash; <code>f</code> for <code>find-file</code>, <code>s</code> for <code>switch-project</code>,
+etc. It&rsquo;s very handy when switching projects since with this command
+you can always pick a different command to execute in the new
+project. By the way, <code>projectile-switch-project</code> will now run the
+commander, when invoked with a prefix argument (<code>C-u C-c p s</code>).</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/articles/page/5/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/articles/page/3/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I&#8217;m a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

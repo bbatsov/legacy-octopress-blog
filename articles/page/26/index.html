@@ -1,0 +1,540 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>(think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Recently I switched to zsh, after being a bash user for almost 5
+years. I was in love with everything in zsh from day one, except one
+thing – the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/page/26">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2008/07/27/zsh-prompt/">A Nice Zsh Prompt</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-07-27T00:00:00+03:00" pubdate data-updated="true">Jul 27<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Recently I switched to zsh, after being a bash user for almost 5
+years. I was in love with everything in zsh from day one, except one
+thing – the default prompt. Although zsh ships with several prompt
+themes, I didn’t like any of them so I looked around a little bit and
+constructed my own humble prompt. Here it goes:</p>
+
+<p><code>PROMPT='[%n@%m %~]$ '</code></p>
+
+<p>In case you’re wondering what this gibberish means:</p>
+
+<p>%n stands for your username(e.g. bozhidar)</p>
+
+<p>%m stands for the first part of your machine’s hostname(you can use %M
+ for the fully qualified name)</p>
+
+<p>%~ stands for the current directory path with your home dir aliased
+ with an ‘~’ (if you want to see the path in its natural form use %d
+ instead)</p>
+
+<p>All of this strange looking character combinations are called “escape
+sequences” and they have special significance to zsh. The rest of the
+characters in the prompt definition are represented literally in the
+resulting prompt. It looks like this(on my machine):</p>
+
+<p><code>[bozhidar@drow ~/store]$</code></p>
+
+<p>If you like it simply put the prompt definition like in your .zshrc
+file. You may want to put a little bit different version of the prompt
+in the root user’s .zshrc(if you use root at all that is):</p>
+
+<p><code>PROMPT='[%n@%m %~]# '</code></p>
+
+<p>This follows the well established pattern that a normal shell and a
+root shell should be easily distinguished visually.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2008/06/19/emacs-rails/">Using Emacs for Rails Development: The Perfect Setup</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-19T00:00:00+03:00" pubdate data-updated="true">Jun 19<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>Updated 29/04/2011</strong></p>
+
+<p>Lately, I’ve started digging more and more into Rails, preparing for
+the start of a Rails powered project. Although there are some IDEs
+offering decent Rails support(namely RubyMine, NetBeans, Komodo and
+Aptana Studio) I have always preferred the comfort of Emacs for
+various reasons. So naturally I embarked on a quest to setup a
+suitable environment for Rails development in Emacs. After a couple of
+days of searching and evaluating possible solutions I finally set up a
+worthy environment. It consists of a couple of components –
+<a href="http://svn.ruby-lang.org/cgi-bin/viewvc.cgi/trunk/misc/ruby-mode.el?view=log">ruby-mode</a>,
+<a href="http://svn.ruby-lang.org/cgi-bin/viewvc.cgi/trunk/misc/inf-ruby.el?view=log">inf-ruby</a>,
+<a href="http://code.google.com/p/autopair/">autopair-mode</a>,
+<a href="http://ourcomments.org/Emacs/nXhtml/doc/nxhtml.html">nxhtml-mode</a>,
+<a href="http://code.google.com/p/yasnippet/">yasnippet</a> and
+<a href="http://rinari.rubyforge.org/">rinari</a>.</p>
+
+<p>As you probably have guessed by now <em>ruby-mode</em> provides support for
+editing ruby source files. The mode is pretty feature complete and
+under active development, headed by none other than Matz(Ruby&rsquo;s
+creator) himself. I can only assume that Matz is an Emacs user
+himself. You can get it from the ruby svn repository if you&rsquo;re using a
+version of Emacs older than Emacs 23(it&rsquo;s built-in there).</p>
+
+<p><em>inf-ruby</em> is a mode that spawns and inferior ruby process(irb shell)
+to which you can directly send code from the ruby buffer you&rsquo;re
+currently editing. For instance &ndash; you can define a function and while
+your cursor is inside it you can press C-M-x &ndash; the function definition
+will be evaluated in irb automatically and you can test it there. This
+is extremely handy!</p>
+
+<p><em>autopair-mode</em> provides auto insertion of closing braces, quotes,
+ends, etc. . Instructions how to setup both modes can be found
+here. It&rsquo;s a much more generic version of the <em>ruby-electric</em> mode
+that used to do similar tasks, but just in Ruby buffers.</p>
+
+<p>Although many people recommend adding pabbrev(a mode which
+provides auto-completion) to the setup, I don’t recommend it – I find
+the mode mostly annoying and stick to the old school dumb
+auto-completion with M-/ . If you&rsquo;re shopping for autocompletion,
+however, a much better and smarter choice would be a
+RSense[<a href="http://cx4a.org/software/rsense/">http://cx4a.org/software/rsense/</a>].</p>
+
+<p><em>yasnippet</em> is a package that offers dynamically expandable code
+snippets(template), quite similar to ones in TextMate. It&rsquo;s very easy
+to add your very own snippets if you wish to.</p>
+
+<p><em>nxhtml-mode</em> is a pretty comprehensive package for web development in
+general. We need it for its excellent support for erb
+templates(.rhtml, .erb.html) and of course xhtml and css. Lately it&rsquo;s
+not been as actively developed as it used to be, but it&rsquo;s still a
+pretty good mode. Alternatively you can use
+<a href="https://github.com/nex3/haml">Haml</a> and
+<a href="https://github.com/antonj/scss-mode">SASS</a> and forget about
+nxhtml. Both have pretty decent Emacs modes available.</p>
+
+<p><em>rinari</em> is a mode for Rails development – it contains rich
+functionality such as the ability to easily navigate between models,
+views and controllers in a Rails apfplication amongst other
+features. Instructions how to set up rinari together with nxhtml-mode
+can be found on rinari’s home page.</p>
+
+<p>It’s always a good idea to add <a href="http://ecb.sourceforge.net/">ecb</a>(the Emacs code browser) to the mix,
+though this is entirely optional.</p>
+
+<p>A lot of the stuff I discussed here are part of the
+<a href="https://github.com/bbatsov/prelude">Emacs Prelude</a> that I
+develop and maintain. I urge you to use the Emacs Prelude as a starting point to
+develop your very own customized version of Emacs. Prelude comes with a
+few ruby-mode customizations, yari(ri integration for Emacs), haml and
+sass modes, autopair, yaml-mode, yasnippet, css-mode, ecb and a lot of
+other goodies(projectile being one of my favourites).</p>
+
+<p>I hope you enjoy this setup and it helps boost your Rails productivity in Emacs.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2008/06/16/das-keyboard/">Das Keyboard</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-16T00:00:00+03:00" pubdate data-updated="true">Jun 16<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Every professional developer knows how important to the development
+process the keyboard is, so it is only natural to be on the look for
+some quality piece of hardware. After a long research in the area of
+good keyboards I decided to upgrade my current rig to the recently
+released <a href="http://www.daskeyboard.com/">Das Keyboard 3</a>.</p>
+
+<p><img class="mechanical_keyboard.jpg" src="http://www.daskeyboard.com/images/products/mechanical_keyboard.jpg"></p>
+
+<p>Das Keyboard comes in three flavours &ndash; Professional(mechanical
+keyboard with labelled keys), Ultimate(the original mechanical
+keyboard with blank keys) and Silent(mechanical keyboard with labelled
+keys that doesn&rsquo;t produce the trademarked clicking sound of the
+original Das Keyboard).</p>
+
+<p>I bought the Ultimate model, of course. I&rsquo;ve been a touch typist for
+several years now and I didn&rsquo;t really cared about the labelled
+keys(though I did miss them in games). Two words describe this
+keyboard perfectly &ndash; <strong>Bad Ass</strong>. It&rsquo;s without a doubt the single
+finest piece of keyboard hardware that I&rsquo;ve touched, it&rsquo;s very
+comfortable, very solid and I feel that I&rsquo;ve actually improved my
+typing speed with it. My colleagues don&rsquo;t like the noisy work of the
+keyboard very much, but I have no problems with it. I actually have
+grown quite fond of it.</p>
+
+<p>The keyboard also features a two port USB hub, that I didn&rsquo;t really
+consider when I was buying it, but it turned out quite helpful. I&rsquo;ve
+actually stopped using the USB ports of my computer entirely(except
+for input devices) &ndash; I use the keyboard hub to plug-in flash drives
+and charge devices. When your computer is sitting beneath a desk you
+learn to appreciate USB hubs very quickly.</p>
+
+<p>I have long heard stories about Das Keyboard&rsquo;s quality
+and comfort and I it has totally lived up to its hype. They price is
+admittedly a bit steep(I bought two keyboards for home and for work
+each costing 130$), but this is our hands and productivity we&rsquo;re
+talking about so we shouldn&rsquo;t be cheap. So what are
+waiting for &ndash; research the market yourselves and make your pick, your
+hands deserve a quality keyboard(the Das Keyboard)!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2008/05/05/first-post/">Every Blog Has Its First Post&#8230;</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-05T00:00:00+03:00" pubdate data-updated="true">May 5<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p>Every Generation Has A Legend. Every Journey Has A First Step. Every<br/>Saga Has A Beginning.</p><footer><strong>Star Wars Episode I: The Phantom Menace</strong> <cite>Trailer</cite></footer></blockquote>
+
+
+<p>Hello, everyone! Welcome to my blog!</p>
+
+<p>I&rsquo;ll post here bits and pieces inspired by my humble experience as a
+software developer. Expect to see primarily articles about Lisp,
+Emacs, Java and Ruby, but also about software development in general.</p>
+
+<p>As a fan of the Star Wars franchise I often like to quote characters
+from the movies. I feel that this is the time for one such quote.</p>
+
+<blockquote><p>Always two there are, no more, no less. A master and an<br/>apprentice.</p><footer><strong>Master Yoda</strong> <cite>The Phantom Menace</cite></footer></blockquote>
+
+
+<p>I’m no hacker wizard by any means, but I hope that I can
+help someone learn something useful and maybe I&rsquo;ll manage to learn something
+from the readers of my blog(if I have any, that is). In this sense
+one can say that in life we&rsquo;re always the master and the apprentice at
+the same time&hellip;</p>
+
+<p>I hope you&rsquo;ll enjoy reading my blog!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/articles/page/25/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I&#8217;m a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

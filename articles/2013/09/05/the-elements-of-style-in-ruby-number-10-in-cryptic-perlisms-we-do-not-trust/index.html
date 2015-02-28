@@ -1,0 +1,555 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The Elements of Style in Ruby #10: In cryptic Perlisms we do not trust - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="For better or for worse Perl had significant influence over Ruby&rsquo;s
+initial design. A lot of things were directly borrowed from Perl, but
+over &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2013/09/05/the-elements-of-style-in-ruby-number-10-in-cryptic-perlisms-we-do-not-trust">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">The Elements of Style in Ruby #10: In Cryptic Perlisms We Do Not Trust</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-05T11:41:00+03:00" pubdate data-updated="true">Sep 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>For better or for worse Perl had significant influence over Ruby&rsquo;s
+initial design. A lot of things were directly borrowed from Perl, but
+over the years the Ruby community rejected most of the Perlisms. In
+this article I&rsquo;ll go over most of the Perl legacy which you should try
+to steer clear from.</p>
+
+<h3>Global variables</h3>
+
+<p>Global variables are the nemesis of object-oriented programming(most
+OO languages don&rsquo;t even have the concept of a global variable). Don&rsquo;t
+introduce any of those in your Ruby programs! In most cases you can
+substitute them for module instance variables:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># bad</span>
+</span><span class='line'><span class="vg">$foo_bar</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#good</span>
+</span><span class='line'><span class="k">module</span> <span class="nn">Foo</span>
+</span><span class='line'>  <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="nb">self</span>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:bar</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Foo</span><span class="o">.</span><span class="n">bar</span> <span class="o">=</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Unfortunately, one cannot code Ruby and get away without using the built-in global
+variables&hellip;</p>
+
+<h3>Special global variables</h3>
+
+<p>Originally Ruby borrowed just about all of Perl&rsquo;s special global
+variables, known worldwide for their <strong>intention revealing names</strong> &ndash;
+<code>$:</code>, <code>$;</code>, <code>$!</code>, <code>$$</code>, <code>$\</code>, etc. I&rsquo;ve coded Ruby for quite some time now and
+still can&rsquo;t remember what half of those meant (and I knew a bit of
+Perl before I knew any Ruby). Luckily at some point the
+<a href="http://www.ruby-doc.org/stdlib-2.0/libdoc/English/rdoc/English.html">English library</a>
+was added to Ruby, which simply adds sensible aliases for the cryptic
+Perl names. With it you can change this code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vg">$:</span><span class="o">.</span><span class="n">unshift</span> <span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">files</span> <span class="o">=</span> <span class="sb">`git ls-files`</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vg">$\</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>to:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;English&#39;</span>
+</span><span class='line'><span class="vg">$LOAD_PATH</span><span class="o">.</span><span class="n">unshift</span> <span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">files</span> <span class="o">=</span> <span class="sb">`git ls-files`</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vg">$INPUT_RECORD_SEPARATOR</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I think that the improvement is pretty obvious.  Why <code>English</code> is not required by
+default is beyond me. Personally I use it always and I think you should do the same.</p>
+
+<h3>Last regexp captures</h3>
+
+<p>When you do a regexp match (like <code>/regexp/ ~= string</code>) a few special
+global variables with funky names get populated with the prematch,
+match, postmatch, etc. If the regexp has any groups in it, the stuff
+they matched gets assigned to other special variables with the
+descriptive names <code>$1</code> (for the first group), <code>$2</code> (for the second
+group), etc. This idiom is unfortunately very popular with Ruby
+developers, likely because few of them know of <code>Regexp.last_match</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/(regexp)/</span> <span class="o">=~</span> <span class="n">string</span>
+</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># this is Perl-style</span>
+</span><span class='line'><span class="n">process</span> <span class="vg">$1</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># this is the same, but more clear and more object oriented</span>
+</span><span class='line'><span class="n">process</span> <span class="no">Regexp</span><span class="o">.</span><span class="n">last_match</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Basically you can extract from <code>Regexp.last_match</code> everything you&rsquo;d get from the special global variables.</p>
+
+<p>Yep, you&rsquo;ll have to type more, but when clarity is at stake a little bit of extra typing is certainly justified.</p>
+
+<p>You can even go a step further and use the <code>Regexp#match</code> method:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">md</span> <span class="o">=</span> <span class="sr">/(Bat.+)\s/</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;Batman rules!&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">#=&gt; #&lt;MatchData &quot;Batman &quot; 1:&quot;Batman&quot;&gt;</span>
+</span><span class='line'><span class="n">md</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span>
+</span><span class='line'><span class="c1">#=&gt; &quot;Batman&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By the way, keep in mind that it&rsquo;s generally a good idea to use named
+regexp groups over positional ones, once you&rsquo;re dealing with more than
+two groups. Numbers simply don&rsquo;t convey that much meaning&hellip;</p>
+
+<h3>BEGIN/END blocks</h3>
+
+<p>Strictly speaking those came from <code>awk</code>, but I still consider them
+part of the Perl legacy. If you don&rsquo;t know what I&rsquo;m talking about feel
+free to skip this section &ndash; your soul has already been saved.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">END</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Exiting...&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;Processing...&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">BEGIN</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Starting...&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>BEGIN</code> blocks are executed before everything else in your program in
+the order in which they are encountered. <code>END</code> blocks are executed right before
+the program exits. Those hideous constructs mess with the flow of
+control of the program and are totally useless. I&rsquo;ve never ever needed
+a <code>BEGIN</code> block and <code>END</code> blocks are totally replaceable with
+<code>Kernel#at_exit</code>. I guess they might have some utility for old-school
+scripting tasks, but application developers should ignore them
+completely!</p>
+
+<h3>Flip-flops</h3>
+
+<p>Same as in the previous section &ndash; if you don&rsquo;t know what I&rsquo;m talking about feel free to
+skip this section &ndash; your soul has already been saved.</p>
+
+<p>Flip-flops are an obscure conditional construct with just a single useful application &ndash; text processing:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">DATA</span><span class="o">.</span><span class="n">each_line</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">print</span> <span class="n">line</span> <span class="k">if</span> <span class="p">(</span><span class="n">line</span> <span class="o">=~</span> <span class="sr">/begin/</span><span class="p">)</span><span class="o">.</span><span class="n">.</span><span class="p">(</span><span class="n">line</span> <span class="o">=~</span> <span class="sr">/end/</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">__END__</span>
+</span><span class='line'><span class="cp">0a</span>
+</span><span class='line'><span class="cp">1begin</span>
+</span><span class='line'><span class="cp">2c</span>
+</span><span class='line'><span class="cp">3end</span>
+</span><span class='line'><span class="cp">4e</span>
+</span><span class='line'><span class="cp">5f</span>
+</span><span class='line'><span class="cp">6begin</span>
+</span><span class='line'><span class="cp">7end</span>
+</span><span class='line'><span class="cp">8i</span>
+</span><span class='line'><span class="cp">9j</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will print:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="mi">1</span><span class="k">begin</span>
+</span><span class='line'><span class="mi">2</span><span class="n">c</span>
+</span><span class='line'><span class="mi">3</span><span class="k">end</span>
+</span><span class='line'><span class="mi">6</span><span class="k">begin</span>
+</span><span class='line'><span class="mi">7</span><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hopefully you&rsquo;ve managed to deduce how they work from this example, if
+you haven&rsquo;t &ndash; you&rsquo;ve just understood what their main problem is.</p>
+
+<p>I never had to use those and probably you won&rsquo;t have a reason to use them
+either. Their usage is likely going to do just one thing for you &ndash; reduce the
+readability of the code you&rsquo;re writing.</p>
+
+<h3>Epilogue</h3>
+
+<p>I&rsquo;d really love to see some of those Perlisms out of Ruby &ndash; the
+removal of <code>flip-flops</code> and <code>BEGIN/END</code> gets suggested upstream every
+now and then and might happen in Ruby 3.0. Removing the global
+variables, however, is unlikely to ever happen since that would be a
+huge change.</p>
+
+<p>You can use <a href="https://github.com/bbatsov/rubocop">RuboCop</a>
+to identify and fix such shortfalls of your code.</p>
+
+<p>As usual I&rsquo;m looking forward to hearing your thoughts here and on
+<a href="http://twitter.com/bbatsov">Twitter</a>!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-05T11:41:00+03:00" pubdate data-updated="true">Sep 5<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/ruby/'>Ruby</a>, <a class='category' href='/articles/categories/style/'>Style</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2013/09/05/the-elements-of-style-in-ruby-number-10-in-cryptic-perlisms-we-do-not-trust/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2013/09/05/the-elements-of-style-in-ruby-number-10-in-cryptic-perlisms-we-do-not-trust/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2013/09/03/a-couple-of-useful-extensions-to-rubys-enumerable-module/" title="Previous Post: A couple of useful extensions to Ruby's Enumerable module">&laquo; A couple of useful extensions to Ruby's Enumerable module</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2013/09/24/lambdas-slash-procs-in-case-expressions/" title="Next Post: Lambdas/Procs in Case Expressions">Lambdas/Procs in Case Expressions &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2013/09/05/the-elements-of-style-in-ruby-number-10-in-cryptic-perlisms-we-do-not-trust/';
+        var disqus_url = 'http://batsov.com/articles/2013/09/05/the-elements-of-style-in-ruby-number-10-in-cryptic-perlisms-we-do-not-trust/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

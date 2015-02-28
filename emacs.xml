@@ -1,0 +1,1012 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Emacs @ (think)]]></title>
+  <link href="http://batsov.com/emacs.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-28T09:00:23+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs]]></title>
+    <link href="http://batsov.com/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/"/>
+    <updated>2014-12-04T12:45:00+02:00</updated>
+    <id>http://batsov.com/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs</id>
+    <content type="html"><![CDATA[<p>At <a href="http://clojure-conj.org/">Clojure/conj</a> I had the chance to shake
+Rich Hickey’s hand and exchange a few words with him. When I asked him
+whether he currently uses CIDER or Cursive for Clojure development he
+replied that he preferred a simpler solution – <code>clojure-mode</code> &amp;
+<code>inferior-lisp-mode</code>. I was a bit surprised because <code>clojure-mode</code>’s
+integration with <code>inferior-lisp-mode</code> sucks (big time). It has always
+been extremely limited and was never really improved/extended. It has
+no Clojure specific features and no code completion. I felt that Rich
+and all the people using inferior-lisp-mode deserved something better,
+so I quickly put together <a href="https://github.com/clojure-emacs/inf-clojure">inf-clojure</a>.</p>
+
+<p><code>inf-clojure</code> provides some Clojure specific features like showing a
+var’s doc or source, derives some core functionality from <code>clojure-mode</code>
+and even features basic code-completion (and <code>company-mode</code>
+support). That’s not much admittedly, but it’s a good start. Extending
+<code>inf-clojure</code> is super easy and I expect that we’ll add a bit more
+features to it along the way (e.g. macroexpansion).</p>
+
+<p><code>inf-clojure</code> is available in MELPA and will eventually replace
+completely <code>inferior-lisp-mode</code> when <code>clojure-mode</code> 4.0 is released.</p>
+
+<p>Keep in mind that <code>inf-clojure</code> is nothing like CIDER and will never
+be. CIDER will always be the powertool for Clojure programming in
+Emacs. I do understand, however, that some people are overwhelmed by
+CIDER and some people simply don’t need anything sophisticated. I hope
+they’ll enjoy <code>inf-clojure</code>!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Road to CIDER 0.8]]></title>
+    <link href="http://batsov.com/articles/2014/11/10/the-road-to-cider-0-dot-8/"/>
+    <updated>2014-11-10T15:27:00+02:00</updated>
+    <id>http://batsov.com/articles/2014/11/10/the-road-to-cider-0-dot-8</id>
+    <content type="html"><![CDATA[<p>I&rsquo;m planning to release the long overdue <a href="https://github.com/clojure-emacs/cider">CIDER</a> 0.8 at <a href="http://clojure-conj.org/">clojure/conj</a> 2014.
+I&rsquo;ll be giving a talk there that will be mostly about CIDER, so this seems like a pretty good idea to me.</p>
+
+<p>I&rsquo;d like to ask you to do a bit of extra testing to the current
+snapshot builds, so we can deliver a solid release (if we&rsquo;re lucky &ndash;
+the most solid ever). Guess you should pay extra attention to the
+<a href="https://github.com/clojure-emacs/cider/blob/master/CHANGELOG.md">new features</a>.</p>
+
+<p>If you want to get some issue fixed in time for 0.8 you&rsquo;d better <a href="https://github.com/clojure-emacs/cider/issues">get started right away</a>.</p>
+
+<p>Thanks in advance for your help!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[clojure-mode 3.0]]></title>
+    <link href="http://batsov.com/articles/2014/09/05/clojure-mode-3-dot-0/"/>
+    <updated>2014-09-05T15:15:00+03:00</updated>
+    <id>http://batsov.com/articles/2014/09/05/clojure-mode-3-dot-0</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/clojure-emacs/clojure-mode">clojure-mode</a> 3.0 is out!</p>
+
+<p>It&rsquo;s one of the most ambitious releases in recent times and brings
+much improved font-locking across the board.  Other notable changes
+include dropping support for Emacs 23 (CIDER doesn&rsquo;t support it
+either) and removing some deprecated features (most notably the
+functionality for switching between code and its test; see
+<a href="https://github.com/bbatsov/projectile">Projectile</a> for an awesome
+replacement of the old feature).</p>
+
+<p>An extensive list of the changes is available <a href="https://github.com/clojure-emacs/clojure-mode/blob/master/CHANGELOG.md">here</a>.</p>
+
+<p>This version also marks the introduction of an automated test suite
+(currently it consists mostly of font-lock tests), which should make
+it easier to do changes in the future.</p>
+
+<p>Next step &ndash; indentation improvements and decoupling <code>clojure-mode</code>
+from <code>lisp-mode</code>.  Both tasks are related. We&rsquo;ve been deriving much
+from <code>lisp-mode</code> since day 1 and this has worked reasonably well so
+far, but the truth is that Clojure is not Common Lisp (or Emacs Lisp
+for that matter) and would benefit from a more refined syntax table,
+indentation rules, etc.</p>
+
+<p>When (if) this will happen?
+Sadly, I have no idea&hellip; Help is definitely welcome! If you
+don&rsquo;t have the time to help out with code or docs you can still support my
+work on <code>clojure-mode</code> (and all my other projects) via
+<a href="https://www.gratipay.com/bbatsov">gratipay</a>.</p>
+
+<p><a href="https://gratipay.com/bbatsov"><img src="https://cdn.rawgit.com/gratipay/gratipay-badge/2.1.3/dist/gratipay.png" alt="Support via Gratipay" /></a></p>
+
+<p>That&rsquo;s all for now, folks! Enjoy the new <code>clojure-mode</code>!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SICP Distilled]]></title>
+    <link href="http://batsov.com/articles/2014/08/29/sicp-distilled/"/>
+    <updated>2014-08-29T18:15:00+03:00</updated>
+    <id>http://batsov.com/articles/2014/08/29/sicp-distilled</id>
+    <content type="html"><![CDATA[<p><a href="https://www.kickstarter.com/projects/1751759988/sicp-distilled">SICP Distilled</a>
+is one of the most interesting Kickstarter projects I&rsquo;ve seen in a
+while.</p>
+
+<p>Its creator <a href="http://www.thattommyhall.com/">Tom Hall</a> is
+planning to create some nice companion resources for <a href="http://sicpebook.wordpress.com/">SICP</a> with code
+examples in Clojure. In his own words:</p>
+
+<blockquote><p>It’s a long book, with lots<br/>of exercises and lots of people I know have started, loved it, but<br/>somehow not finished.</p><p>Abelson and Sussman themselves highlight the important lessons of SICP<br/>in their paper `Lisp: A Language For Stratified Design` and I have my<br/>own favourite bits.</p><p>As the book itself is available online for free I want to make the<br/>perfect accompaniment to it - an ebook summarising the key ideas,<br/>short videos describing them, screencasts of solving some of the<br/>exercises, translation of the examples into Clojure, example projects,<br/>partial solutions for you to complete (similar to `4clojure` and `Clojure<br/>koans`) and a place to discuss solving them with people and hopefully<br/>keep momentum and get it finished!</p><p>Something to be enjoyed alongside SICP, rather than completely replace it.</p><p>Maybe some ideas come out a little different in Clojure, or I take a<br/>slightly novel approach (hence idiosyncratic), maybe I miss something<br/>out (hence tour, sorry), but I hope we can have some fun along the<br/>way.</p><footer><strong>Tom Hall</strong> <cite>SICP Distilled</cite></footer></blockquote>
+
+
+<p>I&rsquo;m one of those many people who never did finish SICP (although I
+hope to do that some day), so I can totally relate to Tom&rsquo;s
+words. I&rsquo;ve already backed his campaign and I hope more of you will do
+the same!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The State of Some Emacs Packages for Clojure Development]]></title>
+    <link href="http://batsov.com/articles/2014/08/12/the-state-of-some-emacs-packages-for-clojure-development/"/>
+    <updated>2014-08-12T11:29:00+03:00</updated>
+    <id>http://batsov.com/articles/2014/08/12/the-state-of-some-emacs-packages-for-clojure-development</id>
+    <content type="html"><![CDATA[<p>There are quite a few packages in the &ldquo;official&rdquo;
+<a href="https://github.com/clojure-emacs">clojure-emacs GitHub organization</a>,
+but many of them have been deprecated recently with the release of
+CIDER 0.7. Unfortunately not everyone is aware of this yet and I often see
+tickets related to those deprecated projects. In this short post I&rsquo;ll
+outline the deprecations and provide a bit of background for them.</p>
+
+<h3>clojure-test-mode</h3>
+
+<p>The venerable
+<a href="https://github.com/clojure-emacs/clojure-mode">clojure-test-mode</a> was
+deprecated in favor of <code>cider-test</code> (which is bundled with CIDER 0.7).
+<code>clojure-test-mode</code> featured quite a lot of inlined Clojure code,
+which made the package very hard to maintain and reworking it to use
+nREPL middleware was a no-brainer for us. <code>clojure-test-mode</code> will be
+removed from the <code>clojure-mode</code> repo at some point. It also interferes
+with CIDER&rsquo;s initialization, so you&rsquo;re <strong>strongly encouraged</strong> to get rid of it.</p>
+
+<p>Down the road we might extend <code>cider-test</code> to support other test frameworks
+as well (which should be feasible with different middleware providing the same interface).</p>
+
+<h3>company-cider</h3>
+
+<p><a href="https://github.com/clojure-emacs/company-cider">company-cider</a> was deprecated, because <code>company-mode</code>
+integration was added to CIDER itself (making <code>company-mode</code> the officially supported and recommended
+completion library).</p>
+
+<h3>ac-nrepl</h3>
+
+<p><a href="https://github.com/clojure-emacs/ac-nrepl">ac-nrepl</a> has been
+superseded by <a href="https://github.com/clojure-emacs/ac-cider">ac-cider</a>.
+<code>ac-cider</code> has a simpler codebase and leverages the <code>compliment</code>-based completion
+introduced in CIDER 0.7. We&rsquo;ll probably remove <code>ac-nrepl</code> at some point in the future
+to avoid the confusion between the two.</p>
+
+<h3>cider-inspect</h3>
+
+<p><a href="https://github.com/clojure-emacs/cider-inspect">cider-inspect</a> was absorbed into CIDER 0.7.</p>
+
+<h3>cider-tracing</h3>
+
+<p><a href="https://github.com/clojure-emacs/cider-tracing">cider-tracing</a> was superseded by middleware-based
+tracing support integrated in CIDER 0.7.</p>
+
+<h2>Epilogue</h2>
+
+<p>Those deprecations are also mentioned in the documentation of the
+respective packages, but I feel it&rsquo;s nice to have them listed together
+in a single document. Most of the packages will also emit load-time
+deprecation warnings.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CIDER 0.7]]></title>
+    <link href="http://batsov.com/articles/2014/08/05/cider-0-dot-7/"/>
+    <updated>2014-08-05T15:19:00+03:00</updated>
+    <id>http://batsov.com/articles/2014/08/05/cider-0-dot-7</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/clojure-emacs/cider">CIDER</a> 0.7 is finally out and
+it&rsquo;s an epic release! It&rsquo;s without a doubt the most important release
+since the inception of the project about two years ago and it&rsquo;s the
+biggest one in terms of features and code changes.</p>
+
+<p>The release is special for a number of reasons. Allow me to quickly
+enumerate though them.</p>
+
+<h3>Middleware-based</h3>
+
+<p>One of the huge problems we&rsquo;ve had so far was that a lot of
+functionality that was present in SLIME + swank-clojure was missing in
+CIDER. For many people the transition between the two didn&rsquo;t really
+feel like an upgrade (although it was advertised as such) &ndash; after all
+they lost things like inspection, tracing, apropos, caller cross-reference, the
+debugger, etc.</p>
+
+<p>The reason this happened was CIDER&rsquo;s initial approach of implementing
+features by inlining Clojure code within the Emacs Lisp code and
+evaluating this code in a dedicated nREPL session (called the tooling
+session), to avoid contaminating the results in the &ldquo;primary&rdquo; eval
+session. This approach had one upside (you didn&rsquo;t need any extra deps
+(middleware) to run CIDER) and one huge downside (it&rsquo;s impossible
+to maintain non-trivial inlined code; not to mention it&rsquo;s not very
+practical). This meant that pretty much all third party libs were out
+of the equation and pretty much every advanced feature.</p>
+
+<p>This problem was initially address by
+<a href="https://github.com/pallet/ritz">ritz</a>, which provided some extra
+functionality built on top of extra nREPL middleware. As it was a
+separate project it was hard to be kept in sync with the flurry of
+changes in CIDER and was abandoned at some point. While <code>ritz</code> failed
+it had the right approach and it served as the principle inspiration
+for CIDER 0.7.</p>
+
+<p>In CIDER 0.6 we introduced optional nREPL middleware for some
+operations (like completion, error reporting, var info) and in 0.7 the
+middleware stack was greatly extended, improved and promoted to a
+mandatory CIDER component. This has one downside (you&rsquo;ll have to
+install it to leverage all of CIDER&rsquo;s power) and a several upsides:</p>
+
+<ul>
+<li><p>A lot of the heavy lifting is now done in pure Clojure code (see
+<a href="https://github.com/clojure-emacs/cider-nrepl">cider-nrepl</a>) and it&rsquo;s
+much easier to implement complex features now (not to mention &ndash; this
+code is much easier to maintain). This also means that it&rsquo;s much
+easier for Clojure programmers to contribute to CIDER as a lot of
+functionality is just lots of Clojure code and very little Emacs Lisp
+code. I&rsquo;m reasonably sure I&rsquo;m one of the very few CIDER users who
+knows more Emacs Lisp than Clojure, so I consider this a big win.</p></li>
+<li><p>It&rsquo;s now easy to provide pretty similar level of support for both
+Clojure and ClojureScript as we can reconcile the differences
+between them in our middleware.</p></li>
+<li><p>It&rsquo;s easier to keep the code backwards compatible (which is a
+nightmare for inlined code).</p></li>
+<li><p>There are no implicit dependencies in the system (unlike before).</p></li>
+</ul>
+
+
+<p>Consider auto-completion &ndash; this feature was implemented in terms of
+evaluating some <code>clojure-complete</code> code with the assumption that
+<code>clojure-complete</code> is available in the environment you were using as
+CIDER assumed you had started the nREPL server using <code>lein repl</code>. This
+would fire up a REPL-y REPL and <code>clojure-complete</code> is a REPL-y
+dependency. Not everyone uses <code>lein repl</code>, though and REPL-y can always
+switch to another completion library in the future.</p>
+
+<p>If you connected CIDER to an embedded nREPL server,
+you&rsquo;d be greeted by a missing class error, as most apps don&rsquo;t normally
+depend on <code>clojure-complete</code>. You&rsquo;d be puzzled for a while, but eventually
+you&rsquo;ll realize what the problem is.</p>
+
+<p>Now we&rsquo;re free to explicitly specify our deps and pick the best
+libraries for the job (as opposed to those that are available) &ndash;
+you&rsquo;ll quickly notice how smarter auto-completion is now on Clojure,
+because we&rsquo;re internally using the newer, faster and more feature-rich
+<a href="https://github.com/alexander-yakushev/compliment">compliment</a> library
+(note that we&rsquo;re using a different library for ClojureScript
+completion).
+* Other projects can leverage some of our middleware &ndash; somewhat
+  amusingly for Emacs users, <code>vim-fireplace</code> is using <code>cider-nrepl</code>
+  as well.</p>
+
+<p>At this point we&rsquo;ve removed pretty much all inlined code (except some
+pretty-printing code) and that has yielded much improved eldoc,
+macroexpansion, documentation viewing (<code>cider-doc</code> will now display
+Javadoc in Emacs!!!), source browsing, etc.</p>
+
+<p>We&rsquo;ve also started bringing back some features we loved in SLIME, but
+were missing so far &ndash; the inspector, apropos and tracing are back. We&rsquo;re now working on
+bringing back function call cross-referencing and debugging as well.</p>
+
+<p>Note that CIDER will still work if you connect to an nREPL server
+that&rsquo;s not using CIDER&rsquo;s middleware. In this case you&rsquo;ll get a
+warning and a pretty limited feature-set &ndash; source file loading, code
+evaluation, pretty-printing and error highlighting.</p>
+
+<h3>cider-test</h3>
+
+<p><code>clojure-test-mode</code> (which was more or less abandoned in terms of
+maintenance) finally has a successor in CIDER itself. <code>cider-test</code>
+provides more or less the same functionality, but is implemented in
+terms of nREPL middleware and is a more robust solution. As it&rsquo;s part
+of CIDER it cannot ever be out-of-sync with CIDER as <code>clojure-test-mode</code> has
+often been lately.</p>
+
+<p><code>cider-test</code> is a little rough around the edges, but I&rsquo;m fairly sure it has bright future
+ahead. Use it, love it, hate it and send us your feedback! We&rsquo;d love to hear it.</p>
+
+<p><strong>P.S.</strong> We might extend this with support for other frameworks like
+<code>midje</code> and <code>expectations</code>, although that&rsquo;s not high on our priority
+list.</p>
+
+<h3>Grimoire support</h3>
+
+<p>In addition to built-in Clojure &amp; Javadoc you can now peruse the
+extended documentation provided by
+<a href="http://grimoire.arrdem.com/">Grimoire</a> from the comfort of your
+beloved editor. No more browser interruptions just to get a few usage
+examples of some function! <code>C-c C-d g</code> for the win!</p>
+
+<p>Adding some extended Grimoire integration is definitely on the roadmap.</p>
+
+<h3>Increased bus factor</h3>
+
+<p>One of the biggest problems of the project so far was that fairly few people
+were involved with it.  At one point it was mostly Tim, Hugo and
+me. At another it was mostly me. The bus factor was dangerously close
+to 1, which always worried me. Recently, however, a lot of people have
+been helping quite actively, which makes me more optimistic about the
+future. As much as I love CIDER I don&rsquo;t want it to depend on one
+extremely busy and very clumsy person (each time I go hiking there&rsquo;s a
+serious chance I&rsquo;ll fall of a cliff or something).</p>
+
+<p>I&rsquo;d like to thank everyone for your wonderful contributions and single
+out a bunch of people for some outstanding work done by them:</p>
+
+<ul>
+<li><a href="https://github.com/gtrak">Gary Trakhman</a> is the one responsible for
+the good ClojureScript support we now boast. Fantastic work, Gary! You have a big thanks from me!</li>
+<li><a href="https://github.com/jeffvalk">Jeff Valk</a> did some mighty fine work
+on the var info retrieval, source navigation, documentation display
+and single-handedly implemented <code>cider-test</code> and <code>cider-apropos</code>. We
+all owe Jeff a huge thanks!</li>
+<li><a href="https://github.com/hugoduncan">Hugo Duncan</a> who constantly
+  contributed patches, bug reports and ideas. His <code>nrepl-ritz</code>
+  project provided a lot of inspiration for some of the existing
+  middleware.</li>
+<li><a href="https://github.com/eslick">Ian Eslick</a> contributed the new inspector.</li>
+<li><a href="https://github.com/alexander-yakushev/compliment">Alexander Yakushev</a>
+  made so many improvements to his awesome <code>compliment</code>
+  library for the needs of CIDER. Did you notice that you now get
+  completion suggestions for <strong>locals</strong>? How amazing is that!</li>
+<li><a href="https://github.com/dgutov">Dmitry Gutov</a> implemented native support in CIDER for <code>company-mode</code>.</li>
+</ul>
+
+
+<h2>The Road Before Us</h2>
+
+<p>Obviously our work is far from over &ndash; we&rsquo;re still lacking some crucial
+features (most notably a debugger) and a lot of code needs
+polish. This will obviously take some time and a lot of work to get right, but I&rsquo;m
+confident we&rsquo;ll get there.</p>
+
+<p>I&rsquo;d also want us to work a bit in the area of documentation &ndash; a
+manual, a cheatsheet, etc. Have a look at the
+<a href="https://github.com/clojure-emacs/cider/issues">issue tracker</a> if
+you&rsquo;d like to help out &ndash; we definitely need all the help we can get.</p>
+
+<p>The 0.7 release required a massive amount of work and we spent more that 3 months to get it to
+a shippable state. With the bulk of the work behind us I hope we&rsquo;ll be able to deliver new
+releases more frequently &ndash; on a monthly (or bi-monthly) basis.</p>
+
+<p>I&rsquo;d love to be able to raise a lot of money via crowd-funding and work
+on CIDER for an year or get hired by some company to work full-time on
+it, but that&rsquo;s not going to happen. For one reason or another people
+rarely get excited about dev tools, so all of us have to work together
+to make CIDER the ultimate Clojure(Script) development environment.</p>
+
+<p>If I knew how much work I&rsquo;d have to do when I assumed the maintenance
+of CIDER exactly one year ago I might not have done it. Maintaining a
+project that&rsquo;s pivotal to an entire community (I recall some article
+mentioning about half the Clojure devs were using it) is both a lot of
+work and a lot of stress and pressure. That said, it&rsquo;s probably my
+favourite OSS project and I enjoy working on it immensely. If you
+don&rsquo;t have the time to help out with code or docs you can still support my
+work on CIDER (and all my other projects) via
+<a href="https://www.gittip.com/bbatsov">gittip</a>.</p>
+
+<p><a href="https://www.gittip.com/bbatsov"><img src="https://rawgithub.com/twolfson/gittip-badge/0.2.0/dist/gittip.png" alt="Support via Gittip" /></a></p>
+
+<p>For all the gory details regarding new features and changes in CIDER 0.7 &ndash; take a look at the
+<a href="https://github.com/clojure-emacs/cider/blob/master/CHANGELOG.md">changelog</a>.</p>
+
+<p>That&rsquo;s all from me, folks! Use CIDER, drink cider and prosper!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Projectile 0.10 is out!]]></title>
+    <link href="http://batsov.com/articles/2013/12/09/projectile-0-dot-10-is-out/"/>
+    <updated>2013-12-09T15:26:00+02:00</updated>
+    <id>http://batsov.com/articles/2013/12/09/projectile-0-dot-10-is-out</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/bbatsov/projectile">Projectile</a> 0.10.0 is out!</p>
+
+<p>This might come as a surprise for people tracking Projectile&rsquo;s
+development, since recent snapshots were using 1.0 as the version
+number, so allow me to explain. I&rsquo;ve been wanting to release
+Projectile 1.0 for a while now, but I felt that without the addition
+of <em>per-project settings</em> support and some refinements to the way
+<em>ignoring of files &amp; folders</em> currently work, such moniker would be
+unjustified. Unfortunately, lately I&rsquo;ve been quite busy working on
+other projects like <a href="https://github.com/clojure-emacs/cider">cider</a>
+and <a href="https://github.com/bbatsov/rubocop">RuboCop</a> and I don&rsquo;t have
+that much time to work on Projectile, so I kept delaying the 1.0
+version.</p>
+
+<p>Recently I decided to release version 0.10 instead, for the benefit of
+users of package repos like Marmalade. The minor bump in the version
+doesn&rsquo;t mean that 0.10 is not a noteworthy update, though. 5 months of
+development and more than a hundred commits from almost a dozen of
+developers have really improved the Projectile experience.  It&rsquo;s
+easily the biggest update of Projectile, since the project was
+conceived.</p>
+
+<p>Some of the highlights include:</p>
+
+<ul>
+<li><code>.projectile</code> is always taken into account (previously it was consulted only when doing <code>native</code> indexing)</li>
+<li>There&rsquo;s now the ability to search for files in a specific directory</li>
+<li>More project types are recognized</li>
+<li>You can search for etags (ctags) in a project</li>
+<li><strong>The Commander</strong> (a really cool feature inspired from CIDER &amp; SLIME, that I&rsquo;ll show in a bit)</li>
+<li>Dozens of (mostly undocumented in the Changelog) bugfixes</li>
+</ul>
+
+
+<p>Have a look at the <a href="https://github.com/bbatsov/projectile/blob/master/CHANGELOG.md">changelog</a> for more details.</p>
+
+<p>And here&rsquo;s the new <strong>Commander</strong> in action:</p>
+
+<p><img src="http://batsov.com/images/articles/projectile-commander.gif"></p>
+
+<p>Basically it gives you a way to invoke many of the Projectile commands
+with a single key &ndash; <code>f</code> for <code>find-file</code>, <code>s</code> for <code>switch-project</code>,
+etc. It&rsquo;s very handy when switching projects since with this command
+you can always pick a different command to execute in the new
+project. By the way, <code>projectile-switch-project</code> will now run the
+commander, when invoked with a prefix argument (<code>C-u C-c p s</code>).</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WikEmacs lives on under new stewardship]]></title>
+    <link href="http://batsov.com/articles/2013/04/24/wikemacs-lives-on-under-new-stewardship/"/>
+    <updated>2013-04-24T11:36:00+03:00</updated>
+    <id>http://batsov.com/articles/2013/04/24/wikemacs-lives-on-under-new-stewardship</id>
+    <content type="html"><![CDATA[<p>Several months passed since I stated my intent
+<a href="articles/2013/01/27/the-wikemacs-experiment-is-over-long-live-emacswiki/">to shutdown WikEmacs</a>. While
+I still consider the project a failed experiment and stand by
+everything I wrote in that post, I have received since lots of messages from
+people who were sad to see WikEmacs go. One person in particular,
+<a href="https://twitter.com/holocronweaver">Jesse Johnson</a>, was committed to
+seeing the project move forward and offered to take over its stewardship.</p>
+
+<p>In the end I&rsquo;ve decided that in spirit of the FOSS ideals I don&rsquo;t have
+the right to take away something people like and want to use(especially
+given the fact that they contributed most of the content there) and
+handed over the domain and the data to Jesse.</p>
+
+<p><a href="http://wikemacs.org/index.php/Main_Page">WikEmacs</a> has been running
+for a couple of weeks now under his management and will continue to
+exist for a long time. If you liked the project I guess this is a good
+moment to show you love and spread the word.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RuboCop]]></title>
+    <link href="http://batsov.com/articles/2013/04/15/rubocop/"/>
+    <updated>2013-04-15T17:22:00+03:00</updated>
+    <id>http://batsov.com/articles/2013/04/15/rubocop</id>
+    <content type="html"><![CDATA[<p>After I launched the
+<a href="https://github.com/bbatsov/ruby-style-guide">Ruby Style Guide</a> I
+often received requests to create a tool enforcing the rules in the guide
+automatically.</p>
+
+<p>Today this tool is a reality &ndash; meet
+<a href="https://github.com/bbatsov/rubocop">RuboCop</a>. RuboCop already covers
+a significant portion of the Guide, supports both MRI 1.9 and MRI 2.0
+and has pretty neat Emacs integration(via
+<a href="https://github.com/bbatsov/rubocop-emacs">rubocop.el</a> and
+<a href="https://github.com/lunaryorn/flycheck">flycheck</a>).</p>
+
+<p>I&rsquo;d love to see more Ruby hackers check out RuboCop!</p>
+
+<p>I&rsquo;d love to thank all the great people who contributed code, issue
+reports and ideas to RuboCop&rsquo;s development and I sincerely hope many
+Ruby hackers will find it useful!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs Redux]]></title>
+    <link href="http://batsov.com/articles/2013/04/15/emacs-redux/"/>
+    <updated>2013-04-15T17:10:00+03:00</updated>
+    <id>http://batsov.com/articles/2013/04/15/emacs-redux</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve recently launched a new blog dedicated to Emacs &ndash;
+<a href="http://emacsredux.com/">Emacs Redux</a>.</p>
+
+<p>There I’ll be sharing with you (hopefully) useful tips and tricks to
+make your experience with Emacs more productive and more enjoyable.</p>
+
+<p>I hope you&rsquo;ll like it!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The WikEmacs Experiment is over! Long Live EmacsWiki!]]></title>
+    <link href="http://batsov.com/articles/2013/01/27/the-wikemacs-experiment-is-over-long-live-emacswiki/"/>
+    <updated>2013-01-27T09:23:00+02:00</updated>
+    <id>http://batsov.com/articles/2013/01/27/the-wikemacs-experiment-is-over-long-live-emacswiki</id>
+    <content type="html"><![CDATA[<p>Less than an year ago
+<a href="http://batsov.com/articles/2012/03/20/die-emacswiki/">amid a lot of turmoil</a>
+I&rsquo;ve started
+<a href="http://batsov.com/articles/2012/03/26/wikemacs-the-other-emacs-wiki/">an alternative to EmacsWiki</a>. The
+project took off to a great start, but quickly lost traction and now
+it&rsquo;s time to face the truth &ndash; I had an assumption, it turned out it(I)
+was wrong and I should come to terms with that.</p>
+
+<p>It&rsquo;s more than apparent at this point that the majority of the Emacs
+community is happy with EmacsWiki and that&rsquo;s fine by me. I&rsquo;ll be
+closing down WikEmacs after 2-3 months and I suggest that everyone who&rsquo;s
+contributed significant chunks of content to it migrate them to
+EmacsWiki (I&rsquo;ll personally move everything good I find). I don&rsquo;t want
+the work people have done to just disappear.</p>
+
+<p>Given the small interest in WikEmacs I doubt that many will miss it. I
+thank all the contributors and the supporters of the idea. In the long
+term it would be better for us to have a single repository of Emacs
+knowledge, that&rsquo;s why I decided to terminate WikEmacs sooner rather than later.</p>
+
+<p>I want to extend a big public apology to Alex Schroeder for my harsh
+criticism of EmacsWiki.  One year later I see that stewarding
+documentation projects and nurturing a healthy community around them
+is much harder than writing software. I&rsquo;m but a humble software
+engineer and you&rsquo;ll have to forgive me for my misguided actions.</p>
+
+<p>I hope that something good has(will) come up from all this drama. At
+the very least I urge everyone who cares for EmacsWiki to try and
+clean up, extend and improve at least a couple of articles on subjects
+that are of importance to him. I know that&rsquo;s something I&rsquo;ll be doing
+from now on.</p>
+
+<p>See you on EmacsWiki!</p>
+
+<p>WikEmacs is dead! Long live the one true EmacsWiki!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs Tip #8: Manipulating Word Case]]></title>
+    <link href="http://batsov.com/articles/2012/12/16/emacs-tip-number-8-manipulating-word-case/"/>
+    <updated>2012-12-16T17:57:00+02:00</updated>
+    <id>http://batsov.com/articles/2012/12/16/emacs-tip-number-8-manipulating-word-case</id>
+    <content type="html"><![CDATA[<p>One operation that we have to do fairly often when editing text is
+manipulating the case of words. The most popular case manipulations
+are probably <strong>capitalize</strong>, <strong>convert to lowercase</strong> and <strong>convert to
+uppercase</strong>. Emacs naturally has built-in commands for all of those.</p>
+
+<p>Pressing <code>M-c</code> runs the command <code>capitalize-word</code>, which will
+capitalize the next word and move the cursor after it. Pressing <code>M--
+M-c</code> will capitalize the previous word without moving the cursor.</p>
+
+<p>Pressing <code>M-l</code> runs the command <code>downcase-word</code>, which will lowercase
+the next word and move the cursor after it. Pressing <code>M-- M-l</code> will
+lowercase the previous word without moving the cursor.</p>
+
+<p>Pressing <code>M-u</code> runs the command <code>upcase-word</code>, which will uppercase the
+next word and move the cursor after it. Pressing <code>M-- M-u</code> will uppercase
+the previous word without moving the cursor.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs 24.3 introduces native OSX full-screen support]]></title>
+    <link href="http://batsov.com/articles/2012/12/09/emacs-24-dot-3-introduces-native-osx-full-screen-support/"/>
+    <updated>2012-12-09T13:34:00+02:00</updated>
+    <id>http://batsov.com/articles/2012/12/09/emacs-24-dot-3-introduces-native-osx-full-screen-support</id>
+    <content type="html"><![CDATA[<p>One of the most requested Emacs features &ndash; native OSX Lion style
+full-screen support has finally landed in Emacs 24.3 (due to be
+released in a few months). If you&rsquo;re eager to try it out right now
+homebrew is a good option:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew install emacs --cocoa --use-git-head --HEAD
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Homebrew&rsquo;s devs have even backported the full-screen patch to Emacs
+24.2, so if you&rsquo;re not very adventurous you can just do:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew install emacs --cocoa
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Alternatively you can install the
+<a href="http://emacsformacosx.com/emacs-builds/Emacs-pretest-24.2.91-universal-10.6.8.dmg">Emacs 24.2.91 pretest</a>
+(or a newer pretest/nightly build) from
+<a href="http://emacsformacosx.com/">Emacs for Mac OSX</a>. Personally I
+recommend this option, since cloning the Emacs git mirror (as homebrew
+does) takes like forever.</p>
+
+<p>Here&rsquo;s the beast in action:</p>
+
+<p><img src="http://batsov.com/images/articles/emacs-full-screen.png"></p>
+
+<p>This was a short article, but I do hope you&rsquo;ll find it useful.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs Tip #7: Remap Return to Control in OSX]]></title>
+    <link href="http://batsov.com/articles/2012/12/06/emacs-tip-number-7-remap-return-to-control-in-osx/"/>
+    <updated>2012-12-06T16:06:00+02:00</updated>
+    <id>http://batsov.com/articles/2012/12/06/emacs-tip-number-7-remap-return-to-control-in-osx</id>
+    <content type="html"><![CDATA[<p>One of the major problems when using
+<a href="http://batsov.com/articles/2012/10/14/emacs-on-osx/">Emacs on OSX</a> is
+not related to OSX itself &ndash; the problem has to do with the Mac&rsquo;s
+hardware. Recent Mac keyboards(both laptop and desktop, with the
+exception of the wired full size Mac keyboard) lack a right <code>Control</code>
+key and it happens to be extremely important if you&rsquo;re looking to
+fully leverage the power of Emacs.</p>
+
+<p>The traditional solution to the problem is to use a tool like
+<a href="http://pqrs.org/macosx/keyremap4macbook/">KeyRemap4MacBook</a> to remap
+the right <code>Option</code> key to right <code>Control</code> and to use a snippet like
+this to make <code>Command</code> behave like <code>Meta</code> in Emacs:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="k">setq</span> <span class="nv">mac-command-modifier</span> <span class="ss">&#39;meta</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This works, but it&rsquo;s hardly ideal since you&rsquo;re remapping <code>Option</code> at
+fairly low level and you won&rsquo;t be able to use it anywhere as <code>Option</code>.</p>
+
+<p>A much better idea would be to leverage a little know capability of
+KeyRemap4MacBook (a great program which despite its name works with
+desktop Macs as well) and map the <code>Return</code> key to <code>Control</code> only
+when it&rsquo;s held down (it will behave like a normal Return key in all
+other situations). The option you&rsquo;ll have to find in KeyRemap4MacBook
+is in the <code>Change Return</code> section and it labeled <code>Return to Control_R
+(+ When you type Return only, send Return)</code>.</p>
+
+<p>This approach has several advantages.  First and foremost you&rsquo;re not
+sacrificing a valuable key like <code>Option</code>. Second &ndash; it&rsquo;s much easier to
+hit <code>Return</code> with your right pinky than it is to hit <code>Option</code>
+(especially if you&rsquo;re using a US layout keyboard &ndash; these have long
+single row <code>Return</code> keys, compared to the short 2 row Returns found on
+European keyboards). Lastly, if you&rsquo;ve already remapped <code>CapsLock</code> to
+<code>Control</code> (like so many people do) you&rsquo;re getting a pretty symmetrical
+mapping on the opposite side of your keyboard.</p>
+
+<p>All in all &ndash; remapping <code>Return</code> to <code>Control</code> is a huge win if you&rsquo;re
+using heavily one of Apple&rsquo;s smaller keyboards. Of course, if you have
+the option to use an external keyboard you&rsquo;d do yourself a solid if you
+obtained a good full size keyboard like the
+<a href="http://batsov.com/articles/2008/06/16/das-keyboard/">Das Keyboard</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[guru-mode]]></title>
+    <link href="http://batsov.com/articles/2012/09/09/guru-mode/"/>
+    <updated>2012-09-09T21:17:00+03:00</updated>
+    <id>http://batsov.com/articles/2012/09/09/guru-mode</id>
+    <content type="html"><![CDATA[<p>Getting started with Emacs is hard. That&rsquo;s a fact of life and you
+shouldn&rsquo;t believe anyone telling you otherwise.</p>
+
+<p>One of the harder parts of the journey to Emacs mastery is remembering
+all those keybindings at the beginning (<code>C-h t</code>), which can be really
+overwhelming. To make matters worse for many common commands there are
+two sets of keybindings &ndash; the Emacs ones (that are touch typing
+friendly) and the popular ones (that typically involve the use of the
+arrow keys). Most people never get to use the <em>proper</em> keybindings and
+forever make use of the arrow keys.</p>
+
+<p>To help Emacs newcomers get used to the proper Emacs keybindings I&rsquo;ve
+created <a href="http://github.com/bbatsov/guru-mode">guru-mode</a> &ndash; a simple
+minor mode that will show you a (helpful) message in the minibuffer
+every time you try to use a <em>non Emacs way</em> keybinding.</p>
+
+<p><img src="http://batsov.com/images/articles/guru-mode.png"></p>
+
+<p>It will probably annoy you <strong>a lot</strong> in the beginning, but trust me &ndash;
+it&rsquo;ll be worth it in the long run.</p>
+
+<p><code>guru-mode</code> comes bundled with
+<a href="http://github.com/bbatsov/prelude">Emacs Prelude</a> and is available
+for installation from <a href="http://marmalade-repo.org">Marmalade</a> and <a href="http://melpa.milkbox.net">MELPA</a>.</p>
+
+<p>P.S. True Emacs mastery cannot be achieved if you do not practice
+touch typing; if you&rsquo;re doing hunt-and-peck typing you&rsquo;d better fire up the
+venerable <code>gtypist</code> before looking at <code>guru-mode</code>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs Support for the Slim Template Language]]></title>
+    <link href="http://batsov.com/articles/2012/09/09/emacs-support-for-the-slim-template-language/"/>
+    <updated>2012-09-09T20:16:00+03:00</updated>
+    <id>http://batsov.com/articles/2012/09/09/emacs-support-for-the-slim-template-language</id>
+    <content type="html"><![CDATA[<p>I&rsquo;m mostly a Ruby on Rails developer these days and as such I&rsquo;m pretty
+fond of the <a href="http://slim-lang.com">Slim template language</a>. I&rsquo;ve
+always hated HTML + ERB, since that evil duo encourages all sorts of
+ever practices and recently I&rsquo;ve adopted Slim as a replacement for
+my long time favourite ERB alternative &ndash; <a href="http://haml-lang.com">Haml</a>.</p>
+
+<p>I won&rsquo;t discuss here the shortcomings of Haml vs Slim, but I&rsquo;ll share
+with you the big advantage Haml has over Slim (for Emacs users at
+least) &ndash; it has a pretty nice major editing mode for Emacs. Slim&rsquo;s
+Emacs support on the other hand is rather iffy and is presently mostly
+based on <code>haml-mode</code>. That will hopefully change soon, since recently
+I&rsquo;ve become a co-maintainer of
+<a href="http://github.com/minad/emacs-slim">slim-mode</a> and I plan to improve
+it as much as I can (currently I&rsquo;m mostly working on precise
+font-locking). Any help from interested parties is, naturally, most
+welcome. I very much doubt that me and
+<a href="https://github.com/minad">Daniel Mendler</a> are the only two people
+dreaming of great Slim experience in Emacs. :&ndash;)</p>
+
+<p><img src="http://batsov.com/images/articles/slim-mode.png"></p>
+
+<p>Let us together eliminate that big Haml advantage. :&ndash;)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A True Emacs Knight]]></title>
+    <link href="http://batsov.com/articles/2012/05/28/a-true-emacs-knight/"/>
+    <updated>2012-05-28T15:39:00+03:00</updated>
+    <id>http://batsov.com/articles/2012/05/28/a-true-emacs-knight</id>
+    <content type="html"><![CDATA[<p>Here&rsquo;s one true Emacs Knight (courtesy of my friend Gergana
+Stancheva). Feel free to use it wherever you see fit.</p>
+
+<p><img src="http://batsov.com/images/articles/emacs_knight.jpg"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MELPA - homebrew (Emacs Edition)]]></title>
+    <link href="http://batsov.com/articles/2012/04/06/melpa-homebrew-emacs-edition/"/>
+    <updated>2012-04-06T18:04:00+03:00</updated>
+    <id>http://batsov.com/articles/2012/04/06/melpa-homebrew-emacs-edition</id>
+    <content type="html"><![CDATA[<p>A few weeks ago I wrote an
+<a href="http://batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/">article about the state of package management in Emacs</a>. In
+that article I pointed out that on the side of <a href="http://wikemacs.org/wiki/Package.el">package.el</a> too much
+was riding on the poorly maintained Marmalade repo. Today
+Marmalade went dark (again) and many people are wondering what to do
+now. The answer is simple &ndash; start using <a href="http://melpa.milkbox.net/">MELPA</a> instead.</p>
+
+<p>I was thinking of starting a project similar to Marmalade to alleviate
+its problems, but then the MELPA project was brought to my
+attention. This project follows the Homebrew (unofficial OSX package
+manager) model of using simple GitHub collaboration to maintain and
+grow a bunch of build recipes. In the case of MELPA, those recipes
+show how to bundle upstream source packages into package.el-compliant
+packages. The recipes can be tested locally by package authors, and
+they are run hourly on the MELPA server to create an HTTP package
+archive that Emacs users can simply add to their <code>'package-archives</code>
+list. As <a href="http://technomancy.us">Phil Hagelberg</a> said &ndash; there&rsquo;s no reason to drag in
+complicated dependencies like Node for something that&rsquo;s essentially a
+pile of static files. MELPA on the other hand is written mostly in
+Emacs Lisp and is thus much more comprehensible to casual Emacs hackers.</p>
+
+<p>Most packages currently contained in MELPA are development snapshots,
+but the project maintainer
+<a href="https://github.com/milkypostman">Donald Curtis</a> and
+<a href="http://www.sanityinc.com/">Steve Purcell</a> (aka <code>sanityinc</code>) are
+working on extending the MELPA build scripts to support stable
+packages, using upstream version tags.</p>
+
+<p>Adding a new package to MELPA is as simple as adding a few lines of
+code to the <code>pkglist</code> file in MELPA&rsquo;s source code repo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">name</span> <span class="ss">:url</span> <span class="s">&quot;&lt;repo url&gt;&quot;</span>
+</span><span class='line'> <span class="ss">:fetcher</span> <span class="nv">[git|svn|darcs</span><span class="err">|</span><span class="nv">wiki]</span>
+</span><span class='line'> <span class="nv">[:files</span> <span class="p">(</span><span class="s">&quot;&lt;file1&gt;&quot;</span><span class="o">,</span> <span class="o">...</span><span class="p">)</span><span class="nv">]</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You simply have to fork the <a href="https://github.com/milkypostman/melpa">official repo</a>, modify <code>pkglist</code>, send a pull
+request and <code>package.el</code> compatible packages will be built
+automatically for you on MELPA&rsquo;s server (you can also build the
+packages locally to test if everything is OK with your recipes). Sure it&rsquo;s not as easy as
+submitting a package via a web UI, but it&rsquo;s a much more robust
+approach. It also eliminates a common problem in Marmalade &ndash; there
+only the original uploader (+ people selected by him) can update a
+package. Often the original uploaders are very hard to find&hellip;</p>
+
+<p>To use MELPA with Emacs 24 (or a recent version of <code>package.el</code>) just
+add this to your <code>.emacs</code> (or equivalent):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;package-archives</span>
+</span><span class='line'><span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;melpa&quot;</span> <span class="o">.</span> <span class="s">&quot;http://melpa.milkbox.net/packages/&quot;</span><span class="p">)</span> <span class="no">t</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There&rsquo;s a lot more info regarding MELPA on its official website and
+I&rsquo;d rather not duplicate it here.</p>
+
+<p>I would encourage package authors and users to investigate and
+contribute to MELPA. I&rsquo;ve already submitted a bunch of packages
+there and rebased <a href="http://batsov.com/prelude">Emacs Prelude</a> to
+use MELPA instead of Marmalade.</p>
+
+<p>Together we can turn MELPA into the most extensive and robust community-supported
+<code>package.el</code> repo! Emacs users deserve one of those :&ndash;)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WikEmacs - The Other Emacs Wiki]]></title>
+    <link href="http://batsov.com/articles/2012/03/26/wikemacs-the-other-emacs-wiki/"/>
+    <updated>2012-03-26T11:23:00+03:00</updated>
+    <id>http://batsov.com/articles/2012/03/26/wikemacs-the-other-emacs-wiki</id>
+    <content type="html"><![CDATA[<p>I&rsquo;d like to apologize to everyone insulted by my previous
+posts. Contrary to popular belief I acknowledge EmacsWiki&rsquo;s
+contribution to the Emacs community. Obviously many people are too
+fond of its current format so I doubt that it will ever change
+(considerably). I didn&rsquo;t mean to insult anyone, I just wanted to catch
+your attention (which unfortunately requires harsher words from time to
+time) and point it in the direction of the existing problems.</p>
+
+<p>For the people that weren&rsquo;t happy with EmacsWiki &ndash; the ones that felt
+my pain and were looking for a change I present
+<a href="http://wikemacs.org">WikEmacs</a> (pronounced wikimacs). It&rsquo;s a
+MediaWiki powered Emacs wiki, that will try to bring to the community
+cleaner, leaner and more up-to-date documentation.</p>
+
+<p>There are only a few guidelines for the contributors there:</p>
+
+<ul>
+<li>articles should be geared only towards the current and future
+versions of Emacs (currently 23 and 24) for maintainability&rsquo;s sake.</li>
+<li>articles should not copy Emacs&rsquo;s or extension&rsquo;s official
+documentation &ndash; they should refer to it instead. An overview, some
+nice pointers, tips and links &ndash; that seems like a good article,
+doesn&rsquo;t it?</li>
+<li>comments and questions should go to an article&rsquo;s discussion page</li>
+</ul>
+
+
+<p>File uploads are disabled on WikEmacs (but image file uploads will
+probably be allowed soon) &ndash; it will never host Emacs extensions of any
+sort.</p>
+
+<p>There is a Google discussion group
+<a href="https://groups.google.com/forum/?fromgroups#!forum/wikemacs">here</a>
+for more general questions regarding the wiki.</p>
+
+<p>Our goal is not to copy over the 8500 articles available at
+EmacsWiki. It&rsquo;s to provide a good road map for new users coming to
+Emacs and enough helpful hints and tips for experienced users. Everyone
+is welcome to join our efforts.</p>
+
+<p>As far as short term goals go &ndash; have a look at the outlined structure
+of the wiki (on its home page), pick a section that interests you and
+create/extend/improve it. Our content is licensed with GNU&rsquo;s Free
+Documentation License (which is compatible with Wikipedia&rsquo;s and
+probably EmacsWiki&rsquo;s GPL2). Some nice blog articles about Emacs might
+be converted to wiki articles with permission from their authors. You
+might find <a href="http://johnmacfarlane.net/pandoc/try">pandoc</a> useful to
+automatically convert articles from other formats to MediaWiki markup
+and <a href="https://launchpad.net/mediawiki-el">mediawiki.el</a> to edit
+articles on wiki from the comfort of your beloved editor.</p>
+
+<p>Thanks to the people that brought us the original EmacsWiki. Thanks to
+everyone who supported the idea for the new wiki. Thanks in advance to
+all future contributors.</p>
+
+<p>Some people will undoubtedly see the birth of WikEmacs as a separatist move to fraction
+the Emacs community. To them I&rsquo;d like to say that few things in life
+are as productive as competition. Obviously a lot of people willing to
+contribute to a new wiki are unwilling to do so for EmacsWiki and vice
+versa. This is not a contest and there will be no winner. I wish the
+best of luck to EmacsWiki and its supporters. What I wish for is to give
+our community the best source of documentation available and the
+option to choose.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[All Hands on Deck! (or the Action Plan for a new Emacs community wiki)]]></title>
+    <link href="http://batsov.com/articles/2012/03/21/all-hands-on-deck-or-the-action-plan-for-a-new-emacs-community-wiki/"/>
+    <updated>2012-03-21T11:11:00+02:00</updated>
+    <id>http://batsov.com/articles/2012/03/21/all-hands-on-deck-or-the-action-plan-for-a-new-emacs-community-wiki</id>
+    <content type="html"><![CDATA[<h2>Prelude</h2>
+
+<p>Yesterday I wrote a highly
+<a href="http://batsov.com/articles/2012/03/20/die-emacswiki/">controversial article about the state of the EmacsWiki</a>
+and suggested a few things we can do to make things better. I got the
+usual batch of hate mail and some remarks on the poor quality of my
+English and writing style (which generally amuse me a lot). But I
+got much more encouraging feedback from <strong>a lot</strong> of Emacs community
+members. So here our story continues&hellip;</p>
+
+<!--more -->
+
+
+<h2>On The Essence of Things</h2>
+
+<p>Some people accused me that I don&rsquo;t even know what I wiki is. To them
+I&rsquo;d like to say that a thing is not its dictionary/encyclopedia
+definition. A thing is what it&rsquo;s perceived to be. People expect wiki
+entries to look and behave like those found in MediaWiki or Confluence
+and not like some mixture of a wiki, forum and irc conversation&hellip;</p>
+
+<h2>A Word from Our Sponsor</h2>
+
+<p>Alex wrote a
+<a href="http://www.emacswiki.org/emacs/2012-03-20">public response on the EmacsWiki</a>
+yesterday, that I&rsquo;d first like to share (since probably more people
+will see it here, than there). I publish it here with no alternations:</p>
+
+<blockquote><p>Bozhidar Batsov is apparently very frustrated with Emacs Wiki. He<br/>seems to think that we should start over – use new software, add<br/>moderators, guidelines, and sorts of fancy stuff. My answer is the<br/>same as it was back in 2008 (http://www.emacswiki.org/emacs/MissionRant).</p><p>One of his ideas I actually agree with. &#8220;Submit documentation only to<br/>the official project pages.&#8221; Absolutely. :)</p><p>Some ideas I am luke warm about: &#8220;package something on Marmalade…&#8221;<br/>Sure, why not? I have never used Marmalade, but I encourage you to<br/>improve the tools you use. There&#8217;s also &#8220;don&#8217;t respond to any bug<br/>requests regarding modified copies of your sources distributed via<br/>EmacsWiki.&#8221; I also don&#8217;t want to encourage bug reports on the<br/>wiki. Use the facilities built into Emacs to report bugs. But almost<br/>all of you know that.</p><p>But other ideas?</p><p>&#8220;Drop the current format of the wiki - use something standard like<br/>MediaWiki instead of OddMuse.&#8221; How is reformatting the pages going to<br/>improve them?</p><p>&#8220;Drop all the articles about Emacs extensions.&#8221; Just delete them? Are<br/>you at least going to rewrite them and move them to the appropriate<br/>project pages out there? Or are you just going to delete them? Taking<br/>away and not giving back?</p><p>&#8220;Drop all the extensions hosted there.&#8221; Some of the old code has no<br/>other home. Some of the old code is here for the poor sods stuck with<br/>Emacs 20. Are you going to package them for ELPA or Marmalade or<br/>whatever you are going to suggest instead?</p><p>Some of you – like Drew Adams – keep their packages on the wiki. For<br/>those packages, I don&#8217;t see any alternative. Are you going to maintain<br/>his software? Fix his bugs? Develop his features? Unless you are, I<br/>guess you can try and fork his stuff and keep it on whatever other<br/>system you want. But please don&#8217;t suggest taking something away<br/>without giving something in return.</p><p>&#8220;Assemble a team of moderators.&#8221; Indeed. Moderators! Where have you<br/>been hiding for the last ten years! Are you volunteering? I&#8217;m a bit<br/>wary regarding your deletionist tendencies. But perhaps you’d like to<br/>start with a new Table of Contents and new top-down menus where only<br/>the pages you personally vetted and checked are listed. That would be<br/>an awesome thing to do! Of course, there’s no need to delete anything<br/>in order for you to do this. Just arrange the stuff you like and do<br/>it.</p><p>In fact, in order to do it, just do it.</p><p>&#8220;Accept only articles about general Emacs usage and Emacs Lisp<br/>programming.&#8221; How is that going to work – more deleting? I don&#8217;t<br/>know&#8230; I don&#8217;t think you understand where the value of Emacs Wiki<br/>comes from. Perhaps you should write a book about Emacs? Collect a<br/>team of authors and editors and deletionists, take a copy of the wiki,<br/>and just do it right.</p><p>Also, less hyperbole when posting&#8230; :P</p><footer><strong>Alex Schroeder</strong> <cite>Creator and Maintainer of EmacsWiki.org</cite></footer></blockquote>
+
+
+<p>Here&rsquo;s my two cents on the letter:</p>
+
+<ul>
+<li><p>The markup format hardly matters. A new wiki engine would give us
+better structure of the wiki as whole (like separate discussion pages
+for one).</p></li>
+<li><p>Dropping it from the wiki doesn&rsquo;t mean we&rsquo;ll delete the code
+forever. What I meant was &ndash; dump all the extensions to some archive
+for the interested parties and remove them from the wiki. You&rsquo;re
+basically putting words in my mouth.</p></li>
+<li><p>We should care for the bad choices some people made (like Drew &ndash; all
+my respect to his work). With so many free project hosting services I
+don&rsquo;t feel we&rsquo;ll be taking something away and not giving an alternative.</p></li>
+<li><p>No, I don&rsquo;t volunteer. Not for this format of the wiki. But I do
+volunteer for an alternative matching the outline I&rsquo;ve suggested.</p></li>
+<li><p>Mocking me is not right response, you know. The problem exists, you
+fail to acknowledge it, but I don&rsquo;t care that much.</p></li>
+<li><p>Alex calls it hyperbole, I call it the simple truth (and many others
+would second me).</p></li>
+</ul>
+
+
+<h2>The Plan</h2>
+
+<p>Many people commented that my post is not worth a damn if I&rsquo;m not
+willing to back it with action. I&rsquo;m sad to disappoint my critics &ndash; but
+I&rsquo;ll willing to go the whole nine yards on this one. Here&rsquo;s the
+outline of my proposal for a new wiki:</p>
+
+<ol>
+<li><p>Use <a href="http://moinmo.in/">MoinMoin</a> as the wiki engine. It&rsquo;s written in Python and
+it&rsquo;s GPL software. It doesn&rsquo;t use a database, it&rsquo;s featureful and
+mature. It&rsquo;s successfully used by Debian and Ubuntu (and many other
+respectable software organizations). I&rsquo;m against using a Git backed
+systems since it will increase the entry bar for user
+participation. I&rsquo;m even more against the use of a custom platform
+developed specially to serve as the EmacsWiki.</p></li>
+<li><p>I&rsquo;ll pay for the hosting and the new domain and set up the wiki
+initially. I&rsquo;d suggest that the new project begins with the domain
+emacswiki.net or emacswiki.info and eventually we&rsquo;ll assume the old
+emacswiki.org domain as well (should the new wiki be successful
+enough). Suggestions for another name are welcome in the comments
+section.</p></li>
+<li><p>I and anyone willing to lend a hand will pick the articles worth
+saving from the EmacsWiki and migrate them to the new one. I and
+anyone willing to serve as moderator will monitor new contributions
+afterwards.</p></li>
+<li><p>Wiki entries will have a more or less standard structure and will
+adhere and community established guidelines.</p></li>
+<li><p>The old EmacsWiki will eventually be retired to another domain such
+as old.emacswiki.org (or similar) for historic purposes and benefit of
+users of old Emacs versions.</p></li>
+</ol>
+
+
+<p>It this good enough for you to call it an action plan? Comments on it
+are most welcome!</p>
+
+<h2>Epilogue</h2>
+
+<p>I&rsquo;m sorry that I&rsquo;m the guy that has to break the terrible news to all of
+the delusional EmacsWiki supporters out there &ndash; <em>It&rsquo;s not
+special. It&rsquo;s not a beautiful or unique snowflake. It&rsquo;s the same
+decaying wiki matter like some many else.</em> I&rsquo;m sorry for my terrible
+English and my lack of good manners. I&rsquo;m sorry I&rsquo;m willing do to
+something while so many of you are just whining and ignoring the
+existing problems.</p>
+
+<p>I think as a member of the Emacs community I&rsquo;ve shown my worth so far
+and I&rsquo;ll willing to do even more. But I cannot carry out such a
+massive undertaking on my own. I encourage everyone serious about
+helping out to comment the article (here, not on reddit or hacker
+news) or send me a personal email.</p>
+
+<p><strong>Update</strong></p>
+
+<p>The new wiki is now available at
+<a href="http://wikemacs.org">http://wikemacs.org</a>. It&rsquo;s using MediaWiki (it
+turned out it had several nice advantages over MoinMoin).</p>
+]]></content>
+  </entry>
+  
+</feed>

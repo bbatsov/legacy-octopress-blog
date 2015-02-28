@@ -1,0 +1,1274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Python | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/python/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-28T09:00:23+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Django 1.3 vs Rails 3: A not so final showdown]]></title>
+    <link href="http://batsov.com/articles/2011/06/19/django-vs-rails/"/>
+    <updated>2011-06-19T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/06/19/django-vs-rails</id>
+    <content type="html"><![CDATA[<h2>Prelude</h2>
+
+<p>I&rsquo;ve recently started a new job at an American start-up company. My
+position in the company is the one of Technical Lead &ndash; the person responsible for
+the selection of technologies around which the projects are being
+built. Since we&rsquo;ll be doing mostly web development we&rsquo;ve had a long
+kick-off discussion with the company&rsquo;s CTO about the direction which we should
+initially take. He had PHP in mind, but I convinced him that Ruby or
+Python would make much better platforms for our futures apps. So he
+tasked me to research the two leading frameworks in the Ruby and
+Python land &ndash; namely Ruby on Rails 3 and Django 1.3. I had a week to
+prepare some prototypes with both and create on overview for my
+boss. I had some experience with Rails 2 a few years back and I have
+fairly decent knowledge of Ruby. My Python is not as fluent
+(admittedly), but still &ndash; I&rsquo;ve played a lot with Python
+recently. Django, however, was completely new to me. In this article
+I&rsquo;ll try to compare the frameworks in a totally friendly way; if
+you&rsquo;ve expected an epic flame war post you may very well stop reading
+here. I&rsquo;m obviously no Rails/Django guru, so if I&rsquo;ve
+written something that is wrong &ndash; please feel free to correct me.</p>
+
+<p>Please, keep in mind that a short comparison article cannot even begin
+to scratch the immense power and complexity of such frameworks. The overview,
+that you&rsquo;ll find here is a bit on the superficial side, but it should
+give you enough pointers to get you started.</p>
+
+<p>Hopefully this article will be useful to people that are in the same
+boat as was &ndash; picking between Rails and Django.</p>
+
+<!--more-->
+
+
+<h2>Setup &amp; Getting started</h2>
+
+<h3>Rails</h3>
+
+<h4>Linux &amp; OSX</h4>
+
+<p>The recommended (by me) way to install Ruby and Ruby on Rails 3.x is via
+<a href="https://rvm.beginrescueend.com/">RVM</a>. RVM allows you to have several
+version of Ruby installed at the same time and to easily switch
+between them. It also allows you to create gem sets, which are quite
+handy in testing. After you&rsquo;ve installed RVM it&rsquo;s easy to install any
+Ruby interpreter and Rails. This example shows how to get RVM, MRI 1.9.2
+and Rails current (3.0.9):</p>
+
+<p><code>bash
+$ bash &lt; &lt;(curl -s https://rvm.beginrescueend.com/install/rvm)
+$ echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] &amp;&amp; . "$HOME/.rvm/scripts/rvm" # Load RVM function' &gt;&gt; ~/.bash_profile
+$ source ~/.bash_profile
+$ rvm install 1.9.2
+$ rvm use 1.9.2 --default
+$ which ruby
+~/.rvm/rubies/ruby-1.9.2-p180/bin/ruby
+$ ruby -v
+ruby 1.9.2p180 (2011-02-18 revision 30909) [i686-linux]
+$ gem install rails
+$ rails -v
+Rails 3.0.9
+</code></p>
+
+<p>Since RVM builds Ruby environments from source you might need to
+install a few dependencies first. After you&rsquo;ve install RVM it will
+output those packages as instructions.</p>
+
+<p>If you&rsquo;re using Z Shell (like me) you should replace .bash_profile
+with .zshenv or .zshrc.</p>
+
+<h4>Windows</h4>
+
+<p>While there are many ways to get Ruby on Rails installed on a Windows
+host, the simplest is certainly to use the <a href="http://railsinstaller.org/">RailsInstaller</a>. It has only one
+little drawback &ndash; currently it comes with Ruby 1.8.7 bundled, but the
+recent beta already features Ruby 1.9.2.</p>
+
+<h4>Your first Rails app</h4>
+
+<p>``` bash
+$ rails new railsdemo</p>
+
+<pre><code>  create
+  create  README
+  create  Rakefile
+  create  config.ru
+  create  .gitignore
+  create  Gemfile
+  create  app
+  create  app/controllers/application_controller.rb
+  create  app/helpers/application_helper.rb
+  create  app/mailers
+  create  app/models
+  create  app/views/layouts/application.html.erb
+  create  config
+  create  config/routes.rb
+  create  config/application.rb
+  create  config/environment.rb
+  create  config/environments
+  create  config/environments/development.rb
+  create  config/environments/production.rb
+  create  config/environments/test.rb
+  create  config/initializers
+  create  config/initializers/backtrace_silencers.rb
+  create  config/initializers/inflections.rb
+  create  config/initializers/mime_types.rb
+  create  config/initializers/secret_token.rb
+  create  config/initializers/session_store.rb
+  create  config/locales
+  create  config/locales/en.yml
+  create  config/boot.rb
+  create  config/database.yml
+  create  db
+  create  db/seeds.rb
+  create  doc
+  create  doc/README_FOR_APP
+  create  lib
+  create  lib/tasks
+  create  lib/tasks/.gitkeep
+  create  log
+  create  log/server.log
+  create  log/production.log
+  create  log/development.log
+  create  log/test.log
+  create  public
+  create  public/404.html
+  create  public/422.html
+  create  public/500.html
+  create  public/favicon.ico
+  create  public/index.html
+  create  public/robots.txt
+  create  public/images
+  create  public/images/rails.png
+  create  public/stylesheets
+  create  public/stylesheets/.gitkeep
+  create  public/javascripts
+  create  public/javascripts/application.js
+  create  public/javascripts/controls.js
+  create  public/javascripts/dragdrop.js
+  create  public/javascripts/effects.js
+  create  public/javascripts/prototype.js
+  create  public/javascripts/rails.js
+  create  script
+  create  script/rails
+  create  test
+  create  test/fixtures
+  create  test/functional
+  create  test/integration
+  create  test/performance/browsing_test.rb
+  create  test/test_helper.rb
+  create  test/unit
+  create  tmp
+  create  tmp/sessions
+  create  tmp/sockets
+  create  tmp/cache
+  create  tmp/pids
+  create  vendor/plugins
+  create  vendor/plugins/.gitkeep
+</code></pre>
+
+<p>$ rails s
+```</p>
+
+<p>As you can see the structure of a Rails project consists of quite a
+few folders and files. This is a bit intimidating at first, but
+becomes quite valuable once you&rsquo;ve used to the predefined
+structure. You&rsquo;ll find a good overview of the structure <a href="http://ruby.railstutorial.org/book/ruby-on-rails-tutorial#sec:the_first_application">here</a>.</p>
+
+<p>Open your browser and type
+<a href="http://localhost:3000">http://localhost:3000</a> as the url. If
+everything is OK you&rsquo;ll see a Rails welcome page.</p>
+
+<p>At this point you should probably either start playing with
+scaffolding or read the rest of this article and start playing with
+scaffolding afterwards :&ndash;) For instance you can try:</p>
+
+<p><code>bash
+$ rails g scaffold User first_name:string last_name:string email:string password:string
+$ rake db:migrate
+$ rails s
+</code></p>
+
+<p>Open your browser and type
+<a href="http://localhost/users:3000">http://localhost:3000</a> as the
+url. &ldquo;Magic&rdquo; like this made Rails famous originally.</p>
+
+<p>By default Rails apps use SQLite as a database backend, so might have
+to install it as well.</p>
+
+<p>The rails script is useful for various tasks &ndash; code generation,
+plug-in installation, running a rails console, running a development
+web server, etc.</p>
+
+<h2>Django</h2>
+
+<h4>Linux</h4>
+
+<p>I prefer to install django from the distribution&rsquo;s package manager. On
+a Red Hat distro like Fedora I would do:</p>
+
+<p><code>bash
+$ sudo yum install Django
+</code></p>
+
+<p>And on a Debian system:</p>
+
+<p><code>bash
+$ sudo apt-get install python-django
+</code></p>
+
+<p>A popular alternative (that would work for OSX and Windows users as
+well) to this distro-specific approach is to use a
+python package manager like <a href="http://packages.python.org/distribute/easy_install.html">easy_install</a> or <a href="http://pypi.python.org/pypi/pip">pip</a>.</p>
+
+<h4>Windows</h4>
+
+<p>The <a href="http://bitnami.org/stack/djangostack">Bitnami Django stack</a> is the simplest way to get Django and
+everything that it requires in a single step.</p>
+
+<h4>Your first app</h4>
+
+<p><code>bash
+$ django-admin startproject djangodemo
+$ ll djangodemo
+total 16
+-rw-r--r-- 1 bozhidar bozhidar    0 Jun 19 09:45 __init__.py
+-rwxr-xr-x 1 bozhidar bozhidar  503 Jun 19 09:45 manage.py*
+-rw-r--r-- 1 bozhidar bozhidar 5039 Jun 19 09:45 settings.py
+-rw-r--r-- 1 bozhidar bozhidar  577 Jun 19 09:45 urls.py
+$ cd djangodemo
+$ ./manage.py runserver
+</code></p>
+
+<p>Compared to Rails, Django created a much simpler project
+structure. There are only four files in here and only two are actual
+Django configuration files &ndash; settings.py and urls.py. manage.py is
+just a script useful for managing some aspects of the project (similar
+to the rails script) &ndash; it can sync the model with the database, run a
+development web server, run a django console, etc.</p>
+
+<p>To test the new project open
+<a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a> in your browser.</p>
+
+<h2>Features at a glance</h2>
+
+<h3>Rails</h3>
+
+<h4>Convention over configuration</h4>
+
+<p>The centerpiece of Rails&rsquo;s philosophy is called convention over
+configuration(CoC). This basically means that a Rails project has a
+predefined layout and sensible defaults. All components (models,
+views, controllers, layouts, css, javascript, etc) have standard
+places where you should drop them and the application picks them up without
+any additional effort on your part.</p>
+
+<p>People seem to underestimate the importance of CoC in practice
+initially &ndash; it
+makes it a lot easier to reason about a project and a lot easier to
+configure the project. On the other hand if some of the defaults don&rsquo;t
+work for you &ndash; you&rsquo;d have to jump through some hoops. Recent versions
+of Rails, however, have made it a lot easier to tweak the defaults.</p>
+
+<p>All in all I feel that CoC is a big win for developers and I guess
+many people share my opinion since CoC can now be found in many other
+frameworks as well.</p>
+
+<h4>MVC to the bone</h4>
+
+<p>Rails is a classical Model-View-Controller full stack web framework &ndash;
+it handle all aspects of a typical web application. What separates it
+from most of the MVC frameworks around is the heavy emphasis on
+<a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">REST</a>. The
+domain objects are treated as resources and could be handled in a
+uniform manner using just the standard HTTP verbs like GET, PUT,
+DELETE, POST. REST is extremely good fit for data driven applications.</p>
+
+<p>As usual the model houses the application&rsquo;s business logic, the
+controller invokes functionality from the model layer and feeds the
+resulting data to the view layer, which display the data in a
+meaningful way to the user.</p>
+
+<p>The model layer is the home of your domain objects and the business
+logic surrounding them. Domain objects (a.k.a. entities) are mapped to
+database tables (at least in RDBMS). Unlike most object relational
+mappers Rails&rsquo;s ActiveRecord (the default ORM; could be substituted
+with something else if you wish) doesn&rsquo;t require you to explicitly
+declare the structure of the objects, but rather extracts it
+automatically from your DB table definitions. A simple class, modeling
+an application user might look like this:</p>
+
+<p><code>bash
+class User &lt; ActiveRecord::Base
+  validates :first_name, :last_name, :email, :password, :presence =&gt; true
+  validates :password, confirmation: true
+end
+</code></p>
+
+<p>Note that the validation methods are entirely optional (but highly
+recommended) &ndash; the class could have very well had an empty body. Rails
+would know to look for a table named Users in the database and extract
+the field information from it.</p>
+
+<p>Rails generates automatically for us &ldquo;finders&rdquo; that we can use to make
+queries about objects in pure Ruby. It also provides an elegant DSL to
+express relationships between various model classes (belongs_to,
+has_many, etc)</p>
+
+<p>In the view layer Rails has traditionally relied on HTML templates
+with Ruby code embedded in them (html.erb). There are a lot of
+community contributed alternatives, however, with HAML being the most
+prominent one. On a similar note Rails allows you to use SASS as a
+replacement for traditional CSS.</p>
+
+<p>Another centerpiece in Rails is the &ldquo;Don&rsquo;t Repeat Yourself&rdquo;(DRY)
+principle. In the view layer partial templates, layouts and helpers
+are some of the tools available to help you abide by that
+principle. You&rsquo;ll certainly make heavy use of them in your
+applications so you should pay them some special attention.</p>
+
+<h4>Database migrations</h4>
+
+<p>Everyone that has done some serious programming knows that it&rsquo;s not
+realistic to presume that the initial database schema won&rsquo;t ever
+change &ndash; fields get added/removed, new tables get introduced,
+etc. All those changes are commonly referred to as &ldquo;migrations&rdquo; and
+traditionally every team unrolls its own handling of the problem. On
+my last job I was tasked at some point to write a tool in Java that
+analyzed a config file and a directory structure filled with SQL
+scripts and applied them selectively to various target databases. In
+Rails you get this functionally for free &ndash; you can express your
+migrations as simple Ruby scripts and you can use rake to generate the
+appropriate SQL statements for any supported database. Here&rsquo;s a simple
+migration script, that creates the Users table:</p>
+
+<p>``` ruby
+class CreateUsers &lt; ActiveRecord::Migration
+  def self.up</p>
+
+<pre><code>create_table :users do |t|
+  t.string :first_name
+  t.string :last_name
+  t.string :email
+  t.string :password
+
+  t.timestamps
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  def self.down</p>
+
+<pre><code>drop_table :users
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>The up method gets invoked when the migration is applied and the down
+method gets invoked when it&rsquo;s reverted. Rails 3.1 will offer even more
+elegant migrations. To execute all migrations:</p>
+
+<p><code>bash
+$ rake db:migrate
+</code></p>
+
+<h4>Ajax from within</h4>
+
+<p>Rails features tight integration with JavaScript and AJAX. Versions
+prior to 3.1 shipped by default the prototype and scriptaculous
+JavaScript libraries. In
+version 3.1 jQuery will replace them as the default JavaScript
+library.</p>
+
+<p>Making and handling AJAX requests in Rails is generally very easy &ndash; a
+big advantage in today world ruled by rich and dynamic web UIs.</p>
+
+<h4>Extensibility</h4>
+
+<p>Rails is extendable through a multitude of community supplied plugins
+that could add incredible functionality to your apps for free. Some of
+my favorite plugins are <a href="https://github.com/indirect/jquery-rails">jQuery for Rails</a>,
+<a href="https://github.com/bcardarella/client_side_validations">client side validations</a> and <a href="https://github.com/sferik/rails_admin">Rails Admin</a>.</p>
+
+<h4>Testing is not optional</h4>
+
+<p>What I particularly like about Rails is that it heavily promotes
+testing your code. All of the Rails generators would generate test
+stubs, that you&rsquo;ll do good to fill in. Rails supports all major Ruby test
+frameworks &ndash; Test::Unit, RSpec, Cucumber. You have fixtures support, test
+database support, the ability to run unit and functional test
+separately. I don&rsquo;t recall using any other framework that pays as much
+attention to having tests as Rails and for that I can only
+congratulate the Rails team.</p>
+
+<h4>Compatibility with Ruby versions</h4>
+
+<p>There are two major version of Ruby out there presently &ndash; Ruby 1.8.7
+and Ruby 1.9.2. Ruby 1.9.2 offers substantial language and performance
+improvements, so you should be pleased to hear that Rails supports
+both major Ruby versions. Rails 4.0 will drop support for Ruby 1.8.x.</p>
+
+<p>Rails can also be run on top of JRuby and Rubinius.</p>
+
+<h4>Deployment options</h4>
+
+<p>The most common deployment options for Rails are currently Apache
+HTTPD or NginX and Phusion Passenger (mod_rails). People shopping for
+cloud Rails deployment should definitely take a look at Heroku.</p>
+
+<p>Rails also runs on alternative Ruby implementations like JRuby and
+Rubinius (as mentioned above), that offer exciting new possibilities. For instance using
+JRuby allows you to deploy a Rails app into a Java application server
+like JBoss or Glassfish and to tap into all those great Java libraries
+and frameworks around. Using JRuby also gives you the opportunity to
+deploy your apps on Google&rsquo;s App Engine.</p>
+
+<h3>Django</h3>
+
+<h4>A simpler project layout</h4>
+
+<p>While I had some experience with Rails from a couple of years ago,
+Django was something totally new to me. I expected it to be more or
+less Rails for Python, but when I created my first Django app I was
+surprised to see that the project folder consisted of only three
+files (I&rsquo;m obviously not counting the python package file
+<strong>init</strong>.py).</p>
+
+<p>My initial surprise aside it turned out that most differences were
+just superficial and that Django and Rails have quite a lot of
+similarities. I&rsquo;ll, however, speak a bit more about the different
+stuff than the similar stuff.</p>
+
+<h4>MVC(MTV), Django style</h4>
+
+<p>While Django is a MVC controller framework as well, it&rsquo;s built around a
+different mindset. Django is totally configurable and minimalistic
+framework that empowers the developers to tailor it to their needs.</p>
+
+<p>A Django project is comprised of autonomous and reusable apps. Apps on
+the other hand are comprised of models, views and templates. Django
+differs a bit in terminology with Rails &ndash; the Rails controllers are
+views in Django and the Rails views are called templates in Django. You
+can sometimes hear that Django is a Model-Template-View framework &ndash;
+that shouldn&rsquo;t confuse you. Although the terminology is different the
+principles are the same.</p>
+
+<p>Django&rsquo;s default ORM is somewhat reminiscent of frameworks like
+Hibernate. Entity classes declare explicitly the all the
+attributes. Let&rsquo;s consider again the User model class:</p>
+
+<p>``` python
+from django.db import models</p>
+
+<p>class User(models.Model):</p>
+
+<pre><code>first_name = models.CharField(max_length=30)
+last_name = models.CharField(max_length=30)
+email = models.EmailField()
+password = models.CharField(max_length=30)
+</code></pre>
+
+<p>```</p>
+
+<p>Both approaches have their strengths and weaknesses an usual. In
+Django&rsquo;s case we have increased verbosity, but on the other had we
+don&rsquo;t have to inquire the database to figure out the exact definition
+of model records.</p>
+
+<p>Like in Rails we get useful &ldquo;finders&rdquo; that can be used to query for model
+objects in pure python (as opposed to using sql).</p>
+
+<h4>In the template layer</h4>
+
+<p>While ERB is basically HTML with Ruby embedded in it, Django features
+a custom templating language with it&rsquo;s own (extendable) tag
+library. This generally means that Django templates tend to be a bit
+cleaner than Rails&rsquo;s templates, since you&rsquo;re not allowed to abuse them
+very much. On the other hand you can do virtually anything by
+embedding code directly in a template, so as usual &ndash; each design
+decision has its pros and cons.</p>
+
+<p>Django supports alternative templating libraries, so you&rsquo;re covered in
+case you don&rsquo;t like the default one.</p>
+
+<p>Django also features a powerful form generation/handling facilities
+that integrate seamlessly with the templating layer. For instance &ndash; it
+very easy to generate a form matching the structure of a domain model
+object with automatic property validation.</p>
+
+<h4>You&rsquo;re in charge</h4>
+
+<p>Django has doesn&rsquo;t adhere to the Rails CoC philosophy. It&rsquo;s assumed
+that developers know best what layout and configurations options make
+the most sense in their applications. I haven&rsquo;t played that much with
+Django yet, but I still haven&rsquo;t come by two different Django apps that
+are structured in the same manner. While I understand the benefits of
+Django&rsquo;s approach I still prefer Rails&rsquo;s approach. I&rsquo;ve worked long
+enough to know that you&rsquo;re rarely in the position to make better
+decisions about the structure and the defaults of your app, than the
+exceptional developers with huge experience that develop frameworks
+like Rails and Django.</p>
+
+<p>To illustrate this consider the strong emphasis Rails places on
+REST. In Django you could certainly use restful access your resources
+as well, but it&rsquo;s all up to you. The framework makes no
+suggestions. You can unroll any URL mapping scheme by simply
+associating regular expressions in urls.py with callback view
+functions:</p>
+
+<p><div>
+  <pre><code class='python'>from django.conf.urls.defaults import patterns, include, url&lt;/p&gt;
+
+&lt;p&gt;urlpatterns = patterns(&amp;lsquo;&amp;rsquo;,&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;url(r&#39;^$&#39;, &#39;djangodemo.views.home&#39;, name=&#39;home&#39;)
+url(r&#39;^users&#39;, &#39;djangodemo.view.users&#39;, name=&#39;list_users&#39;))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;</code></pre>
+</div>
+</p>
+
+<p>An url is mapped to the callback function, which in turn either renders a
+template or directly returns some Http response.</p>
+
+<h4>Free admin</h4>
+
+<p>Django has a built-in support to generate an admin UI for your
+website. This is a very useful feature indeed and is supported in
+Rails as well through plugins (I&rsquo;ve mentioned the one I like the
+best).</p>
+
+<h4>Database migrations</h4>
+
+<p>One of the few gripes I have with stock Django is that it doesn&rsquo;t
+offer an alternative to Rails&rsquo;s migrations. Luckily there is
+<a href="http://south.aeracode.org/">South</a> &ndash; an extension that provides a
+simple, stable and database-independent migration layer to prevent all
+the hassle schema changes over time bring to your Django
+applications. I highly recommend it to everyone planning to use
+Django.</p>
+
+<h4>JavaScript and AJAX</h4>
+
+<p>Unlike Rails, Django doesn&rsquo;t bundle any JavaScript libraries. You have
+to pick a JavaScript framework yourself (which a trivial process). The
+AJAX support in Django is both basic and extremely powerful in the
+same time &ndash; request.is_ajax(). What this means is that you can check
+if a request was regular or an AJAX request and respond
+accordingly. You don&rsquo;t need much more than that. More details can be
+found <a href="https://code.djangoproject.com/wiki/AJAX">here</a>.</p>
+
+<h4>The great divide</h4>
+
+<p>Some of you probably know that Python is currently at a bit of a
+crossroads. Python 2.x was the stable Python version for many years,
+but recently it was replaced by Python 3.x. Python 3.x is all around
+great in my personal opinion, but unfortunately it&rsquo;s backward
+incompatible with the older 2.x series. For that reason very few high
+profile projects still don&rsquo;t support it &ndash; Django is one such
+project. The current version 1.3 require at least Python 2.4 and will
+run with every Python up to 2.7. This is a bit of a disappointment
+since you&rsquo;ll be missing on a few very cool new features. On a more
+positive note Python 2.7 did backport some goodies from Python 3, so
+not all is lost. I&rsquo;ve read (at totally unofficial places) that Django 2.0 will be targeting Python 3
+and I expect it will be available in about a year.</p>
+
+<h4>Deployment</h4>
+
+<p>Python is quite mature technology and offers you a nice array of
+deployment options &ndash; Apache, Nginx and my favorite &ndash; Google App
+Engine. Python, being one of the two supported languages on the App
+Engine (the other one is, of course, Java) makes it very easy to deploy
+Django apps on the App Engine (though you&rsquo;ll need the Django support
+for non-relational databases to be able to use it).</p>
+
+<p>The also the possibility to deploy Django apps on Java or .Net
+infrastructure using Jython or IronPython.</p>
+
+<h2>Community</h2>
+
+<p>When you&rsquo;re selecting the technology for a major project you have to
+make sure that the technology is in good shape &ndash; there is a solid
+community around it, there is no lack of support, innovation and
+deployment options.</p>
+
+<p>Both
+<a href="http://www.google.com/trends?q=ruby+on+rails%2C+django+python">Google trends</a>
+and stackoverflow.com (by the number of question about tagged with
+django or rails) indicate that Rails currently has larger
+community than Django.</p>
+
+<p>I haven&rsquo;t had any direct communication with the Django community yet,
+but I&rsquo;ve found a lot of excellent resources about Django on-line.</p>
+
+<p>Rails has one of the most vibrant, passionate and innovative
+communities. I&rsquo;ve had contact with a lot of people from the Rails
+community and I&rsquo;m certain that it has played a tremendous role in
+Rails&rsquo;s growth.</p>
+
+<h2>Tooling</h2>
+
+<p>Traditionally Ruby &amp; Python hackers have been working with just a
+powerful programmer&rsquo;s editor like Emacs, vim or TextMate. While there
+is nothing inherently wrong with this approach (I&rsquo;m an avid Emacs user
+myself), I do find IDEs quite helpful when working on larger code
+bases, with their trademark features such as intelligent
+autocompletion (aka intellisense), safe refactorings, on-the-fly syntax checking, etc. So
+here&rsquo;s what we&rsquo;ve got:</p>
+
+<ul>
+<li><a href="http://www.jetbrains.com/ruby/">RubyMine</a> &ndash; hands down the best Ruby and Rails IDE I&rsquo;ve ever
+used. The <a href="http://www.jetbrains.com/ruby/features/index.html">list of features</a> is epic as is the quality of the
+project. It support Rails 3, git, RSpec, Cucumber, sass, haml and
+many other cool Ruby/Rails related technologies. Sure, it&rsquo;s a
+commercial project, but is priced very reasonably.</li>
+<li><a href="http://www.aptana.com/">Aptana Studio</a> &ndash; a Web development IDE,
+built on top of the Eclipse platform. Among many other features it
+supports Ruby on Rails.</li>
+<li><a href="http://www.activestate.com/komodo-ide">Komodo</a> &ndash; an IDE focusing on
+dynamic programming language. Great support for both Django and
+Rails development.</li>
+<li><a href="http://www.jetbrains.com/pycharm/">PyCharm</a> &ndash; from the same company that develops RubyMine, PyCharm
+is the king of IDEs when it comes down to Python. It has full
+featured Django support &ndash; there is even autocompletion in the Django
+templates.</li>
+<li><a href="http://pydev.org/">PyDev</a> &ndash; an Eclipse plug-in for Python and Django development.</li>
+</ul>
+
+
+<p>I have to admit I&rsquo;m totally biased. Having been a long time Java
+developer I&rsquo;ve grown extremely fond of the exceptional IntelliJ
+IDEA. RubyMine and PyCharm are both based on the IntelliJ platform and
+bring to the Ruby and Python developers much of the might and magic of
+IDEA. There are both commercial products, but their price tags are
+quite low and their quality is great &ndash; highly recommended.</p>
+
+<p>I&rsquo;m not affiliated in any way with any of these products &ndash; I just
+happen to like them that much.</p>
+
+<h2>Resources</h2>
+
+<p>The are LOTS of resources about Rails and Django on-line. Here are
+just my favorites.</p>
+
+<h4>Rails</h4>
+
+<ul>
+<li><a href="http://guides.rubyonrails.org/">Rails Guides</a> &ndash; best short
+introduction to Rails ever. Immediately updated for new Rails
+versions, fantastic starting point for any aspiring Rails developer.</li>
+<li><a href="http://ruby.railstutorial.org/">Rails Tutorial</a> &ndash; best Rails 3 book
+on the market and it even has a free on-line edition. Nice follow up
+of the Rails Guides.</li>
+<li><a href="http://railscasts.com/">RailsCasts</a> &ndash; Ryan Bates in true Ruby
+hero. He has compiled a unique set of high quality Rails screencasts
+that often illustrate some advanced techniques. And they are all
+free. We all owe a very big &ldquo;Thanks!&rdquo; to Ryan.</li>
+</ul>
+
+
+<h4>Django</h4>
+
+<ul>
+<li><a href="https://docs.djangoproject.com/en/1.3/">Official Docs</a> &ndash; best
+official project documentation I&rsquo;ve read. It&rsquo;s actually so good,
+that I never (well &ndash; almost never) bothered to look for anything else. All my questions
+were answered by the official documentation.</li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>Choosing Django or Rails is basically a win-win situation &ndash; you cannot
+go wrong. There are too many similarities between the frameworks and
+the differences are not something paramount.</p>
+
+<p>Rails places a heavy emphasis on convention over configuration,
+provides you with more defaults and does a can do a lot of heavy
+lifting for you automagically.</p>
+
+<p>Django on the other hand let&rsquo;s you specify most configuration details
+yourself, without making the configuration burdensome (like that of
+older Java web frameworks).</p>
+
+<p>Rails has always been leading on the way of innovation &ndash; constantly
+integration some of the latest and greatest technologies around
+(recent examples being jQuery, Coffee Script and SASS). From time to
+time backward compatibility is sacrificed for the greater good, so
+that is something that you should consider as well.</p>
+
+<p>Django is certainly much more conservative framework as far as
+backward compatibility is concerned &ndash; after all it still support
+Python 2.4.</p>
+
+<p>I guess in the end the choice really boils down to two things &ndash; whether you
+like Ruby or Python better and whether you like the defaults imposed
+to you by Rails.</p>
+
+<p>I&rsquo;ve planned to write a much longer and detailed article, but it&rsquo;s
+summer here and it&rsquo;s sunday and I&rsquo;d rather go out and drink a few
+beers with my friends. Hopefully you&rsquo;ve enjoyed the article. I&rsquo;ll try
+to expand it a bit in the coming days.</p>
+
+<p>P.S. Btw, in case you&rsquo;re wondering &ndash; we&rsquo;ve picked Rails for our
+company&rsquo;s projects. It was a very close call, though, since I
+really liked a lot of aspects of Django as well.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby or Python? Well, it depends...]]></title>
+    <link href="http://batsov.com/articles/2011/05/03/ruby-or-python/"/>
+    <updated>2011-05-03T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/05/03/ruby-or-python</id>
+    <content type="html"><![CDATA[<p><strong>Disclaimer</strong></p>
+
+<p><em>If you&rsquo;re looking for a flame post &ndash; this is not one of them. I love
+both languages and I&rsquo;ll simply compare some of their features and
+possible uses.</em></p>
+
+<h2>Prelude</h2>
+
+<p>Ruby or Python? This is the Question! Well it might not be the
+Question, but it&rsquo;s a common question for many developers looking to
+break free from the statically typed language they know and learn a
+dynamic language. I personally know them both(though I know a bit more
+Ruby, than Python) and in this article I&rsquo;ll share my personal opinion
+on their strengths and weaknesses. You&rsquo;d probably do good to learn
+them both, but my arguments here may lead you to pick only one of the
+languages depending on you preferences.</p>
+
+<h2>Installation</h2>
+
+<p><strong>Linux/Unix installation</strong></p>
+
+<p>If you&rsquo;re using a Linux distribution or some other Unix derivative
+such as *BSD or Solaris you&rsquo;ll probably be able to install Ruby and
+Python through the operating system&rsquo;s software management system. For
+instance on Debian Linux systems(Ubuntu is a popular Debian
+derivative) you can use apt to install them. Run the following
+commands as root or with sudo:</p>
+
+<p><code>bash
+$ apt-get install ruby
+$ apt-get install python
+</code></p>
+
+<p>On Red Hat based distros like Fedora, CentOS, etc you can use yum
+instead:</p>
+
+<p><code>bash
+$ yum install ruby
+$ yum install python
+</code></p>
+
+<p>You should keep in mind the fact that both Ruby and Python have two
+version that are commonly used at the moment. Ruby&rsquo;s current version
+is <em>1.9.2</em> and Python&rsquo;s is <em>3.2</em>. For various reasons(like backward
+compatibility for instance), however, the current versions are not
+widely deployed yet(especially Python 3). In most Linux distributions
+the package ruby will actually be Ruby 1.8.x and the package python
+will be Python 2.7.x. If your distribution is one of those &ndash; look for
+packages named ruby19(or similar) and python3:</p>
+
+<p><code>bash
+$ apt-get install ruby19
+$ apt-get install python3
+</code></p>
+
+<p>or on a Red Hat system:</p>
+
+<p><code>bash
+$ yum install ruby19
+$ yum install python3
+</code></p>
+
+<p>Using the distribution package management system is a simple solution,
+but in the case of Ruby it might not be best one. Most Ruby hackers
+favour a powerful bash script called RVM(Ruby Version Manager) that
+allows you to install several different version(or flavours of Ruby)
+and switch easily between them. Please refer to the official
+<a href="https://rvm.beginrescueend.com/">RVM documentation</a> for installation
+and usage instructions.</p>
+
+<p><strong>Windows installation</strong></p>
+
+<p>Installing Ruby on Windows used to be a pretty hard task, but this is
+no longer the case now thanks to
+<a href="http://rubyinstaller.org/">the RubyInstaller for Windows</a>. This is a
+self-contained Windows-based installer that includes the Ruby
+language, an execution environment, important documentation, and
+more. It has two editions one for the older 1.8.x Ruby branch and one
+for the current 1.9.x.</p>
+
+<p>Python has several installation options for Windows &ndash; the most obvious
+being the
+<a href="http://python.org/ftp/python/3.2/python-3.2.msi">official Python installer for Windows</a>. <a href="http://www.activestate.com/activepython">ActiveState&rsquo;s ActivePython</a>
+is another popular option packed with more features, but you should
+keep in mind that although the Community Edition is free ActivePython
+is not an open-source project. Personally I prefer ActivePython. Other
+prebuilt Python binaries for Windows are also available, but are not
+commonly used.</p>
+
+<p><strong>OS X installation</strong></p>
+
+<p>Ruby is generally preinstalled on OSX, but OSX users can also install
+it via <a href="http://mxcl.github.com/homebrew/">homebrew</a> or RVM(as mentioned in the Linux section).</p>
+
+<p>The is an official <a href="http://python.org/ftp/python/3.2/python-3.2-macosx10.6.dmg">Python package for OSX</a> available. Most users
+will probably prefer using homebrew, however.</p>
+
+<h2>Syntax &amp; code structure</h2>
+
+<p>Ruby makes heavy use of braces and keywords(like do/then/end) to
+delimit blocks of code. Python relies simply on indentation.</p>
+
+<p>``` python
+def fact(n):</p>
+
+<pre><code>return reduce(lambda x, y: x * y, range(1, n + 1))
+</code></pre>
+
+<p>```</p>
+
+<p>Same thing in Ruby:</p>
+
+<p><code>ruby
+def fact(n)
+  (1..n).reduce(:*)
+end
+</code></p>
+
+<p>I personally prefer the Python approach since it enforces the code
+semantics based on the code structure alone without imposing special
+syntax.</p>
+
+<p>As a side node you might take under consideration that the Ruby method
+definition doesn&rsquo;t have an explicit return value. The value of the
+last expression in the method&rsquo;s body becomes automatically the
+method&rsquo;s return value. Lisp developers will find this familiar. Java
+and C# developers will probably find it a bit confusing. There is a
+<code>return</code> in Ruby, though, it&rsquo;s just rarely used.</p>
+
+<p>Both languages have support for nested function definitions.</p>
+
+<p>Both languages have support for &ldquo;top-level&rdquo; functions &ndash; that live(or
+seem to live) outside classes and modules(something not possible in
+Java for instance). This makes them good for general purpose
+scripting. While I would still prefer to do my system administration
+with shell and Perl scripts &ndash; Ruby and Python offer a solid
+alternative. Python has a richer system administration library so I&rsquo;d
+prefer it over Ruby for such tasks.</p>
+
+<p>Ruby has a lot of crust(&ldquo;heritage&rdquo;) from Perl &ndash; like a myriad of
+special variables that are now more or less deprecated. It also has
+much syntactic sugar &ndash; for instance do/end is commonly replaced by {}
+for blocks that are only one line long, there is special syntax for
+hashtables, whose keys are symbols, etc.</p>
+
+<p>Since special symbols(non alphanumeric) are allowed in Ruby
+identifiers Ruby uses them to impose some naming conventions to make
+the source code a bit more readable in certain scenarios &ndash; for
+instance predicate methods(those that return true or false) have names
+that end with ?(usually) like even?, odd?, prime?, etc. Methods that
+mutate the object on which they were invoked generally have the !
+suffix &ndash; sort!, map!, etc. I find this a nice decision. In Ruby you
+generally have many ways to achieve the same result:</p>
+
+<p><code>irb
+ruby-1.9.2-p0 &gt; 1.even?
+ =&gt; false
+ruby-1.9.2-p0 &gt; arr = [1, 2, 3]
+ =&gt; [1, 2, 3]
+ruby-1.9.2-p0 &gt; arr.map { |x| x * 2 }
+ =&gt; [2, 4, 6]
+ruby-1.9.2-p0 &gt; arr
+ =&gt; [1, 2, 3]
+ruby-1.9.2-p0 &gt; arr.map! { |x| x * 2 }
+ =&gt; [2, 4, 6]
+ruby-1.9.2-p0 &gt; arr
+ =&gt; [2, 4, 6]
+ruby-1.9.2-p0 &gt; (1..5).reduce(:*)
+ =&gt; 120
+ruby-1.9.2-p0 &gt; (1..5).reduce { |x, y| x * y }
+ =&gt; 120
+ruby-1.9.2-p0 &gt; (1..5).reduce do |x, y|
+ruby-1.9.2-p0 &gt;     x * y
+ruby-1.9.2-p0 ?&gt;  end
+ =&gt; 120
+</code></p>
+
+<p>No such things in Python, however. Python&rsquo;s philosophy is one of
+simplicity &ndash; no excessive syntax sugar, one true way of doing things.</p>
+
+<p>Both languages have powerful features for organising code in
+libraries. I would not go into any details on the subject here, but
+I&rsquo;ll share with you the fact that I like Python&rsquo;s more.</p>
+
+<p>Both languages come with a REPL in which you can do some exploratory
+programming. Ruby&rsquo;s REPL(irb)  allows you
+to do TAB smart completion(amongst other things) by default. To get
+TAB completion in the Python REPL you&rsquo;d have to execute this bit of
+code first:</p>
+
+<p>``` pycon</p>
+
+<blockquote><blockquote><blockquote><p>import readline, rlcompleter
+readline.parse_and_bind(&ldquo;tab: complete&rdquo;)
+```</p></blockquote></blockquote></blockquote>
+
+<p>Alternative you can just stick this code snippet in the
+<strong>~/.pythonrc.py</strong> file(create it if it doesn&rsquo;t exist). If you are using
+Windows adjust accordingly(you will have to figure out where
+pythonrc.py is located there).</p>
+
+<p>Ruby does not have statements &ndash; only expressions. This
+basically means that everything(objects, method calls) evaluate to
+some value(though the value might not be helpful always).</p>
+
+<p>In Python there are some statements such as assignment and <em>if</em>. One
+thing I dislike about the Python REPL is that it doesn&rsquo;t print None
+values. Compare this bit of Python code:</p>
+
+<p>``` pycon</p>
+
+<blockquote><blockquote><blockquote><p>print(&ldquo;this is a test&rdquo;)
+this is a test
+```</p></blockquote></blockquote></blockquote>
+
+<p>to this Ruby snippet:</p>
+
+<p><code>irb
+ruby-1.9.2-p0 &gt; puts "this is a test"
+this is a test
+ =&gt; nil
+</code></p>
+
+<p>In the Python version we see only the side-effect(the printing), but
+not the return value.</p>
+
+<p>Python also ships with a minimalistic IDE called IDLE. If you don&rsquo;t
+have it by default after a python installation on Linux probably
+you&rsquo;re vendor decided to package IDLE as a separate package. IDLE
+offers basic features like syntax highlighting, code completion and
+integration with a debugger. It&rsquo;s a good tool for exploratory
+programming, but I advise you to pick another tool for serious development.</p>
+
+<h2>Naming conventions</h2>
+
+<p>The naming conventions for both Ruby and Python are mostly the same
+which is good if you&rsquo;re using them both on a daily basis &ndash; less room
+for confusion.</p>
+
+<ul>
+<li>variable and method names consisting of more then one word are
+written in lowercase with underscores separating the individual
+words like_this.</li>
+<li>Class names start with capital letter and follow the camel case
+naming convention LikeThis. Some of Python&rsquo;s core classes, however,
+violate this convention.</li>
+<li>Constants are generally written in all caps with underscores
+separating the individual words LIKE_THIS.</li>
+</ul>
+
+
+<p>As I mentioned earlier it&rsquo;s customary to add ? as a suffix to
+predicate methods and ! to mutator methods in Ruby. This convention is
+not always followed unfortunately, even in Ruby&rsquo;s standard library.</p>
+
+<h2>OOP support</h2>
+
+<p>Both Ruby and Python are famous members of the family of object
+oriented languages. Unlike languages such as Java and C#, however,
+Ruby and Python are pure OOP languages. There is no distinction
+between primitive types(such as numbers, characters and booleans) and
+reference types(classes). Everything in them is an object and in that
+sense it&rsquo;s an instance of some class:</p>
+
+<p>``` pycon</p>
+
+<blockquote><blockquote><blockquote><p>type(1)
+<type 'int'>
+type(&ldquo;string&rdquo;)
+<type 'str'>
+type(20.07)
+<type 'float'>
+type([1, 2, 3])
+<type 'list'>
+type((1, 2, 3))
+<type 'tuple'>
+```</p></blockquote></blockquote></blockquote>
+
+<p>And in Ruby:</p>
+
+<p><code>irb
+ruby-1.9.2-p0 &gt; 10.class
+ =&gt; Fixnum
+ruby-1.9.2-p0 &gt; "string".class
+ =&gt; String
+ruby-1.9.2-p0 &gt; [].class
+ =&gt; Array
+</code></p>
+
+<p>As you can see core Ruby classes tend to have a bit more standard and
+descriptive names than their Python counterparts. You can also notice
+that in Python for some task we use built-in functions like type,
+instead of method calls. The built-in function will eventually result
+in a method invocation(like &ldquo;string&rdquo;.<strong>class</strong> in the case of
+type(&ldquo;string&rdquo;)), but I find this irregularity in the syntax a bit
+irritating.</p>
+
+<p>Method invocation is more flexible in Ruby &ndash; you can omit braces in
+some scenarios. This is handy when you&rsquo;re designing a DSL or you&rsquo;re
+trying to implement the uniform access patterns(data should be
+accessed through fields and methods in the same manner(read this as
+with no braces in method invocations)). On the other hand Python&rsquo;s
+uniform syntax makes it easier to spot method invocations.</p>
+
+<p>Both languages don&rsquo;t have operators &ndash; just methods. Ruby&rsquo;s OO support
+seems to be a bit more mature and polished(at least to me), but
+Python&rsquo;s has some touches as well. I particularly like the explicit
+self references that are required when you try to access class
+members. I&rsquo;m not too found of the use of special sigils in Ruby to
+mark instance(@) and class members(@@). Though they make them visually
+distinctive I think we could have lived without them &ndash; I&rsquo;m generally
+not a fan of non-uniform syntax rules(and you guessed it &ndash; my
+favourite language is Lisp).</p>
+
+<p>Ruby&rsquo;s metaprogramming model arguably gives it an edge in the OOP
+department, but I won&rsquo;t be discussing the metaprogramming issues here
+since they are quite lengthy.</p>
+
+<h2>Functional programming support</h2>
+
+<p>Functional programming has been on the rise lately and it&rsquo;s useful to
+examine what kind of support both languages provide for it. Both have
+support for lambda functions and respectively &ndash; higher-order
+functions(functions that accept functions as parameters). Ruby has
+code blocks, Python has list comprehensions(generally favoured over
+higher-order functions). Both languages lack in their standard libs
+the immutable data structures that generally are the code of most
+functional programming languages. Here&rsquo;s a few example related to
+filtering a sequence based on some predicate:</p>
+
+<p>``` pycon</p>
+
+<blockquote><blockquote><blockquote><p>filter(lambda x: x % 2 == 0, range(1, 11))
+[2, 4, 6, 8, 10]
+[x for x in range(1, 11) if x % 2 == 0]
+[2, 4, 6, 8, 10]
+```</p></blockquote></blockquote></blockquote>
+
+<p>Ruby:</p>
+
+<p><code>irb
+ruby-1.9.2-p0 &gt; (1..10).select { |x| x.even? }
+ =&gt; [2, 4, 6, 8, 10]
+ruby-1.9.2-p0 &gt; (1..10).select &amp;:even?
+ =&gt; [2, 4, 6, 8, 10]
+</code></p>
+
+<p>Ruby&rsquo;s functional programming support seems to be better to me, but
+this is of course subjective.</p>
+
+<h2>GUI programming</h2>
+
+<p>Python has tkinker by default &ndash; a wrapper around the Tk library(which
+sucks in my humble opinion). Ruby doesn&rsquo;t have even this much. Both
+have binding for the popular GUI toolkits such wxwidgets, GTK,
+QT. From my experimentation with them I can tell you that you&rsquo;ll be
+much better off with Python in that department. It&rsquo;s not wonder that
+many GTK+ applications these days are implemented in Python. Most Ruby
+bindings projects seem to be in a state of disarray, abandonment &ndash; I
+guess we have to thank Rails for that. Most people think of Rails as
+the only use of Ruby which is sad&hellip;</p>
+
+<p>Ruby devs shouldn&rsquo;t despair however. JRuby(Ruby&rsquo;s port to the JVM) has
+an excellent support for the superb Swing GUI framework and MacRuby
+has great support for building Cocoa Apps for OS X. I personally think
+that JRuby is the best Ruby distribution out there, but that&rsquo;s the
+point of another post entirely.</p>
+
+<h2>3rd party library availability and installation</h2>
+
+<p>It&rsquo;s not secret that part of Python&rsquo;s philosophy is that it comes with
+batteries included &ndash; meaning that it&rsquo;s standard library is vast and
+covers a lot of common tasks. In case you can&rsquo;t find what you&rsquo;re
+looking for in it you&rsquo;re left with an number of third party libraries
+for Python whose number can only be described by the word epic and
+that cover every task conceivable. <a href="http://pypi.python.org/pypi">PyPi</a>
+maintains an up-to-date list of Python packages.</p>
+
+<p>You have several options in the department of python package
+management. If you&rsquo;re using ActivePython you can use the excellent
+<a href="http://code.activestate.com/pypm/">PyPM</a> tool, which provides quick
+installation of thousands of packages for many Python versions and
+platforms for ActivePython distributions.</p>
+
+<p><a href="http://peak.telecommunity.com/DevCenter/EasyInstall">EasyInstall</a> is another popular solution that works with the standard
+Python distribution. Like PyPM it allows you easily search for and
+install Python packages from the PyPI that are bundled in Python&rsquo;s
+standard egg format(Jave developers might think of eggs as
+jars). EasyInstall has splendid documentation so I won&rsquo;t go into any
+details here.</p>
+
+<p><a href="http://www.pip-installer.org/en/latest/index.html">pip</a> is a
+replacement for easy_install. It uses mostly the same techniques for
+finding packages, so packages that were made easy_installable should
+be pip-installable as well.</p>
+
+<p>pip is meant to improve on EasyInstall. Some of the improvements:</p>
+
+<ul>
+<li>All packages are downloaded before installation. Partially-completed installation doesn’t occur as a result.</li>
+<li>Care is taken to present useful output on the console.</li>
+<li>The reasons for actions are kept track of. For instance, if a package is being installed, pip keeps track of why that package was required.</li>
+<li>Error messages should be useful.</li>
+<li>The code is relatively concise and cohesive, making it easier to use programmatically.</li>
+<li>Packages don’t have to be installed as egg archives, they can be installed flat (while keeping the egg metadata).</li>
+<li>Native support for other version control systems (Git, Mercurial and Bazaar)</li>
+<li>Uninstallation of packages.</li>
+<li>Simple to define fixed sets of requirements and reliably reproduce a set of packages.</li>
+</ul>
+
+
+<p>pip doesn’t do everything that easy_install does. Specifically:</p>
+
+<ul>
+<li>It cannot install from eggs. It only installs from source. (In the future it would be good if it could install binaries from Windows .exe or .msi – binary install on other platforms is not a priority.)</li>
+<li>It doesn’t understand Setuptools extras (like package[test]). This should be added eventually.</li>
+<li>It is incompatible with some packages that extensively customize distutils or setuptools in their setup.py files.</li>
+</ul>
+
+
+<p>Linux users will also find a great selection of Python libraries
+prepackaged for use with the distribution&rsquo;s package manager.</p>
+
+<p>Ruby has an application that is more or less equivalent to EasyInstall
+called <a href="http://rubygems.org/">RubyGems</a>(gems are the standard way to distribute Ruby
+libraries). Linux users can of course install Ruby libraries with the
+distribution&rsquo;s package manager as well.</p>
+
+<p>RubyGems has the following features:</p>
+
+<ul>
+<li>Easy Installation and removal of RubyGems packages and their dependents.</li>
+<li>Management and control of local packages</li>
+<li>Package dependency management</li>
+<li>Query, search and list local and remote packages</li>
+<li>Multiple version support for installed packages</li>
+<li>Web-based interface to view the documentation for your installed gems</li>
+<li>Easy to use interface for building gem packages</li>
+<li>Simple server for distributing your own gem packages</li>
+<li>Easy to use building and publishing of gem packages</li>
+</ul>
+
+
+<p>Using RubyGems, you can:</p>
+
+<ul>
+<li>download and install Ruby libraries easily</li>
+<li>not worry about libraries A and B depending on different versions of library C</li>
+<li>easily remove libraries you no longer use</li>
+<li>have power and control over your Ruby platform!</li>
+</ul>
+
+
+<p>A reader pointed out that about 23000 packages are available for
+installation through RubyGems and 15000 through PyPI. This, however,
+cannot be considered as a certain sign that there are more libraries
+available for Ruby than for Python.</p>
+
+<p>Although tools like EasyInstall and RubyGems are easy to use and quite
+handy, I as a long-time Linux users dislike them a bit, since they
+circumvent the distributions native package handling. Unfortunately
+package maintainers cannot find the time to package every Python and
+Ruby library available so I guess EasyInstall and RubyGems won&rsquo;t be
+going anywhere soon and of course we have to consider Windows users
+for whom such applications are of great value given the lack of
+unified package management on Windows.</p>
+
+<p>One thing to keep in mind about installing eggs and gems is that some
+of them are implemented in C(usually for performance reasons) and are
+locally built prior to their installation &ndash; an operation bound to fail
+if you don&rsquo;t have a C compiler installed.</p>
+
+<h2>Misc</h2>
+
+<p>In terms of performance of the default interpreters CPython and MRI
+Ruby Python is the clear winner. One should note, however, is that there
+are many how quality implementation of Ruby and Python for different
+platforms where the performance situation differs wildly. For instance
+Jython is much slower that JRuby. With the addition of invoke_dynamic
+in JDK7(basically bytecode level support for dynamic method dispatch)
+the performance of JRuby and Jython could potentially be improved
+greatly.</p>
+
+<p>In terms of overall usage, market share, job offers and sheer size of
+the community and available libraries Python is ahead of Ruby as
+well. One of the main supporters of Python is after all none other
+than the mighty Google. Ruby has also the unfortunate luck to be
+living in the shadow of a single application written in Ruby &ndash; Ruby on
+Rails, that is arguably more popular than the language itself.</p>
+
+<p>Tooling for dynamic languages is currently not as advance as the one
+for static languages. People often joke that Python(Ruby) > Java(C#),
+but Python + any python IDE &lt; Java + IntelliJ
+IDEA(Eclipse/NetBeans). Python and Ruby IDEs seem to be mostly on par
+currently. I do all of my Ruby and Python coding in Emacs, but I do
+like RubyMine and PyCharm.</p>
+
+<p>Since they are often used for the creation of webapps one should
+consider the deployment issue. Most web hosting companies provide
+cheap Python hosting, but very few companies provide Ruby hosting.</p>
+
+<h2>The Python 3 problem</h2>
+
+<p>Python 3 was a great undertaking that improved on a lot of aspects of
+the language(for example Unicode support) and the standard library. To
+do this it dropped backward compatibility, an act that slowed it&rsquo;s
+adoption immensely. Three years have passed since it&rsquo;s release and
+still most hosting providers, Linux distros and Python projects hold
+on to the older 2.7.x Python branch.</p>
+
+<p>This is a bit of tragedy since Python 3 is truly a great improvement
+over Python 2. I mention this because most recent books are written
+with Python 3 in mind, but if you land a Python jobs somewhere chances
+are you&rsquo;ll have to use Python 2.x.x for the foreseeable future.</p>
+
+<h2>Epilogue</h2>
+
+<p>Ruby and Python are two beautifully engineered languages capable of
+just about everything. If you don&rsquo;t know any of them you&rsquo;ll do well to
+learn at least one. If you know only one it might not be a terrible
+idea to learn the other.</p>
+
+<p>I haven&rsquo;t touched on many language features(like Python generators and
+Ruby mixins), but to be honest I&rsquo;m just tired of typing. One good
+place to start your journey to Python is
+<a href="http://diveintopython3.org/">&ldquo;Dive into Python 3&rdquo;</a>. For Ruby
+beginners I&rsquo;d recommend a copy of
+<a href="http://www.amazon.com/Ruby-Programming-Language-David-Flanagan/dp/0596516177">&ldquo;The Ruby Programming Language&rdquo;</a>.</p>
+
+<p><em>P.S. If you like exploring different programming languages and you&rsquo;re
+currently shopping for ideas on the subject of which language to learn
+next you might find my recent article
+<a href="/blog/2011/04/27/programming-languages-worth-learning/">&ldquo;Programming languages worth learning&rdquo;</a>
+interesting as well.</em></p>
+]]></content>
+  </entry>
+  
+</feed>

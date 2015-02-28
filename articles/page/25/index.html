@@ -1,0 +1,539 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>(think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="One of the most dreaded things that you can see while trying to run
+some application or trying to install an rpm package is a message
+saying that &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/page/25">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2009/07/14/yum-provides/">Find Out Quickly Which Package Provides a Certain Library With YUM</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-14T00:00:00+03:00" pubdate data-updated="true">Jul 14<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>One of the most dreaded things that you can see while trying to run
+some application or trying to install an rpm package is a message
+saying that some required library is missing.</p>
+
+<p>Generally this is not a big problem, because most often the library
+that you miss is packaged in a package named similarly to the
+library. Sometime however this is not the case&hellip; Suppose for example
+that you&rsquo;re trying to install IBM JDK 5.0 on a Fedora 11 box. You&rsquo;ll
+most likely get the following error message:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>error: Failed dependencies:
+</span><span class='line'>libstdc++.so.5 is needed by ibm-java2-i386-sdk-5.0-9.0.i386
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and there is no package named libstdc++ that you can install, so how
+can you find out which package do you need?</p>
+
+<p>The answer is simple:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>yum provides libstdc++.so.5
+</span><span class='line'>
+</span><span class='line'>Loaded plugins: fastestmirror, presto, refresh-packagekit
+</span><span class='line'>compat-libstdc++-33-3.2.3-66.i586 : Compatibility standard C++ libraries
+</span><span class='line'>Repo        : fedora
+</span><span class='line'>Matched from:
+</span><span class='line'>Other       : libstdc++.so.5
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Pretty neat, eh?</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2009/07/13/java-type-indicators-eclipse/">Java Type Indicators in Eclipse</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-13T00:00:00+03:00" pubdate data-updated="true">Jul 13<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>One of the things that I don’t like about the default Eclipse settings
+for Java development is that in the package explorer all Java files
+appear in the same manner(with the same icon). There is no visual
+distinction between abstract and concrete classes, enums, interfaces&hellip;
+Luckily for us Eclipse supports such a distinction and all you have to
+do is enable it.</p>
+
+<p>Go to <strong>Window &ndash;> Preferences &ndash;> General &ndash;> Appearance &ndash;> Label
+Decorations</strong> and mark the check box saying <strong>Java Type
+Indicator</strong>. I&rsquo;ve tested this on Eclipse 3.5 only, but I guess it is
+included in previous releases as well.</p>
+
+<p>Eclipse, though not as feature rich as IntelliJ IDEA, offers a lot of features that one has to find for himself.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2009/05/19/emacs-shift-return/">Emulate the Behaviour of Return+Shift(insert New Line) From Popular IDEs(IDEA, Eclipse) in Emacs</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-19T00:00:00+03:00" pubdate data-updated="true">May 19<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I’m very fond of the ability to insert a new line below the line I’m
+currently at, and to position the cursor at the beginning of that new
+line, offered by most IDEs, such as IntelliJ IDEA, Eclipse. It’s
+usually bound to Return(Enter)+Shift. Emacs(as far as I know) doesn’t
+have a function that does this thing by default, but one can easily
+create one, combining several well known functions in the process and
+bind that new function to the desired key combination. Here’s the
+snippet one might have in his .emacs(or other) “configuration” file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;; insert an empty line after the current line and position the cursor on its beginning</span>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">insert-empty-line</span> <span class="p">()</span>
+</span><span class='line'> <span class="p">(</span><span class="nv">interactive</span><span class="p">)</span>
+</span><span class='line'> <span class="p">(</span><span class="nv">move-end-of-line</span> <span class="no">nil</span><span class="p">)</span>
+</span><span class='line'> <span class="p">(</span><span class="nv">open-line</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'> <span class="p">(</span><span class="nv">next-line</span> <span class="mi">1</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="nv">[</span><span class="p">(</span><span class="nv">shift</span> <span class="nb">return</span><span class="p">)</span><span class="nv">]</span> <span class="ss">&#39;insert-empty-line</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2009/05/04/switch-string-idiom-java/">A Switch on String Idiom for Java</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-04T00:00:00+03:00" pubdate data-updated="true">May 4<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;ve always been frustrated with the inability to write a switch on
+String in Java.  However the enum type introduced in Java 5.0 somewhat
+diminishes the issue. Read this excellent
+<a href="http://www.xefer.com/2006/12/switchonstring">article</a> on the subject.</p>
+
+<p><strong>Update</strong></p>
+
+<p>Java 7 now supports switch on String!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2008/09/29/singleton-java-ruby/">The Best Way to Implement the Singleton Pattern in Java and Ruby</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-09-29T00:00:00+03:00" pubdate data-updated="true">Sep 29<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I haven’t posted anything lately, but I just received my brand new
+<strong>Das Keyboard</strong> and now I simply can’t stop typing. Recently I’ve been
+going through some effective technics to implement popular design
+patterns and I was surprised to see how few people where aware of
+them. For example since Java 5 the best way to implement the Singleton
+pattern is simply to use an enum like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">enum</span> <span class="n">SomeClass</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">INSTANCE</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is possible due to the fact that in Java(unlike in C++ and C#)
+enums are full-blown classes(although they do not support features
+like inheritance for example). You get an added bonus when using an
+enum class – you do not have to worry about serialization – this is
+handled for you behind the scenes.</p>
+
+<p>And this is how one should implement the Singleton pattern in Ruby:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;singleton&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Some</span>
+</span><span class='line'>  <span class="kp">include</span> <span class="no">Singleton</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Through the magic of Ruby’s mix-ins you get a private constructor for
+your class and an instance method with which you can obtain a
+reference to the single instance of the class. And best of all –
+because this library has undergone a substantial degree of testing it
+is pretty much bulletproof. Things hardly get simpler than that.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/articles/page/26/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/articles/page/24/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I&#8217;m a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

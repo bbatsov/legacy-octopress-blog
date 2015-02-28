@@ -1,0 +1,552 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>From Linux to OSX - 1 Year Later - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude A little more than an year ago I wrote my rant post
+The Linux Desktop Experience is Killing Linux on the Desktop
+and for the first time in 8 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2012/09/09/from-linux-to-osx-1-year-later">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">From Linux to OSX - 1 Year Later</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-09T22:11:00+03:00" pubdate data-updated="true">Sep 9<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Prelude</h2>
+
+<p>A little more than an year ago I wrote my rant post
+<a href="http://batsov.com/articles/2011/06/11/linux-desktop-experience-killing-linux-on-the-desktop/">The Linux Desktop Experience is Killing Linux on the Desktop</a>
+and for the first time in 8 years I wasn&rsquo;t a desktop Linux user
+anymore. I spent about a month wrestling with Windows 7, but let&rsquo;s
+face it &ndash; Windows is ill suited for professional Ruby programmers like
+me (and it&rsquo;s ill suited for most programmers, except maybe Java &amp; .Net I
+guess).</p>
+
+<p>Anyways, it was never my intention to stick with Windows &ndash; I was just
+doing my Mac due diligence. Now with 1+ year of OSX usage I&rsquo;d
+like to share a few things about my experience thus far with you.</p>
+
+<!--more-->
+
+
+<h2>From Linux to OSX</h2>
+
+<p>The transition was initially painful &ndash; I felt very odd dragging app
+icons to the <code>Applications</code> folder to install them. To be honest I was
+quite puzzled what was I supposed to do the first time I had to
+install an app this way (it didn&rsquo;t have those helpful hints with the arrows most apps
+do). The Linux distro package management is definitely infinitely
+better, or at least it seems so from where I&rsquo;m standing. Luckily for me most of the
+tools I use are available from the third-party <a href="http://mxcl.github.com/homebrew/">homebrew</a> package
+manager for OSX. It&rsquo;s like an extremely basic version of the mighty
+Gentoo <code>portage</code>, but it generally gets the job done.</p>
+
+<p>On a more positive note &ndash; I was impressed with the quality and
+responsiveness of the OSX desktop and the fact that Emacs keybindings
+are used by default in its editor toolkit (and strangely puzzled by
+the lack of right control key &ndash; how is one supposed to hit <code>Control +
+a</code> I dare ask?). One app in particular &ndash; <code>spotlight</code>, blew me off the
+water, especially after having dealt on Linux with crappy clones like
+<code>beagle</code> in the past. Spotlight can truly find just about anything,
+was it&rsquo;s own SQL-like query language and is <strong>blazingly</strong> fast.</p>
+
+<p>I quickly found a good terminal emulator (that would be
+<a href="http://www.iterm2.com/#/section/home">iterm2</a> &ndash; it&rsquo;s actually the
+best terminal emulator in the world IMHO) and
+most of the command-line apps I used from day to day were already lying around
+(after all OSX <strong>is</strong> Unix) &ndash; to my great surprise even stuff like PostgreSQL
+(only on OSX Server) and <code>zsh</code> came preinstalled. Most of the other
+apps I really needed had native OSX ports; the others &ndash; worthy
+alternatives.</p>
+
+<p>Having hated OpenOffice.org for many years I was very pleasantly
+surprised by quality of apps like <code>Keynote</code> &amp; <code>Words</code>.</p>
+
+<p>Being a keyboard chap preaching in the church of <code>Das Keyboard</code> I was
+a bit underwhelmed by the whole multi-touch mumbo-jumbo at first, but
+after a while I came to the conclusion that Apple have the only
+trackpads and mice that are actually worth using (even though I still
+like using the keyboard way more).</p>
+
+<p>To sum it all up &ndash; I got up to speed fairly quickly, but it was a
+bumpy ride.</p>
+
+<p>Here&rsquo;s a bit more details&hellip;</p>
+
+<h2>The things I love about OSX</h2>
+
+<h3>The Desktop</h3>
+
+<p>It&rsquo;s pretty, it&rsquo;s quick, it&rsquo;s stable. It makes KDE4 and GNOME3 look
+like school projects in comparison. And did I mention that the fonts
+on OSX are even prettier than the ones in Windows?</p>
+
+<h3>The OSX flavored apps</h3>
+
+<p><a href="http://sparrowapp.com/">Sparrow</a> is the first desktop mail client I ever liked (shame on
+you Google for killing it).</p>
+
+<p>iTerm2 is the ultimate terminal emulator. It alone warrants the
+purchase of a Mac.</p>
+
+<p>Keynote is the best presentation program I&rsquo;ve come to use thus far.</p>
+
+<p><a href="http://www.parallels.com/">Parallels Desktop</a> is light years ahead of VirtualBox and KVM (as far
+as desktop virtualization is concerned).</p>
+
+<p>I could go on a lot like this, but I&rsquo;ll stop now.</p>
+
+<p>It&rsquo;s obvious that Mac users have developed a taste in extremely
+refined software.</p>
+
+<h3>Hardware compatibility</h3>
+
+<p>If something is supposed to work with OSX &ndash; it works superbly
+out-of-the-box. I&rsquo;ve almost forgotten now the days of constant battle
+with crappy hardware. Sleep &amp; Wake just work. Battery life is
+exceptional (due to very advanced power management capabilities).</p>
+
+<p>Certainly controlling all of the hardware an OS will run on helps a
+lot, but we still have to acknowledge Apple&rsquo;s achievement.</p>
+
+<h3>Stability</h3>
+
+<p>One year, three Macs &ndash; only two or three system crashes. For a
+developer that likes to tinker a little bit more than he should &ndash;
+that&rsquo;s impressive.</p>
+
+<p>That having said I had some Linux desktops that used run for more than
+half an year without reboots (and the reboots were often caused by
+power outages or distro/kernel updates). Linux stability on a (fairly
+new) laptop? Well, that&rsquo;s a whole different story&hellip;</p>
+
+<h2>The things that are OK</h2>
+
+<h3>The default apps</h3>
+
+<p>The apps bundled with OSX are not bad at all, but they aren&rsquo;t
+particularly great. Still &ndash; Safari is a very good browser, Mail is a
+much better desktop client than Evolution/Thunderbird, Calendar is a
+good organizer (but a bit buggy when it comes down to Google Calendar
+integration), Messages is so-so.</p>
+
+<p>The bottom line is &ndash; you can go a long way with the bundled apps, but
+they aren&rsquo;t exactly perfect. My advice &ndash; shop for alternatives (both
+open-source and proprietary).</p>
+
+<h3>Mac App Store</h3>
+
+<p>Decent way to distribute proprietary apps, but with all the
+restrictions on the app sandboxing there aren&rsquo;t many interesting apps
+out there. Hopefully it&rsquo;ll get better in time. The ability to upgrade
+your OSX by purchasing the new version from the App Store is very cool
+(for a proprietary OS of course).</p>
+
+<h3>Emacs</h3>
+
+<p>The Cocoa port of Emacs is a bit immature and there are some visual
+glitches here and there (try out <code>M-x linum-mode</code> for instance), but
+they are forgivable. I&rsquo;m also missing the deep integration Emacs had with Linux.
+And who the fuck designed all the official Mac keyboards without a
+right control key? I finally understood why so many Mac users where on
+vim :&ndash;)</p>
+
+<p>Btw, remapping the <code>Caps</code> to <code>Control</code> is not the answer. I do it now,
+I did it on Linux as well. You simply not supposed to hit Control +
+any other key with the same hand. It&rsquo;s disruptive to your
+typing&hellip; But then again &ndash; you should probably do most of your typing
+will a full sized keyboard :&ndash;)</p>
+
+<h3>Software Development</h3>
+
+<p>OSX doesn&rsquo;t nurture software development as much as Linux does, but it
+comes pretty close in second place. All the tools you know and love
+are available, but their installation &amp; setup is a little bit more
+involved on OSX. There is a reason why the screenshots in most
+programming books show OSX.</p>
+
+<h3>System administration</h3>
+
+<p>Definitely a step back from Linux. Programs like <code>launchctl</code> (for instance) are not
+exactly fun to work with, but they do get the job done. I&rsquo;d never use
+an OSX box for anything more than a desktop workstation. Setting up a
+sensible <code>$PATH</code> is not as trivial as it was on Linux either
+(<code>/etc/paths</code> and some plist I forgotten come to mind).</p>
+
+<h2>The things I hate</h2>
+
+<h3>The special keys</h3>
+
+<p>Not exactly an OSX feature, but still&hellip;</p>
+
+<p>One year and I still hate <code>Command</code> and <code>Option</code> &ndash; option is basically <code>Alt</code>
+on a strange location and Command is totally useless IMHO. I&rsquo;d
+probably wouldn&rsquo;t have hated them as much if there were room left on
+the Apple keyboards (expect of course the old wired Apple keyboard) for an addition control key. Luckily for me I use an
+external
+<a href="http://batsov.com/articles/2008/06/16/das-keyboard/">Das Keyboard Ultimate</a>
+most of the time&hellip;</p>
+
+<p>Command and Option do have some value, I&rsquo;d probably would have
+appreciated it if they didn&rsquo;t come at the cost of my beloved right
+control (which I guess only Emacs users are missing anyways).</p>
+
+<h3>No standard all mighty package manager</h3>
+
+<p>On Linux I had <code>aptitude</code>, <code>yum</code>, <code>portage</code> and <code>pacman</code> &ndash; all amazing at what
+they do. On OSX &ndash; <code>homebrew</code> is a decent option, but it&rsquo;s a far cry from
+the might and magic of the Linux package managers. Still, <code>homebrew</code>
+is better than it&rsquo;s alternative, so beware!</p>
+
+<h3>Ugly XML config files</h3>
+
+<p>Here and there in OSX you have to write some appalling <a href="http://en.wikipedia.org/wiki/Property_list">XML config
+files</a>. I thought I&rsquo;d never see the likes of those again after I put
+Java development behind me :&ndash;)</p>
+
+<h3>XCode</h3>
+
+<p>You need to install a giant lame IDE just to get a bunch of command
+line development tools? That&rsquo;s one of the most annoying things I&rsquo;ve
+encountered up-to-date in OSX.</p>
+
+<p>Yep, I know about the tools being available
+<a href="http://kennethreitz.com/xcode-gcc-and-homebrew.html">separately</a> for
+couple of months now, but requesting an Apple developer registration
+just to get them seems a bit to much to me.</p>
+
+<h2>Epilogue</h2>
+
+<p>Am I happier now without Linux? Definitely! Is OSX a better OS than
+Linux? Absolutely not! It does have a <strong>much</strong> better desktop
+experience and since I spend most of the time on a computer
+interacting with the desktop &ndash; that&rsquo;s a big win for me. Of course I
+wouldn&rsquo;t mind seeing Linux achieve this level of desktop maturity and
+stability.</p>
+
+<p>Should you dump Linux and join me in <strong>darkness</strong>? How the hell should
+I know? :&ndash;) I&rsquo;m just sharing my two cents &ndash; if you&rsquo;re happy using
+Linux you should <strong>definitely</strong> stick with it. Obviously I wasn&rsquo;t and
+there weren&rsquo;t that many alternatives lying around.</p>
+
+<p>Not having to deal with hardware problems and immature desktop apps is
+like a breath of fresh air and it more than compensates for the few
+shortcomings of OSX. Nothing compensates the lack of that right
+control key on most keyboards, but after all that&rsquo;s not an OS problem
+;&ndash;)</p>
+
+<p>There is great vibrant hacker community gathered around OSX and it&rsquo;s
+one of the main driving forces of the OS. There is unfortunately a lot
+of corporate pressure from Apple as well, but as you already know by
+now &ndash; there are never perfect things, there are always
+compromises. I&rsquo;d rather use a proprietary OS that stays out of my way,
+than a free OS into which I bump at every turn.</p>
+
+<p>Soon I&rsquo;ll blog a little bit more about the practical aspects and
+implication of the migration. Cheers, mates!</p>
+
+<p><strong>P.S. I&rsquo;ve updated the original post a bit to reflect some of the
+initial feedback I received.</strong></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-09T22:11:00+03:00" pubdate data-updated="true">Sep 9<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/linux/'>Linux</a>, <a class='category' href='/articles/categories/osx/'>OSX</a>, <a class='category' href='/articles/categories/misc/'>misc</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2012/09/09/from-linux-to-osx-1-year-later/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2012/09/09/from-linux-to-osx-1-year-later/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2012/09/09/guru-mode/" title="Previous Post: guru-mode">&laquo; guru-mode</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2012/09/12/setting-up-fallback-locale-s-in-rails-3/" title="Next Post: Setting up fallback locale(s) in Rails 3">Setting up fallback locale(s) in Rails 3 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2012/09/09/from-linux-to-osx-1-year-later/';
+        var disqus_url = 'http://batsov.com/articles/2012/09/09/from-linux-to-osx-1-year-later/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -9,10 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Can&rsquo;t wait for
-Octopress 3.0
-to be released! Octopress 2 is killing me and I was seriously
-considering going back to a plain Jekyll blog, &hellip;">
+  <meta name="description" content="Have you ever been wondering how to access the Emacs menu bar, when
+using Emacs in console mode? The answer is easy &ndash; press F10 or type
+M-x &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +20,7 @@ considering going back to a plain Jekyll blog, &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://batsov.com">
+  <link rel="canonical" href="http://batsov.com/articles/page/24">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
@@ -88,7 +87,7 @@ considering going back to a plain Jekyll blog, &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a></h1>
+      <h1 class="entry-title"><a href="/articles/2009/12/05/menubar-emacs/">Accessing the Menu Bar in Emacs</a></h1>
     
     
       <p class="meta">
@@ -104,19 +103,20 @@ considering going back to a plain Jekyll blog, &hellip;">
   
 
 
-<time datetime="2015-02-15T13:24:00+02:00" pubdate data-updated="true">Feb 15<span>th</span>, 2015</time>
+<time datetime="2009-12-05T00:00:00+02:00" pubdate data-updated="true">Dec 5<span>th</span>, 2009</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Can&rsquo;t wait for
-<a href="http://octopress.org/2015/01/15/octopress-3.0-is-coming/">Octopress 3.0</a>
-to be released! Octopress 2 is killing me and I was seriously
-considering going back to a plain Jekyll blog, before I saw 3.0 is right around the corner.</p>
+  <div class="entry-content"><p>Have you ever been wondering how to access the Emacs menu bar, when
+using Emacs in console mode? The answer is easy &ndash; press <strong>F10</strong> or type
+<strong>M-x menu-bar-open</strong>(both methods work in X as well, of course).</p>
 
-<p>Any day now&hellip;</p>
+<p>Although the menu bar is rarely used by seasoned Emacs veterans,
+exploring it is a great way to get started with the capabilities of
+the new modes, so being able to access it is generally a good thing.</p>
 </div>
   
   
@@ -129,7 +129,7 @@ considering going back to a plain Jekyll blog, before I saw 3.0 is right around 
       
   <header>
     
-      <h1 class="entry-title"><a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a></h1>
+      <h1 class="entry-title"><a href="/articles/2009/12/05/execute-stuff-after-zsh-login/">Automatically Execute Programs After Zsh Login</a></h1>
     
     
       <p class="meta">
@@ -145,39 +145,30 @@ considering going back to a plain Jekyll blog, before I saw 3.0 is right around 
   
 
 
-<time datetime="2014-12-04T12:45:00+02:00" pubdate data-updated="true">Dec 4<span>th</span>, 2014</time>
+<time datetime="2009-12-05T00:00:00+02:00" pubdate data-updated="true">Dec 5<span>th</span>, 2009</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>At <a href="http://clojure-conj.org/">Clojure/conj</a> I had the chance to shake
-Rich Hickey’s hand and exchange a few words with him. When I asked him
-whether he currently uses CIDER or Cursive for Clojure development he
-replied that he preferred a simpler solution – <code>clojure-mode</code> &amp;
-<code>inferior-lisp-mode</code>. I was a bit surprised because <code>clojure-mode</code>’s
-integration with <code>inferior-lisp-mode</code> sucks (big time). It has always
-been extremely limited and was never really improved/extended. It has
-no Clojure specific features and no code completion. I felt that Rich
-and all the people using inferior-lisp-mode deserved something better,
-so I quickly put together <a href="https://github.com/clojure-emacs/inf-clojure">inf-clojure</a>.</p>
+  <div class="entry-content"><p>Sometimes you may want to start a couple of programs just after an
+interactive login to your favourite shell, which in my case would be
+zsh.</p>
 
-<p><code>inf-clojure</code> provides some Clojure specific features like showing a
-var’s doc or source, derives some core functionality from <code>clojure-mode</code>
-and even features basic code-completion (and <code>company-mode</code>
-support). That’s not much admittedly, but it’s a good start. Extending
-<code>inf-clojure</code> is super easy and I expect that we’ll add a bit more
-features to it along the way (e.g. macroexpansion).</p>
+<p>For example &ndash; I use Emacs as daemon process(emacs &mdash;daemon). I cannot use an init
+script to start it since the daemon is usable on a per user basis. The
+solution in this case is really simple &ndash; just create a <strong>.zlogin</strong> file in
+your home folder and put in it all the commands you want executed
+after you&rsquo;ve logged into the shell. In my case I put:</p>
 
-<p><code>inf-clojure</code> is available in MELPA and will eventually replace
-completely <code>inferior-lisp-mode</code> when <code>clojure-mode</code> 4.0 is released.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>emacs --daemon
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Keep in mind that <code>inf-clojure</code> is nothing like CIDER and will never
-be. CIDER will always be the powertool for Clojure programming in
-Emacs. I do understand, however, that some people are overwhelmed by
-CIDER and some people simply don’t need anything sophisticated. I hope
-they’ll enjoy <code>inf-clojure</code>!</p>
+
+<p>there and as soon as I&rsquo;m logged in, the Emacs daemon is up waiting for
+incoming connections.</p>
 </div>
   
   
@@ -190,7 +181,7 @@ they’ll enjoy <code>inf-clojure</code>!</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a></h1>
+      <h1 class="entry-title"><a href="/articles/2009/09/25/xerox-phaser-3117-fedora/">Using Xerox Phaser 3117 on Fedora</a></h1>
     
     
       <p class="meta">
@@ -206,27 +197,25 @@ they’ll enjoy <code>inf-clojure</code>!</p>
   
 
 
-<time datetime="2014-11-15T20:17:00+02:00" pubdate data-updated="true">Nov 15<span>th</span>, 2014</time>
+<time datetime="2009-09-25T00:00:00+03:00" pubdate data-updated="true">Sep 25<span>th</span>, 2009</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I&rsquo;ll be talking about the evolution of CIDER at the
-<a href="http://clojure-conj.org/">conj</a>, but I won&rsquo;t be able to show much (in
-terms of features) during my talk. Luckily, however, beside the talks
-we also have the option for <a href="https://github.com/cognitect/clojure-conj/wiki/Clojure-conj-2014-Unsessions">unsessions</a>. Here&rsquo;s my proposal for one such unsession&hellip;</p>
+  <div class="entry-content"><p>The driver selected by default by Fedora 11 is not appropriate for
+Xerox Phaser 3117 &ndash; it will not print with it. However there is a very
+easy solution to the problem.</p>
 
-<p>I&rsquo;d like to do a more extensive demonstration of the general
-workflow with CIDER and all the cool things we&rsquo;ve done recently and
-I&rsquo;d also like discuss with our users (and potential users) existing
-problems, ideas for improvements and the future direction of the
-project. If you like my idea you can show your support for it
-<a href="https://github.com/cognitect/clojure-conj/wiki/Clojure-conj-2014-Unsessions#cider-demoqa">here</a>.</p>
+<p>Go to <strong>System &ndash;> Administration &ndash;> Printing</strong> (In GNOME at least, in KDE
+it’s probably something similar). Right click the Xerox Phaser 3117
+printer icon there and select &ldquo;Properties&rdquo; from the menu. Then in the
+&ldquo;Make and model&rdquo; section choose change and then select Samsung
+ML-1710.</p>
 
-<p>Feedback is important and I&rsquo;d like to get as much as possible
-to make CIDER better!</p>
+<p>After you apply the change you&rsquo;ve just made, you can start printing
+with your Phaser.</p>
 </div>
   
   
@@ -239,7 +228,7 @@ to make CIDER better!</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a></h1>
+      <h1 class="entry-title"><a href="/articles/2009/09/03/jboss-jvm-params/">Mofidy JVM Parameters for JBoss As</a></h1>
     
     
       <p class="meta">
@@ -255,25 +244,35 @@ to make CIDER better!</p>
   
 
 
-<time datetime="2014-11-15T20:16:00+02:00" pubdate data-updated="true">Nov 15<span>th</span>, 2014</time>
+<time datetime="2009-09-03T00:00:00+03:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2009</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><a href="https://github.com/edw">Edwin Watkeys</a> has just released a
-<a href="https://github.com/thunknyc/nrepl-profile">profiling extension for CIDER</a>,
-based on his library
-<a href="http://github.com/thunknyc/profile">profile</a>. The profiling data you&rsquo;ll get
-is rather crude, but it&rsquo;s still better than nothing and is certainly nicer
-than what you&rsquo;d get by using <code>time</code>.</p>
+  <div class="entry-content"><p>Most people have been in a situation requiring them to change one or
+more of the parameters passed to the JVM on top of which JBoss AS is
+running. For instance &ndash; you may need a bigger heap, bigger perm gen
+size or something else. The best place to put these parameters is
+probably the following file:</p>
 
-<p>Here you can see the extension in action:</p>
+<p><strong>$JBOSS_HOME/bin/run.conf</strong></p>
 
-<p><img src="https://camo.githubusercontent.com/636b6897b279bb761f3377f6e002bbdb8b474937/68747470733a2f2f7261772e6769746875622e636f6d2f7468756e6b6e79632f6e7265706c2d70726f66696c652f6d61737465722f646f632f70726f66696c652d73637265656e73686f742e706e67"></p>
+<p>where <strong>$JBOSS_HOME</strong> refers to the directory in which you’ve unpacked the JBoss AS distribution.</p>
 
-<p>Check out the documentation of both projects for more details.</p>
+<p>Look for this section:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;x$JAVA_OPTS&quot;</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">    </span><span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">&quot;...&quot;</span>
+</span><span class='line'><span class="k">fi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>All you have to do now is adapt it to your needs.</p>
 </div>
   
   
@@ -286,7 +285,7 @@ than what you&rsquo;d get by using <code>time</code>.</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a></h1>
+      <h1 class="entry-title"><a href="/articles/2009/07/19/dotemacs-github/">Emacs Configuration in Github</a></h1>
     
     
       <p class="meta">
@@ -302,19 +301,27 @@ than what you&rsquo;d get by using <code>time</code>.</p>
   
 
 
-<time datetime="2014-11-12T14:16:00+02:00" pubdate data-updated="true">Nov 12<span>th</span>, 2014</time>
+<time datetime="2009-07-19T00:00:00+03:00" pubdate data-updated="true">Jul 19<span>th</span>, 2009</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Good news, RubyMine users!</p>
+  <div class="entry-content"><p>When you have applications, whose configuration is as complex as that
+of Emacs it’s always a good idea to store that configuration under
+version control so you can easily share it between multiple
+computers. You can always set up some version control system yourself,
+but it’s a lot more convenient (and much more reliable) to use an
+already existing code hosting solution such a GitHub. I have created a
+small repo there housing my humble Emacs configuration(.emacs, some
+custom stuff) and this way I can easily access it on all the computers
+that I happen to be working on.</p>
 
-<p>Yesterday <a href="https://github.com/sirlantis">Marcel Jackwerth</a> released the initial version of a <a href="https://github.com/sirlantis/rubocop-for-rubymine">RuboCop plugin for
-RubyMine/IntelliJ IDEA</a>. Here&rsquo;s the plugin in action:</p>
+<p><strong>Update</strong></p>
 
-<p><img src="https://cloud.githubusercontent.com/assets/56807/5009481/9bbee3b4-6a67-11e4-8bf9-2a32c3bc3d5e.png"></p>
+<p>At some point my custom configuration grew into what is known today as
+the <a href="https://github.com/bbatsov/prelude">Emacs Prelude</a>.</p>
 </div>
   
   
@@ -324,9 +331,11 @@ RubyMine/IntelliJ IDEA</a>. Here&rsquo;s the plugin in action:</p>
   
   <div class="pagination">
     
-      <a class="prev" href="/articles/page/2/">&larr; Older</a>
+      <a class="prev" href="/articles/page/25/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/articles/page/23/">Newer &rarr;</a>
     
   </div>
 </div>

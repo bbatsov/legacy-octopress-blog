@@ -1,0 +1,512 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>CIDER 0.7 - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="CIDER 0.7 is finally out and
+it&rsquo;s an epic release! It&rsquo;s without a doubt the most important release
+since the inception of the project &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2014/08/05/cider-0-dot-7">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">CIDER 0.7</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-05T15:19:00+03:00" pubdate data-updated="true">Aug 5<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="https://github.com/clojure-emacs/cider">CIDER</a> 0.7 is finally out and
+it&rsquo;s an epic release! It&rsquo;s without a doubt the most important release
+since the inception of the project about two years ago and it&rsquo;s the
+biggest one in terms of features and code changes.</p>
+
+<p>The release is special for a number of reasons. Allow me to quickly
+enumerate though them.</p>
+
+<h3>Middleware-based</h3>
+
+<p>One of the huge problems we&rsquo;ve had so far was that a lot of
+functionality that was present in SLIME + swank-clojure was missing in
+CIDER. For many people the transition between the two didn&rsquo;t really
+feel like an upgrade (although it was advertised as such) &ndash; after all
+they lost things like inspection, tracing, apropos, caller cross-reference, the
+debugger, etc.</p>
+
+<p>The reason this happened was CIDER&rsquo;s initial approach of implementing
+features by inlining Clojure code within the Emacs Lisp code and
+evaluating this code in a dedicated nREPL session (called the tooling
+session), to avoid contaminating the results in the &ldquo;primary&rdquo; eval
+session. This approach had one upside (you didn&rsquo;t need any extra deps
+(middleware) to run CIDER) and one huge downside (it&rsquo;s impossible
+to maintain non-trivial inlined code; not to mention it&rsquo;s not very
+practical). This meant that pretty much all third party libs were out
+of the equation and pretty much every advanced feature.</p>
+
+<p>This problem was initially address by
+<a href="https://github.com/pallet/ritz">ritz</a>, which provided some extra
+functionality built on top of extra nREPL middleware. As it was a
+separate project it was hard to be kept in sync with the flurry of
+changes in CIDER and was abandoned at some point. While <code>ritz</code> failed
+it had the right approach and it served as the principle inspiration
+for CIDER 0.7.</p>
+
+<p>In CIDER 0.6 we introduced optional nREPL middleware for some
+operations (like completion, error reporting, var info) and in 0.7 the
+middleware stack was greatly extended, improved and promoted to a
+mandatory CIDER component. This has one downside (you&rsquo;ll have to
+install it to leverage all of CIDER&rsquo;s power) and a several upsides:</p>
+
+<ul>
+<li><p>A lot of the heavy lifting is now done in pure Clojure code (see
+<a href="https://github.com/clojure-emacs/cider-nrepl">cider-nrepl</a>) and it&rsquo;s
+much easier to implement complex features now (not to mention &ndash; this
+code is much easier to maintain). This also means that it&rsquo;s much
+easier for Clojure programmers to contribute to CIDER as a lot of
+functionality is just lots of Clojure code and very little Emacs Lisp
+code. I&rsquo;m reasonably sure I&rsquo;m one of the very few CIDER users who
+knows more Emacs Lisp than Clojure, so I consider this a big win.</p></li>
+<li><p>It&rsquo;s now easy to provide pretty similar level of support for both
+Clojure and ClojureScript as we can reconcile the differences
+between them in our middleware.</p></li>
+<li><p>It&rsquo;s easier to keep the code backwards compatible (which is a
+nightmare for inlined code).</p></li>
+<li><p>There are no implicit dependencies in the system (unlike before).</p></li>
+</ul>
+
+
+<p>Consider auto-completion &ndash; this feature was implemented in terms of
+evaluating some <code>clojure-complete</code> code with the assumption that
+<code>clojure-complete</code> is available in the environment you were using as
+CIDER assumed you had started the nREPL server using <code>lein repl</code>. This
+would fire up a REPL-y REPL and <code>clojure-complete</code> is a REPL-y
+dependency. Not everyone uses <code>lein repl</code>, though and REPL-y can always
+switch to another completion library in the future.</p>
+
+<p>If you connected CIDER to an embedded nREPL server,
+you&rsquo;d be greeted by a missing class error, as most apps don&rsquo;t normally
+depend on <code>clojure-complete</code>. You&rsquo;d be puzzled for a while, but eventually
+you&rsquo;ll realize what the problem is.</p>
+
+<p>Now we&rsquo;re free to explicitly specify our deps and pick the best
+libraries for the job (as opposed to those that are available) &ndash;
+you&rsquo;ll quickly notice how smarter auto-completion is now on Clojure,
+because we&rsquo;re internally using the newer, faster and more feature-rich
+<a href="https://github.com/alexander-yakushev/compliment">compliment</a> library
+(note that we&rsquo;re using a different library for ClojureScript
+completion).
+* Other projects can leverage some of our middleware &ndash; somewhat
+  amusingly for Emacs users, <code>vim-fireplace</code> is using <code>cider-nrepl</code>
+  as well.</p>
+
+<p>At this point we&rsquo;ve removed pretty much all inlined code (except some
+pretty-printing code) and that has yielded much improved eldoc,
+macroexpansion, documentation viewing (<code>cider-doc</code> will now display
+Javadoc in Emacs!!!), source browsing, etc.</p>
+
+<p>We&rsquo;ve also started bringing back some features we loved in SLIME, but
+were missing so far &ndash; the inspector, apropos and tracing are back. We&rsquo;re now working on
+bringing back function call cross-referencing and debugging as well.</p>
+
+<p>Note that CIDER will still work if you connect to an nREPL server
+that&rsquo;s not using CIDER&rsquo;s middleware. In this case you&rsquo;ll get a
+warning and a pretty limited feature-set &ndash; source file loading, code
+evaluation, pretty-printing and error highlighting.</p>
+
+<h3>cider-test</h3>
+
+<p><code>clojure-test-mode</code> (which was more or less abandoned in terms of
+maintenance) finally has a successor in CIDER itself. <code>cider-test</code>
+provides more or less the same functionality, but is implemented in
+terms of nREPL middleware and is a more robust solution. As it&rsquo;s part
+of CIDER it cannot ever be out-of-sync with CIDER as <code>clojure-test-mode</code> has
+often been lately.</p>
+
+<p><code>cider-test</code> is a little rough around the edges, but I&rsquo;m fairly sure it has bright future
+ahead. Use it, love it, hate it and send us your feedback! We&rsquo;d love to hear it.</p>
+
+<p><strong>P.S.</strong> We might extend this with support for other frameworks like
+<code>midje</code> and <code>expectations</code>, although that&rsquo;s not high on our priority
+list.</p>
+
+<h3>Grimoire support</h3>
+
+<p>In addition to built-in Clojure &amp; Javadoc you can now peruse the
+extended documentation provided by
+<a href="http://grimoire.arrdem.com/">Grimoire</a> from the comfort of your
+beloved editor. No more browser interruptions just to get a few usage
+examples of some function! <code>C-c C-d g</code> for the win!</p>
+
+<p>Adding some extended Grimoire integration is definitely on the roadmap.</p>
+
+<h3>Increased bus factor</h3>
+
+<p>One of the biggest problems of the project so far was that fairly few people
+were involved with it.  At one point it was mostly Tim, Hugo and
+me. At another it was mostly me. The bus factor was dangerously close
+to 1, which always worried me. Recently, however, a lot of people have
+been helping quite actively, which makes me more optimistic about the
+future. As much as I love CIDER I don&rsquo;t want it to depend on one
+extremely busy and very clumsy person (each time I go hiking there&rsquo;s a
+serious chance I&rsquo;ll fall of a cliff or something).</p>
+
+<p>I&rsquo;d like to thank everyone for your wonderful contributions and single
+out a bunch of people for some outstanding work done by them:</p>
+
+<ul>
+<li><a href="https://github.com/gtrak">Gary Trakhman</a> is the one responsible for
+the good ClojureScript support we now boast. Fantastic work, Gary! You have a big thanks from me!</li>
+<li><a href="https://github.com/jeffvalk">Jeff Valk</a> did some mighty fine work
+on the var info retrieval, source navigation, documentation display
+and single-handedly implemented <code>cider-test</code> and <code>cider-apropos</code>. We
+all owe Jeff a huge thanks!</li>
+<li><a href="https://github.com/hugoduncan">Hugo Duncan</a> who constantly
+  contributed patches, bug reports and ideas. His <code>nrepl-ritz</code>
+  project provided a lot of inspiration for some of the existing
+  middleware.</li>
+<li><a href="https://github.com/eslick">Ian Eslick</a> contributed the new inspector.</li>
+<li><a href="https://github.com/alexander-yakushev/compliment">Alexander Yakushev</a>
+  made so many improvements to his awesome <code>compliment</code>
+  library for the needs of CIDER. Did you notice that you now get
+  completion suggestions for <strong>locals</strong>? How amazing is that!</li>
+<li><a href="https://github.com/dgutov">Dmitry Gutov</a> implemented native support in CIDER for <code>company-mode</code>.</li>
+</ul>
+
+
+<h2>The Road Before Us</h2>
+
+<p>Obviously our work is far from over &ndash; we&rsquo;re still lacking some crucial
+features (most notably a debugger) and a lot of code needs
+polish. This will obviously take some time and a lot of work to get right, but I&rsquo;m
+confident we&rsquo;ll get there.</p>
+
+<p>I&rsquo;d also want us to work a bit in the area of documentation &ndash; a
+manual, a cheatsheet, etc. Have a look at the
+<a href="https://github.com/clojure-emacs/cider/issues">issue tracker</a> if
+you&rsquo;d like to help out &ndash; we definitely need all the help we can get.</p>
+
+<p>The 0.7 release required a massive amount of work and we spent more that 3 months to get it to
+a shippable state. With the bulk of the work behind us I hope we&rsquo;ll be able to deliver new
+releases more frequently &ndash; on a monthly (or bi-monthly) basis.</p>
+
+<p>I&rsquo;d love to be able to raise a lot of money via crowd-funding and work
+on CIDER for an year or get hired by some company to work full-time on
+it, but that&rsquo;s not going to happen. For one reason or another people
+rarely get excited about dev tools, so all of us have to work together
+to make CIDER the ultimate Clojure(Script) development environment.</p>
+
+<p>If I knew how much work I&rsquo;d have to do when I assumed the maintenance
+of CIDER exactly one year ago I might not have done it. Maintaining a
+project that&rsquo;s pivotal to an entire community (I recall some article
+mentioning about half the Clojure devs were using it) is both a lot of
+work and a lot of stress and pressure. That said, it&rsquo;s probably my
+favourite OSS project and I enjoy working on it immensely. If you
+don&rsquo;t have the time to help out with code or docs you can still support my
+work on CIDER (and all my other projects) via
+<a href="https://www.gittip.com/bbatsov">gittip</a>.</p>
+
+<p><a href="https://www.gittip.com/bbatsov"><img src="https://rawgithub.com/twolfson/gittip-badge/0.2.0/dist/gittip.png" alt="Support via Gittip" /></a></p>
+
+<p>For all the gory details regarding new features and changes in CIDER 0.7 &ndash; take a look at the
+<a href="https://github.com/clojure-emacs/cider/blob/master/CHANGELOG.md">changelog</a>.</p>
+
+<p>That&rsquo;s all from me, folks! Use CIDER, drink cider and prosper!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-05T15:19:00+03:00" pubdate data-updated="true">Aug 5<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/clojure/'>Clojure</a>, <a class='category' href='/articles/categories/emacs/'>Emacs</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2014/08/05/cider-0-dot-7/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2014/08/05/cider-0-dot-7/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2014/07/25/permalinks-in-the-clojure-style-guide/" title="Previous Post: Permalinks in the Clojure style guide">&laquo; Permalinks in the Clojure style guide</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2014/08/12/the-state-of-some-emacs-packages-for-clojure-development/" title="Next Post: The State of Some Emacs Packages for Clojure Development">The State of Some Emacs Packages for Clojure Development &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2014/08/05/cider-0-dot-7/';
+        var disqus_url = 'http://batsov.com/articles/2014/08/05/cider-0-dot-7/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,612 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>(think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude If there is something that people love as much as tweaking their
+editing configurations it&rsquo;s probably the selection of color themes. A &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/page/16">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/02/19/color-theming-in-emacs-reloaded/">Color Theming in Emacs: Reloaded</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T12:17:00+02:00" pubdate data-updated="true">Feb 19<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p>If there is something that people love as much as tweaking their
+editing configurations it&rsquo;s probably the selection of color themes. A
+good color theme can make your work much more pleasant and a bad one
+that literally impair your vision. It&rsquo;s a fact of life that I&rsquo;m a firm
+supporter of low-contrast color themes with dark backgrounds &ndash; I find
+them easy on the eyes and I feel that they don&rsquo;t strain the eyes as
+much as most themes. I&rsquo;ve even ported a couple of popular themes to
+Emacs &ndash; <a href="https://github.com/bbatsov/zenburn-emacs">Zenburn</a> and
+<a href="https://github.com/bbatsov/solarized-emacs">Solarized</a>.</p>
+
+<p>In this short article we&rsquo;ll see how color theming has changed in Emacs
+24 and I&rsquo;ll share with you a few tips on theme creation and
+distribution.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/articles/2012/02/19/color-theming-in-emacs-reloaded/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/12/03/solarized-for-emacs/">Solarized for Emacs</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-03T14:44:00+02:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;ve created a new port of the
+<a href="http://ethanschoonover.com/solarized">Solarized color theme</a> for
+Emacs 24. While there is
+<a href="https://github.com/sellout/emacs-color-theme-solarized">another existing port of the theme</a>
+I&rsquo;ve decided to into a separate direction since I&rsquo;ve wanted to keep
+the development of Solarized and
+<a href="https://github.com/bbatsov/zenburn-emacs">Zenburn</a> for Emacs in sync.</p>
+
+<p>So without further ado here&rsquo;s a screenshot of the theme (or the dark
+variant to be precise):</p>
+
+<p><img src="/images/articles/solarized-emacs.png"></p>
+
+<p>Note that this is a very early version and I haven&rsquo;t fine tuned all
+the colors yet. The source code and installation instructions can be
+found on <a href="https://github.com/bbatsov/solarized-emacs">GitHub</a>.</p>
+
+<p>The theme is already bundled in
+<a href="https://github.com/bbatsov/prelude">Emacs Prelude</a> and I&rsquo;ll
+submit it to Marmalade soon. Note that I&rsquo;ve dropped some things like
+the degraded palette and the 16 color palette (at least for now),
+since I doubt many people need them. On the other hand &ndash; you&rsquo;ll proper
+coloring in most prominent modes out of the box.</p>
+
+<p>Feedback, suggestions and patches are always welcome.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/11/30/the-ultimate-collection-of-emacs-resources/">The Ultimate Collection of Emacs Resources</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-30T20:56:00+02:00" pubdate data-updated="true">Nov 30<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p>Anyone who&rsquo;s ever dabbled in the dark art that is Emacs knows that
+chances are you&rsquo;ll be overwhelmed before you start making sense of
+Emacs&#8217; unique view of the world. There is just too much information
+out there&hellip;</p>
+
+<p>There are many great Emacs resources targeting different
+groups of Emacs users. The problems is that often the people that would
+benefit the most from some of those resources don&rsquo;t even know about
+their existence. That&rsquo;s why I&rsquo;m putting together this article &ndash; to collect the
+best resources in a single location and categorize them
+accordingly. Surely I&rsquo;ll miss a lot of stuff &ndash; I&rsquo;m just one man and I
+certainly don&rsquo;t know about many great repositories of Emacs wisdom. I
+hope you&rsquo;ll help me by pointing out such repositories in the comments
+section. So here we go&hellip;</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/articles/2011/11/30/the-ultimate-collection-of-emacs-resources/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/11/28/ruby-tip-number-1-demystifying-the-difference-between-equals-equals-and-eql/">Ruby Tip #1: Demystifying the Difference Between == and Eql?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-28T16:54:00+02:00" pubdate data-updated="true">Nov 28<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Newcomers to Ruby are often confused by the fact the <code>Object</code> class
+defines three methods related to equality &ndash; <code>==</code>, <code>eql?</code> and
+<code>equal?</code>. Of the three the one that it&rsquo;s easiest to describe is
+<code>equal?</code> &ndash; it implements what&rsquo;s commonly known as reference equality
+check. The method returns <code>true</code> only if its receiver (the object upon
+the method was invoked) and parameter (the object we&rsquo;re comparing to) are
+the same object (Java developers should think of the <code>==</code> operator
+there).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">some_word</span> <span class="o">=</span> <span class="s2">&quot;word&quot;</span>
+</span><span class='line'><span class="n">some_other_word</span> <span class="o">=</span> <span class="n">some_word</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">some_word</span><span class="o">.</span><span class="n">equal?</span> <span class="n">some_other_word</span> <span class="c1"># true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Both <code>==</code> and <code>eql?</code> implement value equality checks &ndash; they are not
+interested in whether two variables point to the same object in
+memory, but whether two objects are equal in terms of their
+values. For instance &ldquo;cat&rdquo; and &ldquo;cat&rdquo; might very well be two completely
+different <code>String</code> objects, but they are quite obviously the same as
+far as their value is concerned.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;cat&quot;</span><span class="o">.</span><span class="n">equal?</span> <span class="s2">&quot;cat&quot;</span>     <span class="c1"># false</span>
+</span><span class='line'><span class="s2">&quot;cat&quot;</span> <span class="o">==</span> <span class="s2">&quot;cat&quot;</span>         <span class="c1"># true</span>
+</span><span class='line'><span class="s2">&quot;cat&quot;</span><span class="o">.</span><span class="n">eql?</span> <span class="s2">&quot;cat&quot;</span>       <span class="c1"># true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What&rsquo;s not immediately obvious is why are there two different
+methods that seem to be doing exactly the same thing. The answer is
+simple &ndash; <code>eql?</code> is meant to be used as a stricter version of <code>==</code>, if
+there is a need for such stricter version.<code>eql?</code> most prominent usage
+is probably in the <code>Hash</code> class, where it&rsquo;s used to test members for equality.</p>
+
+<p>In the <code>Object</code> class <code>eql?</code> is synonym with <code>==</code>. Most subclasses
+continue this tradition, but there are a few classes that provide a
+different implementation for <code>eql?</code>.  Numeric types, for example,
+perform type conversion across <code>==</code>, but not across <code>eql?</code>, so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span>       <span class="c1"># true</span>
+</span><span class='line'><span class="mi">1</span><span class="o">.</span><span class="n">eql?</span> <span class="mi">1</span>     <span class="c1"># true</span>
+</span><span class='line'><span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span>     <span class="c1"># true</span>
+</span><span class='line'><span class="mi">1</span><span class="o">.</span><span class="n">eql?</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span>   <span class="c1"># false</span>
+</span><span class='line'><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="n">eql?</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span> <span class="c1"># true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see clearly from this example &ndash; <code>eql?</code> for <code>Numeric</code> classes
+requires both objects to be instances of the same class, apart from
+having equal values, to return <code>true</code>.</p>
+
+<p>If you&rsquo;re wondering about the origins of that convention I should probably
+refer you to Common Lisp (one of the languages cited as principle
+inspiration for Ruby). Common Lisp has <a href="http://eli.thegreenplace.net/2004/08/08/equality-in-lisp/">quite a few equality
+predicates</a>,
+dealing with various aspects of equality. I guess I never found <code>==</code>
+and <code>eql?</code> in Ruby particularly confusing, because I knew Common Lisp,
+before I started playing with Ruby.</p>
+
+<p>Hopefully, I&rsquo;ve managed to make the difference between <code>==</code> and <code>eql?</code>
+clear. That&rsquo;s some fairly esoteric matter that&rsquo;s not totally
+understood by even some fairly experienced Ruby developers.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/11/25/emacs-tip-number-3-whitespace-cleanup/">Emacs Tip #3: Whitespace Cleanup</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-25T14:26:00+02:00" pubdate data-updated="true">Nov 25<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Good developers are very careful about the proper use of
+whitespace in their files &ndash; there should be no empty lines at the
+beginning of a file, no empty lines at the end of a file, no trailing
+whitespace, no mixture of tabs and spaces, etc.</p>
+
+<p>Emacs, naturally, wants to help with every problem possible and
+provides a very nice solution in the form of the <code>whitespace-cleanup</code>
+command. It&rsquo;s a much more powerful alternative to the older
+<code>delete-trailing-whitespace</code> command, that simply deletes trailing
+whitespace, and it&rsquo;s aware of the <code>whitespace-style</code> variable, used by <code>whitespace-mode</code>.</p>
+
+<p>It usually applies to the whole buffer, but in transient mark
+mode when the mark is active, it applies to the region.  It also
+applies to the region when it is not in transient mark mode, the
+mark is active and <code>C-u</code> was pressed just before
+calling <code>whitespace-cleanup</code> interactively. There is also a similar
+command called <code>whitespace-cleanup-region</code>.</p>
+
+<p>The problems cleaned up are (borrowed from the official documentation):</p>
+
+<ol>
+<li><p>Empty lines at beginning of buffer.</p></li>
+<li><p>Empty lines at end of buffer.
+If <code>whitespace-style</code> includes the value <code>empty</code>, remove all
+empty lines at beginning and/or end of buffer.</p></li>
+<li><p>8 or more SPACEs at beginning of line.
+If <code>whitespace-style</code> includes the value <code>indentation</code>:
+replace 8 or more SPACEs at beginning of line by TABs, if
+<code>indent-tabs-mode</code> is non-nil; otherwise, replace TABs by
+SPACEs.
+If <code>whitespace-style</code> includes the value <code>indentation::tab</code>,
+replace 8 or more SPACEs at beginning of line by TABs.
+If <code>whitespace-style</code> includes the value <code>indentation::space</code>,
+replace TABs by SPACEs.</p></li>
+<li><p>SPACEs before TAB.
+If <code>whitespace-style</code> includes the value <code>space-before-tab</code>:
+replace SPACEs by TABs, if <code>indent-tabs-mode</code> is non-nil;
+otherwise, replace TABs by SPACEs.
+If <code>whitespace-style</code> includes the value
+<code>space-before-tab::tab</code>, replace SPACEs by TABs.
+If <code>whitespace-style</code> includes the value
+<code>space-before-tab::space</code>, replace TABs by SPACEs.</p></li>
+<li><p>SPACEs or TABs at end of line.
+If <code>whitespace-style</code> includes the value <code>trailing</code>, remove
+all SPACEs or TABs at end of line.</p></li>
+<li><p>8 or more SPACEs after TAB.
+If <code>whitespace-style</code> includes the value <code>space-after-tab</code>:
+replace SPACEs by TABs, if <code>indent-tabs-mode</code> is non-nil;
+otherwise, replace TABs by SPACEs.
+If <code>whitespace-style</code> includes the value
+<code>space-after-tab::tab</code>, replace SPACEs by TABs.
+If <code>whitespace-style</code> includes the value
+<code>space-after-tab::space</code>, replace TABs by SPACEs.</p></li>
+</ol>
+
+
+<p>It might be a good idea to add <code>whitespace-cleanup</code> to your
+<code>before-save-hook</code> so that every buffer would be cleaned up before it&rsquo;s saved:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;before-save-hook</span> <span class="ss">&#39;whitespace-cleanup</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/articles/page/17/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/articles/page/15/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I&#8217;m a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

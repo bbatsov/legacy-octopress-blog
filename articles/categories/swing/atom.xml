@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Swing | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/swing/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-28T09:00:23+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to enable font anti-aliasing in a Java Swing app]]></title>
+    <link href="http://batsov.com/articles/2010/02/26/enable-aa-in-swing/"/>
+    <updated>2010-02-26T00:00:00+02:00</updated>
+    <id>http://batsov.com/articles/2010/02/26/enable-aa-in-swing</id>
+    <content type="html"><![CDATA[<p>If you have access to the source, you can do this in the main method:</p>
+
+<p><code>java
+// enable anti-aliasing
+System.setProperty("awt.useSystemAAFontSettings","on");
+System.setProperty("swing.aatext", "true");
+</code></p>
+
+<p>Alternatively (and if you do not have access to the source, or if you find this
+easier) you can simply pass the system properties above to the JVM by
+adding these options to the command line:</p>
+
+<p><code>java
+-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to center a JDialog over a JFrame in Swing]]></title>
+    <link href="http://batsov.com/articles/2009/12/18/center-jdialog-over-jframe/"/>
+    <updated>2009-12-18T00:00:00+02:00</updated>
+    <id>http://batsov.com/articles/2009/12/18/center-jdialog-over-jframe</id>
+    <content type="html"><![CDATA[<p>I always thought that the fact that JDialogs accepted a parent frame
+as a constructor argument was the thing, that would make the dialog’s
+position relative to that of the frame:</p>
+
+<p><code>java
+public JDialog(final java.awt.Frame parent, boolean modal)
+</code></p>
+
+<p>Unfortunately all of my freshly opened dialogs would appear in the
+upper left angle of my screen, not centered over the parent JFrame. I
+looked around and found out that I simply needed one more method call
+per dialog:</p>
+
+<p><code>java
+theDialog.setLocationRelativeTo(theFrame);
+</code></p>
+
+<p>You need to call this method before the JDialog’s show() method. Now
+everything is perfect and the dialog appears always right above the
+center of the frame.</p>
+]]></content>
+  </entry>
+  
+</feed>

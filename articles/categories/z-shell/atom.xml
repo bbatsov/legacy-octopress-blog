@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Z Shell | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/z-shell/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-28T09:00:23+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[One shell to rule them all...]]></title>
+    <link href="http://batsov.com/articles/2011/04/29/one-shell-to-rule-them-all/"/>
+    <updated>2011-04-29T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/04/29/one-shell-to-rule-them-all</id>
+    <content type="html"><![CDATA[<h2>Prelude</h2>
+
+<p>I&rsquo;ve been using zsh for about three years now and continue to be
+impressed the its immense power and flexibility. Switching from bash
+to zsh was a decision as good as switching from Windows to GNU/Linux,
+from vim to Emacs, from Eclipse to IntelliJ IDEA. In other words &ndash; it
+was an extremely good decision. :&ndash;)</p>
+
+<p>So I want to finally get the word out, showcase some nice zsh features
+and probably persuade a couple of bash users to try it. Be warned,
+however &ndash; after you try it there is no going back&hellip;</p>
+
+<h2>Getting started</h2>
+
+<p>Most distros come with bash by default so you&rsquo;ll probably need to
+install zsh first and configure it as your user&rsquo;s shell. On Fedora
+you&rsquo;d do:</p>
+
+<p><code>bash
+$ sudo yum install zsh
+$ chsh -s /bin/zsh
+</code></p>
+
+<p>The next time you login a terminal wizard with start up asking you
+about some basic zsh options that you might want to enable. I suggest
+you to enable them all except the beep option. In the end the wizard
+will save the new configuration to the file .zshrc in your user&rsquo;s home
+folder.</p>
+
+<p>Alternatively you may just use a preconfigured .zshrc, like this one:</p>
+
+<p>``` bash</p>
+
+<h1>Lines configured by zsh-newuser-install</h1>
+
+<p>HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt appendhistory autocd extendedglob nomatch notify correct_all
+unsetopt beep
+bindkey -e</p>
+
+<h1>End of lines configured by zsh-newuser-install</h1>
+
+<h1>The following lines were added by compinstall</h1>
+
+<p>zstyle :compinstall filename &lsquo;/home/bozhidar/.zshrc&rsquo;</p>
+
+<p>autoload -Uz compinit
+compinit</p>
+
+<h1>End of lines added by compinstall</h1>
+
+<p>```</p>
+
+<p>I don&rsquo;t like very much the default zsh prompt and I generally change
+it right away. Have a look at my other
+<a href="/Z%20Shell/Linux/2008/07/27/zsh-prompt.html">short article</a> on the topic.</p>
+
+<p>There a couple of configuration files related to zsh that you should
+know about:</p>
+
+<ul>
+<li>.zshrc &ndash; runs for each new shell(roughly equivalent to .bashrc)</li>
+<li>.zprofile &ndash; runs only for login shells(like .bash_profile)</li>
+<li>.zlogout &ndash; runs on logout</li>
+<li>.zshenv &ndash; holds environmental variables</li>
+</ul>
+
+
+<p>Here&rsquo;s an example .zshenv file:</p>
+
+<p>``` bash
+export JAVA_HOME=/usr/java/latest</p>
+
+<p>export SCALA_HOME=/opt/scala-2.8.1.final</p>
+
+<p>export M2_HOME=/opt/apache-maven-3.0.2</p>
+
+<p>export EDITOR=&ldquo;emacsclient -t&rdquo;
+export ALTERNATE_EDITOR=&ldquo;&rdquo;</p>
+
+<h1>needed to properly display complex color-themes in Emacs and vim</h1>
+
+<p>export TERM=xterm-256color</p>
+
+<p>typeset -U path
+path=($M2_HOME/bin $SCALA_HOME/bin ~/bin ~/Projects/work/bin $path)
+```</p>
+
+<p>Please note the way in which the PATH variable is set in zsh, which
+differs substantially from bash(it&rsquo;s just exported there as any other variable).</p>
+
+<h2>Playing around</h2>
+
+<p>At this point you have the legendary zsh autocompletion configured and
+you have enabled many of the zsh core features.</p>
+
+<p><strong>autocd</strong> allows you to navigate to folders only with their name
+without the cd command. One of my favourite features. Now you can do
+things like:</p>
+
+<p><code>bash
+[bozhidar@bozhidar ~]$ Downloads
+[bozhidar@bozhidar ~/Downloads]$
+</code></p>
+
+<p>Instead of:</p>
+
+<p><code>bash
+[bozhidar@bozhidar ~]$ cd Downloads
+[bozhidar@bozhidar ~/Downloads]$
+</code></p>
+
+<p>By the way autocd was added in bash 4.0 as well. You can enable it there with:</p>
+
+<p><code>bash
+[bozhidar@bozhidar ~]$ shopt -s autocd
+</code></p>
+
+<p><strong>appendhistory</strong> all your open shells share the same history which is
+handy if you want to refer commands from one shell in another with
+say Ctrl+R(reverse-history-search)</p>
+
+<p><strong>extendedglob</strong> allows you to recursive look for files in folders:</p>
+
+<p><code>bash
+[bozhidar@bozhidar ~]$ ls somedir/**/Makefile
+</code></p>
+
+<p>is equivalent to:</p>
+
+<p><code>bash
+[bozhidar@bozhidar ~]$ find somedir -name Makefile
+</code></p>
+
+<p>Most zsh users never use find for simple file look up. This feature
+was also added to bash 4.0 but it works in a slightly different
+manner.</p>
+
+<p><code>bash
+$ shopt -s extglob
+</code></p>
+
+<p><strong>correct</strong> &ndash; autocorrects mistyped commands</p>
+
+<p><code>bash
+[bozhidar@bozhidar]$ cta ~/.zshrc
+zsh: correct 'cta' to 'cat' [nyae]?
+</code></p>
+
+<h2>Keybindings</h2>
+
+<p>By default zsh uses Emacs keybindings which is perfect for a long time
+Emacs user like me. zsh doesn&rsquo;t use readline, instead it has its own
+line editing library called zle, which is much more powerful. vi users
+are not forgotten and can switch zsh to vi keybindings with the
+command:</p>
+
+<p><code>bash
+bindkey -v
+</code></p>
+
+<p>Mind that by default you&rsquo;ll be in &ldquo;insert&rdquo; mode and have to press ESC
+to go into command mode.</p>
+
+<p>You can also create custom keybindings like this:</p>
+
+<p><code>bash
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
+</code></p>
+
+<p>This will bind the Home and End keys to the commands beginning-of-line and end-of-line.</p>
+
+<h2>Aliases</h2>
+
+<p>Zsh has three different kinds of shell aliases.</p>
+
+<p><strong>Regular</strong> &ndash; same as in bash:</p>
+
+<p><code>bash
+alias ll='ls -l'
+</code></p>
+
+<p><strong>Suffix</strong> &ndash; suffix aliases are supported in zsh since version
+4.2.0. Some examples:</p>
+
+<p><code>bash
+alias -s tex=emacs
+alias -s html=google-chrome
+</code></p>
+
+<p>Now when you type in the console</p>
+
+<p><code>bash
+$ somefile.tex
+</code></p>
+
+<p>it will be opened automatically with Emacs. Similarly somefile.html
+would be opened by google-chrome. As you might imagine this feature is
+quite handy.</p>
+
+<p><strong>Global</strong> &ndash; global aliases can be used anywhere in the command line(as
+opposed to regular aliases that can used only in the beginning). Example:</p>
+
+<p><code>bash
+alias -g ...='../..'
+cd ...
+</code></p>
+
+<h2>Some tips and tricks</h2>
+
+<ul>
+<li><p>press Alt+q in the middle of a command you&rsquo;re typing. This will clear
+the console prompt and allow you execute another command(like a man lookup). Afterwards
+the things you&rsquo;ve typed before the Alt+q will magically reappear.</p></li>
+<li><p>Imagine you&rsquo;re in the folder <strong>project/4.0/module</strong>. Typing:</p></li>
+</ul>
+
+
+<p><code>bash
+cd 4.0 5.0
+</code></p>
+
+<p>Will take you to a folder named project/5.0/module(assuming that it exists of course). In general
+the command has the format <code>cd old new</code>.</p>
+
+<ul>
+<li>zsh comes with a built-in pager(similar to less). To try it just type &lt;somefilename. This is
+more or less equivalent to typing <code>less somefilename</code>.</li>
+</ul>
+
+
+<h2>Useful resources</h2>
+
+<ul>
+<li><a href="http://www.bash2zsh.com/zsh_refcard/refcard.pdf">zsh reference card</a></li>
+<li><a href="http://zsh.sourceforge.net/Doc/zsh_a4.pdf">zsh manual</a></li>
+<li><a href="http://zsh.sourceforge.net/Guide/zshguide.html">&ldquo;A User&rsquo;s Guide to Z-Shell&rdquo;</a></li>
+<li><a href="http://zshwiki.org/home/">zsh wiki</a></li>
+<li><a href="http://grml.org/zsh/zsh-lovers.html">zsh lovers</a> &ndash; collection of
+tips and tricks</li>
+<li><a href="http://www.bash2zsh.com/">&ldquo;From Bash to Z Shell &ndash; Conquering the Command Line&rdquo;</a></li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>There is no easy way to sum up everything that makes zsh great in a single blog post. I&rsquo;ll try to
+expand and improve it in time. I hope I&rsquo;ve whetted your appetite to try out zsh. If you like it
+well enough(of which I&rsquo;m most certain you should have a look at the resources in the end as well).</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Automatically execute programs after zsh login]]></title>
+    <link href="http://batsov.com/articles/2009/12/05/execute-stuff-after-zsh-login/"/>
+    <updated>2009-12-05T00:00:00+02:00</updated>
+    <id>http://batsov.com/articles/2009/12/05/execute-stuff-after-zsh-login</id>
+    <content type="html"><![CDATA[<p>Sometimes you may want to start a couple of programs just after an
+interactive login to your favourite shell, which in my case would be
+zsh.</p>
+
+<p>For example &ndash; I use Emacs as daemon process(emacs &mdash;daemon). I cannot use an init
+script to start it since the daemon is usable on a per user basis. The
+solution in this case is really simple &ndash; just create a <strong>.zlogin</strong> file in
+your home folder and put in it all the commands you want executed
+after you&rsquo;ve logged into the shell. In my case I put:</p>
+
+<p><code>bash
+emacs --daemon
+</code></p>
+
+<p>there and as soon as I&rsquo;m logged in, the Emacs daemon is up waiting for
+incoming connections.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A nice zsh prompt]]></title>
+    <link href="http://batsov.com/articles/2008/07/27/zsh-prompt/"/>
+    <updated>2008-07-27T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2008/07/27/zsh-prompt</id>
+    <content type="html"><![CDATA[<p>Recently I switched to zsh, after being a bash user for almost 5
+years. I was in love with everything in zsh from day one, except one
+thing – the default prompt. Although zsh ships with several prompt
+themes, I didn’t like any of them so I looked around a little bit and
+constructed my own humble prompt. Here it goes:</p>
+
+<p><code>PROMPT='[%n@%m %~]$ '</code></p>
+
+<p>In case you’re wondering what this gibberish means:</p>
+
+<p>%n stands for your username(e.g. bozhidar)</p>
+
+<p>%m stands for the first part of your machine’s hostname(you can use %M
+ for the fully qualified name)</p>
+
+<p>%~ stands for the current directory path with your home dir aliased
+ with an ‘~’ (if you want to see the path in its natural form use %d
+ instead)</p>
+
+<p>All of this strange looking character combinations are called “escape
+sequences” and they have special significance to zsh. The rest of the
+characters in the prompt definition are represented literally in the
+resulting prompt. It looks like this(on my machine):</p>
+
+<p><code>[bozhidar@drow ~/store]$</code></p>
+
+<p>If you like it simply put the prompt definition like in your .zshrc
+file. You may want to put a little bit different version of the prompt
+in the root user’s .zshrc(if you use root at all that is):</p>
+
+<p><code>PROMPT='[%n@%m %~]# '</code></p>
+
+<p>This follows the well established pattern that a normal shell and a
+root shell should be easily distinguished visually.</p>
+]]></content>
+  </entry>
+  
+</feed>

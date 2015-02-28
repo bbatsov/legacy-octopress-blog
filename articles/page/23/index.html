@@ -9,10 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Can&rsquo;t wait for
-Octopress 3.0
-to be released! Octopress 2 is killing me and I was seriously
-considering going back to a plain Jekyll blog, &hellip;">
+  <meta name="description" content="After a long period of planning I finally migrated my professional CV
+from Word to LaTeX last weekend. Since I live in the European Union I
+used the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +20,7 @@ considering going back to a plain Jekyll blog, &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://batsov.com">
+  <link rel="canonical" href="http://batsov.com/articles/page/23">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
@@ -88,7 +87,7 @@ considering going back to a plain Jekyll blog, &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a></h1>
+      <h1 class="entry-title"><a href="/articles/2010/09/07/cv-in-latex/">My Professional CV in LaTeX</a></h1>
     
     
       <p class="meta">
@@ -104,19 +103,20 @@ considering going back to a plain Jekyll blog, &hellip;">
   
 
 
-<time datetime="2015-02-15T13:24:00+02:00" pubdate data-updated="true">Feb 15<span>th</span>, 2015</time>
+<time datetime="2010-09-07T00:00:00+03:00" pubdate data-updated="true">Sep 7<span>th</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Can&rsquo;t wait for
-<a href="http://octopress.org/2015/01/15/octopress-3.0-is-coming/">Octopress 3.0</a>
-to be released! Octopress 2 is killing me and I was seriously
-considering going back to a plain Jekyll blog, before I saw 3.0 is right around the corner.</p>
+  <div class="entry-content"><p>After a long period of planning I finally migrated my professional CV
+from Word to LaTeX last weekend. Since I live in the European Union I
+used the <a href="http://www.ctan.org/tex-archive/macros/latex/contrib/europecv/">europecv</a> LaTeX class.</p>
 
-<p>Any day now&hellip;</p>
+<p>I’ve uploaded the LaTeX code into <a href="http://github.com/bbatsov/cv">GitHub</a> feel free to borrow it for
+your CVs if you like it. You’ll have to compile the <strong>master.tex</strong> file
+with <strong>pdflatex</strong> to get a nicely formatted pdf version of the CV.</p>
 </div>
   
   
@@ -129,7 +129,7 @@ considering going back to a plain Jekyll blog, before I saw 3.0 is right around 
       
   <header>
     
-      <h1 class="entry-title"><a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a></h1>
+      <h1 class="entry-title"><a href="/articles/2010/05/26/3d-support-nouveau-fedora-13/">Enabling 3D Support for Nouveau in Fedora 13</a></h1>
     
     
       <p class="meta">
@@ -145,39 +145,26 @@ considering going back to a plain Jekyll blog, before I saw 3.0 is right around 
   
 
 
-<time datetime="2014-12-04T12:45:00+02:00" pubdate data-updated="true">Dec 4<span>th</span>, 2014</time>
+<time datetime="2010-05-26T00:00:00+03:00" pubdate data-updated="true">May 26<span>th</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>At <a href="http://clojure-conj.org/">Clojure/conj</a> I had the chance to shake
-Rich Hickey’s hand and exchange a few words with him. When I asked him
-whether he currently uses CIDER or Cursive for Clojure development he
-replied that he preferred a simpler solution – <code>clojure-mode</code> &amp;
-<code>inferior-lisp-mode</code>. I was a bit surprised because <code>clojure-mode</code>’s
-integration with <code>inferior-lisp-mode</code> sucks (big time). It has always
-been extremely limited and was never really improved/extended. It has
-no Clojure specific features and no code completion. I felt that Rich
-and all the people using inferior-lisp-mode deserved something better,
-so I quickly put together <a href="https://github.com/clojure-emacs/inf-clojure">inf-clojure</a>.</p>
+  <div class="entry-content"><p>Most of you probably have heard that Fedora 13 will feature
+experimental 3D support for the Nouveau open source driver for Nvidia
+cards. This support, however, is not enabled by default. To enable it
+you need to install the mesa-dri-drivers-experimental package. I,
+personally, do it like this(if you haven’t configured sudo, you’ll
+have to perform this as root):</p>
 
-<p><code>inf-clojure</code> provides some Clojure specific features like showing a
-var’s doc or source, derives some core functionality from <code>clojure-mode</code>
-and even features basic code-completion (and <code>company-mode</code>
-support). That’s not much admittedly, but it’s a good start. Extending
-<code>inf-clojure</code> is super easy and I expect that we’ll add a bit more
-features to it along the way (e.g. macroexpansion).</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo yum install mesa-dri-drivers-experimental
+</span></code></pre></td></tr></table></div></figure>
 
-<p><code>inf-clojure</code> is available in MELPA and will eventually replace
-completely <code>inferior-lisp-mode</code> when <code>clojure-mode</code> 4.0 is released.</p>
 
-<p>Keep in mind that <code>inf-clojure</code> is nothing like CIDER and will never
-be. CIDER will always be the powertool for Clojure programming in
-Emacs. I do understand, however, that some people are overwhelmed by
-CIDER and some people simply don’t need anything sophisticated. I hope
-they’ll enjoy <code>inf-clojure</code>!</p>
+<p>Afterwards you can enable Compuz, play chromium-bsu or whatever your heart desires.</p>
 </div>
   
   
@@ -190,7 +177,7 @@ they’ll enjoy <code>inf-clojure</code>!</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a></h1>
+      <h1 class="entry-title"><a href="/articles/2010/04/19/changing-laf-in-netbeans/">Changing the Look & Feel in NetBeans 6.8</a></h1>
     
     
       <p class="meta">
@@ -206,27 +193,30 @@ they’ll enjoy <code>inf-clojure</code>!</p>
   
 
 
-<time datetime="2014-11-15T20:17:00+02:00" pubdate data-updated="true">Nov 15<span>th</span>, 2014</time>
+<time datetime="2010-04-19T00:00:00+03:00" pubdate data-updated="true">Apr 19<span>th</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I&rsquo;ll be talking about the evolution of CIDER at the
-<a href="http://clojure-conj.org/">conj</a>, but I won&rsquo;t be able to show much (in
-terms of features) during my talk. Luckily, however, beside the talks
-we also have the option for <a href="https://github.com/cognitect/clojure-conj/wiki/Clojure-conj-2014-Unsessions">unsessions</a>. Here&rsquo;s my proposal for one such unsession&hellip;</p>
+  <div class="entry-content"><p>Recently I’ve been trying to switch my work environment theme to
+something with lower contrast(notably the excellent zenburn theme for
+emacs, vim, gnome terminal, gnome, etc). Swing
+applications however have difficulties with GTK themes when they are
+using the GTK+ look &amp; feel so I’ve decided to go to Nimbus – the new
+default look &amp; feel for Java apps since Java 6 Update 10.</p>
 
-<p>I&rsquo;d like to do a more extensive demonstration of the general
-workflow with CIDER and all the cool things we&rsquo;ve done recently and
-I&rsquo;d also like discuss with our users (and potential users) existing
-problems, ideas for improvements and the future direction of the
-project. If you like my idea you can show your support for it
-<a href="https://github.com/cognitect/clojure-conj/wiki/Clojure-conj-2014-Unsessions#cider-demoqa">here</a>.</p>
+<p>The only problem with the plan was that there is no way to change the
+look and feel inside NetBeans – it had to be done by changing its
+configuration. This is done fairly easy. Just find the file
+/etc/netbeans.conf in NetBeans’s installation folder and append this to
+the netbeans_default_options section:</p>
 
-<p>Feedback is important and I&rsquo;d like to get as much as possible
-to make CIDER better!</p>
+<p><code>--laf Nimbus</code></p>
+
+<p>Now you just have to (re)start NetBeans and you can enjoy Nimbus. More
+information about look &amp; feels in NetBeans can be found here.</p>
 </div>
   
   
@@ -239,7 +229,7 @@ to make CIDER better!</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a></h1>
+      <h1 class="entry-title"><a href="/articles/2010/02/26/enable-aa-in-swing/">How to Enable Font Anti-aliasing in a Java Swing App</a></h1>
     
     
       <p class="meta">
@@ -255,25 +245,32 @@ to make CIDER better!</p>
   
 
 
-<time datetime="2014-11-15T20:16:00+02:00" pubdate data-updated="true">Nov 15<span>th</span>, 2014</time>
+<time datetime="2010-02-26T00:00:00+02:00" pubdate data-updated="true">Feb 26<span>th</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><a href="https://github.com/edw">Edwin Watkeys</a> has just released a
-<a href="https://github.com/thunknyc/nrepl-profile">profiling extension for CIDER</a>,
-based on his library
-<a href="http://github.com/thunknyc/profile">profile</a>. The profiling data you&rsquo;ll get
-is rather crude, but it&rsquo;s still better than nothing and is certainly nicer
-than what you&rsquo;d get by using <code>time</code>.</p>
+  <div class="entry-content"><p>If you have access to the source, you can do this in the main method:</p>
 
-<p>Here you can see the extension in action:</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">// enable anti-aliasing</span>
+</span><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="s">&quot;awt.useSystemAAFontSettings&quot;</span><span class="o">,</span><span class="s">&quot;on&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="s">&quot;swing.aatext&quot;</span><span class="o">,</span> <span class="s">&quot;true&quot;</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p><img src="https://camo.githubusercontent.com/636b6897b279bb761f3377f6e002bbdb8b474937/68747470733a2f2f7261772e6769746875622e636f6d2f7468756e6b6e79632f6e7265706c2d70726f66696c652f6d61737465722f646f632f70726f66696c652d73637265656e73686f742e706e67"></p>
 
-<p>Check out the documentation of both projects for more details.</p>
+<p>Alternatively (and if you do not have access to the source, or if you find this
+easier) you can simply pass the system properties above to the JVM by
+adding these options to the command line:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">-</span><span class="n">Dawt</span><span class="o">.</span><span class="na">useSystemAAFontSettings</span><span class="o">=</span><span class="n">on</span> <span class="o">-</span><span class="n">Dswing</span><span class="o">.</span><span class="na">aatext</span><span class="o">=</span><span class="kc">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
   
   
@@ -286,7 +283,7 @@ than what you&rsquo;d get by using <code>time</code>.</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a></h1>
+      <h1 class="entry-title"><a href="/articles/2009/12/18/center-jdialog-over-jframe/">How to Center a JDialog Over a JFrame in Swing</a></h1>
     
     
       <p class="meta">
@@ -302,19 +299,35 @@ than what you&rsquo;d get by using <code>time</code>.</p>
   
 
 
-<time datetime="2014-11-12T14:16:00+02:00" pubdate data-updated="true">Nov 12<span>th</span>, 2014</time>
+<time datetime="2009-12-18T00:00:00+02:00" pubdate data-updated="true">Dec 18<span>th</span>, 2009</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Good news, RubyMine users!</p>
+  <div class="entry-content"><p>I always thought that the fact that JDialogs accepted a parent frame
+as a constructor argument was the thing, that would make the dialog’s
+position relative to that of the frame:</p>
 
-<p>Yesterday <a href="https://github.com/sirlantis">Marcel Jackwerth</a> released the initial version of a <a href="https://github.com/sirlantis/rubocop-for-rubymine">RuboCop plugin for
-RubyMine/IntelliJ IDEA</a>. Here&rsquo;s the plugin in action:</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nf">JDialog</span><span class="o">(</span><span class="kd">final</span> <span class="n">java</span><span class="o">.</span><span class="na">awt</span><span class="o">.</span><span class="na">Frame</span> <span class="n">parent</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">modal</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p><img src="https://cloud.githubusercontent.com/assets/56807/5009481/9bbee3b4-6a67-11e4-8bf9-2a32c3bc3d5e.png"></p>
+
+<p>Unfortunately all of my freshly opened dialogs would appear in the
+upper left angle of my screen, not centered over the parent JFrame. I
+looked around and found out that I simply needed one more method call
+per dialog:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">theDialog</span><span class="o">.</span><span class="na">setLocationRelativeTo</span><span class="o">(</span><span class="n">theFrame</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You need to call this method before the JDialog’s show() method. Now
+everything is perfect and the dialog appears always right above the
+center of the frame.</p>
 </div>
   
   
@@ -324,9 +337,11 @@ RubyMine/IntelliJ IDEA</a>. Here&rsquo;s the plugin in action:</p>
   
   <div class="pagination">
     
-      <a class="prev" href="/articles/page/2/">&larr; Older</a>
+      <a class="prev" href="/articles/page/24/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/articles/page/22/">Newer &rarr;</a>
     
   </div>
 </div>

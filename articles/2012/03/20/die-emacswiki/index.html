@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Die EmacsWiki, Die! - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude Emacs is slowly, but firmly moving in the right direction with
+Emacs 24. A
+lot of new important features are coming, the release date is &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2012/03/20/die-emacswiki">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Die EmacsWiki, Die!</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-20T14:49:00+02:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Prelude</h2>
+
+<p>Emacs is slowly, but firmly moving in the right direction with
+<a href="http://batsov.com/articles/2011/08/19/a-peek-at-emacs24/">Emacs 24</a>. A
+lot of new important features are coming, the release date is nearing,
+but there is something worrisome on the otherwise bright Emacs
+horizon. It&rsquo;s a remnant from the <strong>Dark Emacs Days</strong> and it&rsquo;s called
+<a href="http://emacswiki.org">EmacsWiki</a>.</p>
+
+<p>Shortly put &ndash; <em>EmacsWiki is a blight</em>.</p>
+
+<!--more-->
+
+
+<h2>A Little Bit of Background</h2>
+
+<p>Here&rsquo;s the longer story. EmacsWiki was created by
+<a href="http://www.emacswiki.org/alex/">Alex Schroeder</a> (aka <strong>kensanata</strong>)
+way back (in 2001) with the goal to become the home of all the Emacs
+information one would ever need (both about Emacs in general and its
+extensions). I have to admit that this was a noble goal and I know that
+Alex had all the right intentions, but unfortunately right intentions
+rarely are enough for things to always move in the right
+direction.</p>
+
+<p>The software behind the wiki is called
+<a href="http://www.oddmuse.org/cgi-bin/oddmuse">OddMuse</a> and it&rsquo;s authored by
+Alex himself. It&rsquo;s pretty basic Perl script and doesn&rsquo;t feature db
+support. Its motto is <em>No MySQL; no PostgreSQL; no worries.</em> &ndash; wish it
+were true&hellip;</p>
+
+<h2>The Problems</h2>
+
+<p>The EmacsWiki has several epic problems. Here we go:</p>
+
+<h3>Odd Choice for a Wiki</h3>
+
+<p>Even if in the beginning OddMuse might have been a good choice (Alex
+authored it and MediaWiki didn&rsquo;t exist back then), it hasn&rsquo;t been a
+good choice for quite a while. There are much better solutions in
+terms of markup support (Markdown anyone?), usability and
+performance. Some of the features of the wiki are simply abhorring &ndash;
+like the lack of user access control; anyone can enter any user name and
+edit the wiki&hellip; Yep, this is not a joke&hellip;</p>
+
+<h3>Moderators, Where Art Though?</h3>
+
+<p>I&rsquo;ve never seen so much junk in a wiki in my entire life (and I&rsquo;ve
+seen the wikis of 15-year enterprise systems). When I was
+an Emacs beginner I often consulted the wiki for advice &ndash; even then I
+noticed that there were some suspicious practices being suggested
+there. Now I can say with certainly that much of the content there is
+total bullshit &ndash; it&rsquo;s mostly written by people with very little
+knowledge of Emacs (not to mention good Emacs practices). The articles
+are littered with crappy advice confusing beginners, have little
+structure and are filled with ridiculous questions (questions in an
+wiki???). All of this would have been avoided had the EmacsWiki had a
+team of moderators to keep shitty contributions at bay. Alas, such a
+team does not exist (or does a very crappy job of it).</p>
+
+<h3>Software Distribution Medium</h3>
+
+<p>As crazy as it seems a lot of people are using the wiki as a software
+distribution mechanism. Instead of hosting their projects in version
+control (say <a href="http://github.com">GitHub</a>) they develop stuff locally,
+upload them to the wiki and say that this is the canonical way to
+obtain their software. Needless to say &ndash; this is a horrible, horrible
+practice. I&rsquo;ve often encountered on the wiki source files authored by
+someone, then edited by 10 different guys, that have a tendency to add
+their names to the copyrights sections instead of thinking how their
+poor users will understand what exactly was changed in these
+files. Sometimes the authors themselves are to blame (for being
+fucking lazy), but often someone just copies a snapshot of a project
+from version control and uploads it to the wiki, creating problems of
+epic proportions for the maintainers, who start receiving bugs about
+stuff they never developed in the first place.</p>
+
+<p>For the love of God &ndash; take your project(s) to GitHub and develop them
+there with pleasure, under the scrutiny of an active and passionate
+developer community. Wikis should be used for documentation only!</p>
+
+<p>Tools like audo-install (an extension that supports installing
+software from EmacsWiki) should never have existed. el-get should not
+have added support for the installation of stuff from the wiki. As
+long as such practices are tolerated they will not stop.</p>
+
+<p>Need I remind you that we&rsquo;re now living in the era of
+<a href="http://batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/">package.el</a>
+and distributed version control (Git, Mercurial, Bazaar)? Act accordingly!</p>
+
+<h3>Jack of All Trades</h3>
+
+<p>Documenting each and every Emacs project is an impossible task. And it
+should not be centralized. Each project should be responsible for
+producing its own up-to-date easy-to-follow crystal-clear
+documentation. By putting everything in one place you&rsquo;re just making
+sure you&rsquo;ll end up with a pile of out-of-date confusing unstructured
+ramblings (the EmacsWiki proves my point).</p>
+
+<p>An EmacsWiki shouldn&rsquo;t list tips on the use of external projects &ndash;
+such tips should be in the project&rsquo;s wiki. An EmacsWiki should
+document the core Emacs experience and customizations only.</p>
+
+<h2>The Solution</h2>
+
+<p>Kill the EmacsWiki! (may it be reborn from its ashes)</p>
+
+<h3>Action Plan for The Maintainers</h3>
+
+<p>Drop the current format of the wiki &ndash; use something standard like
+MediaWiki instead of OddMuse. Drop all the articles about Emacs
+extensions. Drop all the extensions hosted there. Assemble
+a team of moderators. Accept only articles about general Emacs usage
+and Emacs Lisp programming.</p>
+
+<h3>Action Plan for Emacs Extensions Authors</h3>
+
+<p>If you&rsquo;ve got a normal project hosted on GitHub (or a similar service)
+&ndash; delete everything about your project on the wiki and don&rsquo;t respond
+to any bug requests regarding modified copies of your sources
+distributed via EmacsWiki.</p>
+
+<p>If you&rsquo;ve got a project hosted on the EmacsWiki &ndash; there is still
+a chance for you to redeem yourself. Migrate your project(s) to GitHub
+(you&rsquo;ll thank me later for that). Use their version control, their
+issue tracker, their wiki system. Start distributing your project via
+Marmalade or MELPA (<code>package.el</code> repos). Your life will become much nicer and
+the visibility of your project and the possibility to attract new
+developers will be significantly boosted. GitHub is a project hosting
+solution, the EmacsWiki is not.</p>
+
+<h3>The Regular Users</h3>
+
+<p>Boycott the wiki (unless the maintainers take actions)! Submit
+documentation only to the official project pages. Ignore projects
+hosted on the EmacsWiki. (or migrate them to GitHub if they seem
+orphaned and try to rekindle them)</p>
+
+<h2>Epilogue</h2>
+
+<p>Do we need an EmacsWiki? Certainly we do! But we need a <strong>real</strong>
+EmacsWiki and not this abomination that is currently a detriment to
+new Emacs users, instead of help. The wiki needs restructuring, but
+first it needs to die. I hope you&rsquo;ll see the truth in my words and
+take action instead of commenting how outrageous my claims are. Do
+something meaningful for a change &ndash; save a project from the EmacsWiki,
+contribute documentation to an official project&rsquo;s wiki, package
+something on Marmalade&hellip;</p>
+
+<p>Die, Die EmacsWiki! I&rsquo;ll be seeing you in hell&hellip;</p>
+
+<p><strong>Update</strong></p>
+
+<p>This post stirred a huge discussion online and as a result there is
+now another Emacs wiki out there. The new wiki is available at
+<a href="http://wikemacs.org">http://wikemacs.org</a>. It&rsquo;s using MediaWiki (it
+turned out it had several nice advantages over MoinMoin).</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-20T14:49:00+02:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/emacs/'>Emacs</a>, <a class='category' href='/articles/categories/rant/'>Rant</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2012/03/20/die-emacswiki/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2012/03/20/die-emacswiki/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2012/03/08/emacs-tip-number-5-save-buffers-automatically-on-buffer-or-window-switch/" title="Previous Post: Emacs Tip #5: Save Buffers Automatically on Buffer or Window Switch">&laquo; Emacs Tip #5: Save Buffers Automatically on Buffer or Window Switch</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2012/03/21/all-hands-on-deck-or-the-action-plan-for-a-new-emacs-community-wiki/" title="Next Post: All Hands on Deck! (or the Action Plan for a new Emacs community wiki)">All Hands on Deck! (or the Action Plan for a new Emacs community wiki) &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2012/03/20/die-emacswiki/';
+        var disqus_url = 'http://batsov.com/articles/2012/03/20/die-emacswiki/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

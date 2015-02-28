@@ -1,0 +1,575 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>(think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="One operation that we have to do fairly often when editing text is
+manipulating the case of words. The most popular case manipulations
+are probably &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/page/11">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/12/16/emacs-tip-number-8-manipulating-word-case/">Emacs Tip #8: Manipulating Word Case</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-16T17:57:00+02:00" pubdate data-updated="true">Dec 16<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>One operation that we have to do fairly often when editing text is
+manipulating the case of words. The most popular case manipulations
+are probably <strong>capitalize</strong>, <strong>convert to lowercase</strong> and <strong>convert to
+uppercase</strong>. Emacs naturally has built-in commands for all of those.</p>
+
+<p>Pressing <code>M-c</code> runs the command <code>capitalize-word</code>, which will
+capitalize the next word and move the cursor after it. Pressing <code>M--
+M-c</code> will capitalize the previous word without moving the cursor.</p>
+
+<p>Pressing <code>M-l</code> runs the command <code>downcase-word</code>, which will lowercase
+the next word and move the cursor after it. Pressing <code>M-- M-l</code> will
+lowercase the previous word without moving the cursor.</p>
+
+<p>Pressing <code>M-u</code> runs the command <code>upcase-word</code>, which will uppercase the
+next word and move the cursor after it. Pressing <code>M-- M-u</code> will uppercase
+the previous word without moving the cursor.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/12/16/deleting-remote-git-branches/">Deleting Remote Git Branches</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-16T10:10:00+02:00" pubdate data-updated="true">Dec 16<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This post is mostly a note to myself, since I constantly forget how to
+delete remote Git branches.</p>
+
+<p>The classic way to do so (introduced in Git 1.5) would be:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git push origin :branch-to-delete
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So, if I were migrating an application from MySQL to PostgreSQL I might want to delete
+the <code>postgres</code> branch when I&rsquo;m done:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git push origin :postgres
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You have to agree this syntax is hardly something one can easily
+remember(and I&rsquo;m extra certain nobody would have guessed it on their
+own). Fortunately in Git 1.7 a nicer alternative to the above command
+was introduced:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git push origin --delete branch-to-delete
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&rsquo;s all from me for today. Now go ahead and delete those unneeded Git branches.</p>
+
+<p>P.S. GitHub users might also want to take a look at this
+<a href="https://github.com/blog/1335-tidying-up-after-pull-requests">article</a>
+describing recently added functionality to clean up after pull
+requests.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/12/09/emacs-24-dot-3-introduces-native-osx-full-screen-support/">Emacs 24.3 Introduces Native OSX Full-screen Support</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-09T13:34:00+02:00" pubdate data-updated="true">Dec 9<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>One of the most requested Emacs features &ndash; native OSX Lion style
+full-screen support has finally landed in Emacs 24.3 (due to be
+released in a few months). If you&rsquo;re eager to try it out right now
+homebrew is a good option:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew install emacs --cocoa --use-git-head --HEAD
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Homebrew&rsquo;s devs have even backported the full-screen patch to Emacs
+24.2, so if you&rsquo;re not very adventurous you can just do:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew install emacs --cocoa
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Alternatively you can install the
+<a href="http://emacsformacosx.com/emacs-builds/Emacs-pretest-24.2.91-universal-10.6.8.dmg">Emacs 24.2.91 pretest</a>
+(or a newer pretest/nightly build) from
+<a href="http://emacsformacosx.com/">Emacs for Mac OSX</a>. Personally I
+recommend this option, since cloning the Emacs git mirror (as homebrew
+does) takes like forever.</p>
+
+<p>Here&rsquo;s the beast in action:</p>
+
+<p><img src="/images/articles/emacs-full-screen.png"></p>
+
+<p>This was a short article, but I do hope you&rsquo;ll find it useful.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/12/09/from-linux-to-osx-meet-your-new-apps/">From Linux to OSX: Meet Your New Apps</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-09T11:41:00+02:00" pubdate data-updated="true">Dec 9<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p>It&rsquo;s time I resume what I started in
+<a href="http://batsov.com/articles/2012/09/09/from-linux-to-osx-1-year-later/">my previous article documenting my first year as an OSX user</a>
+a few months ago.</p>
+
+<p>In this article I&rsquo;ll focus primarily on the applications I&rsquo;ve adopted
+during my short time being a Mac OSX user, after being a GNU/Linux
+user for quite some time before that. The focus of the article will be
+mostly desktop applications, since the command-line tools are more or
+less the same in both operating system. I will mention a couple of OSX
+specific command-line tools near the end of the article though.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/articles/2012/12/09/from-linux-to-osx-meet-your-new-apps/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/12/06/dealing-with-ssl-certificate-validation-errors-in-rails/">Dealing With SSL Certificate Validation Errors in Rails</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-06T17:07:00+02:00" pubdate data-updated="true">Dec 6<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I often see this question asked &ndash; &ldquo;I&rsquo;m getting the following error</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>OpenSSL::SSL::SSLError: hostname was not match with the server certificate</span></code></pre></td></tr></table></div></figure>
+
+
+<p>when trying to deliver an email with Rails 3. How can I solve the problem?&#8221;</p>
+
+<p>Obviously the best solution would be get a valid certificate for your hostname, but sometimes
+this is not possible or you simply don&rsquo;t want to bother with this stuff (on your development machine for instance).
+The solution to the problem commonly suggested is to turn off encryption completely like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">smtp_settings</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="ss">:address</span>              <span class="o">=&gt;</span> <span class="s1">&#39;mail.foo.com&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:port</span>                 <span class="o">=&gt;</span> <span class="mi">587</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:domain</span>               <span class="o">=&gt;</span> <span class="s1">&#39;foo.com&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:user_name</span>            <span class="o">=&gt;</span> <span class="s1">&#39;addy@foo.com&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:password</span>             <span class="o">=&gt;</span> <span class="s1">&#39;foofoo&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:authentication</span>       <span class="o">=&gt;</span> <span class="s1">&#39;plain&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:enable_starttls_auto</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This bit of code represent a portion of your <code>ActionMailer</code> configuration and you&rsquo;d put it in <code>application.rb</code> or
+<code>env.rb</code> (where env is something like <code>development</code>, <code>staging</code>, <code>production</code>, etc).</p>
+
+<p>While the solution is OK for <code>development.rb</code> you&rsquo;d be crazy to use
+this code in production! Disabling encryption means that your username
+and password will traverse the Internet in plain text! A simple, but
+secure solution would be to just disable the certificate validation,
+without sacrificing the secure connection:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">smtp_settings</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="ss">:address</span>              <span class="o">=&gt;</span> <span class="s1">&#39;mail.foo.com&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:port</span>                 <span class="o">=&gt;</span> <span class="mi">587</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:domain</span>               <span class="o">=&gt;</span> <span class="s1">&#39;foo.com&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:user_name</span>            <span class="o">=&gt;</span> <span class="s1">&#39;addy@foo.com&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:password</span>             <span class="o">=&gt;</span> <span class="s1">&#39;foofoo&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:authentication</span>       <span class="o">=&gt;</span> <span class="s1">&#39;plain&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:enable_starttls_auto</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:openssl_verify_mode</span>  <span class="o">=&gt;</span> <span class="s1">&#39;none&#39;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This code snippet is mostly the same as the one shown before. The crucial difference is the line
+<code>:openssl_verify_mode =&gt; 'none'</code>.</p>
+
+<p>I hope someone will find this short article useful. Happy hacking!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/articles/page/12/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/articles/page/10/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I&#8217;m a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

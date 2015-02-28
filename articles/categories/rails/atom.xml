@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: rails | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/rails/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-28T09:00:23+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Tip #1: Use Pry Instead of irb for the Rails Console]]></title>
+    <link href="http://batsov.com/articles/2012/10/14/rails-tip-number-1-use-pry-instead-of-irb-for-the-rails-console/"/>
+    <updated>2012-10-14T18:06:00+03:00</updated>
+    <id>http://batsov.com/articles/2012/10/14/rails-tip-number-1-use-pry-instead-of-irb-for-the-rails-console</id>
+    <content type="html"><![CDATA[<p>This tip is going to be a really short one. Hopefully by now you&rsquo;ve
+heard about <a href="http://pryrepl.org/">pry</a> &ndash; a fantastic <code>irb</code>
+replacement, that somewhat reminds me of the mighty Lisp REPLs. What
+you might not know is how to hook it into Rails so that the <code>rails
+console</code> (a.k.a. <code>rails c</code>) command would fire a pry shell instead of
+an irb one. There are several ways to do so, but I find one
+particularly straightforward &ndash; the awesome little gem
+<a href="https://github.com/rweng/pry-rails">pry-rails</a>.</p>
+
+<p>So what are you waiting for? Go ahead, install the little sucker and
+enjoy your new pry-powered Rails console.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Setting up fallback locale(s) in Rails 3]]></title>
+    <link href="http://batsov.com/articles/2012/09/12/setting-up-fallback-locale-s-in-rails-3/"/>
+    <updated>2012-09-12T14:56:00+03:00</updated>
+    <id>http://batsov.com/articles/2012/09/12/setting-up-fallback-locale-s-in-rails-3</id>
+    <content type="html"><![CDATA[<p>I18n(internationalization) and l10n(localization) are topics that are
+covered superbly by the
+<a href="http://guides.rubyonrails.org/i18n.html">Rails Guides</a>. The one thing
+that&rsquo;s left out is the setup of fallback locales in case something is
+missing in the currently selected locale (and mark my words &ndash;
+something probably is). Therefore I&rsquo;m writing this
+post.</p>
+
+<p>Ideally we&rsquo;d have i18n-ed and localized everything perfectly, but
+that&rsquo;s rarely the case. I&rsquo;d rather have the users see things from
+another locale than error messages. So how do we do that in Rails 3?
+It&rsquo;s pretty simple actually. There are three fallback options we can
+select and they all require small changes to the <code>application.rb</code> file.</p>
+
+<ul>
+<li>fallback to the default locale</li>
+</ul>
+
+
+<p>``` ruby</p>
+
+<h1>fallback to what&rsquo;s specified in config.i18n.default_locale</h1>
+
+<p>config.i18n.fallbacks = true
+```</p>
+
+<ul>
+<li>fallback to a specified locale</li>
+</ul>
+
+
+<p>``` ruby</p>
+
+<h1>fallback to en, regardless of what&rsquo;s in config.i18n.default_locale</h1>
+
+<p>config.i18n.fallbacks = [:en]
+```</p>
+
+<ul>
+<li>specify a fallback map (different fallback locales for different
+locales)</li>
+</ul>
+
+
+<p>``` ruby</p>
+
+<h1>missing translations of es and fr languages will fallback to english</h1>
+
+<h1>missing translations in german will fallback to french</h1>
+
+<p>config.i18n.fallbacks = {&lsquo;es&rsquo; => &lsquo;en&rsquo;, &lsquo;fr&rsquo; => &lsquo;en&rsquo;, &lsquo;de&rsquo; => &lsquo;fr&rsquo;}
+```</p>
+
+<p>Well, that&rsquo;s the gist of it. Happy coding!</p>
+]]></content>
+  </entry>
+  
+</feed>

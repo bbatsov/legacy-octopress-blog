@@ -1,0 +1,1140 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Django 1.3 vs Rails 3: A not so final showdown - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude I&rsquo;ve recently started a new job at an American start-up company. My
+position in the company is the one of Technical Lead &ndash; the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2011/06/19/django-vs-rails">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Django 1.3 vs Rails 3: A Not So Final Showdown</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-19T00:00:00+03:00" pubdate data-updated="true">Jun 19<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Prelude</h2>
+
+<p>I&rsquo;ve recently started a new job at an American start-up company. My
+position in the company is the one of Technical Lead &ndash; the person responsible for
+the selection of technologies around which the projects are being
+built. Since we&rsquo;ll be doing mostly web development we&rsquo;ve had a long
+kick-off discussion with the company&rsquo;s CTO about the direction which we should
+initially take. He had PHP in mind, but I convinced him that Ruby or
+Python would make much better platforms for our futures apps. So he
+tasked me to research the two leading frameworks in the Ruby and
+Python land &ndash; namely Ruby on Rails 3 and Django 1.3. I had a week to
+prepare some prototypes with both and create on overview for my
+boss. I had some experience with Rails 2 a few years back and I have
+fairly decent knowledge of Ruby. My Python is not as fluent
+(admittedly), but still &ndash; I&rsquo;ve played a lot with Python
+recently. Django, however, was completely new to me. In this article
+I&rsquo;ll try to compare the frameworks in a totally friendly way; if
+you&rsquo;ve expected an epic flame war post you may very well stop reading
+here. I&rsquo;m obviously no Rails/Django guru, so if I&rsquo;ve
+written something that is wrong &ndash; please feel free to correct me.</p>
+
+<p>Please, keep in mind that a short comparison article cannot even begin
+to scratch the immense power and complexity of such frameworks. The overview,
+that you&rsquo;ll find here is a bit on the superficial side, but it should
+give you enough pointers to get you started.</p>
+
+<p>Hopefully this article will be useful to people that are in the same
+boat as was &ndash; picking between Rails and Django.</p>
+
+<!--more-->
+
+
+<h2>Setup &amp; Getting started</h2>
+
+<h3>Rails</h3>
+
+<h4>Linux &amp; OSX</h4>
+
+<p>The recommended (by me) way to install Ruby and Ruby on Rails 3.x is via
+<a href="https://rvm.beginrescueend.com/">RVM</a>. RVM allows you to have several
+version of Ruby installed at the same time and to easily switch
+between them. It also allows you to create gem sets, which are quite
+handy in testing. After you&rsquo;ve installed RVM it&rsquo;s easy to install any
+Ruby interpreter and Rails. This example shows how to get RVM, MRI 1.9.2
+and Rails current (3.0.9):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bash &lt; &lt;<span class="o">(</span>curl -s https://rvm.beginrescueend.com/install/rvm<span class="o">)</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;[[ -s &quot;$HOME/.rvm/scripts/rvm&quot; ]] &amp;&amp; . &quot;$HOME/.rvm/scripts/rvm&quot; # Load RVM function&#39;</span> &gt;&gt; ~/.bash_profile
+</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> ~/.bash_profile
+</span><span class='line'><span class="nv">$ </span>rvm install 1.9.2
+</span><span class='line'><span class="nv">$ </span>rvm use 1.9.2 --default
+</span><span class='line'><span class="nv">$ </span>which ruby
+</span><span class='line'>~/.rvm/rubies/ruby-1.9.2-p180/bin/ruby
+</span><span class='line'><span class="nv">$ </span>ruby -v
+</span><span class='line'>ruby 1.9.2p180 <span class="o">(</span>2011-02-18 revision 30909<span class="o">)</span> <span class="o">[</span>i686-linux<span class="o">]</span>
+</span><span class='line'><span class="nv">$ </span>gem install rails
+</span><span class='line'><span class="nv">$ </span>rails -v
+</span><span class='line'>Rails 3.0.9
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Since RVM builds Ruby environments from source you might need to
+install a few dependencies first. After you&rsquo;ve install RVM it will
+output those packages as instructions.</p>
+
+<p>If you&rsquo;re using Z Shell (like me) you should replace .bash_profile
+with .zshenv or .zshrc.</p>
+
+<h4>Windows</h4>
+
+<p>While there are many ways to get Ruby on Rails installed on a Windows
+host, the simplest is certainly to use the <a href="http://railsinstaller.org/">RailsInstaller</a>. It has only one
+little drawback &ndash; currently it comes with Ruby 1.8.7 bundled, but the
+recent beta already features Ruby 1.9.2.</p>
+
+<h4>Your first Rails app</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rails new railsdemo
+</span><span class='line'>      create
+</span><span class='line'>      create  README
+</span><span class='line'>      create  Rakefile
+</span><span class='line'>      create  config.ru
+</span><span class='line'>      create  .gitignore
+</span><span class='line'>      create  Gemfile
+</span><span class='line'>      create  app
+</span><span class='line'>      create  app/controllers/application_controller.rb
+</span><span class='line'>      create  app/helpers/application_helper.rb
+</span><span class='line'>      create  app/mailers
+</span><span class='line'>      create  app/models
+</span><span class='line'>      create  app/views/layouts/application.html.erb
+</span><span class='line'>      create  config
+</span><span class='line'>      create  config/routes.rb
+</span><span class='line'>      create  config/application.rb
+</span><span class='line'>      create  config/environment.rb
+</span><span class='line'>      create  config/environments
+</span><span class='line'>      create  config/environments/development.rb
+</span><span class='line'>      create  config/environments/production.rb
+</span><span class='line'>      create  config/environments/test.rb
+</span><span class='line'>      create  config/initializers
+</span><span class='line'>      create  config/initializers/backtrace_silencers.rb
+</span><span class='line'>      create  config/initializers/inflections.rb
+</span><span class='line'>      create  config/initializers/mime_types.rb
+</span><span class='line'>      create  config/initializers/secret_token.rb
+</span><span class='line'>      create  config/initializers/session_store.rb
+</span><span class='line'>      create  config/locales
+</span><span class='line'>      create  config/locales/en.yml
+</span><span class='line'>      create  config/boot.rb
+</span><span class='line'>      create  config/database.yml
+</span><span class='line'>      create  db
+</span><span class='line'>      create  db/seeds.rb
+</span><span class='line'>      create  doc
+</span><span class='line'>      create  doc/README_FOR_APP
+</span><span class='line'>      create  lib
+</span><span class='line'>      create  lib/tasks
+</span><span class='line'>      create  lib/tasks/.gitkeep
+</span><span class='line'>      create  log
+</span><span class='line'>      create  log/server.log
+</span><span class='line'>      create  log/production.log
+</span><span class='line'>      create  log/development.log
+</span><span class='line'>      create  log/test.log
+</span><span class='line'>      create  public
+</span><span class='line'>      create  public/404.html
+</span><span class='line'>      create  public/422.html
+</span><span class='line'>      create  public/500.html
+</span><span class='line'>      create  public/favicon.ico
+</span><span class='line'>      create  public/index.html
+</span><span class='line'>      create  public/robots.txt
+</span><span class='line'>      create  public/images
+</span><span class='line'>      create  public/images/rails.png
+</span><span class='line'>      create  public/stylesheets
+</span><span class='line'>      create  public/stylesheets/.gitkeep
+</span><span class='line'>      create  public/javascripts
+</span><span class='line'>      create  public/javascripts/application.js
+</span><span class='line'>      create  public/javascripts/controls.js
+</span><span class='line'>      create  public/javascripts/dragdrop.js
+</span><span class='line'>      create  public/javascripts/effects.js
+</span><span class='line'>      create  public/javascripts/prototype.js
+</span><span class='line'>      create  public/javascripts/rails.js
+</span><span class='line'>      create  script
+</span><span class='line'>      create  script/rails
+</span><span class='line'>      create  <span class="nb">test</span>
+</span><span class='line'><span class="nb">      </span>create  <span class="nb">test</span>/fixtures
+</span><span class='line'>      create  <span class="nb">test</span>/functional
+</span><span class='line'>      create  <span class="nb">test</span>/integration
+</span><span class='line'>      create  <span class="nb">test</span>/performance/browsing_test.rb
+</span><span class='line'>      create  <span class="nb">test</span>/test_helper.rb
+</span><span class='line'>      create  <span class="nb">test</span>/unit
+</span><span class='line'>      create  tmp
+</span><span class='line'>      create  tmp/sessions
+</span><span class='line'>      create  tmp/sockets
+</span><span class='line'>      create  tmp/cache
+</span><span class='line'>      create  tmp/pids
+</span><span class='line'>      create  vendor/plugins
+</span><span class='line'>      create  vendor/plugins/.gitkeep
+</span><span class='line'><span class="nv">$ </span>rails s
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see the structure of a Rails project consists of quite a
+few folders and files. This is a bit intimidating at first, but
+becomes quite valuable once you&rsquo;ve used to the predefined
+structure. You&rsquo;ll find a good overview of the structure <a href="http://ruby.railstutorial.org/book/ruby-on-rails-tutorial#sec:the_first_application">here</a>.</p>
+
+<p>Open your browser and type
+<a href="http://localhost:3000">http://localhost:3000</a> as the url. If
+everything is OK you&rsquo;ll see a Rails welcome page.</p>
+
+<p>At this point you should probably either start playing with
+scaffolding or read the rest of this article and start playing with
+scaffolding afterwards :&ndash;) For instance you can try:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rails g scaffold User first_name:string last_name:string email:string password:string
+</span><span class='line'><span class="nv">$ </span>rake db:migrate
+</span><span class='line'><span class="nv">$ </span>rails s
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Open your browser and type
+<a href="http://localhost/users:3000">http://localhost:3000</a> as the
+url. &ldquo;Magic&rdquo; like this made Rails famous originally.</p>
+
+<p>By default Rails apps use SQLite as a database backend, so might have
+to install it as well.</p>
+
+<p>The rails script is useful for various tasks &ndash; code generation,
+plug-in installation, running a rails console, running a development
+web server, etc.</p>
+
+<h2>Django</h2>
+
+<h4>Linux</h4>
+
+<p>I prefer to install django from the distribution&rsquo;s package manager. On
+a Red Hat distro like Fedora I would do:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install Django
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And on a Debian system:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install python-django
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A popular alternative (that would work for OSX and Windows users as
+well) to this distro-specific approach is to use a
+python package manager like <a href="http://packages.python.org/distribute/easy_install.html">easy_install</a> or <a href="http://pypi.python.org/pypi/pip">pip</a>.</p>
+
+<h4>Windows</h4>
+
+<p>The <a href="http://bitnami.org/stack/djangostack">Bitnami Django stack</a> is the simplest way to get Django and
+everything that it requires in a single step.</p>
+
+<h4>Your first app</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>django-admin startproject djangodemo
+</span><span class='line'><span class="nv">$ </span>ll djangodemo
+</span><span class='line'>total 16
+</span><span class='line'>-rw-r--r-- 1 bozhidar bozhidar    0 Jun 19 09:45 __init__.py
+</span><span class='line'>-rwxr-xr-x 1 bozhidar bozhidar  503 Jun 19 09:45 manage.py*
+</span><span class='line'>-rw-r--r-- 1 bozhidar bozhidar 5039 Jun 19 09:45 settings.py
+</span><span class='line'>-rw-r--r-- 1 bozhidar bozhidar  577 Jun 19 09:45 urls.py
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>djangodemo
+</span><span class='line'><span class="nv">$ </span>./manage.py runserver
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Compared to Rails, Django created a much simpler project
+structure. There are only four files in here and only two are actual
+Django configuration files &ndash; settings.py and urls.py. manage.py is
+just a script useful for managing some aspects of the project (similar
+to the rails script) &ndash; it can sync the model with the database, run a
+development web server, run a django console, etc.</p>
+
+<p>To test the new project open
+<a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a> in your browser.</p>
+
+<h2>Features at a glance</h2>
+
+<h3>Rails</h3>
+
+<h4>Convention over configuration</h4>
+
+<p>The centerpiece of Rails&rsquo;s philosophy is called convention over
+configuration(CoC). This basically means that a Rails project has a
+predefined layout and sensible defaults. All components (models,
+views, controllers, layouts, css, javascript, etc) have standard
+places where you should drop them and the application picks them up without
+any additional effort on your part.</p>
+
+<p>People seem to underestimate the importance of CoC in practice
+initially &ndash; it
+makes it a lot easier to reason about a project and a lot easier to
+configure the project. On the other hand if some of the defaults don&rsquo;t
+work for you &ndash; you&rsquo;d have to jump through some hoops. Recent versions
+of Rails, however, have made it a lot easier to tweak the defaults.</p>
+
+<p>All in all I feel that CoC is a big win for developers and I guess
+many people share my opinion since CoC can now be found in many other
+frameworks as well.</p>
+
+<h4>MVC to the bone</h4>
+
+<p>Rails is a classical Model-View-Controller full stack web framework &ndash;
+it handle all aspects of a typical web application. What separates it
+from most of the MVC frameworks around is the heavy emphasis on
+<a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">REST</a>. The
+domain objects are treated as resources and could be handled in a
+uniform manner using just the standard HTTP verbs like GET, PUT,
+DELETE, POST. REST is extremely good fit for data driven applications.</p>
+
+<p>As usual the model houses the application&rsquo;s business logic, the
+controller invokes functionality from the model layer and feeds the
+resulting data to the view layer, which display the data in a
+meaningful way to the user.</p>
+
+<p>The model layer is the home of your domain objects and the business
+logic surrounding them. Domain objects (a.k.a. entities) are mapped to
+database tables (at least in RDBMS). Unlike most object relational
+mappers Rails&rsquo;s ActiveRecord (the default ORM; could be substituted
+with something else if you wish) doesn&rsquo;t require you to explicitly
+declare the structure of the objects, but rather extracts it
+automatically from your DB table definitions. A simple class, modeling
+an application user might look like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>class User &lt; ActiveRecord::Base
+</span><span class='line'>  validates :first_name, :last_name, :email, :password, :presence <span class="o">=</span>&gt; <span class="nb">true</span>
+</span><span class='line'><span class="nb">  </span>validates :password, confirmation: <span class="nb">true</span>
+</span><span class='line'>end
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that the validation methods are entirely optional (but highly
+recommended) &ndash; the class could have very well had an empty body. Rails
+would know to look for a table named Users in the database and extract
+the field information from it.</p>
+
+<p>Rails generates automatically for us &ldquo;finders&rdquo; that we can use to make
+queries about objects in pure Ruby. It also provides an elegant DSL to
+express relationships between various model classes (belongs_to,
+has_many, etc)</p>
+
+<p>In the view layer Rails has traditionally relied on HTML templates
+with Ruby code embedded in them (html.erb). There are a lot of
+community contributed alternatives, however, with HAML being the most
+prominent one. On a similar note Rails allows you to use SASS as a
+replacement for traditional CSS.</p>
+
+<p>Another centerpiece in Rails is the &ldquo;Don&rsquo;t Repeat Yourself&rdquo;(DRY)
+principle. In the view layer partial templates, layouts and helpers
+are some of the tools available to help you abide by that
+principle. You&rsquo;ll certainly make heavy use of them in your
+applications so you should pay them some special attention.</p>
+
+<h4>Database migrations</h4>
+
+<p>Everyone that has done some serious programming knows that it&rsquo;s not
+realistic to presume that the initial database schema won&rsquo;t ever
+change &ndash; fields get added/removed, new tables get introduced,
+etc. All those changes are commonly referred to as &ldquo;migrations&rdquo; and
+traditionally every team unrolls its own handling of the problem. On
+my last job I was tasked at some point to write a tool in Java that
+analyzed a config file and a directory structure filled with SQL
+scripts and applied them selectively to various target databases. In
+Rails you get this functionally for free &ndash; you can express your
+migrations as simple Ruby scripts and you can use rake to generate the
+appropriate SQL statements for any supported database. Here&rsquo;s a simple
+migration script, that creates the Users table:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateUsers</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">up</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:users</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="ss">:first_name</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="ss">:last_name</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="ss">:email</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="ss">:password</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">timestamps</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">down</span>
+</span><span class='line'>    <span class="n">drop_table</span> <span class="ss">:users</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The up method gets invoked when the migration is applied and the down
+method gets invoked when it&rsquo;s reverted. Rails 3.1 will offer even more
+elegant migrations. To execute all migrations:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rake db:migrate
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Ajax from within</h4>
+
+<p>Rails features tight integration with JavaScript and AJAX. Versions
+prior to 3.1 shipped by default the prototype and scriptaculous
+JavaScript libraries. In
+version 3.1 jQuery will replace them as the default JavaScript
+library.</p>
+
+<p>Making and handling AJAX requests in Rails is generally very easy &ndash; a
+big advantage in today world ruled by rich and dynamic web UIs.</p>
+
+<h4>Extensibility</h4>
+
+<p>Rails is extendable through a multitude of community supplied plugins
+that could add incredible functionality to your apps for free. Some of
+my favorite plugins are <a href="https://github.com/indirect/jquery-rails">jQuery for Rails</a>,
+<a href="https://github.com/bcardarella/client_side_validations">client side validations</a> and <a href="https://github.com/sferik/rails_admin">Rails Admin</a>.</p>
+
+<h4>Testing is not optional</h4>
+
+<p>What I particularly like about Rails is that it heavily promotes
+testing your code. All of the Rails generators would generate test
+stubs, that you&rsquo;ll do good to fill in. Rails supports all major Ruby test
+frameworks &ndash; Test::Unit, RSpec, Cucumber. You have fixtures support, test
+database support, the ability to run unit and functional test
+separately. I don&rsquo;t recall using any other framework that pays as much
+attention to having tests as Rails and for that I can only
+congratulate the Rails team.</p>
+
+<h4>Compatibility with Ruby versions</h4>
+
+<p>There are two major version of Ruby out there presently &ndash; Ruby 1.8.7
+and Ruby 1.9.2. Ruby 1.9.2 offers substantial language and performance
+improvements, so you should be pleased to hear that Rails supports
+both major Ruby versions. Rails 4.0 will drop support for Ruby 1.8.x.</p>
+
+<p>Rails can also be run on top of JRuby and Rubinius.</p>
+
+<h4>Deployment options</h4>
+
+<p>The most common deployment options for Rails are currently Apache
+HTTPD or NginX and Phusion Passenger (mod_rails). People shopping for
+cloud Rails deployment should definitely take a look at Heroku.</p>
+
+<p>Rails also runs on alternative Ruby implementations like JRuby and
+Rubinius (as mentioned above), that offer exciting new possibilities. For instance using
+JRuby allows you to deploy a Rails app into a Java application server
+like JBoss or Glassfish and to tap into all those great Java libraries
+and frameworks around. Using JRuby also gives you the opportunity to
+deploy your apps on Google&rsquo;s App Engine.</p>
+
+<h3>Django</h3>
+
+<h4>A simpler project layout</h4>
+
+<p>While I had some experience with Rails from a couple of years ago,
+Django was something totally new to me. I expected it to be more or
+less Rails for Python, but when I created my first Django app I was
+surprised to see that the project folder consisted of only three
+files (I&rsquo;m obviously not counting the python package file
+<strong>init</strong>.py).</p>
+
+<p>My initial surprise aside it turned out that most differences were
+just superficial and that Django and Rails have quite a lot of
+similarities. I&rsquo;ll, however, speak a bit more about the different
+stuff than the similar stuff.</p>
+
+<h4>MVC(MTV), Django style</h4>
+
+<p>While Django is a MVC controller framework as well, it&rsquo;s built around a
+different mindset. Django is totally configurable and minimalistic
+framework that empowers the developers to tailor it to their needs.</p>
+
+<p>A Django project is comprised of autonomous and reusable apps. Apps on
+the other hand are comprised of models, views and templates. Django
+differs a bit in terminology with Rails &ndash; the Rails controllers are
+views in Django and the Rails views are called templates in Django. You
+can sometimes hear that Django is a Model-Template-View framework &ndash;
+that shouldn&rsquo;t confuse you. Although the terminology is different the
+principles are the same.</p>
+
+<p>Django&rsquo;s default ORM is somewhat reminiscent of frameworks like
+Hibernate. Entity classes declare explicitly the all the
+attributes. Let&rsquo;s consider again the User model class:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">first_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">last_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">email</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">EmailField</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">password</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Both approaches have their strengths and weaknesses an usual. In
+Django&rsquo;s case we have increased verbosity, but on the other had we
+don&rsquo;t have to inquire the database to figure out the exact definition
+of model records.</p>
+
+<p>Like in Rails we get useful &ldquo;finders&rdquo; that can be used to query for model
+objects in pure python (as opposed to using sql).</p>
+
+<h4>In the template layer</h4>
+
+<p>While ERB is basically HTML with Ruby embedded in it, Django features
+a custom templating language with it&rsquo;s own (extendable) tag
+library. This generally means that Django templates tend to be a bit
+cleaner than Rails&rsquo;s templates, since you&rsquo;re not allowed to abuse them
+very much. On the other hand you can do virtually anything by
+embedding code directly in a template, so as usual &ndash; each design
+decision has its pros and cons.</p>
+
+<p>Django supports alternative templating libraries, so you&rsquo;re covered in
+case you don&rsquo;t like the default one.</p>
+
+<p>Django also features a powerful form generation/handling facilities
+that integrate seamlessly with the templating layer. For instance &ndash; it
+very easy to generate a form matching the structure of a domain model
+object with automatic property validation.</p>
+
+<h4>You&rsquo;re in charge</h4>
+
+<p>Django has doesn&rsquo;t adhere to the Rails CoC philosophy. It&rsquo;s assumed
+that developers know best what layout and configurations options make
+the most sense in their applications. I haven&rsquo;t played that much with
+Django yet, but I still haven&rsquo;t come by two different Django apps that
+are structured in the same manner. While I understand the benefits of
+Django&rsquo;s approach I still prefer Rails&rsquo;s approach. I&rsquo;ve worked long
+enough to know that you&rsquo;re rarely in the position to make better
+decisions about the structure and the defaults of your app, than the
+exceptional developers with huge experience that develop frameworks
+like Rails and Django.</p>
+
+<p>To illustrate this consider the strong emphasis Rails places on
+REST. In Django you could certainly use restful access your resources
+as well, but it&rsquo;s all up to you. The framework makes no
+suggestions. You can unroll any URL mapping scheme by simply
+associating regular expressions in urls.py with callback view
+functions:</p>
+
+<div>
+  <pre><code class='python'>from django.conf.urls.defaults import patterns, include, url
+
+urlpatterns = patterns(&#39;&#39;,
+    url(r&#39;^$&#39;, &#39;djangodemo.views.home&#39;, name=&#39;home&#39;)
+    url(r&#39;^users&#39;, &#39;djangodemo.view.users&#39;, name=&#39;list_users&#39;))</code></pre>
+</div>
+
+
+<p>An url is mapped to the callback function, which in turn either renders a
+template or directly returns some Http response.</p>
+
+<h4>Free admin</h4>
+
+<p>Django has a built-in support to generate an admin UI for your
+website. This is a very useful feature indeed and is supported in
+Rails as well through plugins (I&rsquo;ve mentioned the one I like the
+best).</p>
+
+<h4>Database migrations</h4>
+
+<p>One of the few gripes I have with stock Django is that it doesn&rsquo;t
+offer an alternative to Rails&rsquo;s migrations. Luckily there is
+<a href="http://south.aeracode.org/">South</a> &ndash; an extension that provides a
+simple, stable and database-independent migration layer to prevent all
+the hassle schema changes over time bring to your Django
+applications. I highly recommend it to everyone planning to use
+Django.</p>
+
+<h4>JavaScript and AJAX</h4>
+
+<p>Unlike Rails, Django doesn&rsquo;t bundle any JavaScript libraries. You have
+to pick a JavaScript framework yourself (which a trivial process). The
+AJAX support in Django is both basic and extremely powerful in the
+same time &ndash; request.is_ajax(). What this means is that you can check
+if a request was regular or an AJAX request and respond
+accordingly. You don&rsquo;t need much more than that. More details can be
+found <a href="https://code.djangoproject.com/wiki/AJAX">here</a>.</p>
+
+<h4>The great divide</h4>
+
+<p>Some of you probably know that Python is currently at a bit of a
+crossroads. Python 2.x was the stable Python version for many years,
+but recently it was replaced by Python 3.x. Python 3.x is all around
+great in my personal opinion, but unfortunately it&rsquo;s backward
+incompatible with the older 2.x series. For that reason very few high
+profile projects still don&rsquo;t support it &ndash; Django is one such
+project. The current version 1.3 require at least Python 2.4 and will
+run with every Python up to 2.7. This is a bit of a disappointment
+since you&rsquo;ll be missing on a few very cool new features. On a more
+positive note Python 2.7 did backport some goodies from Python 3, so
+not all is lost. I&rsquo;ve read (at totally unofficial places) that Django 2.0 will be targeting Python 3
+and I expect it will be available in about a year.</p>
+
+<h4>Deployment</h4>
+
+<p>Python is quite mature technology and offers you a nice array of
+deployment options &ndash; Apache, Nginx and my favorite &ndash; Google App
+Engine. Python, being one of the two supported languages on the App
+Engine (the other one is, of course, Java) makes it very easy to deploy
+Django apps on the App Engine (though you&rsquo;ll need the Django support
+for non-relational databases to be able to use it).</p>
+
+<p>The also the possibility to deploy Django apps on Java or .Net
+infrastructure using Jython or IronPython.</p>
+
+<h2>Community</h2>
+
+<p>When you&rsquo;re selecting the technology for a major project you have to
+make sure that the technology is in good shape &ndash; there is a solid
+community around it, there is no lack of support, innovation and
+deployment options.</p>
+
+<p>Both
+<a href="http://www.google.com/trends?q=ruby+on+rails%2C+django+python">Google trends</a>
+and stackoverflow.com (by the number of question about tagged with
+django or rails) indicate that Rails currently has larger
+community than Django.</p>
+
+<p>I haven&rsquo;t had any direct communication with the Django community yet,
+but I&rsquo;ve found a lot of excellent resources about Django on-line.</p>
+
+<p>Rails has one of the most vibrant, passionate and innovative
+communities. I&rsquo;ve had contact with a lot of people from the Rails
+community and I&rsquo;m certain that it has played a tremendous role in
+Rails&rsquo;s growth.</p>
+
+<h2>Tooling</h2>
+
+<p>Traditionally Ruby &amp; Python hackers have been working with just a
+powerful programmer&rsquo;s editor like Emacs, vim or TextMate. While there
+is nothing inherently wrong with this approach (I&rsquo;m an avid Emacs user
+myself), I do find IDEs quite helpful when working on larger code
+bases, with their trademark features such as intelligent
+autocompletion (aka intellisense), safe refactorings, on-the-fly syntax checking, etc. So
+here&rsquo;s what we&rsquo;ve got:</p>
+
+<ul>
+<li><a href="http://www.jetbrains.com/ruby/">RubyMine</a> &ndash; hands down the best Ruby and Rails IDE I&rsquo;ve ever
+used. The <a href="http://www.jetbrains.com/ruby/features/index.html">list of features</a> is epic as is the quality of the
+project. It support Rails 3, git, RSpec, Cucumber, sass, haml and
+many other cool Ruby/Rails related technologies. Sure, it&rsquo;s a
+commercial project, but is priced very reasonably.</li>
+<li><a href="http://www.aptana.com/">Aptana Studio</a> &ndash; a Web development IDE,
+built on top of the Eclipse platform. Among many other features it
+supports Ruby on Rails.</li>
+<li><a href="http://www.activestate.com/komodo-ide">Komodo</a> &ndash; an IDE focusing on
+dynamic programming language. Great support for both Django and
+Rails development.</li>
+<li><a href="http://www.jetbrains.com/pycharm/">PyCharm</a> &ndash; from the same company that develops RubyMine, PyCharm
+is the king of IDEs when it comes down to Python. It has full
+featured Django support &ndash; there is even autocompletion in the Django
+templates.</li>
+<li><a href="http://pydev.org/">PyDev</a> &ndash; an Eclipse plug-in for Python and Django development.</li>
+</ul>
+
+
+<p>I have to admit I&rsquo;m totally biased. Having been a long time Java
+developer I&rsquo;ve grown extremely fond of the exceptional IntelliJ
+IDEA. RubyMine and PyCharm are both based on the IntelliJ platform and
+bring to the Ruby and Python developers much of the might and magic of
+IDEA. There are both commercial products, but their price tags are
+quite low and their quality is great &ndash; highly recommended.</p>
+
+<p>I&rsquo;m not affiliated in any way with any of these products &ndash; I just
+happen to like them that much.</p>
+
+<h2>Resources</h2>
+
+<p>The are LOTS of resources about Rails and Django on-line. Here are
+just my favorites.</p>
+
+<h4>Rails</h4>
+
+<ul>
+<li><a href="http://guides.rubyonrails.org/">Rails Guides</a> &ndash; best short
+introduction to Rails ever. Immediately updated for new Rails
+versions, fantastic starting point for any aspiring Rails developer.</li>
+<li><a href="http://ruby.railstutorial.org/">Rails Tutorial</a> &ndash; best Rails 3 book
+on the market and it even has a free on-line edition. Nice follow up
+of the Rails Guides.</li>
+<li><a href="http://railscasts.com/">RailsCasts</a> &ndash; Ryan Bates in true Ruby
+hero. He has compiled a unique set of high quality Rails screencasts
+that often illustrate some advanced techniques. And they are all
+free. We all owe a very big &ldquo;Thanks!&rdquo; to Ryan.</li>
+</ul>
+
+
+<h4>Django</h4>
+
+<ul>
+<li><a href="https://docs.djangoproject.com/en/1.3/">Official Docs</a> &ndash; best
+official project documentation I&rsquo;ve read. It&rsquo;s actually so good,
+that I never (well &ndash; almost never) bothered to look for anything else. All my questions
+were answered by the official documentation.</li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>Choosing Django or Rails is basically a win-win situation &ndash; you cannot
+go wrong. There are too many similarities between the frameworks and
+the differences are not something paramount.</p>
+
+<p>Rails places a heavy emphasis on convention over configuration,
+provides you with more defaults and does a can do a lot of heavy
+lifting for you automagically.</p>
+
+<p>Django on the other hand let&rsquo;s you specify most configuration details
+yourself, without making the configuration burdensome (like that of
+older Java web frameworks).</p>
+
+<p>Rails has always been leading on the way of innovation &ndash; constantly
+integration some of the latest and greatest technologies around
+(recent examples being jQuery, Coffee Script and SASS). From time to
+time backward compatibility is sacrificed for the greater good, so
+that is something that you should consider as well.</p>
+
+<p>Django is certainly much more conservative framework as far as
+backward compatibility is concerned &ndash; after all it still support
+Python 2.4.</p>
+
+<p>I guess in the end the choice really boils down to two things &ndash; whether you
+like Ruby or Python better and whether you like the defaults imposed
+to you by Rails.</p>
+
+<p>I&rsquo;ve planned to write a much longer and detailed article, but it&rsquo;s
+summer here and it&rsquo;s sunday and I&rsquo;d rather go out and drink a few
+beers with my friends. Hopefully you&rsquo;ve enjoyed the article. I&rsquo;ll try
+to expand it a bit in the coming days.</p>
+
+<p>P.S. Btw, in case you&rsquo;re wondering &ndash; we&rsquo;ve picked Rails for our
+company&rsquo;s projects. It was a very close call, though, since I
+really liked a lot of aspects of Django as well.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-19T00:00:00+03:00" pubdate data-updated="true">Jun 19<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/django/'>Django</a>, <a class='category' href='/articles/categories/python/'>Python</a>, <a class='category' href='/articles/categories/rails/'>Rails</a>, <a class='category' href='/articles/categories/ruby/'>Ruby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2011/06/19/django-vs-rails/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2011/06/19/django-vs-rails/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2011/06/14/linux-desktop-part-2/" title="Previous Post: The Linux desktop experience is killing Linux on the desktop, Part II">&laquo; The Linux desktop experience is killing Linux on the desktop, Part II</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2011/07/04/debian-tips/" title="Next Post: Debian post installation setup & tips">Debian post installation setup & tips &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2011/06/19/django-vs-rails/';
+        var disqus_url = 'http://batsov.com/articles/2011/06/19/django-vs-rails/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

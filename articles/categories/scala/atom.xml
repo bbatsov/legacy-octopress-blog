@@ -1,0 +1,1287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Scala | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/scala/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-28T09:00:23+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Java.next() - Scala: The Revenge of the Static Typing]]></title>
+    <link href="http://batsov.com/articles/2011/05/08/jvm-langs-scala/"/>
+    <updated>2011-05-08T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/05/08/jvm-langs-scala</id>
+    <content type="html"><![CDATA[<h2>Prelude</h2>
+
+<p>This is the second post from my series dedicated to modern programming
+languages for the Java platform. Last time we&rsquo;ve discussed the
+<a href="/Java/Groovy/2011/05/06/jvm-langs-groovy.html">Groovy programming language</a>, which
+is a member of the ever expanding family of dynamic programming
+languages. The Scala programming language, that is the object of
+today&rsquo;s discussion, is different beast entirely &ndash; not only it uses static
+typing(like Java &amp; C# amongst others), but it also puts a heavy emphasis on the type
+system, functional and parallel programming.</p>
+
+<p>In theory Scala runs both on the JVM and on the CLR(the .NET VM). The
+Java port, however, receives a lot more attention by Scala&rsquo;s developers
+and it probably accounts for close of to all of Scala&rsquo;s
+deployments(especially in production).</p>
+
+<p>This article is extremely hard to write for me. Unlike Groovy, I&rsquo;m
+deeply familiar with the language and would like to share quite a lot
+with you. For obvious reasons I cannot go into much detail (otherwise
+I&rsquo;d have written an on-line book). You&rsquo;re encourage to follow up this
+article by reading some of the excellent resources, mentioned near its end.</p>
+
+<h2>A brief history of Scala</h2>
+
+<p>After having written hundreds of thousands lines of Java himself,
+Martin Odersky, Professor at EPFL, was well aware of the frustrations
+faced by Java programmers. He formed the vision of applying the best
+knowledge of the academic research community to the problem of making
+the Java programming experience better, even fun. His first pragmatic
+step was Java Generics, seen as a major success by the Java
+community (though we should mention that it was C# that first brought
+generic programming to the masses). But for the full vision of scalable concurrent programming
+to be achieved he saw that the basic Java syntax would need to
+change. You simply couldn&rsquo;t get there from here. But a deceptively
+simple shift in syntax gained better uniformity to the object-oriented
+aspects of Java, and this in turn enabled a natural fusion with
+functional programming concepts which are critical for tackling
+concurrency. In 2001 Scala was born. The first official version was
+released in late 2003. This year it celebrates its first
+anniversary in a way (depending on what do you consider the birthday).</p>
+
+<p>Scala stands for a SCAlable LAnguage. What does this mean? Scala is
+designed to tackle solutions of wildly varying sizes &ndash; from small
+scripts (programming in the small) to massive distributed enterprise
+applications (generally programming in the large). Scala also means
+<em>steps</em> in Italian and this is the reason why most Scala books have
+some form of steps on their covers (arguably this is the reason why
+Scala is very popular in Italy and particularly in Milan).</p>
+
+<p>The current production version of Scala is 2.8.1 with 2.9.0 being in
+the release candidate stages.</p>
+
+<h2>Installing Scala</h2>
+
+<h4>Universal installer</h4>
+
+<p>Scala has an <a href="http://www.scala-lang.org/downloads/distrib/files/scala-2.8.1.final-installer.jar">universal installer</a> that could be ran on every platform
+with Java installed. You can run it from the console like this:</p>
+
+<p><code>bash
+$ java -jar scala-2.8.1.final-installer.jar
+</code></p>
+
+<p>Alternatively, on most systems simply double clicking the installer
+jar will run it(assuming you have a GUI environment and assuming that
+the java command is associated with jar files &ndash; something that is
+usually so by default).</p>
+
+<h4>Installing from binary archive</h4>
+
+<p>Just download the Scala distribution for <a href="http://www.scala-lang.org/downloads/distrib/files/scala-2.8.1.final.tgz">Unix, OS X and Cygwin</a> or
+the one for
+<a href="http://www.scala-lang.org/downloads/distrib/files/scala-2.8.1.final.zip">Windows</a>
+and extract it somewhere. I&rsquo;m a GNU/Linux user and I tend to extract
+all third party apps in the /opt folder:</p>
+
+<p><code>bash
+$ sudo tar xf scala-2.8.1.final.tgz -C /opt
+</code></p>
+
+<p>You&rsquo;d also want to add the folder containing the Scala binaries
+(compiler, REPL, etc) to your PATH environmental variable. Unix users
+might add something like this to their shell startup script (like
+.bashrc):</p>
+
+<p><code>bash
+export JAVA_HOME=/usr/java/latest
+export SCALA_HOME=/opt/scala-2.8.1
+export PATH=$SCALA_HOME/bin:$PATH
+</code></p>
+
+<p>You should now have Scala installed properly. You can test this by
+typing the following in a command shell:</p>
+
+<p><code>bash
+$ scala
+</code></p>
+
+<p>Which should create an interactive Scala shell where you can type
+Scala expressions.</p>
+
+<p>To run a specific Scala script type:</p>
+
+<p><code>bash
+$ scala SomeScript.scala
+</code></p>
+
+<h4>Linux installation</h4>
+
+<p>Most Linux distributions provide Scala through their integrated
+package management system. On Debian(and derivatives like Ubuntu) you
+can install it like this:</p>
+
+<p><code>bash
+$ sudo apt-get install scala
+</code></p>
+
+<p>On Red Hat systems the magic incantation looks like this:</p>
+
+<p><code>bash
+$ sudo yum install scala
+</code></p>
+
+<p>Personally I&rsquo;d prefer the platform-independent installation method,
+since some distribution package Scala in a non-standard manner, which
+confuses IDEs for instance.</p>
+
+<h2>Scala at a glance</h2>
+
+<p><blockquote><p>If I were to pick a language to use today other than Java, it would<br/>be Scala&hellip;</p><footer><strong>James Gosling</strong> <cite>Creator of Java</cite></footer></blockquote></p>
+
+<p><blockquote><p>If Java programmers want to use features that aren&rsquo;t present in the<br/>language, I think they&rsquo;re probably best off using another language<br/>that targets the JVM, such a Scala and Groovy.</p><footer><strong>Joshua Bloch</strong> <cite>Author of &ldquo;Effective Java&rdquo; and Many of Java&rsquo;s Core Libraries</cite></footer></blockquote></p>
+
+<p>Scala basically is:</p>
+
+<ul>
+<li>SCAlable LAnguage</li>
+<li>Pure OO language</li>
+<li>Functional language</li>
+<li>Statically typed language</li>
+<li>A language that integrates seamlessly with existing Java code</li>
+<li>A great community</li>
+</ul>
+
+
+<p>Scala&rsquo;s more prominent features are:</p>
+
+<ul>
+<li>Type inference</li>
+<li>Advanced type system</li>
+<li>Improved OO model</li>
+<li>Improved imports system</li>
+<li>Simplified visibility rules</li>
+<li>Suitable for scripting, GUI, enterprise</li>
+<li>Relies on immutable data structures by default</li>
+<li>Great support for building parallel applications</li>
+<li>Pimps (improves) a lot of standard Java classes using a technique
+called <a href="http://www.codecommit.com/blog/ruby/implicit-conversions-more-powerful-than-dynamic-typing">implicit conversion</a>.</li>
+</ul>
+
+
+<h2>Static vs Dynamic typing</h2>
+
+<p>This is one of the oldest debates in computing and everyone with a
+little bit of common sense knows that there is no definitive answer to this
+so fundamental question. Both approaches have merits and drawbacks. In
+recent years we saw a rapid explosion in the rate of growth of
+dynamic languages which lead many people to believe that static typing
+is something of the past and is headed down on the road to oblivion. I ,
+however, very much doubt such a possibility. So, without further ado
+here&rsquo;s my take on their pros and cons:</p>
+
+<h4>Dynamic typing</h4>
+
+<ul>
+<li><p>Pros</p>
+
+<ul>
+<li>Less verbose</li>
+<li>Better metaprogramming capabilities &ndash; it&rsquo;s very easy in a
+language like to Ruby to modify a class at runtime for
+instance. Java developers, on the other side, can only dream for
+such things&hellip;</li>
+<li>Duck typing allows to reduce immensely the coupling between your
+classes</li>
+<li>Reduced development and deployment cycles &ndash; most dynamic
+languages are implemented as interpreters and this way you&rsquo;re
+spared the tedious compilation/redeployment cycles</li>
+</ul>
+</li>
+<li><p>Cons</p>
+
+<ul>
+<li>Some might argue that type declarations serve as an additional
+documentation and their lack (arguably) make the code harder to
+read. Of course, when you&rsquo;re following a decent naming
+convention (and by that I mean that you&rsquo;re using sensible
+identifiers) that hardly matters.</li>
+<li>Slower performance &ndash; knowing all the types in advance,
+naturally, allows the compilers to generate faster code for
+static languages than for dynamic ones. Some Lisp compilers,
+however, offer performance that rivals that of statically typed
+programs, so it&rsquo;s reasonable to expect that the situation in
+this department will improve over time.</li>
+<li>It&rsquo;s hard to create IDEs for dynamic languages that offer the
+same level of assistance as those for static languages. The
+problem stems from the simple fact that in a dynamic language
+the type of an object is known only at runtime and an IDE will have
+a pretty hard type guessing the types because of this fact. In
+my humble opinion the lack of all the fancy IDE features like
+reliable code completion and refactorings is one of the central
+reasons why statically type languages like Java, C# and C++ are
+still enjoying higher popularity than dynamic languages.</li>
+<li>You need to write more unit tests, because many of the simple
+errors that the compiler of statically typed language will detect
+will manifest themselves only at runtime.</li>
+</ul>
+</li>
+</ul>
+
+
+<h4>Static typing</h4>
+
+<ul>
+<li><p>Pros</p>
+
+<ul>
+<li>Mighty development environments, capable of compensating for a
+lot of the languages deficiencies. You always get correct
+completion suggestions (in a decent IDE that is), all type errors
+are caught as you type (except the runtime errors that is).</li>
+<li>Reliable refactoring &ndash; you make some changes, you recompile the
+project, you instantly see whether everything is OK after the
+refactoring. One of the key reasons why enterprise projects are
+often implemented in Java and C#.</li>
+<li>Maximum performance &ndash; when you know all the types in advance it&rsquo;s
+not particularly hard to generate the most efficient in terms of
+performance bytecode/binary
+code.</li>
+<li>You don&rsquo;t need to write unit tests for errors that will be caught
+by compiler.</li>
+<li>The type declarations arguably serve as an up-to-date
+documentation on which you can always rely.</li>
+</ul>
+</li>
+<li><p>Cons</p>
+
+<ul>
+<li>Poor metaprogramming support &ndash; statically typed system limit very
+much the magic you can do in you programs. Metaprogramming is
+actually considered a black art in many statically type
+languages. In a functional statically typed language higher-order
+functions can compensate a lot in that department. Scala happens
+to be one such language, Haskell &ndash; another.</li>
+<li>Generally statically type languages are a bit more verbose &ndash;
+mostly because the code is full of type annotations (languages
+like Scala and Haskell, however, have found the cure for this
+ailment &ndash; <a href="http://www.codecommit.com/blog/scala/what-is-hindley-milner-and-why-is-it-cool">type inference</a>)</li>
+<li>No support (in most statically typed languages) for duck typing
+causes you to often link classes in hierarchies that you&rsquo;d rather
+avoid if you had the chance to. I should point out that languages
+supporting structural types are not suffering from these
+problems. Scala happens to support them from version 2.6.0.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>A whirlwind tour of Scala</h2>
+
+<h4>Scala is expressive</h4>
+
+<p>``` scala
+scala> val romanToArabic = Map(&ldquo;I&rdquo; &ndash;> 1, &ldquo;II&rdquo; &ndash;> 2, &ldquo;III&rdquo; &ndash;> 3, &ldquo;IV&rdquo; &ndash;> 4, &ldquo;V&rdquo; &ndash;> 5)
+romanToArabic: scala.collection.immutable.Map[java.lang.String,Int] = Map((II,2), (IV,4), (I,1), (V,5), (III,3))</p>
+
+<p>scala> romanToArabic(&ldquo;I&rdquo;)
+res2: Int = 1</p>
+
+<p>scala> romanToArabic(&ldquo;II&rdquo;)
+res3: Int = 2
+```</p>
+
+<h4>Scala removes the incidental complexity</h4>
+
+<p>Scala removes the incidental complexity and cut right to the core of
+the problem. Imagine that you want to find whether or not a string
+contains uppercase characters. In Java you&rsquo;d write something like
+this:</p>
+
+<p>``` java
+public boolean hasUpperCase(String word) {</p>
+
+<pre><code>if (word == null) {
+    return false;
+}
+int len = word.length();
+for (int i = 0; i &lt; len; i++) {
+    if (Character.isUpperCase(word.charAt(i))) {
+        return true;
+    }
+}
+return false;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>So much boilerplate code (loop, if) to express such a basic idea. In
+Scala you&rsquo;d simply write:</p>
+
+<p>``` scala
+def hasUppercase(word: String): Boolean = {
+  if (word != null)</p>
+
+<pre><code>word.exists(c =&gt; c.isUpperCase)
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>false
+</code></pre>
+
+<p>}</p>
+
+<p>// or more compactly
+def hasUppercase(word: String) = if (word != null) word.exists(_.isUpperCase) else false
+```</p>
+
+<p>Scala&rsquo;s code actually reads a lot like English language that makes
+sense to humans &ndash; check if in <em>word</em>
+there exists an uppercase character. Notice that is Scala <em>if</em> is an
+expression yielding a return value, unlike in many other languages.</p>
+
+<h4>Scala is concise</h4>
+
+<p>Consider this simple JavaBean (well, not exactly JavaBean to be
+precise &ndash; it lacks a no param constructor) definition:</p>
+
+<p>``` java
+class Person {</p>
+
+<pre><code>private String name;
+private int age;
+
+Person(String name, int age) {
+    this.name = name;
+    this.age = age;
+}
+
+public String getName() {
+    return name;
+}
+
+public void setName(String name) {
+    this.name = name;
+}
+
+public int getAge() {
+    return age;
+}
+
+public void setAge(int age) {
+    this.age = age;
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>In Scala the equivalent definition looks like this:</p>
+
+<p><code>scala
+class Person(var name: String, var age: Int)
+</code></p>
+
+<p>This is what I call a good signal-to-noise ratio.</p>
+
+<h4>Scala supercharges OO programming</h4>
+
+<p>Scala is pure OO language &ndash; everything is an object, operators are
+actually methods, everything yields some result(even constructs such
+as if), there are no static field and methods</p>
+
+<h4>Scala is power overwhelming</h4>
+
+<p>Want to implement a thread-safe mathematical service in Scala? No problem!</p>
+
+<p>``` scala
+import scala.actors.Actor._</p>
+
+<p>case class Add(x: Int, y: Int)
+case class Sub(x: Int, y: Int)</p>
+
+<p>val mathService = actor {
+  loop {</p>
+
+<pre><code>receive {
+  case Add(x, y) =&gt; reply(x + y)
+  case Sub(x, y) =&gt; reply(x - y)
+}
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>mathService !? Add(1, 3) // returns 4
+mathService !? Sub(5, 2) // returns 3
+```</p>
+
+<p>Case classes are out of the scope of this post, but I guess you get
+the basic idea.</p>
+
+<h4>Scala is duck friendly</h4>
+
+<p>Duck typing is nothing new for developers familiar with dynamic
+languages. Its the concept that an objects type is defined not by the
+objects class, but by the objects interface. This allows us to write
+very flexible code that works on unrelated types (in the inheritance
+hierarchy) that happen to share common methods. For instance in Ruby
+we could write this code:</p>
+
+<p>``` ruby
+class Duck
+  def walk</p>
+
+<pre><code>puts "The duck walks"
+</code></pre>
+
+<p>  end</p>
+
+<p>  def quack</p>
+
+<pre><code>puts "The duck quacks"
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>class Dog
+  def walk</p>
+
+<pre><code>puts "The dog walks"
+</code></pre>
+
+<p>  end</p>
+
+<p>  def quack</p>
+
+<pre><code>puts "The dog quacks"
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>def test_animal(animal)
+  animal.walk
+  animal.quack
+end</p>
+
+<p>test_animal(Duck.new)
+test_animal(Dog.new)
+```</p>
+
+<p>It will work just fine &ndash; trust me. Few statically typed languages can
+boast something similar&hellip; and Scala happens to be one of them:</p>
+
+<p>``` scala
+class Duck {
+  def quack = println(&ldquo;The duck quacks&rdquo;)
+  def walk = println(&ldquo;The duck walks&rdquo;)
+}</p>
+
+<p>class Dog {
+  def quack = println(&ldquo;The dog quacks (barks)&rdquo;)
+  def walk = println(&ldquo;The dog walks&rdquo;)
+}</p>
+
+<p>def testDuckTyping(animal: { def quack; def walk }) = {
+  animal.quack
+  animal.walk
+}</p>
+
+<p>scala> testDuckTyping(new Duck)
+The duck quacks
+The duck walks</p>
+
+<p>scala> testDuckTyping(new Dog)
+The dog quacks (barks)
+The dog walks
+```</p>
+
+<p>This is point in the article when Ruby and Python are starting to get
+impressed. :&ndash;) (I should know &ndash; I&rsquo;ve learnt about this feature after
+I&rsquo;ve written the first draft and got some negative feedback due to my
+oversight).</p>
+
+<h4>Pimp my library</h4>
+
+<p>Want to make the compiler convert between types from time to time to
+get access to some richer functionality? Nothing is easier in Scala:</p>
+
+<p>``` scala
+scala> implicit def intarray2sum(x: Array[Int]) = x.reduceLeft(<em> + </em>)
+intarray2sum: (x: Array[Int])Int</p>
+
+<p>scala> val x = Array(1, 2, 3)
+x: Array[Int] = Array(1, 2, 3)</p>
+
+<p>scala> val y = Array(4, 5, 6)
+y: Array[Int] = Array(4, 5, 6)</p>
+
+<p>scala> val z = x + y
+z: Int = 21
+```</p>
+
+<p>Scala arrays don&rsquo;t have a + method, but Scala Ints do. When the
+compiler sees that the + method is invoked on an object that doesn&rsquo;t
+have it, it starts searching for an implicit conversion to a type that
+has it &ndash; like Int. Both arrays are converted to their sums and the
+sums are added together in the end.</p>
+
+<h2>Playing around</h2>
+
+<p>A good way to start exploring Scala is the REPL. Fire it up and type
+along:</p>
+
+<p>``` scala
+scala> println(&ldquo;Hello, Scala&rdquo;)
+Hello, Scala</p>
+
+<p>scala> val name = &ldquo;Bozhidar&rdquo;
+name: java.lang.String = Bozhidar</p>
+
+<p>scala> Predef.println(&ldquo;My name is &rdquo;+name)
+My name is Bozhidar</p>
+
+<p>scala> var someNumber: Int = 5
+someNumber: Int = 5</p>
+
+<p>scala> var names = Array(&ldquo;Superman&rdquo;, &ldquo;Batman&rdquo;, &ldquo;The Flash&rdquo;, &ldquo;Bozhidar&rdquo;)
+names: Array[java.lang.String] = Array(Superman, Batman, The Flash, Bozhidar)</p>
+
+<p>scala> names.filter(name => name.startsWith(&ldquo;B&rdquo;))
+res6: Array[java.lang.String] = Array(Batman, Bozhidar)</p>
+
+<p>scala> names.length
+res7: Int = 4</p>
+
+<p>scala> name.length()
+res8: Int = 8</p>
+
+<p>scala> import java.util.Date
+import java.util.Date</p>
+
+<p>scala> var currentDate = new Date
+currentDate: java.util.Date = Wed May 11 15:03:20 EEST 2011</p>
+
+<p>scala> println(&ldquo;Now is &rdquo; + currentDate)
+Now is Wed May 11 15:03:20 EEST 2011</p>
+
+<p>scala> currentDate.toString
+res10: java.lang.String = Wed May 11 15:03:20 EEST 2011</p>
+
+<p>scala> currentDate.toString()
+res11: java.lang.String = Wed May 11 15:03:20 EEST 2011</p>
+
+<p>scala> currentDate toString
+res12: java.lang.String = Wed May 11 15:03:20 EEST 2011
+```</p>
+
+<p>The REPL has an excellent TAB completion &ndash; I used it ofter. You&rsquo;ll
+note from these examples the flexibility and the brevity of Scala&rsquo;s
+syntax &ndash; no <strong>;</strong> to terminate statements (though you&rsquo;ll have to use ; to
+separate more than one expression on a single line). The types of the
+variables are inferred by the context, without the need to
+specifically specify them &ndash; if you assign a string literal to some
+variable the compiler will figure out on its own that the variable
+must of type String (also note that Scala strings are Java strings &ndash;
+at least on the JVM). You&rsquo;ve got a lot of flexibility when you&rsquo;re
+calling methods &ndash; you can omit the braces and the dot in some
+scenarios &ndash; this makes it easy to create Domain Specific Languages in Scala.</p>
+
+<p>The REPL outputs both the result of the expression you&rsquo;ve evaluated
+and the output from the evaluation (if any). The result from the
+evaluation is assigned to automatically generated variables named resX
+(res0, res1, res3) and you can refer to them later on.</p>
+
+<h2>Object orientation purification</h2>
+
+<ul>
+<li>Everything is an object &ndash; there are no primitive types in Scala,
+though the compiler will map some Scala types to primitive Java
+types for performance whenever possible</li>
+<li>No operators, just methods
+
+<ul>
+<li><code>1 + 2 === 1.+(2)</code></li>
+</ul>
+</li>
+<li><p>No static fields &amp; methods &ndash; replaced by companion objects (a
+singleton object named the same way as the class). What would be a
+static field of a static method in Java will be a companion object
+field/method in Scala. This makes the Scala OO model purer than that
+of some other languages (of course in languages like Ruby where
+classes are objects class variables and methods have more or less
+the same meaning and the model is just a pure if not purer).</p></li>
+<li><p><a href="http://www.scala-lang.org/node/126">Traits</a> &ndash; the evolution of interfaces</p>
+
+<ul>
+<li>Traits are interfaces on steroids</li>
+<li>They can contain state as well as behaviour</li>
+<li>Think of them more as Ruby&rsquo;s mixins than Java&rsquo;s interfaces</li>
+<li>They can be implemented on the fly by objects</li>
+<li>They are too complex to be properly explained in one short blog post :&ndash;)</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Functional programming</h2>
+
+<p>Functional programming has many aspects, but to get the bulk of it you
+need just two magical ingredients &ndash; support for functions as objects
+and a nice array of immutable data structures. Scala, naturally, has
+both. Traditionally OOP languages have rarely had much support for
+functional programming, which makes it awkward to express some
+problems in them. Steve Yegge wrote an excellent article on the
+subject some time ago &ndash; <a href="http://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html">&ldquo;Execution in the kingdom of the
+nouns&rdquo;</a>.</p>
+
+<h4>Return of the verbs</h4>
+
+<ul>
+<li><p>Functions are first class objects</p>
+
+<ul>
+<li>val inc = (x: Int) => x + 1</li>
+<li>inc(1) // => 2</li>
+</ul>
+</li>
+<li><p>Higher-order functions</p>
+
+<ul>
+<li>List(1, 2, 3).map((x: Int) => x + 1) // => List(2, 3, 4)</li>
+</ul>
+</li>
+<li><p>Sugared functions</p>
+
+<ul>
+<li>List(1, 2, 3).map(x => x + 1)</li>
+<li>List(1, 2, 3).map(_ + 1)</li>
+</ul>
+</li>
+</ul>
+
+
+<h4>Closures</h4>
+
+<p>Closures are basically functions that have captured variables from an
+external scope (variables that were not parameters of the
+functions). Closures are often used as the parameters of higher-order
+functions (functions that take functions as parameters):</p>
+
+<p>``` scala
+scala> var x = 10
+x: Int = 10</p>
+
+<p>scala> val addToX = (y: Int) => x + y
+addToX: (Int) => Int = <function1></p>
+
+<p>scala> addToX(2)
+res0: Int = 12</p>
+
+<p>scala> addToX(6)
+res1: Int = 16</p>
+
+<p>scala> x = 5
+x: Int = 5</p>
+
+<p>scala> addToX(10)
+res2: Int = 15
+```</p>
+
+<h4>Functional data structures</h4>
+
+<p>Functional programming revolves around the concept of immutability &ndash;
+nothing is ever changed &ndash; we have some input, we get some output and
+the input is not changed in the process. Consider a simple operation
+like an addition of an element to a list:</p>
+
+<ul>
+<li>the operation could modify the list to which the element is being
+added</li>
+<li>the operation can return a new list that is the same as the
+original, but has the additional element</li>
+</ul>
+
+
+<p>Functional programming favours the second approach and Scala as a
+functional programming language provides data structures with the
+desired behaviour.</p>
+
+<ul>
+<li>List &ndash; think here of Lisp lists and not Java lists(unless you&rsquo;re
+thinking of Java linked lists that is)</li>
+<li>Maps</li>
+<li>Sets</li>
+<li>Trees</li>
+<li>Stacks</li>
+</ul>
+
+
+<p>Scala doesn&rsquo;t force you into functional programming, though. Apart
+from the List, which is always immutable, we have two types of all the
+core data structures mentioned &ndash; immutable and mutable. The immutable
+data structures are those imported by default to promote a more
+functional programming style, but you can easily switch to the mutable
+versions and program in an imperative manner.</p>
+
+<p>``` scala
+scala> import scala.collection.mutable.Map
+import scala.collection.mutable.Map</p>
+
+<p>scala> val phoneBook = Map(&ldquo;Bozhidar&rdquo; &ndash;> 123, &ldquo;Ivan&rdquo; &ndash;> 456)
+phoneBook: scala.collection.mutable.Map[java.lang.String,Int] = Map((Ivan,456), (Bozhidar,123))</p>
+
+<p>scala> phoneBook += &ldquo;Maya&rdquo; &ndash;> 53434
+res13: phoneBook.type = Map((Maya,53434), (Ivan,456), (Bozhidar,123))
+```</p>
+
+<h4>List almighty</h4>
+
+<p>The list is a core data structure in functional programming because it is
+recursively defined and therefore it&rsquo;s very suitable for use in
+recursive algorithms. A list is composed of cons cells, each having
+two components &ndash; the value it holds and a reference to a next cons
+cell. The last cell points to a special value &ndash; Nil (which happens to
+represent an empty list).</p>
+
+<p><code>1 | -&gt; 2 | -&gt; 3 | -&gt; Nil</code></p>
+
+<p>Here&rsquo;s some things you can do with Scala&rsquo;s lists:</p>
+
+<p>``` scala
+scala> 1 :: 2 :: 3 :: 4 :: 5 :: Nil
+res3: List[Int] = List(1, 2, 3, 4, 5)</p>
+
+<p>scala> val names = List(&ldquo;Neo&rdquo;, &ldquo;Trinity&rdquo;, &ldquo;Morpheus&rdquo;, &ldquo;Tank&rdquo;, &ldquo;Dozer&rdquo;)
+names: List[java.lang.String] = List(Neo, Trinity, Morpheus, Tank, Dozer)</p>
+
+<p>scala> names.length
+res4: Int = 5</p>
+
+<p>scala> names.foreach(println)
+Neo
+Trinity
+Morpheus
+Tank
+Dozer</p>
+
+<p>scala> names.map(_.toUpperCase)
+res6: List[java.lang.String] = List(NEO, TRINITY, MORPHEUS, TANK, DOZER)</p>
+
+<p>scala> names.forall(_.length > 5)
+res7: Boolean = false</p>
+
+<p>scala> names.forall(_.length > 2)
+res8: Boolean = true</p>
+
+<p>scala> names.filter(_.startsWith(&ldquo;T&rdquo;))
+res9: List[java.lang.String] = List(Trinity, Tank)</p>
+
+<p>scala> names.exists(_.length == 3)
+res10: Boolean = true</p>
+
+<p>scala> names.drop(2)
+res11: List[java.lang.String] = List(Morpheus, Tank, Dozer)</p>
+
+<p>scala> names.reverse
+res12: List[java.lang.String] = List(Dozer, Tank, Morpheus, Trinity, Neo)</p>
+
+<p>scala> names.sortBy(_.length)
+res13: List[java.lang.String] = List(Neo, Tank, Dozer, Trinity, Morpheus)</p>
+
+<p>scala> names.sort(<em> > </em>)
+res14: List[java.lang.String] = List(Trinity, Tank, Neo, Morpheus, Dozer)</p>
+
+<p>scala> names.slice(2, 4)
+res16: List[java.lang.String] = List(Morpheus, Tank)
+```</p>
+
+<h4>Pattern matching</h4>
+
+<p>You can think of Scala&rsquo;s pattern matching as a super charged version
+of switch, capable of matching on a variety of criteria and of
+destructuring that matched objects. Here&rsquo;s a simple example:</p>
+
+<p>``` scala
+scala> def testMatching(something: Any) = something match {</p>
+
+<pre><code> |   case 1 =&gt; "one"
+ |   case "two" =&gt; 2
+ |   case x: Int =&gt; "an integer number"
+ |   case x: String =&gt; "some string"
+ |   case &lt;xmltag&gt;{content}&lt;/xmltag&gt; =&gt; content
+ |   case head :: tail =&gt; head
+ |   case _ =&gt; "something else entirely"
+ | }
+</code></pre>
+
+<p>testMatching: (something: Any)Any</p>
+
+<p>scala> testMatching(1)
+res18: Any = one</p>
+
+<p>scala> testMatching(&ldquo;two&rdquo;)
+res19: Any = 2</p>
+
+<p>scala> testMatching(2)
+res20: Any = an integer number</p>
+
+<p>scala> testMatching(&ldquo;matrix&rdquo;)
+res21: Any = some string</p>
+
+<p>scala> testMatching(<xmltag>this is in the tag</xmltag>)
+res22: Any = this is in the tag</p>
+
+<p>scala> testMatching(List(1, 2, 3))
+res23: Any = 1</p>
+
+<p>scala> testMatching(3.9)
+res24: Any = something else entirely
+```</p>
+
+<p>Pattern matching gives you a new way to implement common programming
+task. For instance consider the following trivial problem &ndash; computing
+the length of a list:</p>
+
+<p><code>scala
+def length(list: List[Any]): Int = list match {
+  case head :: tail =&gt; 1 + length(tail)
+  case Nil =&gt; 0
+}
+</code></p>
+
+<p>Sure, it&rsquo;s not tail-recursive, but it&rsquo;s pretty neat. Now that I
+mentioned tail-recursion I should probably say a bit more about
+it. Recursive solutions generally look very nice in source form, but
+performance-wise are not that great because each recursive call
+creates a new stack frame and what&rsquo;s even worse is that stack frames
+are limited &ndash; create too many of them and your program will blow
+up. This doesn&rsquo;t mean that we should start coding everything
+imperatively, of course. Some compilers have the ability to optimize
+away recursive calls if the last thing that happens in the recursive
+function is a call to the function itself. In the case of our function <em>length</em>,
+unfortunately, the last call happens to be of the method <strong>+</strong> of the
+object <strong>1</strong> (of class Int). We can improve the solution this way:</p>
+
+<p>``` scala
+def length(list: List[Any]): Int = {
+  def lengthrec(list: List[Any], result: Int): Int = list match {</p>
+
+<pre><code>case head :: tail =&gt; lengthrec(tail, result + 1)
+case Nil =&gt; result
+</code></pre>
+
+<p>  }</p>
+
+<p>  lengthrec(list, 0)
+}
+```</p>
+
+<p>Notice that we now have a nested helper method with a second parameter,
+an accumulator value. This pattern often recurs when dealing with tail
+recursion &ndash; we take the original recursive definition and introduce a
+helper method using accumulator that is tail recursive. The outer
+method just calls the helper method and waits for the result. The
+Scala compiler will translate internally this recursive function into
+a something like a loop and the performance will be greatly improved,
+while preserving the clarity of the recursive approach.</p>
+
+<p>Some languages (like Scheme) will always optimize tail calls. Because
+of limitations in the JVM not all tail calls can be optimized in Scala
+(for now), but
+some tails recursion is better than none.</p>
+
+<h2>Parallel programming</h2>
+
+<p>With the advent of multi-core processors concurrent programming is
+becoming indispensable. Scala&rsquo;s primary concurrency construct is
+actors. Actors are basically concurrent processes that communicate by
+exchanging messages. Actors can also be seen as a form of active
+objects where invoking a method corresponds to sending a
+message. Actors are not a new idea &ndash; Scala&rsquo;s actor library draws heavy
+inspiration from Erlang &ndash; a programming language notable for its
+support for the development of distributed highly parallel systems.</p>
+
+<p>The Scala Actors library provides both asynchronous and synchronous
+message sends (the latter are implemented by exchanging several
+asynchronous messages). Moreover, actors may communicate using futures
+where requests are handled asynchronously, but return a representation
+(the future) that allows to await the reply.</p>
+
+<p>All actors execute in parallel by their nature. Each actor acts as if
+it contains its own dedicated thread of execution.</p>
+
+<p>Here&rsquo;s a very simple actor example. The echoActor runs forever and
+waits for messages:</p>
+
+<p>``` scala
+import scala.actors.Actor._
+val echoActor = actor {</p>
+
+<pre><code>while (true) {
+    receive {
+        case msg =&gt; println("received: "+msg)
+    }
+}
+</code></pre>
+
+<p>}</p>
+
+<p>echoActor ! &ldquo;Chuck Norris is the only real actor!&rdquo;
+echoActor ! &ldquo;You don&rsquo;t find Chuck Norris &ndash; Chuck Norris finds you!&rdquo;
+```</p>
+
+<p>Here the actor just waits for messages and responds to them by
+printing them to the console. Since the article&rsquo;s size is already
+quite impressive I won&rsquo;t go into any further details about the actors.</p>
+
+<p>I want you to know that actors are not the only way to write parallel
+programs in Scala. You still have access to the native Java (or .Net)
+primitive like threads, locks, executors, etc. Another option is the
+Scala implementation of Software Transactional Memory(STM) &ndash; a
+parallel programming model made recently popular by the Clojure
+programming language. Scala&rsquo;s implementation is a work in progress and
+you can have a look a it
+<a href="http://nbronson.github.com/scala-stm/">here</a>. STM is basically a
+programming technique that lets you model concurrent operations in a
+way similar to db transactions &ndash; you combine the critical code in a
+transaction and if possible execute it and commit the transaction,
+otherwise just rollback it and maybe try again after a while. Note that this is a
+<em>great</em> oversimplification of what&rsquo;s actually happening &ndash; for all the
+gory details you should read the exhaustive documentation.</p>
+
+<h2>Tools</h2>
+
+<p>We all know that even the best programming language can be rendered
+useless by the lack of good development tools for it &ndash; powerful text
+editors, integrated development environments, profilers, build tools,
+etc. Scala is a relatively young programming language that became
+really popular just recently and as a result there are still no
+development environments for Scala as powerful as those for Java
+(although since both languages use static typing eventually the
+environments will be on par). Most popular Java IDEs features feature
+some form of Scala support and most Java build tools as well.</p>
+
+<ul>
+<li><p>IDE</p>
+
+<ul>
+<li><p><a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a> &ndash; the ultimate
+Scala IDE at the moment. It works quite well, but it&rsquo;s a bit
+buggy that the moment (which is to be expected of something with
+some many beta features).</p></li>
+<li><p><a href="http://www.scala-ide.org/">Eclipse</a> &ndash; the most
+popular Java IDE has a Scala plug-in that
+until recently was mostly useless, but currently is being
+totally reworked and the next stable version will bring usable
+Scala support to the Eclipse users. The development of the new
+Scala plug-in is headed by none other than Martin Odersky
+himself. Don&rsquo;t bother using the older version at all &ndash; just grab
+the latest beta.</p></li>
+<li><p><a href="http://wiki.netbeans.org/Scala69">NetBeans</a> &ndash; Presently the
+Scala support in NetBeans is a bit basic, but it&rsquo;s usable.</p></li>
+<li><p><a href="https://github.com/aemoncannon/ensime">Emacs ENSIME</a> &ndash; Ok, I admit &ndash; Emacs is not actually an IDE
+per se, but it&rsquo;s still much more powerful than most IDEs. Emacs
+happens to have an excellent Scala mode, called ENSIME that
+gives you code completion, instant feedback, an integrated REPL,
+SBT integration, refactorings and other goodies in an Emacs
+package. The project attempts to be the equivalent of the legendary SLIME (
+an Emacs mode for Common Lisp) for Scala. ENSIME is integrated
+into the <a href="https://github.com/bbatsov/emacs-dev-kit">Emacs Dev Kit</a>(maintained by yours truly).</p></li>
+</ul>
+</li>
+<li><p>Scala distribution</p>
+
+<ul>
+<li><p>scala &ndash; A Scala REPL for exploratory programming; it&rsquo;s also the
+Scala &ldquo;interpreter&rdquo; and the Scala class runner</p></li>
+<li><p>scalac &ndash; the Scala compiler</p></li>
+<li><p>fsc &ndash; fast Scala compiler. The Scala compiler is notoriously
+slow to start and fsc is a partial solution to this problem. The fsc runs
+as a daemon and waits to receive files to compile. Maven&rsquo;s
+scala:cc and sbt&rsquo;s ~compile continuous compilation task use fsc internally.</p></li>
+<li><p>sbaz &ndash; The Scala Bazaar System, sbaz for short, is a packaging
+system developed to automate the task of mainaining a Scala
+installation. The program allows you to easily upgrade your
+installation as soon as a new version is available. You can also
+contribute your own packages, and make them easily available to
+other sbaz users.</p></li>
+</ul>
+</li>
+<li><p>Build tools</p>
+
+<ul>
+<li><a href="http://maven.apache.org">Apache Maven</a></li>
+<li><a href="http://buildr.apache.org">Apache Buildr</a></li>
+<li><a href="http://gradle.org">Gradle</a></li>
+<li><a href="http://code.google.com/p/simple-build-tool/">SBT</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Killer apps</h2>
+
+<p>Scala presently doesn&rsquo;t have that many killer apps. Here are the most
+prominent:</p>
+
+<ul>
+<li><p><a href="http://liftweb.net/">Lift web framework</a> &ndash; Lift is a web framework
+that has cherry-picked some of the best ideas from existing frameworks and
+added some novelties of its own to harness the capabilities of the
+Scala programming language.</p>
+
+<ul>
+<li>Lazy page loading</li>
+<li>Parallel rendering</li>
+<li>Comet &amp; Ajax</li>
+<li>Wiring</li>
+<li>Designer friendly templates</li>
+<li>Wizard</li>
+<li>Security</li>
+</ul>
+</li>
+<li><p><a href="http://www.playframework.org/">Play framework</a> &ndash; Play focuses on
+developer productivity and targets RESTful architectures. It has
+both a Java and a Scala API. It&rsquo;s considered by many to be the first
+Java web framework that was actually made by web developers.</p></li>
+<li><p><a href="http://akka.io/">Akka</a> &ndash; A powerful library for writing concurrent applications
+using Actors, STM &amp; Transactors. It has both Scala and Java API.</p></li>
+<li><p><a href="http://code.google.com/p/simple-build-tool/">SBT</a> &ndash; a powerful
+build tool</p></li>
+</ul>
+
+
+<h2>Success stories</h2>
+
+<ul>
+<li><a href="http://www.artima.com/scalazine/articles/twitter_on_scala.html">Twitter</a>  &ndash; you remember how often Twitter used to go down because of
+overloads and suddenly the problems stopped &ndash; no, this was the
+moment in which Twitter&rsquo;s backend was rewritten in Scala (that
+moment never actually came)&hellip; I have it on good authority that the
+problem was actually resolved by great improvements in their Ruby
+code base. But they use Scala there &ndash; Twitter had a Ruby-based
+queueing system that we used for communicating between the Rails
+front ends and the daemons that often crashed under heavy loads, and
+they ended up replacing that with one written in Scala.</li>
+<li><a href="http://www.scala-lang.org/node/5130">Four square</a> &ndash; Four square
+uses Lift as well</li>
+<li><a href="http://www.scala-lang.org/node/6436">LinkedIn</a></li>
+<li>SAP</li>
+<li><a href="http://www.infoq.com/articles/guardian_scala">Guardian.co.uk</a></li>
+</ul>
+
+
+<h2>Comparison to Java</h2>
+
+<p>It&rsquo;s only natural that Java developers are interested in how Scala
+stacks up to Java:</p>
+
+<ul>
+<li>Pros
+
+<ul>
+<li>Scala is fast, just as fast as Java. Some might wonder why this
+is a feature &ndash; they should take a look at the performance of the
+most of the other JVM langs and they&rsquo;ll understand. Granted, all
+of the performance benefits come from the use of static typing
+in Scala, but Scala&rsquo;s code is often as concise as the code
+written in a dynamic language like Ruby or Groovy.</li>
+<li>Great Java interoperability</li>
+<li>Scala removes a lot of the incidental complexity of programming
+and let&rsquo;s you express your thoughts directly in the source code</li>
+<li>The syntax of Scala is mostly uniform and you can usually easily
+create new abstractions that look like language built-ins.</li>
+<li>Scala features great support for parallel programming.</li>
+<li>Runs on both Java and .Net (at least in theory)</li>
+</ul>
+</li>
+<li>Cons
+
+<ul>
+<li>Some aspects of the language are fairly complex like the
+subtyping rules for instance. This will probably scare off some
+people, but I can assure you that this complexity is superficial
+and once you&rsquo;ve grasped enough of Scala everything will fall
+into place and seem to you the most natural thing in the world.</li>
+<li>Calling Scala from Java is not as easy as calling Java from
+Scala.</li>
+<li>The core API is still subject to constant changes and most new
+Scala version are not backward compatible with the old ones
+(unlike in Java).</li>
+<li>Scala&rsquo;s community (albeit very friendly and helpful) is current
+tiny compared to Java&rsquo;s. You might not get an assistance from
+the community as quickly as you&rsquo;d get it for Java related
+problems.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Resources</h2>
+
+<ul>
+<li>Books
+
+<ul>
+<li><a href="http://programming-scala.labs.oreilly.com/">Programming Scala</a>
+
+<ul>
+<li>great free on-line book</li>
+</ul>
+</li>
+<li><a href="http://www.artima.com/pins1ed/">Programming in Scala</a> &ndash; the holy
+bible of Scala. The first edition is available for free on-line.</li>
+</ul>
+</li>
+<li>Blogs &amp; Websites
+
+<ul>
+<li><a href="http://www.scala-lang.org">Official web site</a></li>
+<li><a href="http://www.codecommit.com/blog/">Daniel Spiewak&rsquo;s blog</a></li>
+<li><a href="http://daily-scala.blogspot.com/">Daily Scala</a></li>
+</ul>
+</li>
+<li>Exercises
+
+<ul>
+<li><a href="http://aperiodic.net/phil/scala/s-99/">99 Scala problems</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>Scala&rsquo;s future is nothing but bright. It uses static typing, which is
+familiar to so many Java and C# developers, and is also the
+prerequisite for creating very helpful IDEs. Scala runs on the
+venerable Java platform and easily leverages all of its power while
+adding a lot of magic of its own &ndash; implicits, type inference, pattern
+matching, functional programming support, actors and others.</p>
+
+<p>It&rsquo;s my personal opinion that if any language has the chance to
+displace Java as the king of the world &ndash; that might be Scala. In all
+likelihood this will never happen &ndash; rarely has the greatest solutions
+enjoyed the greatest popularity (remember the Betamax vs VHS?). I do
+believe, however, that Scala will capture a significant market share
+in the coming years &ndash; mainly due to it excellent support for building
+distributed systems.</p>
+
+<p>Until next time and the next chapter of the story, dedicated to the
+rising star of the JVM world &ndash; Clojure.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Incremental development with Scala and JRebel]]></title>
+    <link href="http://batsov.com/articles/2011/04/26/jrebel-with-scala/"/>
+    <updated>2011-04-26T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/04/26/jrebel-with-scala</id>
+    <content type="html"><![CDATA[<p>One of the things I love most about Lisp development is the ability to
+develop applications in an incremental interactive manner &ndash; you write
+one function, compile it, load into your current REPL session, make
+some adjustments and repeat this process until you get satisfactory
+results. You never stop to compile your project, you never have to
+restart your application server. Without those distractions it&rsquo;s
+easier to maintain your concentration and to remain in the <em>flow</em>.</p>
+
+<p>With languages like Scala and Java, however, you cannot do this &ndash; at
+least without a bit of external help. This help comes in the form of an
+application called <a href="http://www.zeroturnaround.com/jrebel/">JRebel</a>, which basically reloads the classes in your
+program as you make changes to them and recompile them. JRebel is a commercial
+application and generally you have to pay to use it&hellip; unless you want
+to you use it for Scala development, that is. ZeroTurnaround(the
+company that makes JRebel) offers
+<a href="http://sales.zeroturnaround.com/wp-content/themes/zeroturnaround4.0/modals/applyForLicense.php">free licences to Scala developers</a>
+and if you&rsquo;re one of them you should definitely get one.</p>
+
+<p>Installing JRebel is trivial &ndash; generally you have to only extract a
+zip file(or use an installer) somewhere and drop in the JRebel folder
+the licence file that they have e-mail you. Afterwards you simply have
+to integrate JRebel with your build system. JRebel can also be
+integrated with IDEs, but I want cover this here. I use mostly
+<a href="http://maven.apache.org">Maven 3</a> and
+<a href="http://code.google.com/p/simple-build-tool/">SBT</a> so I&rsquo;ll show you
+what to do for them. With Maven you have to add the following to the
+<em>$MAVEN_OPTS</em> environmental variable:</p>
+
+<p><code>bash
+export MAVEN_OPTS=-noverify -javaagent:/home/bozhidar/work/jrebel/jrebel.jar
+</code></p>
+
+<p>Since most people use JRebel for web development to avoid the need to
+restart their application containers and Scala&rsquo;s most prominent
+framework is <a href="http://liftweb.net">Lift</a> you&rsquo;d probably want to enable
+the JRebel Lift plug-in as well:</p>
+
+<p><code>bash
+export MAVEN_OPTS=-noverify -javaagent:/home/bozhidar/work/jrebel/jrebel.jar
+ -Drebel.lift_plugin=true
+</code></p>
+
+<p>Stick this in your shell&rsquo;s init file and source it to make it
+available in the shell.</p>
+
+<p>Now when you start your web app with</p>
+
+<p><code>bash
+mvn jetty:run
+</code></p>
+
+<p>And the continuous Scala compilation with</p>
+
+<p><code>bash
+mvn scala:cc
+</code></p>
+
+<p>The compiler with pickup the changes you made and JRebel will reload
+the changed classes behind the scenes. The development process this
+way starts to feel a bit like using a scripting language such as Ruby
+or PHP.</p>
+
+<p>If you&rsquo;re using SBT you should modify the sbt startup script to
+include the same options that I mentioned in the section about Maven
+configuration. Mine sbt script looks like this:</p>
+
+<p>``` bash</p>
+
+<h1>!/bin/bash</h1>
+
+<p>java -noverify -javaagent:/home/bozhidar/work/jrebel/jrebel.jar
+ -Drebel.lift_plugin=true -XX:+CMSClassUnloadingEnabled
+ -XX:MaxPermSize=512m -Xmx512M -Xss2M -jar <code>dirname $0</code>/sbt-launch.jar
+ &ldquo;$@&rdquo;
+```</p>
+
+<p>Another use for JRebel is the Scala REPL itself. When you start the
+REPL from inside SBT for instance with the command:</p>
+
+<p><code>bash
+sbt console
+</code></p>
+
+<p>changes to the imported classes will be reflected automatically
+without the need to do a <em>:replay</em> or restart the REPL &ndash; something
+reminiscent of the interactive Lisp programming I mentioned earlier.</p>
+
+<p>So what are you waiting for? Go grab JRebel and speed up your Scala
+development process.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,1215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Linux | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/linux/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-28T09:00:23+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[From Linux to OSX: Meet Your New Apps]]></title>
+    <link href="http://batsov.com/articles/2012/12/09/from-linux-to-osx-meet-your-new-apps/"/>
+    <updated>2012-12-09T11:41:00+02:00</updated>
+    <id>http://batsov.com/articles/2012/12/09/from-linux-to-osx-meet-your-new-apps</id>
+    <content type="html"><![CDATA[<h2>Prelude</h2>
+
+<p>It&rsquo;s time I resume what I started in
+<a href="http://batsov.com/articles/2012/09/09/from-linux-to-osx-1-year-later/">my previous article documenting my first year as an OSX user</a>
+a few months ago.</p>
+
+<p>In this article I&rsquo;ll focus primarily on the applications I&rsquo;ve adopted
+during my short time being a Mac OSX user, after being a GNU/Linux
+user for quite some time before that. The focus of the article will be
+mostly desktop applications, since the command-line tools are more or
+less the same in both operating system. I will mention a couple of OSX
+specific command-line tools near the end of the article though.</p>
+
+<!--more-->
+
+
+<h2>Productivity</h2>
+
+<h3>Office Suite</h3>
+
+<p>On Linux I was mostly using LibreOffice (chiefly its Impress
+module) and while it did get the job done I wasn&rsquo;t particularly
+fond of it. At some point I was so frustrated with LibreOffice, that I
+started running Microsoft Office with
+<a href="http://www.codeweavers.com/products/">CodeWeavers CrossOver for Linux</a>. If
+you like LibreOffice &ndash; it&rsquo;s available on OSX as well. If you don&rsquo;t
+like it &ndash; you have some solid alternative available.</p>
+
+<p>First, there is a native port of Microsoft Office for OSX. It&rsquo;s a far
+cry from the Windows version of the app, but it does have a few
+advantages over LibreOffice. If you&rsquo;re doing a lot of document
+authoring and editing it might be a good option for you.</p>
+
+<p>The other office suite you might want to explore is Apple&rsquo;s own
+<strong>iWorks</strong>. It has a few distinct advantages over Microsoft Office &ndash;
+you can buy only the apps you need (as opposed to the whole suite), it
+integrates great with the OS (but that&rsquo;s hardly a suprise) and it&rsquo;s
+much cheaper. I only bought <strong>Pages</strong> (Apple&rsquo;s <strong>Word</strong> alternative)
+and <strong>Keynote</strong> (<strong>PowerPoint</strong> alternative). Pages is a so-so
+application, but Keynote is simply fantastic. I write a lot of
+presentations and for the first I actually enjoy the process.</p>
+
+<h3>Instant Messaging</h3>
+
+<h4>Skype</h4>
+
+<p>Skype has a native client for OSX, that&rsquo;s much more stable and
+featureful than the Linux one.</p>
+
+<h4>Pidgin/Kopete</h4>
+
+<p>OSX Mountain Lion ships with an app similar to Pidgin and Kopete
+called <strong>Messages</strong> (and iMessage in older OSX versions). It supports
+a plethora of chat protocols, but it kept constantly disconnecting and
+crashing for me, so I started looking for an
+alternative. <a href="http://adium.im/">Adium</a> is a great free IM app that
+supports many protocols and works flawlessly (at least for me), so I&rsquo;d
+recommend it to everyone.</p>
+
+<h4>IRC</h4>
+
+<p>If you&rsquo;re in the market for an XChat replacement look no further than
+<a href="http://colloquy.info/">Colloquy</a>. Personally I used Emacs&rsquo;s ERC under
+Linux and continue to use it under OSX as well.</p>
+
+<h4>Twitter</h4>
+
+<p>Twitter has an official desktop app for OSX, that&rsquo;s available for free
+in the Mac App store. It has one notable shortcoming &ndash; no retina
+support. Rumour has it Twitter will kill the app in the future, but it
+gets the job done for the time being and there are plenty of
+alternatives lying around.</p>
+
+<h3>Browser</h3>
+
+<p>The default OSX browser Safari is great and has some fairly unique
+features like pinch to zoom gesture support (smartphone users will
+appreciate those). Unfortunately it has a pretty small selection of
+plugins and might not be well suited for power users. I recommend the
+use of Google Chrome on OSX, since Firefox really seems to lag in terms
+of features there (the upcoming Firefox 18 will be the first with
+Retina support).</p>
+
+<h3>Email</h3>
+
+<p>OSX&rsquo;s default application <strong>Mail</strong> is decent, but nothing
+more. Thunderbird is available for OSX, but I personally think it&rsquo;s no
+better than Mail. My desktop email client of choice is the delightful
+<a href="http://www.sparrowmailapp.com/mac.php">Sparrow</a>. It&rsquo;s the first
+desktop email client I ever liked (I used to check my email with
+terminal clients and Emacs afterwards) and has great integration with
+GMail (it even supports GMail&rsquo;s keyboard shortcuts), Dropbox,
+Facebook, etc. While it&rsquo;s a doomed product since
+<a href="http://www.sparrowmailapp.com/">Google acquired Sparrow</a> I plan to
+continue using it in the foreseeable future.</p>
+
+<h3>Keyboard remapping</h3>
+
+<p>By default you cannot remap that many things in OSX. The small utility
+<a href="http://pqrs.org/macosx/keyremap4macbook/">KeyRemap4MacBook</a> allows
+you to do much crazier remappings and despite its name the tool works
+on all recent Macs.</p>
+
+<h3>Virtualization Software</h3>
+
+<p>The go-to desktop virtualization solution favoured by most Linux users
+is VirtualBox and it&rsquo;s available for OSX as well. VirtualBox gets the
+job done, but doesn&rsquo;t even come close to
+<a href="http://www.parallels.com/">Parallels</a> in terms of performance,
+stability and integration with OSX. Parallels support for Windows
+guests is particularly good.</p>
+
+<h2>Software Development</h2>
+
+<h3>Text Editing</h3>
+
+<p>Every major text editor has a port for OSX, so things are pretty
+much the same here. On OSX you&rsquo;ll also get access to
+<a href="http://macromates.com/">TextMate</a>. My affection for Emacs is widely
+known though. Excellent Emacs builds are available
+<a href="http://emacsformacosx.com/">here</a> and the upcoming Emacs 24.3 will
+finally feature OSX Lion style full-screen support. If the mention of
+Emacs and vim scares you I&rsquo;d recommend trying out
+<a href="http://www.sublimetext.com/2">Sublime Text 2</a>.</p>
+
+<h3>IDEs</h3>
+
+<p>Eclipse, NetBeans and IntelliJ are available (no suprise since they
+are all Java apps) and look and perform great on OSX. There&rsquo;s also
+Apple&rsquo;s own XCode, which I found unwieldy.</p>
+
+<h3>Terminal Emulator</h3>
+
+<p>OSX comes with a pretty barebone terminal emulator called
+<strong>Terminal</strong>. I wouldn&rsquo;t advice anyone to spent much time with it.</p>
+
+<p>Install <a href="http://www.iterm2.com/#/section/home">iTerm2</a>. It redefines
+the meaning of insanely great.</p>
+
+<h3>Shells</h3>
+
+<p>OSX comes with Bash enabled by default, but Zsh is also preinstalled
+and you can easily enable it by typing:</p>
+
+<p><code>bash
+$ chsh -s /bin/zsh
+</code></p>
+
+<h2>Media</h2>
+
+<h3>Video player</h3>
+
+<p>As in Linux <a href="http://www.videolan.org/vlc/index.html">VLC</a> is the king.</p>
+
+<h3>Audio player</h3>
+
+<p>iTunes fits the bill for a basic music player. I still haven&rsquo;t found an
+OSX app which I like as much as Linux&rsquo;s Amarok and Exaile.</p>
+
+<h3>UPnP server</h3>
+
+<p>Under Linux I used to use MediaTomb and it performed great. It&rsquo;s
+available for OSX as well, but was causing a lot of problems for me,
+so I finally decided to go with a commercial solution. I heartily
+recommend <a href="http://www.yazsoft.com/products/playback/">Playback</a>. Of
+course if your media player supports NFS you should go with it instead
+of UPnP.</p>
+
+<h2>File Transfer</h2>
+
+<h3>FTP</h3>
+
+<p><a href="http://filezilla-project.org/download.php?type=client">Filezilla</a> is
+extremely popular under Linux and has a native OSX version as
+well. <a href="http://cyberduck.ch/">Cyberduck</a> seems to be the top choice of
+OSX users.</p>
+
+<h3>Bittorrent</h3>
+
+<p>There are plenty of great Bittorrent clients on Linux &ndash; Deluge,
+KTorrent, Transmission, etc. Transmission is the only with an OSX port
+and it seems that it&rsquo;s also the only popular OSX torrent client.</p>
+
+<h2>Package Management</h2>
+
+<p>OSX has no official package managent tool but it has plenty of
+unofficial ones. Currently
+<a href="http://mxcl.github.com/homebrew/">homebrew</a> seems to be the most
+popular option. Its package selection is quite vast and I&rsquo;ve rarely
+experienced problems with it. While regular users are unlikely to use
+anything from outside the Mac App store, developers and power users
+should definitely check homebrew out.</p>
+
+<h2>Command Line</h2>
+
+<p>Most of the command line applications that you know and love from
+Linux are available in OSX (by default or installable via homebrew) as
+well (but might be slightly different since Linux ships with GNU&rsquo;s
+version of many tools and OSX with BSD&rsquo;s). Here&rsquo;s a few notable OSX
+specific commands:</p>
+
+<ul>
+<li><code>open</code> &ndash; opens a file or directory in the appropriate desktop application</li>
+</ul>
+
+
+<p><code>bash
+$ open doc.pdf
+</code></p>
+
+<ul>
+<li><p><code>pbcopy</code> and <code>pbpaste</code> allow you to interact with OSX&rsquo;s clipboard</p></li>
+<li><p><code>launchctl</code> is a rough equivalent to the <code>service</code> and <code>chkconfig</code> commands on some Linux distros</p></li>
+<li><p><code>fs_usage</code> allows you to monitor your filesystem usage statistics</p></li>
+<li><p><code>system_profiler</code> gives you information about your hardware configuration (kind of like <code>lshw</code>)</p></li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>This was a whirlwind tour of so many apps. I hope that my superficial
+treatment of many of them won&rsquo;t stop you from trying them out. It
+seems to me that the app selection catalogue on OSX is not as vast as
+the one on Linux, but there&rsquo;s also a tendency that established OSX
+apps are much more polished and reliable.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[From Linux to OSX - 1 Year Later]]></title>
+    <link href="http://batsov.com/articles/2012/09/09/from-linux-to-osx-1-year-later/"/>
+    <updated>2012-09-09T22:11:00+03:00</updated>
+    <id>http://batsov.com/articles/2012/09/09/from-linux-to-osx-1-year-later</id>
+    <content type="html"><![CDATA[<h2>Prelude</h2>
+
+<p>A little more than an year ago I wrote my rant post
+<a href="http://batsov.com/articles/2011/06/11/linux-desktop-experience-killing-linux-on-the-desktop/">The Linux Desktop Experience is Killing Linux on the Desktop</a>
+and for the first time in 8 years I wasn&rsquo;t a desktop Linux user
+anymore. I spent about a month wrestling with Windows 7, but let&rsquo;s
+face it &ndash; Windows is ill suited for professional Ruby programmers like
+me (and it&rsquo;s ill suited for most programmers, except maybe Java &amp; .Net I
+guess).</p>
+
+<p>Anyways, it was never my intention to stick with Windows &ndash; I was just
+doing my Mac due diligence. Now with 1+ year of OSX usage I&rsquo;d
+like to share a few things about my experience thus far with you.</p>
+
+<!--more-->
+
+
+<h2>From Linux to OSX</h2>
+
+<p>The transition was initially painful &ndash; I felt very odd dragging app
+icons to the <code>Applications</code> folder to install them. To be honest I was
+quite puzzled what was I supposed to do the first time I had to
+install an app this way (it didn&rsquo;t have those helpful hints with the arrows most apps
+do). The Linux distro package management is definitely infinitely
+better, or at least it seems so from where I&rsquo;m standing. Luckily for me most of the
+tools I use are available from the third-party <a href="http://mxcl.github.com/homebrew/">homebrew</a> package
+manager for OSX. It&rsquo;s like an extremely basic version of the mighty
+Gentoo <code>portage</code>, but it generally gets the job done.</p>
+
+<p>On a more positive note &ndash; I was impressed with the quality and
+responsiveness of the OSX desktop and the fact that Emacs keybindings
+are used by default in its editor toolkit (and strangely puzzled by
+the lack of right control key &ndash; how is one supposed to hit <code>Control +
+a</code> I dare ask?). One app in particular &ndash; <code>spotlight</code>, blew me off the
+water, especially after having dealt on Linux with crappy clones like
+<code>beagle</code> in the past. Spotlight can truly find just about anything,
+was it&rsquo;s own SQL-like query language and is <strong>blazingly</strong> fast.</p>
+
+<p>I quickly found a good terminal emulator (that would be
+<a href="http://www.iterm2.com/#/section/home">iterm2</a> &ndash; it&rsquo;s actually the
+best terminal emulator in the world IMHO) and
+most of the command-line apps I used from day to day were already lying around
+(after all OSX <strong>is</strong> Unix) &ndash; to my great surprise even stuff like PostgreSQL
+(only on OSX Server) and <code>zsh</code> came preinstalled. Most of the other
+apps I really needed had native OSX ports; the others &ndash; worthy
+alternatives.</p>
+
+<p>Having hated OpenOffice.org for many years I was very pleasantly
+surprised by quality of apps like <code>Keynote</code> &amp; <code>Words</code>.</p>
+
+<p>Being a keyboard chap preaching in the church of <code>Das Keyboard</code> I was
+a bit underwhelmed by the whole multi-touch mumbo-jumbo at first, but
+after a while I came to the conclusion that Apple have the only
+trackpads and mice that are actually worth using (even though I still
+like using the keyboard way more).</p>
+
+<p>To sum it all up &ndash; I got up to speed fairly quickly, but it was a
+bumpy ride.</p>
+
+<p>Here&rsquo;s a bit more details&hellip;</p>
+
+<h2>The things I love about OSX</h2>
+
+<h3>The Desktop</h3>
+
+<p>It&rsquo;s pretty, it&rsquo;s quick, it&rsquo;s stable. It makes KDE4 and GNOME3 look
+like school projects in comparison. And did I mention that the fonts
+on OSX are even prettier than the ones in Windows?</p>
+
+<h3>The OSX flavored apps</h3>
+
+<p><a href="http://sparrowapp.com/">Sparrow</a> is the first desktop mail client I ever liked (shame on
+you Google for killing it).</p>
+
+<p>iTerm2 is the ultimate terminal emulator. It alone warrants the
+purchase of a Mac.</p>
+
+<p>Keynote is the best presentation program I&rsquo;ve come to use thus far.</p>
+
+<p><a href="http://www.parallels.com/">Parallels Desktop</a> is light years ahead of VirtualBox and KVM (as far
+as desktop virtualization is concerned).</p>
+
+<p>I could go on a lot like this, but I&rsquo;ll stop now.</p>
+
+<p>It&rsquo;s obvious that Mac users have developed a taste in extremely
+refined software.</p>
+
+<h3>Hardware compatibility</h3>
+
+<p>If something is supposed to work with OSX &ndash; it works superbly
+out-of-the-box. I&rsquo;ve almost forgotten now the days of constant battle
+with crappy hardware. Sleep &amp; Wake just work. Battery life is
+exceptional (due to very advanced power management capabilities).</p>
+
+<p>Certainly controlling all of the hardware an OS will run on helps a
+lot, but we still have to acknowledge Apple&rsquo;s achievement.</p>
+
+<h3>Stability</h3>
+
+<p>One year, three Macs &ndash; only two or three system crashes. For a
+developer that likes to tinker a little bit more than he should &ndash;
+that&rsquo;s impressive.</p>
+
+<p>That having said I had some Linux desktops that used run for more than
+half an year without reboots (and the reboots were often caused by
+power outages or distro/kernel updates). Linux stability on a (fairly
+new) laptop? Well, that&rsquo;s a whole different story&hellip;</p>
+
+<h2>The things that are OK</h2>
+
+<h3>The default apps</h3>
+
+<p>The apps bundled with OSX are not bad at all, but they aren&rsquo;t
+particularly great. Still &ndash; Safari is a very good browser, Mail is a
+much better desktop client than Evolution/Thunderbird, Calendar is a
+good organizer (but a bit buggy when it comes down to Google Calendar
+integration), Messages is so-so.</p>
+
+<p>The bottom line is &ndash; you can go a long way with the bundled apps, but
+they aren&rsquo;t exactly perfect. My advice &ndash; shop for alternatives (both
+open-source and proprietary).</p>
+
+<h3>Mac App Store</h3>
+
+<p>Decent way to distribute proprietary apps, but with all the
+restrictions on the app sandboxing there aren&rsquo;t many interesting apps
+out there. Hopefully it&rsquo;ll get better in time. The ability to upgrade
+your OSX by purchasing the new version from the App Store is very cool
+(for a proprietary OS of course).</p>
+
+<h3>Emacs</h3>
+
+<p>The Cocoa port of Emacs is a bit immature and there are some visual
+glitches here and there (try out <code>M-x linum-mode</code> for instance), but
+they are forgivable. I&rsquo;m also missing the deep integration Emacs had with Linux.
+And who the fuck designed all the official Mac keyboards without a
+right control key? I finally understood why so many Mac users where on
+vim :&ndash;)</p>
+
+<p>Btw, remapping the <code>Caps</code> to <code>Control</code> is not the answer. I do it now,
+I did it on Linux as well. You simply not supposed to hit Control +
+any other key with the same hand. It&rsquo;s disruptive to your
+typing&hellip; But then again &ndash; you should probably do most of your typing
+will a full sized keyboard :&ndash;)</p>
+
+<h3>Software Development</h3>
+
+<p>OSX doesn&rsquo;t nurture software development as much as Linux does, but it
+comes pretty close in second place. All the tools you know and love
+are available, but their installation &amp; setup is a little bit more
+involved on OSX. There is a reason why the screenshots in most
+programming books show OSX.</p>
+
+<h3>System administration</h3>
+
+<p>Definitely a step back from Linux. Programs like <code>launchctl</code> (for instance) are not
+exactly fun to work with, but they do get the job done. I&rsquo;d never use
+an OSX box for anything more than a desktop workstation. Setting up a
+sensible <code>$PATH</code> is not as trivial as it was on Linux either
+(<code>/etc/paths</code> and some plist I forgotten come to mind).</p>
+
+<h2>The things I hate</h2>
+
+<h3>The special keys</h3>
+
+<p>Not exactly an OSX feature, but still&hellip;</p>
+
+<p>One year and I still hate <code>Command</code> and <code>Option</code> &ndash; option is basically <code>Alt</code>
+on a strange location and Command is totally useless IMHO. I&rsquo;d
+probably wouldn&rsquo;t have hated them as much if there were room left on
+the Apple keyboards (expect of course the old wired Apple keyboard) for an addition control key. Luckily for me I use an
+external
+<a href="http://batsov.com/articles/2008/06/16/das-keyboard/">Das Keyboard Ultimate</a>
+most of the time&hellip;</p>
+
+<p>Command and Option do have some value, I&rsquo;d probably would have
+appreciated it if they didn&rsquo;t come at the cost of my beloved right
+control (which I guess only Emacs users are missing anyways).</p>
+
+<h3>No standard all mighty package manager</h3>
+
+<p>On Linux I had <code>aptitude</code>, <code>yum</code>, <code>portage</code> and <code>pacman</code> &ndash; all amazing at what
+they do. On OSX &ndash; <code>homebrew</code> is a decent option, but it&rsquo;s a far cry from
+the might and magic of the Linux package managers. Still, <code>homebrew</code>
+is better than it&rsquo;s alternative, so beware!</p>
+
+<h3>Ugly XML config files</h3>
+
+<p>Here and there in OSX you have to write some appalling <a href="http://en.wikipedia.org/wiki/Property_list">XML config
+files</a>. I thought I&rsquo;d never see the likes of those again after I put
+Java development behind me :&ndash;)</p>
+
+<h3>XCode</h3>
+
+<p>You need to install a giant lame IDE just to get a bunch of command
+line development tools? That&rsquo;s one of the most annoying things I&rsquo;ve
+encountered up-to-date in OSX.</p>
+
+<p>Yep, I know about the tools being available
+<a href="http://kennethreitz.com/xcode-gcc-and-homebrew.html">separately</a> for
+couple of months now, but requesting an Apple developer registration
+just to get them seems a bit to much to me.</p>
+
+<h2>Epilogue</h2>
+
+<p>Am I happier now without Linux? Definitely! Is OSX a better OS than
+Linux? Absolutely not! It does have a <strong>much</strong> better desktop
+experience and since I spend most of the time on a computer
+interacting with the desktop &ndash; that&rsquo;s a big win for me. Of course I
+wouldn&rsquo;t mind seeing Linux achieve this level of desktop maturity and
+stability.</p>
+
+<p>Should you dump Linux and join me in <strong>darkness</strong>? How the hell should
+I know? :&ndash;) I&rsquo;m just sharing my two cents &ndash; if you&rsquo;re happy using
+Linux you should <strong>definitely</strong> stick with it. Obviously I wasn&rsquo;t and
+there weren&rsquo;t that many alternatives lying around.</p>
+
+<p>Not having to deal with hardware problems and immature desktop apps is
+like a breath of fresh air and it more than compensates for the few
+shortcomings of OSX. Nothing compensates the lack of that right
+control key on most keyboards, but after all that&rsquo;s not an OS problem
+;&ndash;)</p>
+
+<p>There is great vibrant hacker community gathered around OSX and it&rsquo;s
+one of the main driving forces of the OS. There is unfortunately a lot
+of corporate pressure from Apple as well, but as you already know by
+now &ndash; there are never perfect things, there are always
+compromises. I&rsquo;d rather use a proprietary OS that stays out of my way,
+than a free OS into which I bump at every turn.</p>
+
+<p>Soon I&rsquo;ll blog a little bit more about the practical aspects and
+implication of the migration. Cheers, mates!</p>
+
+<p><strong>P.S. I&rsquo;ve updated the original post a bit to reflect some of the
+initial feedback I received.</strong></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Changelog vs API diff]]></title>
+    <link href="http://batsov.com/articles/2012/04/07/changelog-vs-api-diff/"/>
+    <updated>2012-04-07T12:22:00+03:00</updated>
+    <id>http://batsov.com/articles/2012/04/07/changelog-vs-api-diff</id>
+    <content type="html"><![CDATA[<p><em>This is a guest post from my friend <a href="http://about.me/atodorov">Alexander Todorov</a>
+who is a QA guru, software engineer and cloud enthusiast!</em></p>
+
+<p><strong>Software changes fast! Open source software even faster!</strong></p>
+
+<p>And once you start to update dependencies, libraries and frameworks it never ends&hellip;
+After all the testing and validation you may have done there is no
+guarantee that the software will keep working afterwards.
+This is no big deal for small and medium sized projects but becomes a full-time
+job for larger projects with longer life span which require constant maintenance
+and enhancements. I&rsquo;ve seen this time and time again during my work on various projects.
+Even a simple <em>Drupal</em> based website pops up an update every couple of weeks.</p>
+
+<p>OTOH back porting fixes and keeping stable APIs can be a big business. This is what
+<em>Red Hat</em> is doing for their <em>Red Hat Enterprise Linux</em> distribution. Nearly all changes
+are backwards compatible and and the software stack remains stable compared
+to upstream <em>Fedora</em> or the more upstream projects which comprise it.</p>
+
+<p>Let me say that I don&rsquo;t like to upgrade. Long ago I was using <em>Debian</em> <strong>stable</strong>
+on my computer. Now I use <em>RHEL</em>. No fancy features, no bells and
+whistles and more important predictable behavior wrt updates and APIs.
+The same approach I take when developing software. I stay away from the latest and
+greatest technology simply because it changes too often. I prefer mature frameworks and
+packages which produce new versions every six months or less frequent.
+This approach allows me to concentrate on writing code and getting the project done
+instead of plumbing bugs introduced by the latest <em>package foo</em> version.</p>
+
+<p>All this said I have a very careful approach to upgrades, especially if I&rsquo;m
+using an upstream package. I will first look at the changelog if any. Luckily
+many of the mature projects provide comprehensive changelog records. This is
+especially true for Perl packages. I&rsquo;m looking for notices about backward
+incompatible changes, API breakage, security notices, major bug fixes,
+changes in behavior and the like.
+When changelog is not available there&rsquo;s the commit log. I admit this is
+not something I usually look at but it happens once in a while. I do this for projects
+I&rsquo;m particularly interested in or otherwise following.
+Doing a content diff is another possibility which usually helps you
+spot (if you look carefully) some API changes as well. I resort to this if I&rsquo;m not able to find the upstream
+source repository or when it is hosted on something ancient like CVS.</p>
+
+<p>Based on all of this I decide to upgrade or not. With careful planning
+of updates (which version, which moment of time) and testing I manage to
+minimize the hassle of breaking my projects and spending days fixing
+bugs afterwards. Instead I use the time to write some code that kicks ass
+(or at least I hope so).</p>
+
+<p>I&rsquo;m curious to know what sort of information folks do prefer to have
+when considering an update? Changelog vs. API diff or seething else?
+I personally prefer well written Changelog and full list of fixed bugs.
+Please cast your vote in the comments or visit the
+<a href="http://www.surveymonkey.com/s/T7YW2MJ">survey</a>! Thank you!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Debian post installation setup & tips]]></title>
+    <link href="http://batsov.com/articles/2011/07/04/debian-tips/"/>
+    <updated>2011-07-04T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/07/04/debian-tips</id>
+    <content type="html"><![CDATA[<h2>Prelude</h2>
+
+<p>I&rsquo;ve recently been using Debian a lot (mostly Debian Wheezy (aka
+testing)), So I&rsquo;ve decided to adapt my
+<a href="/Linux/Fedora/2011/05/31/fedora-15-tips.html">Fedora 15 post installation setup &amp; tips</a>
+article for Debian. Here are some of the common things I add to a
+typical &ldquo;graphical desktop&rdquo; Debian installation as well as some tips
+and tricks that you&rsquo;ll hopefully find useful. Btw, I highly recommend
+you to use the <a href="http://cdimage.debian.org/cdimage/daily-builds/daily/arch-latest/amd64/iso-cd/debian-testing-amd64-netinst.iso">netinstall Debian distribution</a> &ndash; that way you&rsquo;ll get an
+up-to-date installation immediately and you won&rsquo;t have to download
+huge installation images.</p>
+
+<p>This article will be of use mostly to people using Debian as a desktop
+OS (with GNOME as their desktop environment) &ndash; it doesn&rsquo;t discuss any
+server configurations.</p>
+
+<!--more-->
+
+
+<h2>Tweak defaults</h2>
+
+<h4>Configure sudo</h4>
+
+<p><code>sudo</code> gives you a way to execute single commands as the superuser. You
+can also do this with <code>su -c</code>, but you have to quote the commands there,
+which I don&rsquo;t like very much. To enable sudo for some account first
+run the command:</p>
+
+<p><code>bash
+$ su -c "visudo"
+</code></p>
+
+<p>The file <code>/etc/sudoers</code> will open up in a customized vi editor. Append
+somewhere to the end of the file the following line:</p>
+
+<p><code>username ALL=(ALL) ALL</code></p>
+
+<p>You should replace <em>username</em> with your username.</p>
+
+<h2>apt-get + apt-cache or aptitude</h2>
+
+<p>There are two common ways (and many others less popular or obsolete)
+to manage packages on a Debian system these days &ndash; the simpler <code>apt-get</code>
++ <code>apt-cache</code> combo or the more advanced <code>aptitude</code> tool. I tend to prefer
+using aptitude since it&rsquo;s a all-in-one solution &ndash; you could use it to both
+query and install packages and has both a CLI and a curses interface.</p>
+
+<p>It doesn&rsquo;t really matter whether you decided to use apt-get/apt-cache
+or aptitude, but you shouldn&rsquo;t mix their usage &ndash; pick one and stay
+with it.</p>
+
+<h2>Install additional software</h2>
+
+<p>I generally install Debian from the netinstall images and don&rsquo;t
+customize very much the default package set since it&rsquo;s so easy to
+install everything you need afterwards.</p>
+
+<h4>Install REAL text editors</h4>
+
+<p>gedit is ok for causal text editing, but professionals like software
+engineers and system administrators will definitely need something more:</p>
+
+<p><code>bash
+$ sudo aptitude install emacs vim
+</code></p>
+
+<p>Personally I use Emacs most of the time and use vim only to edit
+config files that require root access. If you need an advanced Emacs
+setup my suggestion is the <a href="https://github.com/bbatsov/emacs-dev-kit">Emacs Dev Kit</a>.</p>
+
+<h4>Install Z Shell</h4>
+
+<p>It&rsquo;s no secret that I love the Z Shell &ndash; after all I
+<a href="/Z%20Shell/2011/04/29/one-shell-to-rule-them-all.html">rave about it</a>
+quite often. It should come as no surprise that I happen to use it and
+probably you should start using it as well:</p>
+
+<p><code>bash
+$ sudo aptitude install zsh
+$ sudo vim /etc/passwd
+</code></p>
+
+<p>Find the line about your account and change there <code>/bin/bash</code> to
+<code>/usr/bin/zsh</code>. Alternatively you can use the chsh program to
+achieve the same result:</p>
+
+<p><code>bash
+$ sudo chsh
+</code></p>
+
+<p>Afterwards start a new login shell and a simple wizard will
+fire up asking you some questions to create a default .zshrc file for
+you. Alternatively you can use the excellent <a href="https://github.com/robbyrussell/oh-my-zsh">O My Zsh</a> config &ndash; I&rsquo;m
+very fond of it.</p>
+
+<h4>Install guake(a drop down terminal)</h4>
+
+<p>I spend a lot of time at the terminal and like to have one at my
+fingertips always. Since I&rsquo;m a GNOME user guake is the best option for
+me:</p>
+
+<p><code>bash
+$ sudo aptitude install guake
+</code></p>
+
+<h4>Install LibreOffice</h4>
+
+<p>LibreOffice is currently the best Linux option for word processing,
+spreadsheet handling and presentation creation. It&rsquo;s generally
+installed by default if you select the &ldquo;Graphical Desktop&rdquo; option in
+the installation wizard, but you can install the
+most common components at any time with the following command:</p>
+
+<p><code>bash
+$ sudo aptitude install libreoffice-calc libreoffice-impress libreoffice-draw libreoffice-writer
+</code></p>
+
+<p>LibreOffice uses hunspell to do spellchecking. An English dictionary
+will be installed by default, but you&rsquo;ll need to install additional
+dictionaries manually:</p>
+
+<p><code>bash
+$ sudo aptitude install hunspell-bg
+</code></p>
+
+<p>This command will install the Bulgarian hunspell dictionary. You
+likely don&rsquo;t need it so install some more helpful dictionary instead. :&ndash;)</p>
+
+<h4>Install OpenJDK</h4>
+
+<p>If you need to run Java programs/applets:</p>
+
+<p><code>bash
+$ sudo aptitude install openjdk-6-jre
+</code></p>
+
+<p>If you&rsquo;re planning to do some Java development:</p>
+
+<p><code>bash
+$ sudo aptitude install openjdk-6-jdk openjdk-6-doc openjdk-6-demo openjdk-6-source
+</code></p>
+
+<h4>Install Deluge torrent client</h4>
+
+<p>The default Transmission torrent client is pretty basic. I recommend
+you to replace it with the much more feature-rich deluge:</p>
+
+<p><code>bash
+$ sudo aptitude install deluge
+</code></p>
+
+<h4>Install Inconsolata font</h4>
+
+<p>I&rsquo;m a software engineer and I obviously spend a lot of time reading
+and writing source code. I&rsquo;m very picking about the monospace font
+that I use and currently Inconsolata happens to be my favorite:</p>
+
+<p><code>bash
+$ sudo aptitude install ttf-inconsolata
+</code></p>
+
+<h4>Install GIMP</h4>
+
+<p>A lot of you might need an image editor. GIMP is generally
+considered the best option so you might want to install it:</p>
+
+<p><code>bash
+$ sudo aptitude install gimp
+</code></p>
+
+<h2>Install additional patent encumbered/proprietary software</h2>
+
+<h4>Enable non-free repo</h4>
+
+<p>Just add contrib and non-free to the list of your enabled repos. Your
+first line in /etc/apt/sources.list should look like this:</p>
+
+<p><code>bash
+deb http://ftp.bg.debian.org/debian/ wheezy main contrib non-free
+</code></p>
+
+<p>Then do a:</p>
+
+<p><code>bash
+$ sudo aptitude update
+</code></p>
+
+<h4>Install proprietary codecs</h4>
+
+<p>No MP3 support in Debian by default? And almost no video codecs?
+Non-free to the rescue! Type this:</p>
+
+<p><code>bash
+$ sudo aptitude install gstreamer-plugins-ugly gstreamer-plugins-bad gstreamer-ffmpeg
+</code></p>
+
+<h4>Install VLC</h4>
+
+<p>With MPlayer&rsquo;s development in stagnation VLC has established itself as
+the best video player for Linux recently. Installing it is as easy as typing the following command:</p>
+
+<p><code>bash
+$ sudo aptitude install vlc
+</code></p>
+
+<h4>Install Adobe Flash Player</h4>
+
+<p>Love it or hate it &ndash; you probably need it.</p>
+
+<p><code>bash
+$ sudo aptitude install flashplugin-nonfree
+</code></p>
+
+<p>You can omit this if you&rsquo;re planning to use Google Chrome (on a 32bit system), since it
+comes with Flash Player built-in.</p>
+
+<h4>Install Skype</h4>
+
+<p>In a perfect world everyone would be using Google Talk&hellip; In the real one:</p>
+
+<p><code>bash
+$ sudo aptitude install skype
+</code></p>
+
+<h4>Install Oracle JDK</h4>
+
+<p>OpenJDK is great, but due to licensing problems it&rsquo;s not quite the
+same as the Oracle JDK. If you start experiencing strange problems
+(mostly in Swing programs) you&rsquo;d probably do well to try the Oracle
+JDK instead. The magic incantation goes like this:</p>
+
+<p><code>bash
+$ sudo aptitude install sun-java6-jdk sun-java6-demo sun-java6-source sun-java6-plugin
+</code></p>
+
+<p>Debian uses OpenJDK by default, so you&rsquo;ll have to do some more work to
+tell it to start using Oracle JDK. The <code>alternatives</code> program allows
+you to select between multiple installed versions of a program:</p>
+
+<p>These commands will make alternative aware of the java binaries and
+set high priorities to them which will make them the default Java
+binaries. You can use &ldquo;alternatives &mdash;config binaryname&rdquo; to select
+active binaries manually.</p>
+
+<h4>Install Google Chrome</h4>
+
+<p>Firefox is dying, Google Chrome is the new king of the
+browsers. Download it from the <a href="http://www.google.com/chrome">official site</a> and install it:</p>
+
+<p><code>bash
+$ sudo dpk -i ~/Downloads/google-chrome-stable_current_i386.deb
+</code></p>
+
+<p>Google Chrome will install a apt repository as well, so you&rsquo;ll receive
+updates as soon as they arrive.</p>
+
+<p>Alternatively you can use Chromium &ndash; Chrome&rsquo;s open source sibling:</p>
+
+<p><code>bash
+$ sudo aptitude install chromium-browser
+</code></p>
+
+<h4>Install DropBox</h4>
+
+<p><a href="http://www.dropbox.com">DropBox</a> is a great file sharing service
+which allows you to sync files between all of your computers and
+mobile devices(Android, iPhone, iPad, etc). It has a great Linux
+client which I use all the time. It&rsquo;s available in the non-free repo
+so you can install it like this:</p>
+
+<p><code>bash
+$ sudo aptitude install nautilus-dropbox
+</code></p>
+
+<h2>Epilogue</h2>
+
+<p>Hopefully some of my setup has made your setup more enjoyable and more
+productive. I&rsquo;ll update this article along the way if I stumble upon
+other things that I consider to be generally helpful.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Linux desktop experience is killing Linux on the desktop, Part II]]></title>
+    <link href="http://batsov.com/articles/2011/06/14/linux-desktop-part-2/"/>
+    <updated>2011-06-14T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/06/14/linux-desktop-part-2</id>
+    <content type="html"><![CDATA[<p><em>Read this with an open mind.</em></p>
+
+<h2>Prelude</h2>
+
+<p>A few days back I wrote a somewhat controversial article called,
+<a href="/Linux/Windows/Rant/2011/06/11/linux-desktop-experience-killing-linux-on-the-desktop.html">&ldquo;The Linux desktop experience is killing Linux on the desktop&rdquo;</a>. While
+many readers seem to have grasped the true purpose of the article, a
+lot of people claimed that it was nothing but FUD (a favorite term
+of many people in the Linux community, who would rather ignore
+existing problems than face/acknowledge them).</p>
+
+<p>If you&rsquo;ve read my last post and generally agree with it &ndash; don&rsquo;t bother
+reading this one. It&rsquo;s basically more of the same &ndash; in greater detail
+and with less profanities.</p>
+
+<p>In this article I&rsquo;ll have a look at the state of the Linux desktop,
+it&rsquo;s usability, strengths and weaknesses.</p>
+
+<h2>Let&rsquo;s get some facts straight</h2>
+
+<p>I&rsquo;m writing this post from my Emacs 23.2 client (in Markdown, to
+publish it via git to my jekyll powered blog) connected to my Emacs
+daemon, running on my Fedora 15 GNOME 3.0 desktop at home. This
+machine has its every part carefully selected for maximum Linux
+compatibility (the machine is a bit old, but that wasn&rsquo;t always the case) &ndash;
+a GeForce 9600GT known to work &ldquo;great&rdquo; with the open-source nouveau
+driver, an Asus Xonar DX sound card, supported by the great Oxygen HD
+audio driver, etc. I do know how to buy hardware (contrary to popular
+belief). Actually I&rsquo;ve been a hardware
+enthusiast for most of my life and I know much more about the inner
+workings of computer components than most people. That said &ndash; the hardware that
+I bought for my home PC was not the hardware that I wanted to buy, but
+the one I had to buy.</p>
+
+<p>Even the ill-fated T520 Sandy Bridge laptop was supposed to work very
+well with Linux &ndash; after all Intel and Nvidia video cards are the
+safest bet in town.</p>
+
+<p>One of the great things about using a free (as in speech) OS like
+Linux is that you get to do things exactly the way you want to do
+them. You&rsquo;re in control. Everything is transparent. Nothing magically
+happens behind the scenes. It&rsquo;s sad that this
+doesn&rsquo;t extend to the ability to pick any piece of fairly generic
+hardware and properly enjoy it. Often you just have to hope
+and pray &ndash; and sometimes you might get lucky.</p>
+
+<p>A reader pointed me to
+<a href="http://blog.eracc.com/2011/06/14/the-century-of-the-linux-desktop/">this piece</a>
+&ndash; a rebuttal of my article. Here&rsquo;s an excerpt:</p>
+
+<p><em>Here we go again. Some fellow has gotten all whiny about being such a
+big Linux fan, &ldquo;… hardcore Linux user …&rdquo;, but he just had to go back
+to Microsoft to get things done. Why? Because he is tired of having to
+tinker with Fedora Linux to make things work, or fail to work, with
+cutting edge hardware … and 64-bit Flash on 64-bit Linux is sucky …
+and Skype on Linux is sucky … and … and … and. It was all just so
+painful and time consuming he could not take it any longer and went
+back to the safe arms of Microsoft to escape the horror that is
+Linux. Good grief.
+Okay, first and foremost, a true &ldquo;hardcore Linux user&rdquo;, in my mind a
+fan of Linux, is unlikely to switch from Linux to anything else. Oh
+yes, he or she will switch Linux distributions in a heartbeat, or
+maybe three heartbeats, if a distribution fails to work as needed. But
+switching to Microsoft and leaving the Linux desktop behind? Not
+likely, my friends. I consider myself a true &ldquo;hardcore Linux user&rdquo; and
+I see no voluntary switch from Linux in my future … ever.</em></p>
+
+<p>This bit produced a sad smile on my face. Had to go back to Microsoft?
+Absolutely not! Chose to use Windows 7 (for the time
+being)&hellip; If I was to go back to something it should have been FreeBSD
+since it was the OS I was using before Linux (and of course Windows
+before that indeed). I actually switched quite reluctantly from
+FreeBSD to Linux for a simple reason &ndash; Linux supported wider hardware
+variety and there were more native apps for it.</p>
+
+<p>All Unix-derived OSes are more or less the same from an user&rsquo;s
+perspective &ndash; mostly the same environment, the same applications. The
+only thing that really makes the difference is the hardware support
+and Linux is clearly far ahead of its competition.</p>
+
+<p>Hardcore user? You bet! But hardcore doesn&rsquo;t mean an &lsquo;unreasonable
+idiot, blinded by zealously&rsquo;. It&rsquo;s not always that someone&rsquo;s favorite
+technologies are the best solution to a problem. The section &ldquo;the shit
+I&rsquo;ve endured&rdquo; had a dual purpose &ndash; list a &ldquo;few&rdquo; problems and show how
+resilient I am.</p>
+
+<p>Distro hopping is something that mostly newbies do, because they fail
+to grasp a fundamental thing in the land of Linux &ndash; 95% of the stuff
+that comprises a distribution is generic stuff found in most other
+distros. You cannot seriously expect that the same drivers in a
+different distro will yield wildly different results&hellip; Sure, bugs do
+tend to occur, and sometimes they are truly distribution
+specific. Sure, some distros happen to patch the stuff they ship
+heavily, while others favor shipping vanilla versions of both software ant
+the kernel.</p>
+
+<h2>The process of driver development</h2>
+
+<p>My former post placed a heavy emphasis on existing driver
+issues. While I abhor some Linux drivers I&rsquo;ve never ever blamed the
+authors of open source drivers. Here&rsquo;s why:</p>
+
+<p>The year and a half I&rsquo;ve spent writing Linux drivers for a proprietary
+Austrian company was some of the hardest time in my professional
+career. Writing drivers is fairly hard task for two reasons &ndash; you have
+to have very intimate knowledge of the hardware at hand and you have
+to write very safe code (and carefully test it), because otherwise you might bring the whole
+kernel down. I was basically reading tech specs (most boring read in
+the world) most of the day and
+writing very little code in end. Debugging drivers is not a pleasant
+task either.</p>
+
+<p>Linux certainly has some of the best developers in the world. I have
+little doubt in that. The problem is that these same developers spent
+their days working other jobs and you cannot seriously expect them to
+have the time or the energy (not to mention the specs required) to
+produce drivers that are on par with commercial counterparts developed
+for OSX and Windows by big team with vast resources at their disposal.</p>
+
+<p>This is the actual problem as I see it &ndash; we&rsquo;re expecting individuals
+to create good drivers for us out the kindness of their hearts in
+their little spare time with little or no hardware specs on which to
+rely for absolutely no money.</p>
+
+<p>I&rsquo;ve read the source code of many network layer drivers in the Linux
+kernel and I&rsquo;ve noticed a common trend &ndash; a lot of the drivers were
+actually written by hardware engineers (instead of software engineers)
+&ndash; they are filled with copy/paste segments from other drivers, lots of
+  useless/dubious/dangerous code. This doesn&rsquo;t surprise me &ndash; few
+  software engineers have solid grasp of hardware and/or the will to
+  take part in driver development. This is a big problem with no easy solution.</p>
+
+<p>The hardware vendors are the only party that deserves blame for the
+sorry state of many drivers. I cannot believe how hard it is for a
+company with the size of AMD to deliver a decent Linux driver
+for so many years. Their driver is a monument of everything that is
+wrong with hardware vendors as far as Linux is concerned &ndash; no support
+for latest kernels/X, no support for current state-of-the-art Linux
+video technologies, notorious instability and performance. Nvidia fare
+a lot better but still &ndash; their driver lacks the support basic stuff
+such as KMS&hellip;</p>
+
+<p>So what can we do? Obviously not everyone can start writing better
+drivers, but still everyone could try to help&hellip;</p>
+
+<p>For most desktop hardware vendors Linux is a non-existing OS. Linux
+truly has a small market share, but that is not the actual
+problem. The actual problem is that Linux desktop user would rather
+wait for someone from the community to come up with a solution instead
+of the pressure the vendors into action. Fill their mailboxes with angry
+letters, write blog posts about their inadequacy to properly support
+the third largest desktop OS in the world. Companies love to make
+money and hate bad press&hellip;</p>
+
+<h2>The desktop software stack</h2>
+
+<p>The Linux desktop stack has some great qualities &ndash; for instance it
+often comes with batteries included. You have most of your day to day
+need covered as soon as you install your distro &ndash; a decent browser, a
+good email client, an office suit, disk burning utility, torrent
+downloader, IM client, text editors, photo organizers, image editors,
+etc. When I installed Windows 7 I was a bit surprised how bare the
+initial installation is and how many third party apps I needed to
+install. And of course most of the Linux desktop apps coming from the
+same environment (KDE, GNOME, XFCE, etc) have a very uniform look and
+feel to them which I personally value a lot.</p>
+
+<p>Unfortunately not everything is great&hellip;</p>
+
+<p>The Linux desktop application stack suffers from a few serious
+problems:</p>
+
+<ul>
+<li>a few individuals make crucial decisions without taking any input
+from the user community</li>
+<li>many projects have only one principle developer that happens to do
+things his way without regard for anyone else</li>
+<li>often highly unstable beta quality software is pushed as stable to
+the end users</li>
+<li>a lot of prominent apps that are multi-platform seem to undergo
+sub-par testing/QA process under Linux and experience common problems
+like crashes and memory leaks that don&rsquo;t manifest that often on
+other platforms</li>
+</ul>
+
+
+<p>In more details&hellip;</p>
+
+<p><strong>Is it really better for the users?</strong></p>
+
+<p>Often a new feature arrives that is marketed as a huge improvement for
+the end-users. Most of the time the end-users are never inquired about
+their opinion of the feature. PulseAudio is a great example. I was
+pretty happy using ALSA directly, but nobody asked me what I thought
+about the change. Initially it was fairly easy to disable pulse audio,
+but as it became more and more integrated into the desktops the
+process became harder (luckily pulse audio improved in the
+process). While I&rsquo;m perfectly aware of the technical reasoning that
+lead to pulse audio&rsquo;s creation I do find it rather useless. With only
+one major architecture left (almost no one uses OSS on Linux these
+days) the introduction of intermediate sound layer of dubious quality
+never made that much sense to me. Sure, ALSA needed a simpler API, but
+we didn&rsquo;t deserve to be punished with pulse audio&hellip;</p>
+
+<p><strong>It&rsquo;s my way or the highway</strong></p>
+
+<p>Most of you probably remember that Pidgin (formerly Gaim) used to be
+the default IM client in GNOME based distros. At some point this
+quickly changed and Empathy became the default client. Part of the
+reason for the switch was the unwillingness of the lead developer in the
+Pidgin project to collaborate with the GNOME developers. I still
+remember the controversial fix that made the input area non-resizable
+with no option to go back to the previous setting. I guess GNOME&rsquo;s
+devs were really pissed about something since they replaced the all around great
+Pidgin with a vastly inferior and immensely buggy (at least for the
+first year and a half) product.</p>
+
+<p>Too much power of the hands of a single person with no overseer is
+dangerous. In the open-source world one can easily fork a project, but
+this is a dangerous path as well that is often likely to wreak havoc
+into the development of the project.</p>
+
+<p><strong>Are we your users or your beta testers?</strong></p>
+
+<p>A few examples from recent years:</p>
+
+<p>KDE 4.0</p>
+
+<p>GNOME 3.0</p>
+
+<p>Empathy</p>
+
+<p>PulseAudio</p>
+
+<p>NetworkManager</p>
+
+<p>Beagle</p>
+
+<p>The list could go on and on&hellip; Microsoft and Apple have certainly had
+their fair share of mistakes (Win ME, Win Vista, OS X Leopard), but
+nothing on a scale as epic as KDE 4.0 or GNOME 3.0&hellip;</p>
+
+<p><strong>Some users are more important then others it seems&hellip;</strong></p>
+
+<p>All those programs run on all major OS, but they perform worst on Linux:</p>
+
+<p>Firefox</p>
+
+<p>OpenOffice</p>
+
+<p>Flash Player</p>
+
+<p>Obviously writing great multi-platform apps is possible as illustrated
+by software such as VLC and Google Chrome. But what about all the
+rest. I feel that Firefox&rsquo;s days as the dominant browser on the Linux
+desktop are numbered &ndash; most of my friends that use Linux have already
+switched to Chrome (or the open source Chromium). Firefox on Linux is
+like a bad joke &ndash; slow, memory hungry and unstable. I keep hearing
+that it runs a lot better on OSX and Windows, probably because it got
+a lot more testing on those platforms. I understand their reasoning &ndash;
+most of their clients use those two OSes so it makes sense to make them
+important in the dev/testing phases. But they should remember
+something &ndash; Firefox is (for now) the default
+browser only in most Linux distros and it&rsquo;s never going to be the
+default in Windows or OSX&hellip;</p>
+
+<p>Same goes for OpenOffice to the letter.</p>
+
+<p>And flash is well &ndash;
+flash. It&rsquo;s not the greatest piece of software on any platform, but
+it&rsquo;s absolutely horrible in Linux. When I open a flash intensive web
+site my CPU load generally spikes up to the sky (thank God for AdBlock
+&amp; FlashBlock).</p>
+
+<p>Skype was not even mentioned here (until now obviously) since the Linux version is so far behind
+the one for OSX and Windows that I wouldn&rsquo;t even consider it a
+port. It&rsquo;s just some pile of crap compiled to be able to list Linux as
+a supported OS on their website&hellip; They promised improvements, they
+promised an open-source Linux client &ndash; two years later we&rsquo;re still
+using Skype 2.1 BETA. I wish more people had the sense to use a
+service like Google Talk so I wouldn&rsquo;t have to put up with skype at all.</p>
+
+<h2>The community (communist) model</h2>
+
+<p>I live in a country from the former Soviet block (Bulgaria) and I&rsquo;ve seen first
+hand what Communism leads to. I&rsquo;ve also seen first-hand why Communism
+doesn&rsquo;t actually work &ndash; few people actually live and abide by it and
+the rest of society simply practices the fine art of &ldquo;getting by&rdquo; and
+lives on their shoulders. The Communism can only really work if
+everyone is pulling their own weight in it (which sounds a bit absurd indeed).</p>
+
+<p>Something similar is happening on the Linux desktop ship &ndash; everybody
+says he&rsquo;s on board, but very few people are actually rowing and
+bringing the Linux desktop to it&rsquo;s designated port.</p>
+
+<p>I&rsquo;ve written only two desktop project for Linux from scratch (an
+English-Bulgarian dictionary utility and a GUI front-end for pacman on
+Arch Linux), but I&rsquo;ve contributed bug reports and patches to lots of
+projects. No matter what your opinion about me is &ndash; I&rsquo;ve done
+something for the Linux desktop and I&rsquo;m doing something for the desktop now
+as well &ndash; writing this article&hellip;</p>
+
+<p>What have you done? Sure, very few users are software engineers, but
+that doesn&rsquo;t mean they can&rsquo;t help. Bug reports are just as important
+as patches. Ideas and suggestions for improvements are highly valued
+as well. Don&rsquo;t sit in the shadows doing nothing &ndash; step into the light
+and do something to help your favorite project get a little bit
+better.</p>
+
+<p>Step by step. Fix by fix. Improvement by improvement. This is how good
+software gets created.</p>
+
+<p>The bottom line is &ndash; the more of us that pitch in the fight for a
+proper Linux desktop experience, the bigger the chances of the dream
+becoming reality become.</p>
+
+<h2>Future</h2>
+
+<p>Unless something radically changes in the near future I don&rsquo;t see how
+Linux can rise up to be a mainstream desktop OS. With very few
+companies having any stakes in the Linux desktop that isn&rsquo;t happening
+any time soon. I find a somewhat troubling trend in recent years &ndash; a
+lot of companies that worked for a better desktop experience are now
+gone. Ximian (the company behind GNOME) was purchased by Novell and
+later Novell crumbled, making the future of one of the most popular
+desktop distributions OpenSUSE doubtful. Mandrake was once one of the
+most powerful Linux companies and Mandrake Linux was widely
+used. Currently Mandriva is constantly on the brink of
+bankruptcy. There are many other examples &ndash; Xandros, VidaLinux,
+etc&hellip; Even the &ldquo;mighty&rdquo; Canonical struggles to build a successful
+business model around their widely successful Ubuntu OS.</p>
+
+<p>Desktop Linux has to be made somehow profitable for companies to start
+investing more heavily in it. This is the hard, but honest truth. As
+long as the primarily development is carried out with little (or no
+funding), mostly by volunteers the hour of the desktop Linux will
+never come.</p>
+
+<p>There is one more serious problem &ndash; diversity. There are two many
+distributions bring too little value to the table. The time spent
+repacking the same software for a hundred distros could be better
+utilized developing new applications/drivers and improving existing
+ones. We need to have at least a couple rock solid desktop
+distros/environments, otherwise the whole diversity thing means
+basically nothing.</p>
+
+<p>Few good options are worth more than a million half-baked options!</p>
+
+<h2>Epilogue</h2>
+
+<p>This article (and the one before it) was never about jumping the
+ship, claiming that Windows or OSX are better than Linux or spreading
+&ldquo;FUD&rdquo; (if I totally hate a term this is the one). It was always about
+raising the awareness of existing issues in the land of desktop
+Linux. After all just a few days before <a href="/Linux/Fedora/2011/05/31/fedora-15-tips.html">I had written a post
+installation guide for Fedora 15</a>.</p>
+
+<p>While I was writing the last paragraph I got another GNOME 3 shell corruption (time
+for killall gnome-shell to take the stage) on my totally supported
+hardware&hellip; A skype sound notification interrupted the song I was
+listening to (thanks a lot, PulseAudio)&hellip; And yet I&rsquo;m still here. I
+did switch to Windows 7 on my laptop and I do intend to use Window 7
+at least for a while there. It&rsquo;s not perfect either, trust me about
+that. Poor terminal emulator (though great PowerShell), a few random
+application crashes (but these happen in Linux as well in recent
+years) just to name a few.</p>
+
+<p>The Linux desktop is at the edge of a cliff now. It&rsquo;s up to us to
+decide whether we would save it or push it over the edge.</p>
+]]></content>
+  </entry>
+  
+</feed>

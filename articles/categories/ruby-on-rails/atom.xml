@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ruby on Rails | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/ruby-on-rails/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-28T09:00:23+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Admin Interfaces for Rails Apps: RailsAdmin vs ActiveAdmin]]></title>
+    <link href="http://batsov.com/articles/2011/11/20/admin-interfaces-for-rails-apps-railsadmin-vs-activeadmin/"/>
+    <updated>2011-11-20T09:24:00+02:00</updated>
+    <id>http://batsov.com/articles/2011/11/20/admin-interfaces-for-rails-apps-railsadmin-vs-activeadmin</id>
+    <content type="html"><![CDATA[<h2>Prelude</h2>
+
+<p>Often in comparisons between <a href="https://www.djangoproject.com/">Django</a>
+and Rails, one of the Django advantages being cited is the automatic
+admin interface you get for free out-of-the-box there.</p>
+
+<p>I guess a lot of people don&rsquo;t know that there are similar solutions for
+Rails, although they are not included in the standard
+distribution. Currently the two most prominent admin UI &lsquo;frameworks&rsquo; are
+<a href="https://github.com/sferik/rails_admin">RailsAdmin</a> and <a href="http://activeadmin.info/">Active Admin</a>.</p>
+
+<p>While they are both shooting to solve the same problem, they do it in
+a very different way. Many new users are quite confused what
+advantages/disadvantages one has over the other (and vice versa) and
+that&rsquo;s the reason I&rsquo;m writing this article right now &ndash; to clarify a
+few vague points and to help people choose the framework most
+appropriate for the task at hand.</p>
+
+<!--more-->
+
+
+<h2>RailsAdmin</h2>
+
+<p>RailsAdmin started its life as a port of MerbAdmin to Rails 3 and was
+implemented as a Ruby Summer of Code project by Bogdan Gaza with
+mentors Erik Michaels-Ober, Yehuda Katz, Luke van der Hoeven, and Rein
+Henrichs. The project is self described as <em>a Rails
+engine that provides an easy-to-use interface for managing your
+data.</em>.</p>
+
+<p>Its main features include:</p>
+
+<ul>
+<li>Display database tables</li>
+<li>Create new data</li>
+<li>Easily update data</li>
+<li>Safely delete data</li>
+<li>Automatic form validation</li>
+<li>Search and filtering</li>
+<li>Export data to CSV/JSON/XML (very handy)</li>
+<li>Authentication (via Devise)</li>
+<li>User action history</li>
+</ul>
+
+
+<p>RailsAdmin currently supports only ActiveRecord as the ORM. You can
+see a live demo of RailsAdmin <a href="http://rails-admin-tb.herokuapp.com/">here</a>.</p>
+
+<p>The current master branch of RailsAdmin targets Rails 3.1.x and it&rsquo;s
+naturally aware of the asset pipeline introduced there. Installing
+RailsAdmin is a trivial exercise. Just add these deps to your
+<code>Gemfile</code>:</p>
+
+<p><code>ruby
+gem 'fastercsv' # Only required on Ruby 1.8 and below
+gem 'rails_admin', :git =&gt; 'git://github.com/sferik/rails_admin.git'
+</code></p>
+
+<p>Afterwards you should run:</p>
+
+<p><code>bash
+$ bundle install
+$ rails g rails_admin:install
+$ rake db:migrate
+</code></p>
+
+<p>And you&rsquo;re done. RailsAdmin uses internally the tried and true
+<a href="https://github.com/plataformatec/devise">Devise</a> for admin users authentication. If you&rsquo;re already using
+devise &ndash; you&rsquo;re covered, otherwise RailsAdmin will install it for you.</p>
+
+<p>At this point you can boot your development web server (<code>rails s</code>) and
+visit the url <a href="http://localhost:3000/admin">localhost:3000/admin</a> (or whatever port you&rsquo;re running
+the dev server on). You&rsquo;ll be able to create admin accounts and after
+you log in you&rsquo;ll be presented by an attractive admin dashboard, that
+shows you an overview of all the tables in your model.</p>
+
+<p>By default you&rsquo;ll be able to manage every single model in your
+app. You&rsquo;ll have to customize the contents of
+<code>config/initializers/rails_admin.rb</code> to change that default
+behavior.</p>
+
+<p>One thing to note is that there are no gem releases of
+RailsAdmin. It&rsquo;s still alpha quality software (at least on paper &ndash; it&rsquo;s
+quite stable actually). I&rsquo;m generally a bit annoyed to have to track
+gems from a git repo, but I understand and respect the developer&rsquo;s
+decision on the matter. Hopefully we&rsquo;ll see a stable release of
+RailsAdmin soon enough and a gem to go with it.</p>
+
+<p>Another thing to keep in mind is the use case for RailsAdmin &ndash; it is
+pretty much an automatic backend, that you&rsquo;re not supposed to modify a
+lot. In its spirit it&rsquo;s very close to what Django&rsquo;s admin backend
+is. RailsAdmin is very smart in determining the relations between
+model and supplying forms and show views that express them properly.</p>
+
+<p>Unfortunately not all relationships are represented correctly and
+modifying the form builders in RailsAdmin is no walk in the
+park. Another minor annoyance is that CarrierWave is not supported out
+of the box so you have to do some manual tinkering in the RailsAdmin
+initializer to make it work.</p>
+
+<p>Some of the nicer touches in RailsAdmin include basic integration with
+CKEditor (a rich WYSIWYG editor) and an user action feature, which
+helps keep track of who did what. I wouldn&rsquo;t mind seeing some mention of
+TinyMCE as an alternative to CKEditor in the docs, since it&rsquo;s considered more
+robust by many (yours truly included).</p>
+
+<p>The docs themselves are just a big README in the project&rsquo;s github
+repo. While they feature most of what you&rsquo;ll need to know about
+RailsAdmin, having them organized in a nicer way (something that the
+guys behind Active Admin have done) wouldn&rsquo;t hurt.</p>
+
+<h2>Active Admin</h2>
+
+<p>Active Admin is the other big Rails admin UI framework, developed by
+Greg Bell. Its official web site describes it like this:</p>
+
+<p><blockquote><p>Active Admin is a Ruby on Rails plugin for generating administration<br/>style interfaces. It abstracts common business application patterns to<br/>make it simple for developers to implement beautiful and elegant<br/>interfaces with very little effort.</p></blockquote></p>
+
+<p>Active Admin is of course Rails 3.1 ready, plays nice with the asset
+pipeline and has great documentation on its official web site. There
+also a very nice <a href="http://railscasts.com/episodes/284-active-admin">introductory screencast</a> by Ryan Bates from RailsCasts.</p>
+
+<p>Getting started with Active Admin is just as easy as getting started
+with RailsAdmin. You just need to add a dependency to your <code>Gemfile</code>:</p>
+
+<p><code>ruby
+gem 'activeadmin'
+</code></p>
+
+<p>And to a few command line incantations afterwards to seal the deal:</p>
+
+<p><code>bash
+$ bundle install
+$ rails g active_admin:install
+$ rake db:migrate
+$ rails s
+</code></p>
+
+<p>Fire up your favorite browser and visit
+<a href="http://localhost:3000/admin">localhost:3000/admin</a>. The default username is
+<em>admin@example.com</em> and the default password is <em>password</em>. You&rsquo;d
+probably be surprised to see an empty dashboard and absolutely no
+models that you can administer. Active Admin takes a totally different
+approach compared to RailsAdmin. Here nothing happens automatically &ndash;
+you have to customize your dashboard yourself and you have to register
+the models you&rsquo;d be administrating with the following command:</p>
+
+<p><code>bash
+$ rails g active_admin:resource ModelName
+</code></p>
+
+<p>This will create a file named <code>app/admin/model_name.rb</code> where you can
+tinker with looks of the resource&rsquo;s index, form and show view.</p>
+
+<p>And here comes Active Admin&rsquo;s core feature &ndash; it&rsquo;s immensely easy to
+customize anything in the Admin UI. The forms used to create and
+update model records are simple Formtastic forms (the same Formtastic
+forms you&rsquo;re probably already using throughout the rest of your
+apps):</p>
+
+<p>``` ruby
+ActiveAdmin.register Post do
+  form do |f|</p>
+
+<pre><code>f.inputs "Details" do
+  f.input :title
+  f.input :published_at, :label =&gt; "Publish Post At"
+  f.input :category
+end
+f.inputs "Content" do
+  f.input :body
+end
+f.buttons
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>Rendering a partial for the form is also supported.</p>
+
+<p>Active Admin features an elegant DSL to express the index and the show
+views. Here&rsquo;s an example of index table for a fictional Course
+Management app:</p>
+
+<p>``` ruby
+ActiveAdmin.register Course do
+  index do</p>
+
+<pre><code>column :id
+column :title
+column :start_date
+column :end_date
+column :created_at
+column :updated_at
+default_actions
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>The <code>default_actions</code> method invocation here is important &ndash; without it
+you&rsquo;ll be missing the action buttons in the last column of the index
+table.</p>
+
+<p>Here&rsquo;s an example of a show view:</p>
+
+<p>``` ruby
+ActiveAdmin.register Post do
+  show do</p>
+
+<pre><code>h3 post.title
+div do
+  simple_format post.body
+end
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>Alternatively you can forgo the Arbre HTML DSL and render a partial like this:</p>
+
+<p>``` ruby
+ActiveAdmin.register Post do
+  show do</p>
+
+<pre><code># renders app/views/admin/posts/_some_partial.html.erb
+render "some_partial"
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>The documentation is very well written and quite extensive so I
+wouldn&rsquo;t go into many details here (remember DRY). The only issue I&rsquo;ve
+had with Active Admin so far is not related to Active Admin directly &ndash;
+the latest gem release still depends on the old Formtastic 1.3 and I
+happen to use Formtastic 2.0 in all of my apps. Luckily the master
+branch is already using Formtastic 2.0, so all you have to do if you
+have this problem is to use the gem from git:</p>
+
+<p><code>ruby
+'activeadmin', git: git://github.com/gregbell/active_admin.git
+</code></p>
+
+<p>If you&rsquo;re reading this article after the release of Active Admin 0.4
+(which should happen any day now) &ndash; you don&rsquo;t have to do this.</p>
+
+<h2>Which Should You Use</h2>
+
+<p>The answer to that question depends on your needs for a particular
+project.</p>
+
+<p>RailsAdmin is still alpha. Unstable developments are made in topic branches
+and master is supposed to be as stable as possible. RailsAdmin is not an admin scaffolder as is
+Active Admin. It&rsquo;s an automatic backend. It&rsquo;s goal is to provide a full
+access to your data, with maximum of defaults extracted from
+application&rsquo;s ORM/ActiveModel, a DSL to customize those, and hooks for
+third-party projects (Cancan/Devise/Paperclip/CKeditor) to enrich the
+experience. Granularity is
+higher in RA. You are not supposed to access FormBuilder the way you
+would with Active Admin and Formtastic. RailAdmin says here <em>It&rsquo;s in the dev field, not
+configuration</em>. Still, the current blackbox has some flaws, discrepancies
+and uncovered areas that its developers are currently addressing.</p>
+
+<p>Active Admin basically does things the other way around. You&rsquo;re
+totally supposed to tweak every aspect of the Admin UI &ndash; but tweaking
+those aspects is very very easy. If you&rsquo;re looking for a heavily
+customized Admin UI solution &ndash; Active Admin is certainly the way to
+go. It&rsquo;s not an automatic admin backend by any means &ndash; it&rsquo;s more or
+less a framework that simplifies the creation of admin UIs.</p>
+
+<p>In terms of popularity it seems that RailsAdmin is a bit more popular
+right now. I consider the GitHub watchers of a project to be a fairly
+accurate measurement of its popularity and as of the time of this
+writing RailsAdmin has 2539 compared to 2127 for Active Admin. You
+have to consider the fact that RailsAdmin has been out in the open a
+bit longer. Active Admin is rapidly closing this gap, however, and I
+expect it to surpass RailsAdmin in a month or two.</p>
+
+<p>My personal recommendation is to start by trying RailsAdmin &ndash; if it
+covers your use cases, you&rsquo;d do well to simply use it instead of
+pouring additional effort into creating a similar UI with Active
+Admin. If you need heavily customized admin UI, however, you&rsquo;d
+probably do well to start with Active Admin in the first place, since
+after all &ndash; it was designed for such scenarios.</p>
+
+<h2>Epilogue</h2>
+
+<p>Having used both RailsAdmin and Active Admin with real projects I can
+tell you that they serve a different purpose &ndash; the
+admin UI generated by RailsAdmin is quite usable by default and might
+be used with very little changes. Active Admin&rsquo;s admin UI generally
+requires manual tweaking to achieve the same effect. On the other hand
+Active Admin was developed with manual customization in mind at it&rsquo;s
+very easy to do such changes there. Modifying the forms in RailsAdmin
+was definitely a less pleasant experience (not to mention stuff like
+CarrierWave integration).</p>
+
+<p>While there are some people urging the projects to merge I think that
+would be a terrible idea. Aside from the technical difficulties of
+merging separate projects sharing no common codebase, I do think diversity
+matters. Rails has virtually no alternatives (in Rubyland) and that is bad for
+business, since competition always drives innovation. I&rsquo;d love to see
+both projects evolve in their current directions (and stabilize along
+the way).</p>
+
+<p>So what are you waiting for? Give them both a shot and share your
+experience in the comments section! :&ndash;)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Deploying Rails 3.1 applications on Heroku's Celadon Cedar stack]]></title>
+    <link href="http://batsov.com/articles/2011/10/30/deploying-rails31-apps-on-celadon-cedar/"/>
+    <updated>2011-10-30T00:00:00+03:00</updated>
+    <id>http://batsov.com/articles/2011/10/30/deploying-rails31-apps-on-celadon-cedar</id>
+    <content type="html"><![CDATA[<h2>Prelude</h2>
+
+<p><a href="http://heroku.com">Heroku</a> is an amazing cloud hosting solution. It&rsquo;s extremely well
+documented, very easy to start with, very stable and provides you with
+the option to use free hosting for some small applications.</p>
+
+<p>While Heroku is generally known as a Ruby on Rails hosting company,
+since their acquisition by SalesForce last year, they&rsquo;ve expanded
+their deployment options a lot. Currently Ruby, Java, Scala, Clojure,
+Python and Node.js are all officially supported (on the Cedar Celadon
+stack) and more will probably come very soon.</p>
+
+<p>All of our company&rsquo;s applications are using
+<a href="http://guides.rubyonrails.org/">Ruby on Rails 3.1.x</a> and are
+targeting the <a href="http://ruby-lang.org">MRI 1.9.2</a>. Those two facts are
+the reason that we&rsquo;re using Heroku&rsquo;s
+<a href="http://devcenter.heroku.com/articles/cedar">Celadon Cedar</a> deployment
+stack. Celadon Cedar is currently in beta, but it offer a lot of
+benefit over the old (stable) Bamboo stack (which also support Rails
+3.1 apps and Ruby 1.9.2). For instance &ndash; Celadon is aware of the Rails
+3.1 asset pipeline and can compile the assets automatically when you
+deploy your apps to Heroku. With Bamboo you have to precompile the
+resources, which is a very tedious task.</p>
+
+<p>While our experience with Heroku has been very positive in
+general, we&rsquo;ve hit some bumps along the road, so I&rsquo;ve decided to share
+some of the problems and their solutions with everyone.</p>
+
+<!--more-->
+
+
+<h2>Background</h2>
+
+<p>There are some things to keep in mind before deploying to Heroku:</p>
+
+<ul>
+<li><p>You can&rsquo;t upload files to Heroku. This means that if you&rsquo;re using a
+gem such as <a href="https://github.com/jnicklas/carrierwave">CarrierWave</a> (or
+<a href="https://github.com/thoughtbot/paperclip">PaperClip</a>) for file uploads
+it should be configured to use some cloud storage (e.g. Amazon
+S3). There is only one writeable folder on Heroku and this is the
+<strong>tmp</strong> folder that you should configure as a tmp folder for your
+uploads as well.</p></li>
+<li><p>Your app should run on Ruby 1.9.2 (the Celadon
+Cedar stack, doesn&rsquo;t support Ruby 1.8.x).</p></li>
+<li><p>Your <code>rake assets:precompile</code> task should (ideally) not invoke any database related
+operations.</p></li>
+<li><p>You should use PostgreSQL as your local development database to
+avoid potential differences between the production and the development
+database.</p></li>
+<li><p>You should add the <code>heroku</code> gem to your <code>Gemfile</code>.</p></li>
+<li><p>You should install the <code>taps</code> gem if you&rsquo;d like to use <code>heroku
+db:pull</code> or <code>heroku db:push</code>.</p></li>
+</ul>
+
+
+<h2>Preparations</h2>
+
+<h4>Configure CarrierWave to use cloud storage</h4>
+
+<p>Here&rsquo;s a sample <strong>carrierwave.rb</strong>, that you can put in <strong>config/initializers/</strong> folder:</p>
+
+<p>``` ruby config/initializers/carrierwave.rb
+if Rails.env.test? # Store the files locally for test environment
+  CarrierWave.configure do |config|</p>
+
+<pre><code>config.storage = :file
+config.enable_processing = false
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>if Rails.env.development? or Rails.env.production? # Using Amazon S3 for Development and Production
+  CarrierWave.configure do |config|</p>
+
+<pre><code>config.root = Rails.root.join('tmp')
+config.cache_dir = 'uploads'
+
+config.storage = :fog
+config.fog_credentials = {
+    :provider =&gt; 'AWS', # required
+    :aws_access_key_id =&gt; 'key_id', # required
+    :aws_secret_access_key =&gt; 'access_key', # required
+}
+config.fog_directory = 'empoweronrails' # required
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<h4>Disable db access during rake assets:precompile</h4>
+
+<p>Some gems (like Rails Admin) access the database during the
+initialization of the app. The app initialization is ran by default
+when you invoke:</p>
+
+<p><code>rake assets:precompile</code></p>
+
+<p>This is not a problem on your development machine, but it&rsquo;s
+problematic on Heroku, since the regular database.yml is discarded
+there. Add this:</p>
+
+<p><code>config.assets.initialize_on_precompile = false</code></p>
+
+<p>somewhere near the end of your <strong>application.rb</strong> file and it will
+suppress the initialization on precompile.</p>
+
+<h4>Enable assets compilation</h4>
+
+<p>It&rsquo;s absolutely required to have this line:</p>
+
+<p><code>config.assets.compile = true</code></p>
+
+<p>in your <strong>production.rb</strong> file if you want your assets to be compiled
+automatically by Heroku (which I highly recommend).</p>
+
+<h4>Use thin or unicorn as the application server</h4>
+
+<p>By default, your app&rsquo;s web process runs <code>rails server</code>, which uses
+Webrick. This is fine for testing, but for production apps you`ll want
+to switch to a more robust webserver. I personally use Thin
+(recommended by Heroku). Add this to your Gemfile:</p>
+
+<p><code>gem 'thin'</code></p>
+
+<p>and this to your Procfile (create it if it doesn&rsquo;t already exist):</p>
+
+<p><code>web: bundle exec rails server thin -p $PORT</code></p>
+
+<p>The creation of the Procfile is very important! You can use the
+<a href="https://github.com/ddollar/foreman">foreman</a> gem to test the
+correctness of the Procfile locally.</p>
+
+<p>Alternatively you can use unicorn. While I haven&rsquo;t used Cedar with
+Heroku yet, I&rsquo;ve read some nice articles, like this
+<a href="http://michaelvanrooijen.com/articles/2011/06/01-more-concurrency-on-a-single-heroku-dyno-with-the-new-celadon-cedar-stack/">one</a>,
+according to which one can gain significant performance boost with
+unicorn.</p>
+
+<h4>Optimize your slug&rsquo;s size</h4>
+
+<p>Your slug size is displayed at the end of a successful compile. You
+can roughly estimate slug size locally by doing a fresh checkout of
+your app, deleting the <code>.git</code> directory, and running <code>du -hsc</code>.</p>
+
+<p>Smaller slugs can be transferred across the dyno grid more quickly,
+allowing for a faster spin-up speed on your dynos. Generally speaking,
+any slug under 15MB is small and nimble; 30MB is average; and 40MB or
+above is weighty. If you find your app getting into the 40MB+ range,
+you may want to look into some techniques (such as removing unneeded
+dependencies or excluding files via <code>.slugignore</code>) to reduce the size.</p>
+
+<p>If your repository contains files not necessary to run your app, you
+may wish to add these to a <code>.slugignore</code> file in the root of your
+repository.</p>
+
+<h2>Deployment</h2>
+
+<p>First you should create a Heroku application on the Cedar Celadon stack.</p>
+
+<p><code>heroku create --stack cedar</code></p>
+
+<p>This step will automatically add a git remote called <strong>heroku</strong> to
+your git repo&rsquo;s config. Afterwards the deployment is as simple as
+pushing a branch (e.g. <strong>master</strong>) to this remote:</p>
+
+<p><code>git push heroku master</code></p>
+
+<p>Keep in mind that one Heroku app corresponds to exactly one git
+branch. We keep a <strong>production</strong> branch for production deployments and
+a <strong>master</strong> branch for development deployments.</p>
+
+<p>The last step is to initialize your database. You have two options &ndash;
+you can either load the db schema or push an existing database:</p>
+
+<p><code>heroku run rake db:schema:load</code></p>
+
+<p>or</p>
+
+<p><code>heroku db:push</code></p>
+
+<p><code>db:push</code> takes as an optional parameter the URL of the db to push to
+heroku in the following format
+<code>db://username:password@host/dbname</code>. For example the url for a local
+SomeApp db is probably
+<code>postgres://someapp:someapp@localhost/someapp</code>. If you
+don&rsquo;t supply the URL it will be automatically conjured by inspecting
+the <strong>database.yml</strong> file of the project you were in, while issuing the
+command.</p>
+
+<h2>Troubleshooting</h2>
+
+<p>If you&rsquo;re lucky your deployment will go without a hitch and you
+won&rsquo;t have to ever read this section of the manual. Most people won&rsquo;t
+be so lucky. :&ndash;)</p>
+
+<h4>Errors during deployment</h4>
+
+<p>If you get an error during the deployment process the cause of the
+problem will be in front of your eyes. Never-the-less here are some of
+the most common problems:</p>
+
+<ul>
+<li>missing Gemfile.lock</li>
+<li>Gemfile.lock that doesn&rsquo;t match the project&rsquo;s Gemfile (this happens if you have OS specific gems in your Gemfile)</li>
+<li>db access on <code>assets:precompile</code></li>
+<li>you forgot the run all specs and cucumber scenarios before
+deployment ;&ndash;)</li>
+</ul>
+
+
+<h4>Other errors</h4>
+
+<p>Obviously you need to take a look at the stack trace to gain some
+insight about the nature of the problem. You can do this very easy:</p>
+
+<p><code>heroku logs</code></p>
+
+<p>Some of the most common errors you&rsquo;ll encounter:</p>
+
+<ul>
+<li>you forgot to run some migration(s)</li>
+<li>you forgot to turn on asset compilation</li>
+<li>you forgot to run all specs and cucumber scenarios before the deployment</li>
+</ul>
+
+
+<h2>Misc</h2>
+
+<h4>Dealing with the database on Heroku</h4>
+
+<p>You can easily apply migrations to the production database. Just run:</p>
+
+<p><code>heroku run rake db:migrate</code></p>
+
+<p>If you want to retrieve the production database locally use the following command:</p>
+
+<p><code>heroku db:pull postgres://username:password@localhost/dbname</code></p>
+
+<p>If you want to push your local db to production run the following command:</p>
+
+<p><code>heroku db:push</code></p>
+
+<p>Be very careful about the last command! <strong>It will wipe out and replace the current production database!</strong></p>
+
+<h4>Running a console</h4>
+
+<p>Running the Rails console on Heroku is astonishingly easy. Just run:</p>
+
+<p><code>heroku run rails console</code></p>
+
+<h2>Epilogue</h2>
+
+<p>Heroku and Rails are moving targets, which causes a bit of a headache
+from time to time. Hopefully this short article will save some of you
+some of that headache.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Style | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/style/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-28T09:00:23+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[The Elements of Style in Ruby #14: Variable Interpolation]]></title>
+    <link href="http://batsov.com/articles/2014/08/13/the-elements-of-style-in-ruby-number-14-variable-interpolation/"/>
+    <updated>2014-08-13T16:27:00+03:00</updated>
+    <id>http://batsov.com/articles/2014/08/13/the-elements-of-style-in-ruby-number-14-variable-interpolation</id>
+    <content type="html"><![CDATA[<p>Most experienced Rubyists probably know that there are two ways to interpolate instance, class and global variables into
+strings.</p>
+
+<p>``` ruby</p>
+
+<h1>compact notation (works only for instance/class/global vars)</h1>
+
+<p>&ldquo;this is #$some_var&rdquo;</p>
+
+<h1>standard notation (works for any expression)</h1>
+
+<p>&ldquo;this is #{$some_var}&rdquo;
+```</p>
+
+<p>As you&rsquo;ve noticed you can leave out the <code>{}</code> which can&rsquo;t be left out for any other expression. Some people find this
+interpolation syntax concise and elegant, but I&rsquo;ll argue that it should be avoided. Here&rsquo;s why:</p>
+
+<ul>
+<li>You can&rsquo;t use this notation in every possible scenario:</li>
+</ul>
+
+
+<p>``` ruby</p>
+
+<h1>this is fine</h1>
+
+<p>puts &ldquo;#{@variable}string_straight_after_without_space&rdquo;</p>
+
+<h1>but this means something totally different</h1>
+
+<p>puts &ldquo;#@variablestring_straight_after_without_space&rdquo;
+```</p>
+
+<p>This means that using the compact notation only when applicable forces you to introduce some inconsistency in your code.
+This is rarely good&hellip;</p>
+
+<ul>
+<li>You&rsquo;re using different notations for the same basic operation (interpolation), without getting anything in return.
+That&rsquo;s not the same with semantic use of single and double quoted strings or <code>fail</code> and <code>raise</code>.</li>
+</ul>
+
+
+<p>``` ruby</p>
+
+<h1>using compact</h1>
+
+<p>&ldquo;this is #@x&rdquo;
+&ldquo;this is #{x}&rdquo;</p>
+
+<h1>using standard</h1>
+
+<p>&ldquo;this is #{@x}&rdquo;
+&ldquo;this is #{x}&rdquo;
+```</p>
+
+<ul>
+<li>It&rsquo;s easy to make a mistake in the context of a regular expression
+(as interpolation works in regexp literals).  Recently I saw the
+following regexp &ndash; <code>/[0-9.(),;:!?%#$?\x27\x22_+=\\\/\-]*/</code>. There&rsquo;s a
+subtle problem with it, that&rsquo;s not obvious (unless you have a good
+editor, that is). The sequence <code>#$?</code> is interpreted as interpolation
+of the global variable <code>$?</code> (a.k.a. <code>$CHILD_STATUS</code>) and this regexp doesn&rsquo;t work as intended.</li>
+</ul>
+
+
+<p>This scenario shows that the syntax was ill-conceived.</p>
+
+<ul>
+<li>Non-experience Rubyists probably don&rsquo;t know about the compact interpolation notation.
+Few books and tutorials mention it these days, so using it your code will confuse at least
+some of the people reading it.</li>
+</ul>
+
+
+<hr />
+
+<p>It seems to me that Ruby will be better off without a special syntax
+for variable interpolation. Ideally it would be removed in Ruby 3 and
+we&rsquo;ll have one less thing to worry about in our Ruby code.</p>
+
+<p>That&rsquo;s all for today, folks!</p>
+
+<p>As usual I&rsquo;m looking forward to hearing your thoughts here and on
+<a href="http://twitter.com/bbatsov">Twitter</a>!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Elements of Style in Ruby #13: length vs size vs count]]></title>
+    <link href="http://batsov.com/articles/2014/02/17/the-elements-of-style-in-ruby-number-13-length-vs-size-vs-count/"/>
+    <updated>2014-02-17T18:55:00+02:00</updated>
+    <id>http://batsov.com/articles/2014/02/17/the-elements-of-style-in-ruby-number-13-length-vs-size-vs-count</id>
+    <content type="html"><![CDATA[<p>One of the problems newcomers to Ruby experience is that there are
+often quite a few ways to do same thing. For instance &ndash; you can obtain
+the number of items in <code>Enumerable</code> objects (instances of classes
+using the <code>Enumerable</code> mixin, which would often be collections like
+<code>Array</code>, <code>Hash</code>, <code>Set</code>, etc) by either using <code>Enumerable#count</code> or the
+methods <code>length</code> and its alias <code>size</code> that such classes often
+provide.</p>
+
+<p>``` ruby
+arr = [1, 2, 3]</p>
+
+<p>arr.length # => 3
+arr.size # => 3
+arr.count # => 3</p>
+
+<p>h = { a: 1, b: 2 }</p>
+
+<p>h.length # => 2
+h.size # => 2
+h.count # => 2</p>
+
+<p>str = &lsquo;name&rsquo;
+str.length # => 4
+str.size # => 4</p>
+
+<h1>str.count won&rsquo;t work as String does not include Enumerable</h1>
+
+<p>```</p>
+
+<p>Which one should you use? Let me help with this choice.</p>
+
+<p><code>length</code> is a method that&rsquo;s not part of <code>Enumerable</code> &ndash; it&rsquo;s part of a
+concrete class (like <code>String</code> or <code>Array</code>) and it&rsquo;s usually running in
+<code>O(1)</code> (constant) time. That&rsquo;s as fast as it gets, which means that
+using it is probably a good idea.</p>
+
+<p>Whether you should use <code>length</code> or <code>size</code> is mostly a matter of
+personal preference.  Personally I use <code>size</code> for collections (hashes,
+arrays, etc) and <code>length</code> for strings, since for me objects like
+hashes and stacks don&rsquo;t have a length, but a size (defined in terms of
+the elements they contain). Conversely, it&rsquo;s perfectly normal to
+assume that some text has some length. Anyways, in the end you&rsquo;re
+invoking the same method, so the semantic distinction is not
+important.</p>
+
+<p><code>Enumerable#count</code>, on the other hand, is a totally different
+beast. It&rsquo;s usually meant to be used with a block or an argument and
+will return the number of matches in an <code>Enumerable</code>:</p>
+
+<p>``` ruby
+arr = [1, 1, 2, 3, 5, 6, 8]</p>
+
+<p>arr.count(&amp;:even?) # => 3
+arr.count(1) # => 2
+```</p>
+
+<p>You can, however, invoke it without any arguments and it will return the size of the enumerable on which it was invoked:</p>
+
+<p><code>ruby
+arr.count # =&gt; 7
+</code></p>
+
+<p>There&rsquo;s a performance implication with this, though &ndash; to calculate the
+size of the enumerable the <code>count</code> method will traverse it, which is
+not particularly fast (especially for huge collections). Some classes
+(like <code>Array</code>) implement an optimized version of <code>count</code> in terms of
+<code>length</code>, but many don&rsquo;t.</p>
+
+<p>The takeaway for you is that you should
+avoid using the <code>count</code> method if you can use <code>length</code> or <code>size</code>.</p>
+
+<p>A note to Rails developers &ndash; <code>ActiveRecord::Relation</code>&rsquo;s <code>length</code>,
+<code>size</code> and <code>count</code> methods have a totally different meaning, but that&rsquo;s
+irrelevant to our current discussion. (<code>Sean Griffin</code> has written
+<a href="http://batsov.com/articles/2014/02/17/the-elements-of-style-in-ruby-number-13-length-vs-size-vs-count/#comment-1248998887">a comment regarding it</a>).</p>
+
+<p>That&rsquo;s all for now, folks! As usual I&rsquo;m looking forward to hearing your thoughts here and on
+<a href="http://twitter.com/bbatsov">Twitter</a>!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Elements of Style in Ruby #12: proc vs Proc.new]]></title>
+    <link href="http://batsov.com/articles/2014/02/04/the-elements-of-style-in-ruby-number-12-proc-vs-proc-dot-new/"/>
+    <updated>2014-02-04T16:20:00+02:00</updated>
+    <id>http://batsov.com/articles/2014/02/04/the-elements-of-style-in-ruby-number-12-proc-vs-proc-dot-new</id>
+    <content type="html"><![CDATA[<p>People are often confused about the fact that there are two ways to created <code>proc</code>s in Ruby &ndash;
+via <code>Kernel#proc</code> and <code>Proc.new</code>. Let&rsquo;s see them in action:</p>
+
+<p>``` ruby
+Proc.new { true }</p>
+
+<h1>=> #&lt;Proc:0x007fe35440a058></h1>
+
+<p>proc { true }</p>
+
+<h1>=> #&lt;Proc:0x007fe35440a059></h1>
+
+<p>```</p>
+
+<p>Hmmm, it seems we get exactly the same results&hellip; While this is true
+on Ruby 1.9+, this was not always the case.</p>
+
+<p>In Ruby 1.8, <code>Kernel#proc</code> is actually a synonym for <code>Kernel#lambda</code>
+which was extremely confusing, since as we all know <code>lambda</code>s an
+<code>proc</code>s differ in
+<a href="http://stackoverflow.com/questions/626/when-to-use-lambda-when-to-use-proc-new">subtle ways</a>. Luckily
+sanity prevailed and Ruby 1.9 made <code>Kernel#proc</code> a synonym for
+<code>Proc.new</code> instead.</p>
+
+<p>At this point, however, people couldn&rsquo;t use <code>Kernel#proc</code> anymore if they
+wanted to write code that&rsquo;s behaving in the same way on both Ruby 1.8
+and Ruby 1.9 and the use of <code>Kernel#proc</code> was generally discouraged.
+Thankfully Ruby 1.8 is now dead and buried and there&rsquo;s no reason to prefer
+<code>Proc.new</code> over <code>Kernel#proc</code> anymore.  As a matter of fact &ndash; you
+should probably be using only <code>Kernel#proc</code> as it&rsquo;s more concise and
+it&rsquo;s symmetrical to <code>Kernel#lambda</code>.</p>
+
+<p>``` ruby
+lambda { true }</p>
+
+<h1>=> #&lt;Proc:0x007fe35440a058 (lambda)></h1>
+
+<p>proc { true }</p>
+
+<h1>=> #&lt;Proc:0x007fe35440a059></h1>
+
+<p>```</p>
+
+<p>By the way, given <code>proc</code>&rsquo;s fairly counter-intuitive behavior regarding <code>return</code>, you should probably
+use <code>lambda</code>s most of the time.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Elements of Style in Ruby #11: Invoking Lambdas/Procs]]></title>
+    <link href="http://batsov.com/articles/2013/09/26/the-elements-of-style-in-ruby-number-11-invoking-lambdas-slash-procs/"/>
+    <updated>2013-09-26T17:43:00+03:00</updated>
+    <id>http://batsov.com/articles/2013/09/26/the-elements-of-style-in-ruby-number-11-invoking-lambdas-slash-procs</id>
+    <content type="html"><![CDATA[<p>There are whopping 4 ways to invoke a lambda (or a proc) in Ruby:</p>
+
+<p>``` ruby
+lambda.call(arg1, arg2)</p>
+
+<p>lambda[arg1, arg2]</p>
+
+<p>lambda.(arg1, arg2)</p>
+
+<h1>works only with one argument lambdas</h1>
+
+<p>lambda === arg
+```</p>
+
+<p>The last option <code>Proc#===</code> is a special case, that&rsquo;s quite useful
+in <a href="http://batsov.com/articles/2013/09/24/lambdas-slash-procs-in-case-expressions/">case expressions</a>,
+but should never the used directly.</p>
+
+<p>Of the three general purpose <code>Proc</code> methods that are available (it&rsquo;s
+actually just one method with two aliases) I&rsquo;d strongly encourage you
+to stick with<code>Proc#call</code>. The reasons are quite simple:</p>
+
+<ul>
+<li><p><code>lambda[arg]</code> looks like an index access on some data structure and you&rsquo;d certainly
+have to analyze the code context to understand what&rsquo;s going on (especially since the <code>lambda</code> is unlikely to actually be named
+<code>lambda</code> in actual code :&ndash;)).</p></li>
+<li><p><code>lambda.(arg)</code> is a cute syntactic trick, but it&rsquo;s really easy to overlook the <code>.</code> and assume that this is a normal
+method call (which probably was the point when this syntax was introduced). <code>lambda</code>s in Ruby are not real lambdas (they are instances of the <code>Proc</code> class) and we should simply embrace this fact instead of trying to hide it behind awkward syntax.</p></li>
+</ul>
+
+
+<p>I value code clarity and readability immensely and I&rsquo;m not particularly fond of excessive usage of
+operator overloading. The use of operators for lambda invocations in Ruby represents the ugly side of operator overloading &ndash;
+instead of increasing the readability of the code, the operators actually decrease it.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Elements of Style in Ruby #10: In cryptic Perlisms we do not trust]]></title>
+    <link href="http://batsov.com/articles/2013/09/05/the-elements-of-style-in-ruby-number-10-in-cryptic-perlisms-we-do-not-trust/"/>
+    <updated>2013-09-05T11:41:00+03:00</updated>
+    <id>http://batsov.com/articles/2013/09/05/the-elements-of-style-in-ruby-number-10-in-cryptic-perlisms-we-do-not-trust</id>
+    <content type="html"><![CDATA[<p>For better or for worse Perl had significant influence over Ruby&rsquo;s
+initial design. A lot of things were directly borrowed from Perl, but
+over the years the Ruby community rejected most of the Perlisms. In
+this article I&rsquo;ll go over most of the Perl legacy which you should try
+to steer clear from.</p>
+
+<h3>Global variables</h3>
+
+<p>Global variables are the nemesis of object-oriented programming(most
+OO languages don&rsquo;t even have the concept of a global variable). Don&rsquo;t
+introduce any of those in your Ruby programs! In most cases you can
+substitute them for module instance variables:</p>
+
+<p>``` ruby</p>
+
+<h1>bad</h1>
+
+<p>$foo_bar = 1</p>
+
+<h1>good</h1>
+
+<p>module Foo
+  class &lt;&lt; self</p>
+
+<pre><code>attr_accessor :bar
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>Foo.bar = 1
+```</p>
+
+<p>Unfortunately, one cannot code Ruby and get away without using the built-in global
+variables&hellip;</p>
+
+<h3>Special global variables</h3>
+
+<p>Originally Ruby borrowed just about all of Perl&rsquo;s special global
+variables, known worldwide for their <strong>intention revealing names</strong> &ndash;
+<code>$:</code>, <code>$;</code>, <code>$!</code>, <code>$$</code>, <code>$\</code>, etc. I&rsquo;ve coded Ruby for quite some time now and
+still can&rsquo;t remember what half of those meant (and I knew a bit of
+Perl before I knew any Ruby). Luckily at some point the
+<a href="http://www.ruby-doc.org/stdlib-2.0/libdoc/English/rdoc/English.html">English library</a>
+was added to Ruby, which simply adds sensible aliases for the cryptic
+Perl names. With it you can change this code:</p>
+
+<p>``` ruby
+$:.unshift File.dirname(<strong>FILE</strong>)</p>
+
+<p>files = <code>git ls-files</code>.split($)
+```</p>
+
+<p>to:</p>
+
+<p>``` ruby
+require &lsquo;English&rsquo;
+$LOAD_PATH.unshift File.dirname(<strong>FILE</strong>)</p>
+
+<p>files = <code>git ls-files</code>.split($INPUT_RECORD_SEPARATOR)
+```</p>
+
+<p>I think that the improvement is pretty obvious.  Why <code>English</code> is not required by
+default is beyond me. Personally I use it always and I think you should do the same.</p>
+
+<h3>Last regexp captures</h3>
+
+<p>When you do a regexp match (like <code>/regexp/ ~= string</code>) a few special
+global variables with funky names get populated with the prematch,
+match, postmatch, etc. If the regexp has any groups in it, the stuff
+they matched gets assigned to other special variables with the
+descriptive names <code>$1</code> (for the first group), <code>$2</code> (for the second
+group), etc. This idiom is unfortunately very popular with Ruby
+developers, likely because few of them know of <code>Regexp.last_match</code>.</p>
+
+<p>``` ruby
+/(regexp)/ =~ string
+&hellip;</p>
+
+<h1>this is Perl-style</h1>
+
+<p>process $1</p>
+
+<h1>this is the same, but more clear and more object oriented</h1>
+
+<p>process Regexp.last_match[1]
+```</p>
+
+<p>Basically you can extract from <code>Regexp.last_match</code> everything you&rsquo;d get from the special global variables.</p>
+
+<p>Yep, you&rsquo;ll have to type more, but when clarity is at stake a little bit of extra typing is certainly justified.</p>
+
+<p>You can even go a step further and use the <code>Regexp#match</code> method:</p>
+
+<p>``` ruby
+md = /(Bat.+)\s/.match(&lsquo;Batman rules!&rsquo;)</p>
+
+<h1>=> #<MatchData "Batman " 1:"Batman"></h1>
+
+<p>md[1]</p>
+
+<h1>=> &ldquo;Batman&rdquo;</h1>
+
+<p>```</p>
+
+<p>By the way, keep in mind that it&rsquo;s generally a good idea to use named
+regexp groups over positional ones, once you&rsquo;re dealing with more than
+two groups. Numbers simply don&rsquo;t convey that much meaning&hellip;</p>
+
+<h3>BEGIN/END blocks</h3>
+
+<p>Strictly speaking those came from <code>awk</code>, but I still consider them
+part of the Perl legacy. If you don&rsquo;t know what I&rsquo;m talking about feel
+free to skip this section &ndash; your soul has already been saved.</p>
+
+<p>``` ruby
+END {
+  puts &ldquo;Exiting&hellip;&rdquo;
+}</p>
+
+<p>puts &ldquo;Processing&hellip;&rdquo;</p>
+
+<p>BEGIN {
+  puts &ldquo;Starting&hellip;&rdquo;
+}
+```</p>
+
+<p><code>BEGIN</code> blocks are executed before everything else in your program in
+the order in which they are encountered. <code>END</code> blocks are executed right before
+the program exits. Those hideous constructs mess with the flow of
+control of the program and are totally useless. I&rsquo;ve never ever needed
+a <code>BEGIN</code> block and <code>END</code> blocks are totally replaceable with
+<code>Kernel#at_exit</code>. I guess they might have some utility for old-school
+scripting tasks, but application developers should ignore them
+completely!</p>
+
+<h3>Flip-flops</h3>
+
+<p>Same as in the previous section &ndash; if you don&rsquo;t know what I&rsquo;m talking about feel free to
+skip this section &ndash; your soul has already been saved.</p>
+
+<p>Flip-flops are an obscure conditional construct with just a single useful application &ndash; text processing:</p>
+
+<p>``` ruby
+DATA.each_line do |line|
+  print line if (line =~ /begin/)..(line =~ /end/)
+end</p>
+
+<p><strong>END</strong>
+0a
+1begin
+2c
+3end
+4e
+5f
+6begin
+7end
+8i
+9j
+```</p>
+
+<p>This will print:</p>
+
+<p><code>
+1begin
+2c
+3end
+6begin
+7end
+</code></p>
+
+<p>Hopefully you&rsquo;ve managed to deduce how they work from this example, if
+you haven&rsquo;t &ndash; you&rsquo;ve just understood what their main problem is.</p>
+
+<p>I never had to use those and probably you won&rsquo;t have a reason to use them
+either. Their usage is likely going to do just one thing for you &ndash; reduce the
+readability of the code you&rsquo;re writing.</p>
+
+<h3>Epilogue</h3>
+
+<p>I&rsquo;d really love to see some of those Perlisms out of Ruby &ndash; the
+removal of <code>flip-flops</code> and <code>BEGIN/END</code> gets suggested upstream every
+now and then and might happen in Ruby 3.0. Removing the global
+variables, however, is unlikely to ever happen since that would be a
+huge change.</p>
+
+<p>You can use <a href="https://github.com/bbatsov/rubocop">RuboCop</a>
+to identify and fix such shortfalls of your code.</p>
+
+<p>As usual I&rsquo;m looking forward to hearing your thoughts here and on
+<a href="http://twitter.com/bbatsov">Twitter</a>!</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Ruby Tip #2: Get a List of All Rake Tasks - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Many people are having trouble remembering all the rake tasks defined
+in a particular project&rsquo;s Rakefile (especially if they hadn&rsquo;t &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2012/03/08/ruby-tip-number-2-get-a-list-of-all-rake-tasks">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Ruby Tip #2: Get a List of All Rake Tasks</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-08T15:28:00+02:00" pubdate data-updated="true">Mar 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Many people are having trouble remembering all the rake tasks defined
+in a particular project&rsquo;s <code>Rakefile</code> (especially if they hadn&rsquo;t
+authored it). This is quite normal given the fact that Rails&rsquo;s
+Rakefile, for instance, defines 39 tasks (as of version
+3.2.2). Personally I never memorize anything, but the most basic rake
+tasks &ndash; for everything else there is the <code>rake -T</code> (or <code>rake --tasks</code>)
+command. Here&rsquo;s the command in action for Octopress&rsquo;s Rakefile:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rake -T
+</span><span class='line'>rake clean                 <span class="c"># Clean out caches: .pygments-cache, .gist-cache, .sass-cache</span>
+</span><span class='line'>rake copydot<span class="o">[</span><span class="nb">source</span>,dest<span class="o">]</span>  <span class="c"># copy dot files for deployment</span>
+</span><span class='line'>rake deploy                <span class="c"># Default deploy task</span>
+</span><span class='line'>rake gen_deploy            <span class="c"># Generate website and deploy</span>
+</span><span class='line'>rake generate              <span class="c"># Generate jekyll site</span>
+</span><span class='line'>rake install<span class="o">[</span>theme<span class="o">]</span>        <span class="c"># Initial setup for Octopress: copies the default theme into the path of Jekyll&#39;s generator.</span>
+</span><span class='line'>rake integrate             <span class="c"># Move all stashed posts back into the posts directory, ready for site generation.</span>
+</span><span class='line'>rake isolate<span class="o">[</span>filename<span class="o">]</span>     <span class="c"># Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much quicker.</span>
+</span><span class='line'>rake list                  <span class="c"># list tasks</span>
+</span><span class='line'>rake new_page<span class="o">[</span>filename<span class="o">]</span>    <span class="c"># Create a new page in source/(filename)/index.markdown</span>
+</span><span class='line'>rake new_post<span class="o">[</span>title<span class="o">]</span>       <span class="c"># Begin a new post in source/_posts</span>
+</span><span class='line'>rake preview               <span class="c"># preview the site in a web browser</span>
+</span><span class='line'>rake push                  <span class="c"># deploy public directory to github pages</span>
+</span><span class='line'>rake rsync                 <span class="c"># Deploy website via rsync</span>
+</span><span class='line'>rake set_root_dir<span class="o">[</span>dir<span class="o">]</span>     <span class="c"># Update configurations to support publishing to root or sub directory</span>
+</span><span class='line'>rake setup_github_pages    <span class="c"># Set up _deploy folder and deploy branch for Github Pages deployment</span>
+</span><span class='line'>rake update_source<span class="o">[</span>theme<span class="o">]</span>  <span class="c"># Move source to source.old, install source theme updates, replace source/_includes/navigation.html with source.old&#39;s navigation</span>
+</span><span class='line'>rake update_style<span class="o">[</span>theme<span class="o">]</span>   <span class="c"># Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom</span>
+</span><span class='line'>rake watch                 <span class="c"># Watch the site and regenerate when it</span>
+</span><span class='line'>changes
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Not only did you get a list of all the tasks, but nice descriptions of
+the tasks as well.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-08T15:28:00+02:00" pubdate data-updated="true">Mar 8<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/ruby/'>Ruby</a>, <a class='category' href='/articles/categories/tip/'>Tip</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2012/03/08/ruby-tip-number-2-get-a-list-of-all-rake-tasks/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2012/03/08/ruby-tip-number-2-get-a-list-of-all-rake-tasks/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2012/03/08/emacs-tip-number-4-repeat-last-command/" title="Previous Post: Emacs Tip #4: Repeat Last Command">&laquo; Emacs Tip #4: Repeat Last Command</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2012/03/08/emacs-tip-number-5-save-buffers-automatically-on-buffer-or-window-switch/" title="Next Post: Emacs Tip #5: Save Buffers Automatically on Buffer or Window Switch">Emacs Tip #5: Save Buffers Automatically on Buffer or Window Switch &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2012/03/08/ruby-tip-number-2-get-a-list-of-all-rake-tasks/';
+        var disqus_url = 'http://batsov.com/articles/2012/03/08/ruby-tip-number-2-get-a-list-of-all-rake-tasks/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

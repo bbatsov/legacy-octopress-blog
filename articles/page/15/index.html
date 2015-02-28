@@ -1,0 +1,599 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>(think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude Emacs is slowly, but firmly moving in the right direction with
+Emacs 24. A
+lot of new important features are coming, the release date is &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/page/15">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/03/20/die-emacswiki/">Die EmacsWiki, Die!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-20T14:49:00+02:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p>Emacs is slowly, but firmly moving in the right direction with
+<a href="http://batsov.com/articles/2011/08/19/a-peek-at-emacs24/">Emacs 24</a>. A
+lot of new important features are coming, the release date is nearing,
+but there is something worrisome on the otherwise bright Emacs
+horizon. It&rsquo;s a remnant from the <strong>Dark Emacs Days</strong> and it&rsquo;s called
+<a href="http://emacswiki.org">EmacsWiki</a>.</p>
+
+<p>Shortly put &ndash; <em>EmacsWiki is a blight</em>.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/articles/2012/03/20/die-emacswiki/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/03/08/emacs-tip-number-5-save-buffers-automatically-on-buffer-or-window-switch/">Emacs Tip #5: Save Buffers Automatically on Buffer or Window Switch</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-08T15:58:00+02:00" pubdate data-updated="true">Mar 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When I program in Java I usually leave the comfort of Emacs and use
+IntelliJ IDEA instead (for various reasons that are irrelevant to this
+post). IDEA has one particularly nice feature &ndash; &ldquo;auto-save on focus
+lost&rdquo;. Basically you never have to hit <code>C-s</code> there explicitly, because
+any time your current editor window loses focus its contents get
+flushed to the disk automatically. Implementing something exactly the
+same in Emacs is impossible (at least in Emacs Lisp), but we can
+create a solution that is similar in spirit at least &ndash; we can
+auto-save buffers when we switch the Emacs window or the current
+buffer (which are more or less the most popular ways to change editing
+focus in Emacs). This is easy to achieve in Emacs Lisp:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;; use shift + arrow keys to switch between visible buffers</span>
+</span><span class='line'><span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;windmove</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nv">windmove-default-keybindings</span> <span class="ss">&#39;super</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; automatically save buffers associated with files on buffer switch</span>
+</span><span class='line'><span class="c1">;; and on windows switch</span>
+</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">switch-to-buffer</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">save-buffer-now</span> <span class="nv">activate</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">when</span> <span class="nv">buffer-file-name</span> <span class="p">(</span><span class="nv">save-buffer</span><span class="p">)))</span>
+</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">other-window</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-now</span> <span class="nv">activate</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">when</span> <span class="nv">buffer-file-name</span> <span class="p">(</span><span class="nv">save-buffer</span><span class="p">)))</span>
+</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-up</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-now</span> <span class="nv">activate</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">when</span> <span class="nv">buffer-file-name</span> <span class="p">(</span><span class="nv">save-buffer</span><span class="p">)))</span>
+</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-down</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-now</span> <span class="nv">activate</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">when</span> <span class="nv">buffer-file-name</span> <span class="p">(</span><span class="nv">save-buffer</span><span class="p">)))</span>
+</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-left</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-now</span> <span class="nv">activate</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">when</span> <span class="nv">buffer-file-name</span> <span class="p">(</span><span class="nv">save-buffer</span><span class="p">)))</span>
+</span><span class='line'><span class="p">(</span><span class="nv">defadvice</span> <span class="nv">windmove-right</span> <span class="p">(</span><span class="nv">before</span> <span class="nv">other-window-now</span> <span class="nv">activate</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">when</span> <span class="nv">buffer-file-name</span> <span class="p">(</span><span class="nv">save-buffer</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Obviously this code could have been written in a more compact manner
+with the use of a macro, but I&rsquo;ve decided to use this more verbose
+variant for the sake of simplicity. We assume that you want to
+auto-save your current work (buffer) when you switch to a new buffer
+or to a new window (with either <code>C-x o</code> (<code>other-window</code>) or a
+<code>windmove</code> command).</p>
+
+<p>XEmacs has a hook called <code>deselect-frame-hook</code> that can take the
+concept even further, but it&rsquo;s absent from GNU Emacs.</p>
+
+<p>So, that&rsquo;s all for this tip, folks! I hope you&rsquo;ve enjoyed it!
+Personally I find it much more useful that the standard auto-save
+mechanism in Emacs. And one more thing &ndash;
+<a href="https://github.com/bbatsov/prelude">Emacs Prelude</a> naturally
+enables this functionality by default.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/03/08/ruby-tip-number-2-get-a-list-of-all-rake-tasks/">Ruby Tip #2: Get a List of All Rake Tasks</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-08T15:28:00+02:00" pubdate data-updated="true">Mar 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Many people are having trouble remembering all the rake tasks defined
+in a particular project&rsquo;s <code>Rakefile</code> (especially if they hadn&rsquo;t
+authored it). This is quite normal given the fact that Rails&rsquo;s
+Rakefile, for instance, defines 39 tasks (as of version
+3.2.2). Personally I never memorize anything, but the most basic rake
+tasks &ndash; for everything else there is the <code>rake -T</code> (or <code>rake --tasks</code>)
+command. Here&rsquo;s the command in action for Octopress&rsquo;s Rakefile:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rake -T
+</span><span class='line'>rake clean                 <span class="c"># Clean out caches: .pygments-cache, .gist-cache, .sass-cache</span>
+</span><span class='line'>rake copydot<span class="o">[</span><span class="nb">source</span>,dest<span class="o">]</span>  <span class="c"># copy dot files for deployment</span>
+</span><span class='line'>rake deploy                <span class="c"># Default deploy task</span>
+</span><span class='line'>rake gen_deploy            <span class="c"># Generate website and deploy</span>
+</span><span class='line'>rake generate              <span class="c"># Generate jekyll site</span>
+</span><span class='line'>rake install<span class="o">[</span>theme<span class="o">]</span>        <span class="c"># Initial setup for Octopress: copies the default theme into the path of Jekyll&#39;s generator.</span>
+</span><span class='line'>rake integrate             <span class="c"># Move all stashed posts back into the posts directory, ready for site generation.</span>
+</span><span class='line'>rake isolate<span class="o">[</span>filename<span class="o">]</span>     <span class="c"># Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much quicker.</span>
+</span><span class='line'>rake list                  <span class="c"># list tasks</span>
+</span><span class='line'>rake new_page<span class="o">[</span>filename<span class="o">]</span>    <span class="c"># Create a new page in source/(filename)/index.markdown</span>
+</span><span class='line'>rake new_post<span class="o">[</span>title<span class="o">]</span>       <span class="c"># Begin a new post in source/_posts</span>
+</span><span class='line'>rake preview               <span class="c"># preview the site in a web browser</span>
+</span><span class='line'>rake push                  <span class="c"># deploy public directory to github pages</span>
+</span><span class='line'>rake rsync                 <span class="c"># Deploy website via rsync</span>
+</span><span class='line'>rake set_root_dir<span class="o">[</span>dir<span class="o">]</span>     <span class="c"># Update configurations to support publishing to root or sub directory</span>
+</span><span class='line'>rake setup_github_pages    <span class="c"># Set up _deploy folder and deploy branch for Github Pages deployment</span>
+</span><span class='line'>rake update_source<span class="o">[</span>theme<span class="o">]</span>  <span class="c"># Move source to source.old, install source theme updates, replace source/_includes/navigation.html with source.old&#39;s navigation</span>
+</span><span class='line'>rake update_style<span class="o">[</span>theme<span class="o">]</span>   <span class="c"># Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom</span>
+</span><span class='line'>rake watch                 <span class="c"># Watch the site and regenerate when it</span>
+</span><span class='line'>changes
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Not only did you get a list of all the tasks, but nice descriptions of
+the tasks as well.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/03/08/emacs-tip-number-4-repeat-last-command/">Emacs Tip #4: Repeat Last Command</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-08T15:09:00+02:00" pubdate data-updated="true">Mar 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Some times you&rsquo;d want to quickly repeat an Emacs command several times and
+most of the time it won&rsquo;t have a convenient keybinding you can use to
+do this. Enter <code>C-x z</code> (<code>repeat</code>) &ndash; it simply repeats the most
+recently executed command. And the best part? After you&rsquo;ve pressed
+<code>C-x z</code> once you can continue repeating the last command simply by
+pressing <code>z</code>. Vi(m) users will probably note that this is quite similar
+to the <code>.</code> command there.</p>
+
+<p>For instance &ndash; if you want to execute the <code>er/expand-region</code> command
+(part of the
+<a href="https://github.com/magnars/expand-region.el">expand-region package</a>)
+a few times you can do it like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>M-x er/expand-region
+</span><span class='line'>C-x z
+</span><span class='line'>z
+</span><span class='line'>z
+</span><span class='line'>z</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Neat, ah?</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/">Package Management in Emacs: The Good, the Bad and the Ugly</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T12:18:00+02:00" pubdate data-updated="true">Feb 19<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p>Let&rsquo;s face it &ndash; although a vanilla Emacs installation is quite
+powerful almost nobody is using Emacs without a pile of add-ons. And
+managing those add-ons is quite frankly a pain in the ass. Traditional
+options included installing Emacs add-ons via the operating system&rsquo;s
+package manager (if available), downloading <code>.el</code> files from various
+locations (everybody hates packages distributed only on Emacs Wiki
+with no canonical version control repo) and simply sticking them on
+the <code>load-path</code>, etc. It&rsquo;s more than obvious that such solutions are
+less than ideal.</p>
+
+<p>For instance if you&rsquo;re installing Emacs add-ons via a package manager
+and you have to change OSes (or machines) you&rsquo;re mostly fucked. On the
+other hand piling files manually in <code>.emacs.d</code> is equal to hell in the
+version and dependency tracking department. There has to be a better
+way, right? Wouldn&rsquo;t it be nice if Emacs had its own package manager
+similar to the likes of <code>homebrew</code>, <code>apt</code> or <code>yum</code>?</p>
+
+<p><a href="http://batsov.com/articles/2011/08/19/a-peek-at-emacs24/">Emacs 24</a>
+finally introduces such a tool &ndash; its name is <code>package.el</code> (very
+original, right?) and it&rsquo;s promise is to make you&rsquo;re lives a bit
+easier. Does it manage to deliver on that promise? We&rsquo;ll see that in a bit&hellip;</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/articles/page/16/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/articles/page/14/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I&#8217;m a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

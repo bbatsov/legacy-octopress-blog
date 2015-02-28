@@ -1,0 +1,1710 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>(think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Disclaimer If you&rsquo;re looking for a flame post &ndash; this is not one of them. I love
+both languages and I&rsquo;ll simply compare some of &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/page/21">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/05/03/ruby-or-python/">Ruby or Python? Well, It Depends&#8230;</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-03T00:00:00+03:00" pubdate data-updated="true">May 3<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>Disclaimer</strong></p>
+
+<p><em>If you&rsquo;re looking for a flame post &ndash; this is not one of them. I love
+both languages and I&rsquo;ll simply compare some of their features and
+possible uses.</em></p>
+
+<h2>Prelude</h2>
+
+<p>Ruby or Python? This is the Question! Well it might not be the
+Question, but it&rsquo;s a common question for many developers looking to
+break free from the statically typed language they know and learn a
+dynamic language. I personally know them both(though I know a bit more
+Ruby, than Python) and in this article I&rsquo;ll share my personal opinion
+on their strengths and weaknesses. You&rsquo;d probably do good to learn
+them both, but my arguments here may lead you to pick only one of the
+languages depending on you preferences.</p>
+
+<h2>Installation</h2>
+
+<p><strong>Linux/Unix installation</strong></p>
+
+<p>If you&rsquo;re using a Linux distribution or some other Unix derivative
+such as *BSD or Solaris you&rsquo;ll probably be able to install Ruby and
+Python through the operating system&rsquo;s software management system. For
+instance on Debian Linux systems(Ubuntu is a popular Debian
+derivative) you can use apt to install them. Run the following
+commands as root or with sudo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>apt-get install ruby
+</span><span class='line'><span class="nv">$ </span>apt-get install python
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On Red Hat based distros like Fedora, CentOS, etc you can use yum
+instead:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>yum install ruby
+</span><span class='line'><span class="nv">$ </span>yum install python
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should keep in mind the fact that both Ruby and Python have two
+version that are commonly used at the moment. Ruby&rsquo;s current version
+is <em>1.9.2</em> and Python&rsquo;s is <em>3.2</em>. For various reasons(like backward
+compatibility for instance), however, the current versions are not
+widely deployed yet(especially Python 3). In most Linux distributions
+the package ruby will actually be Ruby 1.8.x and the package python
+will be Python 2.7.x. If your distribution is one of those &ndash; look for
+packages named ruby19(or similar) and python3:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>apt-get install ruby19
+</span><span class='line'><span class="nv">$ </span>apt-get install python3
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or on a Red Hat system:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>yum install ruby19
+</span><span class='line'><span class="nv">$ </span>yum install python3
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using the distribution package management system is a simple solution,
+but in the case of Ruby it might not be best one. Most Ruby hackers
+favour a powerful bash script called RVM(Ruby Version Manager) that
+allows you to install several different version(or flavours of Ruby)
+and switch easily between them. Please refer to the official
+<a href="https://rvm.beginrescueend.com/">RVM documentation</a> for installation
+and usage instructions.</p>
+
+<p><strong>Windows installation</strong></p>
+
+<p>Installing Ruby on Windows used to be a pretty hard task, but this is
+no longer the case now thanks to
+<a href="http://rubyinstaller.org/">the RubyInstaller for Windows</a>. This is a
+self-contained Windows-based installer that includes the Ruby
+language, an execution environment, important documentation, and
+more. It has two editions one for the older 1.8.x Ruby branch and one
+for the current 1.9.x.</p>
+
+<p>Python has several installation options for Windows &ndash; the most obvious
+being the
+<a href="http://python.org/ftp/python/3.2/python-3.2.msi">official Python installer for Windows</a>. <a href="http://www.activestate.com/activepython">ActiveState&rsquo;s ActivePython</a>
+is another popular option packed with more features, but you should
+keep in mind that although the Community Edition is free ActivePython
+is not an open-source project. Personally I prefer ActivePython. Other
+prebuilt Python binaries for Windows are also available, but are not
+commonly used.</p>
+
+<p><strong>OS X installation</strong></p>
+
+<p>Ruby is generally preinstalled on OSX, but OSX users can also install
+it via <a href="http://mxcl.github.com/homebrew/">homebrew</a> or RVM(as mentioned in the Linux section).</p>
+
+<p>The is an official <a href="http://python.org/ftp/python/3.2/python-3.2-macosx10.6.dmg">Python package for OSX</a> available. Most users
+will probably prefer using homebrew, however.</p>
+
+<h2>Syntax &amp; code structure</h2>
+
+<p>Ruby makes heavy use of braces and keywords(like do/then/end) to
+delimit blocks of code. Python relies simply on indentation.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">fact</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Same thing in Ruby:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">fact</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="mi">1</span><span class="o">.</span><span class="n">.n</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="ss">:*</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I personally prefer the Python approach since it enforces the code
+semantics based on the code structure alone without imposing special
+syntax.</p>
+
+<p>As a side node you might take under consideration that the Ruby method
+definition doesn&rsquo;t have an explicit return value. The value of the
+last expression in the method&rsquo;s body becomes automatically the
+method&rsquo;s return value. Lisp developers will find this familiar. Java
+and C# developers will probably find it a bit confusing. There is a
+<code>return</code> in Ruby, though, it&rsquo;s just rarely used.</p>
+
+<p>Both languages have support for nested function definitions.</p>
+
+<p>Both languages have support for &ldquo;top-level&rdquo; functions &ndash; that live(or
+seem to live) outside classes and modules(something not possible in
+Java for instance). This makes them good for general purpose
+scripting. While I would still prefer to do my system administration
+with shell and Perl scripts &ndash; Ruby and Python offer a solid
+alternative. Python has a richer system administration library so I&rsquo;d
+prefer it over Ruby for such tasks.</p>
+
+<p>Ruby has a lot of crust(&ldquo;heritage&rdquo;) from Perl &ndash; like a myriad of
+special variables that are now more or less deprecated. It also has
+much syntactic sugar &ndash; for instance do/end is commonly replaced by {}
+for blocks that are only one line long, there is special syntax for
+hashtables, whose keys are symbols, etc.</p>
+
+<p>Since special symbols(non alphanumeric) are allowed in Ruby
+identifiers Ruby uses them to impose some naming conventions to make
+the source code a bit more readable in certain scenarios &ndash; for
+instance predicate methods(those that return true or false) have names
+that end with ?(usually) like even?, odd?, prime?, etc. Methods that
+mutate the object on which they were invoked generally have the !
+suffix &ndash; sort!, map!, etc. I find this a nice decision. In Ruby you
+generally have many ways to achieve the same result:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='irb'><span class='line'><span class="go">ruby-1.9.2-p0 &gt; 1.even?</span>
+</span><span class='line'><span class="go"> =&gt; false</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; arr = [1, 2, 3]</span>
+</span><span class='line'><span class="go"> =&gt; [1, 2, 3]</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; arr.map { |x| x * 2 }</span>
+</span><span class='line'><span class="go"> =&gt; [2, 4, 6]</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; arr</span>
+</span><span class='line'><span class="go"> =&gt; [1, 2, 3]</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; arr.map! { |x| x * 2 }</span>
+</span><span class='line'><span class="go"> =&gt; [2, 4, 6]</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; arr</span>
+</span><span class='line'><span class="go"> =&gt; [2, 4, 6]</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; (1..5).reduce(:*)</span>
+</span><span class='line'><span class="go"> =&gt; 120</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; (1..5).reduce { |x, y| x * y }</span>
+</span><span class='line'><span class="go"> =&gt; 120</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; (1..5).reduce do |x, y|</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt;     x * y</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 ?&gt;  end</span>
+</span><span class='line'><span class="go"> =&gt; 120</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>No such things in Python, however. Python&rsquo;s philosophy is one of
+simplicity &ndash; no excessive syntax sugar, one true way of doing things.</p>
+
+<p>Both languages have powerful features for organising code in
+libraries. I would not go into any details on the subject here, but
+I&rsquo;ll share with you the fact that I like Python&rsquo;s more.</p>
+
+<p>Both languages come with a REPL in which you can do some exploratory
+programming. Ruby&rsquo;s REPL(irb)  allows you
+to do TAB smart completion(amongst other things) by default. To get
+TAB completion in the Python REPL you&rsquo;d have to execute this bit of
+code first:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='pycon'><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">readline</span><span class="o">,</span> <span class="nn">rlcompleter</span>
+</span><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="n">readline</span><span class="o">.</span><span class="n">parse_and_bind</span><span class="p">(</span><span class="s">&quot;tab: complete&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Alternative you can just stick this code snippet in the
+<strong>~/.pythonrc.py</strong> file(create it if it doesn&rsquo;t exist). If you are using
+Windows adjust accordingly(you will have to figure out where
+pythonrc.py is located there).</p>
+
+<p>Ruby does not have statements &ndash; only expressions. This
+basically means that everything(objects, method calls) evaluate to
+some value(though the value might not be helpful always).</p>
+
+<p>In Python there are some statements such as assignment and <em>if</em>. One
+thing I dislike about the Python REPL is that it doesn&rsquo;t print None
+values. Compare this bit of Python code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='pycon'><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&quot;this is a test&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="go">this is a test</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>to this Ruby snippet:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='irb'><span class='line'><span class="go">ruby-1.9.2-p0 &gt; puts &quot;this is a test&quot;</span>
+</span><span class='line'><span class="go">this is a test</span>
+</span><span class='line'><span class="go"> =&gt; nil</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the Python version we see only the side-effect(the printing), but
+not the return value.</p>
+
+<p>Python also ships with a minimalistic IDE called IDLE. If you don&rsquo;t
+have it by default after a python installation on Linux probably
+you&rsquo;re vendor decided to package IDLE as a separate package. IDLE
+offers basic features like syntax highlighting, code completion and
+integration with a debugger. It&rsquo;s a good tool for exploratory
+programming, but I advise you to pick another tool for serious development.</p>
+
+<h2>Naming conventions</h2>
+
+<p>The naming conventions for both Ruby and Python are mostly the same
+which is good if you&rsquo;re using them both on a daily basis &ndash; less room
+for confusion.</p>
+
+<ul>
+<li>variable and method names consisting of more then one word are
+written in lowercase with underscores separating the individual
+words like_this.</li>
+<li>Class names start with capital letter and follow the camel case
+naming convention LikeThis. Some of Python&rsquo;s core classes, however,
+violate this convention.</li>
+<li>Constants are generally written in all caps with underscores
+separating the individual words LIKE_THIS.</li>
+</ul>
+
+
+<p>As I mentioned earlier it&rsquo;s customary to add ? as a suffix to
+predicate methods and ! to mutator methods in Ruby. This convention is
+not always followed unfortunately, even in Ruby&rsquo;s standard library.</p>
+
+<h2>OOP support</h2>
+
+<p>Both Ruby and Python are famous members of the family of object
+oriented languages. Unlike languages such as Java and C#, however,
+Ruby and Python are pure OOP languages. There is no distinction
+between primitive types(such as numbers, characters and booleans) and
+reference types(classes). Everything in them is an object and in that
+sense it&rsquo;s an instance of some class:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='pycon'><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="go">&lt;type &#39;int&#39;&gt;</span>
+</span><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="s">&quot;string&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="go">&lt;type &#39;str&#39;&gt;</span>
+</span><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mf">20.07</span><span class="p">)</span>
+</span><span class='line'><span class="go">&lt;type &#39;float&#39;&gt;</span>
+</span><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</span><span class='line'><span class="go">&lt;type &#39;list&#39;&gt;</span>
+</span><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</span><span class='line'><span class="go">&lt;type &#39;tuple&#39;&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And in Ruby:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='irb'><span class='line'><span class="go">ruby-1.9.2-p0 &gt; 10.class</span>
+</span><span class='line'><span class="go"> =&gt; Fixnum</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; &quot;string&quot;.class</span>
+</span><span class='line'><span class="go"> =&gt; String</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; [].class</span>
+</span><span class='line'><span class="go"> =&gt; Array</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see core Ruby classes tend to have a bit more standard and
+descriptive names than their Python counterparts. You can also notice
+that in Python for some task we use built-in functions like type,
+instead of method calls. The built-in function will eventually result
+in a method invocation(like &ldquo;string&rdquo;.<strong>class</strong> in the case of
+type(&ldquo;string&rdquo;)), but I find this irregularity in the syntax a bit
+irritating.</p>
+
+<p>Method invocation is more flexible in Ruby &ndash; you can omit braces in
+some scenarios. This is handy when you&rsquo;re designing a DSL or you&rsquo;re
+trying to implement the uniform access patterns(data should be
+accessed through fields and methods in the same manner(read this as
+with no braces in method invocations)). On the other hand Python&rsquo;s
+uniform syntax makes it easier to spot method invocations.</p>
+
+<p>Both languages don&rsquo;t have operators &ndash; just methods. Ruby&rsquo;s OO support
+seems to be a bit more mature and polished(at least to me), but
+Python&rsquo;s has some touches as well. I particularly like the explicit
+self references that are required when you try to access class
+members. I&rsquo;m not too found of the use of special sigils in Ruby to
+mark instance(@) and class members(@@). Though they make them visually
+distinctive I think we could have lived without them &ndash; I&rsquo;m generally
+not a fan of non-uniform syntax rules(and you guessed it &ndash; my
+favourite language is Lisp).</p>
+
+<p>Ruby&rsquo;s metaprogramming model arguably gives it an edge in the OOP
+department, but I won&rsquo;t be discussing the metaprogramming issues here
+since they are quite lengthy.</p>
+
+<h2>Functional programming support</h2>
+
+<p>Functional programming has been on the rise lately and it&rsquo;s useful to
+examine what kind of support both languages provide for it. Both have
+support for lambda functions and respectively &ndash; higher-order
+functions(functions that accept functions as parameters). Ruby has
+code blocks, Python has list comprehensions(generally favoured over
+higher-order functions). Both languages lack in their standard libs
+the immutable data structures that generally are the code of most
+functional programming languages. Here&rsquo;s a few example related to
+filtering a sequence based on some predicate:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='pycon'><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+</span><span class='line'><span class="go">[2, 4, 6, 8, 10]</span>
+</span><span class='line'><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+</span><span class='line'><span class="go">[2, 4, 6, 8, 10]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ruby:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='irb'><span class='line'><span class="go">ruby-1.9.2-p0 &gt; (1..10).select { |x| x.even? }</span>
+</span><span class='line'><span class="go"> =&gt; [2, 4, 6, 8, 10]</span>
+</span><span class='line'><span class="go">ruby-1.9.2-p0 &gt; (1..10).select &amp;:even?</span>
+</span><span class='line'><span class="go"> =&gt; [2, 4, 6, 8, 10]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ruby&rsquo;s functional programming support seems to be better to me, but
+this is of course subjective.</p>
+
+<h2>GUI programming</h2>
+
+<p>Python has tkinker by default &ndash; a wrapper around the Tk library(which
+sucks in my humble opinion). Ruby doesn&rsquo;t have even this much. Both
+have binding for the popular GUI toolkits such wxwidgets, GTK,
+QT. From my experimentation with them I can tell you that you&rsquo;ll be
+much better off with Python in that department. It&rsquo;s not wonder that
+many GTK+ applications these days are implemented in Python. Most Ruby
+bindings projects seem to be in a state of disarray, abandonment &ndash; I
+guess we have to thank Rails for that. Most people think of Rails as
+the only use of Ruby which is sad&hellip;</p>
+
+<p>Ruby devs shouldn&rsquo;t despair however. JRuby(Ruby&rsquo;s port to the JVM) has
+an excellent support for the superb Swing GUI framework and MacRuby
+has great support for building Cocoa Apps for OS X. I personally think
+that JRuby is the best Ruby distribution out there, but that&rsquo;s the
+point of another post entirely.</p>
+
+<h2>3rd party library availability and installation</h2>
+
+<p>It&rsquo;s not secret that part of Python&rsquo;s philosophy is that it comes with
+batteries included &ndash; meaning that it&rsquo;s standard library is vast and
+covers a lot of common tasks. In case you can&rsquo;t find what you&rsquo;re
+looking for in it you&rsquo;re left with an number of third party libraries
+for Python whose number can only be described by the word epic and
+that cover every task conceivable. <a href="http://pypi.python.org/pypi">PyPi</a>
+maintains an up-to-date list of Python packages.</p>
+
+<p>You have several options in the department of python package
+management. If you&rsquo;re using ActivePython you can use the excellent
+<a href="http://code.activestate.com/pypm/">PyPM</a> tool, which provides quick
+installation of thousands of packages for many Python versions and
+platforms for ActivePython distributions.</p>
+
+<p><a href="http://peak.telecommunity.com/DevCenter/EasyInstall">EasyInstall</a> is another popular solution that works with the standard
+Python distribution. Like PyPM it allows you easily search for and
+install Python packages from the PyPI that are bundled in Python&rsquo;s
+standard egg format(Jave developers might think of eggs as
+jars). EasyInstall has splendid documentation so I won&rsquo;t go into any
+details here.</p>
+
+<p><a href="http://www.pip-installer.org/en/latest/index.html">pip</a> is a
+replacement for easy_install. It uses mostly the same techniques for
+finding packages, so packages that were made easy_installable should
+be pip-installable as well.</p>
+
+<p>pip is meant to improve on EasyInstall. Some of the improvements:</p>
+
+<ul>
+<li>All packages are downloaded before installation. Partially-completed installation doesn’t occur as a result.</li>
+<li>Care is taken to present useful output on the console.</li>
+<li>The reasons for actions are kept track of. For instance, if a package is being installed, pip keeps track of why that package was required.</li>
+<li>Error messages should be useful.</li>
+<li>The code is relatively concise and cohesive, making it easier to use programmatically.</li>
+<li>Packages don’t have to be installed as egg archives, they can be installed flat (while keeping the egg metadata).</li>
+<li>Native support for other version control systems (Git, Mercurial and Bazaar)</li>
+<li>Uninstallation of packages.</li>
+<li>Simple to define fixed sets of requirements and reliably reproduce a set of packages.</li>
+</ul>
+
+
+<p>pip doesn’t do everything that easy_install does. Specifically:</p>
+
+<ul>
+<li>It cannot install from eggs. It only installs from source. (In the future it would be good if it could install binaries from Windows .exe or .msi – binary install on other platforms is not a priority.)</li>
+<li>It doesn’t understand Setuptools extras (like package[test]). This should be added eventually.</li>
+<li>It is incompatible with some packages that extensively customize distutils or setuptools in their setup.py files.</li>
+</ul>
+
+
+<p>Linux users will also find a great selection of Python libraries
+prepackaged for use with the distribution&rsquo;s package manager.</p>
+
+<p>Ruby has an application that is more or less equivalent to EasyInstall
+called <a href="http://rubygems.org/">RubyGems</a>(gems are the standard way to distribute Ruby
+libraries). Linux users can of course install Ruby libraries with the
+distribution&rsquo;s package manager as well.</p>
+
+<p>RubyGems has the following features:</p>
+
+<ul>
+<li>Easy Installation and removal of RubyGems packages and their dependents.</li>
+<li>Management and control of local packages</li>
+<li>Package dependency management</li>
+<li>Query, search and list local and remote packages</li>
+<li>Multiple version support for installed packages</li>
+<li>Web-based interface to view the documentation for your installed gems</li>
+<li>Easy to use interface for building gem packages</li>
+<li>Simple server for distributing your own gem packages</li>
+<li>Easy to use building and publishing of gem packages</li>
+</ul>
+
+
+<p>Using RubyGems, you can:</p>
+
+<ul>
+<li>download and install Ruby libraries easily</li>
+<li>not worry about libraries A and B depending on different versions of library C</li>
+<li>easily remove libraries you no longer use</li>
+<li>have power and control over your Ruby platform!</li>
+</ul>
+
+
+<p>A reader pointed out that about 23000 packages are available for
+installation through RubyGems and 15000 through PyPI. This, however,
+cannot be considered as a certain sign that there are more libraries
+available for Ruby than for Python.</p>
+
+<p>Although tools like EasyInstall and RubyGems are easy to use and quite
+handy, I as a long-time Linux users dislike them a bit, since they
+circumvent the distributions native package handling. Unfortunately
+package maintainers cannot find the time to package every Python and
+Ruby library available so I guess EasyInstall and RubyGems won&rsquo;t be
+going anywhere soon and of course we have to consider Windows users
+for whom such applications are of great value given the lack of
+unified package management on Windows.</p>
+
+<p>One thing to keep in mind about installing eggs and gems is that some
+of them are implemented in C(usually for performance reasons) and are
+locally built prior to their installation &ndash; an operation bound to fail
+if you don&rsquo;t have a C compiler installed.</p>
+
+<h2>Misc</h2>
+
+<p>In terms of performance of the default interpreters CPython and MRI
+Ruby Python is the clear winner. One should note, however, is that there
+are many how quality implementation of Ruby and Python for different
+platforms where the performance situation differs wildly. For instance
+Jython is much slower that JRuby. With the addition of invoke_dynamic
+in JDK7(basically bytecode level support for dynamic method dispatch)
+the performance of JRuby and Jython could potentially be improved
+greatly.</p>
+
+<p>In terms of overall usage, market share, job offers and sheer size of
+the community and available libraries Python is ahead of Ruby as
+well. One of the main supporters of Python is after all none other
+than the mighty Google. Ruby has also the unfortunate luck to be
+living in the shadow of a single application written in Ruby &ndash; Ruby on
+Rails, that is arguably more popular than the language itself.</p>
+
+<p>Tooling for dynamic languages is currently not as advance as the one
+for static languages. People often joke that Python(Ruby) > Java(C#),
+but Python + any python IDE &lt; Java + IntelliJ
+IDEA(Eclipse/NetBeans). Python and Ruby IDEs seem to be mostly on par
+currently. I do all of my Ruby and Python coding in Emacs, but I do
+like RubyMine and PyCharm.</p>
+
+<p>Since they are often used for the creation of webapps one should
+consider the deployment issue. Most web hosting companies provide
+cheap Python hosting, but very few companies provide Ruby hosting.</p>
+
+<h2>The Python 3 problem</h2>
+
+<p>Python 3 was a great undertaking that improved on a lot of aspects of
+the language(for example Unicode support) and the standard library. To
+do this it dropped backward compatibility, an act that slowed it&rsquo;s
+adoption immensely. Three years have passed since it&rsquo;s release and
+still most hosting providers, Linux distros and Python projects hold
+on to the older 2.7.x Python branch.</p>
+
+<p>This is a bit of tragedy since Python 3 is truly a great improvement
+over Python 2. I mention this because most recent books are written
+with Python 3 in mind, but if you land a Python jobs somewhere chances
+are you&rsquo;ll have to use Python 2.x.x for the foreseeable future.</p>
+
+<h2>Epilogue</h2>
+
+<p>Ruby and Python are two beautifully engineered languages capable of
+just about everything. If you don&rsquo;t know any of them you&rsquo;ll do well to
+learn at least one. If you know only one it might not be a terrible
+idea to learn the other.</p>
+
+<p>I haven&rsquo;t touched on many language features(like Python generators and
+Ruby mixins), but to be honest I&rsquo;m just tired of typing. One good
+place to start your journey to Python is
+<a href="http://diveintopython3.org/">&ldquo;Dive into Python 3&rdquo;</a>. For Ruby
+beginners I&rsquo;d recommend a copy of
+<a href="http://www.amazon.com/Ruby-Programming-Language-David-Flanagan/dp/0596516177">&ldquo;The Ruby Programming Language&rdquo;</a>.</p>
+
+<p><em>P.S. If you like exploring different programming languages and you&rsquo;re
+currently shopping for ideas on the subject of which language to learn
+next you might find my recent article
+<a href="/blog/2011/04/27/programming-languages-worth-learning/">&ldquo;Programming languages worth learning&rdquo;</a>
+interesting as well.</em></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/04/30/parsing-numbers-from-string-in-lisp/">Parsing Numbers From String in Common Lisp</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-30T00:00:00+03:00" pubdate data-updated="true">Apr 30<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>One task that often recurs in programming is the need to parse a
+string representation a number(or several numbers) and convert it to
+its numeric value. Parsing integer value in Common Lisp is fairly
+straightforward process &ndash; we have the built-in function <strong>PARSE-INTEGER</strong>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">parse-integer</span> <span class="s">&quot;100&quot;</span><span class="p">)</span> <span class="c1">;; =&gt; 100</span>
+</span><span class='line'><span class="p">(</span><span class="nb">parse-integer</span> <span class="s">&quot;100&quot;</span> <span class="ss">:radix</span> <span class="mi">2</span><span class="p">)</span> <span class="c1">;; =&gt; 4</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see the function allows you to parse a string
+representation of a number in an arbitrary base system(the default is
+the <em>decimal</em>). With the keyword argument <strong>:radix</strong> you can specify a
+base in the interval 2-36. The function has a few other fancy
+capabilities as well &ndash; like the ability to process only a part of the
+string that has been passed to it and to ignore junk in the input
+string. For all the gory details refer to the
+<a href="http://www.lispworks.com/documentation/HyperSpec/Body/f_parse_.htm">Lisp HyperSpec</a>.</p>
+
+<p>The problem that most Lisper face soon after is that there is no
+matching function PARSE-FLOAT or PARSE-DOUBLE. I&rsquo;m not sure what
+technical reason is hidden beneath this design decision, but I know of
+simple way to parse floating point numbers non-the-less. It&rsquo;s built
+around the <strong>READ</strong>(The R in REPL) function that allows you read any
+S-expression from a string form. The READ function then returns a Lisp
+object corresponding to the S-expression read. With that knowledge and
+the fact that READ accepts as an optional argument an input stream
+from which to read that S-expression(the default is the the standard
+input) we can write the following bit of parsing code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">with-input-from-string</span> <span class="p">(</span><span class="nv">in</span> <span class="s">&quot;3.14&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">read</span> <span class="nv">in</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here we created an input stream that&rsquo;s bound to the string &ldquo;3.14&rdquo; and
+read one S-expression from it &ndash; the floating point object 3.14.</p>
+
+<p>We can even build a more general solution that parses several numbers
+in a string, regardless of their actual type(integer or floating
+point):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">with-input-from-string</span> <span class="p">(</span><span class="nv">in</span> <span class="s">&quot;3.14 5.646 4 9.6&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">x</span> <span class="nb">=</span> <span class="p">(</span><span class="nb">read</span> <span class="nv">in</span> <span class="no">nil</span> <span class="no">nil</span><span class="p">)</span> <span class="nv">while</span> <span class="nv">x</span> <span class="nv">collect</span> <span class="nv">x</span><span class="p">))</span>
+</span><span class='line'><span class="c1">;; =&gt; (3.14 5.646 4 9.6)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hopefully this short article has been helpful. You&rsquo;ve also witnessed
+one of the practical benefits of having the code in Lisp represented
+as data.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/04/29/one-shell-to-rule-them-all/">One Shell to Rule Them All&#8230;</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-29T00:00:00+03:00" pubdate data-updated="true">Apr 29<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p>I&rsquo;ve been using zsh for about three years now and continue to be
+impressed the its immense power and flexibility. Switching from bash
+to zsh was a decision as good as switching from Windows to GNU/Linux,
+from vim to Emacs, from Eclipse to IntelliJ IDEA. In other words &ndash; it
+was an extremely good decision. :&ndash;)</p>
+
+<p>So I want to finally get the word out, showcase some nice zsh features
+and probably persuade a couple of bash users to try it. Be warned,
+however &ndash; after you try it there is no going back&hellip;</p>
+
+<h2>Getting started</h2>
+
+<p>Most distros come with bash by default so you&rsquo;ll probably need to
+install zsh first and configure it as your user&rsquo;s shell. On Fedora
+you&rsquo;d do:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install zsh
+</span><span class='line'><span class="nv">$ </span>chsh -s /bin/zsh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The next time you login a terminal wizard with start up asking you
+about some basic zsh options that you might want to enable. I suggest
+you to enable them all except the beep option. In the end the wizard
+will save the new configuration to the file .zshrc in your user&rsquo;s home
+folder.</p>
+
+<p>Alternatively you may just use a preconfigured .zshrc, like this one:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Lines configured by zsh-newuser-install</span>
+</span><span class='line'><span class="nv">HISTFILE</span><span class="o">=</span>~/.histfile
+</span><span class='line'><span class="nv">HISTSIZE</span><span class="o">=</span>1000
+</span><span class='line'><span class="nv">SAVEHIST</span><span class="o">=</span>1000
+</span><span class='line'>setopt appendhistory autocd extendedglob nomatch notify correct_all
+</span><span class='line'>unsetopt beep
+</span><span class='line'>bindkey -e
+</span><span class='line'><span class="c"># End of lines configured by zsh-newuser-install</span>
+</span><span class='line'><span class="c"># The following lines were added by compinstall</span>
+</span><span class='line'>zstyle :compinstall filename <span class="s1">&#39;/home/bozhidar/.zshrc&#39;</span>
+</span><span class='line'>
+</span><span class='line'>autoload -Uz compinit
+</span><span class='line'>compinit
+</span><span class='line'><span class="c"># End of lines added by compinstall</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I don&rsquo;t like very much the default zsh prompt and I generally change
+it right away. Have a look at my other
+<a href="/Z%20Shell/Linux/2008/07/27/zsh-prompt.html">short article</a> on the topic.</p>
+
+<p>There a couple of configuration files related to zsh that you should
+know about:</p>
+
+<ul>
+<li>.zshrc &ndash; runs for each new shell(roughly equivalent to .bashrc)</li>
+<li>.zprofile &ndash; runs only for login shells(like .bash_profile)</li>
+<li>.zlogout &ndash; runs on logout</li>
+<li>.zshenv &ndash; holds environmental variables</li>
+</ul>
+
+
+<p>Here&rsquo;s an example .zshenv file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/java/latest
+</span><span class='line'>
+</span><span class='line'><span class="nb">export </span><span class="nv">SCALA_HOME</span><span class="o">=</span>/opt/scala-2.8.1.final
+</span><span class='line'>
+</span><span class='line'><span class="nb">export </span><span class="nv">M2_HOME</span><span class="o">=</span>/opt/apache-maven-3.0.2
+</span><span class='line'>
+</span><span class='line'><span class="nb">export </span><span class="nv">EDITOR</span><span class="o">=</span><span class="s2">&quot;emacsclient -t&quot;</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">ALTERNATE_EDITOR</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">#needed to properly display complex color-themes in Emacs and vim</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">TERM</span><span class="o">=</span>xterm-256color
+</span><span class='line'>
+</span><span class='line'><span class="nb">typeset</span> -U path
+</span><span class='line'><span class="nv">path</span><span class="o">=(</span><span class="nv">$M2_HOME</span>/bin <span class="nv">$SCALA_HOME</span>/bin ~/bin ~/Projects/work/bin <span class="nv">$path</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Please note the way in which the PATH variable is set in zsh, which
+differs substantially from bash(it&rsquo;s just exported there as any other variable).</p>
+
+<h2>Playing around</h2>
+
+<p>At this point you have the legendary zsh autocompletion configured and
+you have enabled many of the zsh core features.</p>
+
+<p><strong>autocd</strong> allows you to navigate to folders only with their name
+without the cd command. One of my favourite features. Now you can do
+things like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>bozhidar@bozhidar ~<span class="o">]</span><span class="nv">$ </span>Downloads
+</span><span class='line'><span class="o">[</span>bozhidar@bozhidar ~/Downloads<span class="o">]</span><span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instead of:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>bozhidar@bozhidar ~<span class="o">]</span><span class="nv">$ </span><span class="nb">cd </span>Downloads
+</span><span class='line'><span class="o">[</span>bozhidar@bozhidar ~/Downloads<span class="o">]</span><span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By the way autocd was added in bash 4.0 as well. You can enable it there with:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>bozhidar@bozhidar ~<span class="o">]</span><span class="nv">$ </span><span class="nb">shopt</span> -s autocd
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>appendhistory</strong> all your open shells share the same history which is
+handy if you want to refer commands from one shell in another with
+say Ctrl+R(reverse-history-search)</p>
+
+<p><strong>extendedglob</strong> allows you to recursive look for files in folders:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>bozhidar@bozhidar ~<span class="o">]</span><span class="nv">$ </span>ls somedir/**/Makefile
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>is equivalent to:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>bozhidar@bozhidar ~<span class="o">]</span><span class="nv">$ </span>find somedir -name Makefile
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Most zsh users never use find for simple file look up. This feature
+was also added to bash 4.0 but it works in a slightly different
+manner.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">shopt</span> -s extglob
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>correct</strong> &ndash; autocorrects mistyped commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>bozhidar@bozhidar<span class="o">]</span><span class="nv">$ </span>cta ~/.zshrc
+</span><span class='line'>zsh: correct <span class="s1">&#39;cta&#39;</span> to <span class="s1">&#39;cat&#39;</span> <span class="o">[</span>nyae<span class="o">]</span>?
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Keybindings</h2>
+
+<p>By default zsh uses Emacs keybindings which is perfect for a long time
+Emacs user like me. zsh doesn&rsquo;t use readline, instead it has its own
+line editing library called zle, which is much more powerful. vi users
+are not forgotten and can switch zsh to vi keybindings with the
+command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bindkey -v
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Mind that by default you&rsquo;ll be in &ldquo;insert&rdquo; mode and have to press ESC
+to go into command mode.</p>
+
+<p>You can also create custom keybindings like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bindkey <span class="s1">&#39;^[[H&#39;</span> beginning-of-line
+</span><span class='line'>bindkey <span class="s1">&#39;^[[F&#39;</span> end-of-line
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will bind the Home and End keys to the commands beginning-of-line and end-of-line.</p>
+
+<h2>Aliases</h2>
+
+<p>Zsh has three different kinds of shell aliases.</p>
+
+<p><strong>Regular</strong> &ndash; same as in bash:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">alias </span><span class="nv">ll</span><span class="o">=</span><span class="s1">&#39;ls -l&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Suffix</strong> &ndash; suffix aliases are supported in zsh since version
+4.2.0. Some examples:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">alias</span> -s <span class="nv">tex</span><span class="o">=</span>emacs
+</span><span class='line'><span class="nb">alias</span> -s <span class="nv">html</span><span class="o">=</span>google-chrome
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now when you type in the console</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>somefile.tex
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>it will be opened automatically with Emacs. Similarly somefile.html
+would be opened by google-chrome. As you might imagine this feature is
+quite handy.</p>
+
+<p><strong>Global</strong> &ndash; global aliases can be used anywhere in the command line(as
+opposed to regular aliases that can used only in the beginning). Example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">alias</span> -g ...<span class="o">=</span><span class="s1">&#39;../..&#39;</span>
+</span><span class='line'><span class="nb">cd</span> ...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Some tips and tricks</h2>
+
+<ul>
+<li><p>press Alt+q in the middle of a command you&rsquo;re typing. This will clear
+the console prompt and allow you execute another command(like a man lookup). Afterwards
+the things you&rsquo;ve typed before the Alt+q will magically reappear.</p></li>
+<li><p>Imagine you&rsquo;re in the folder <strong>project/4.0/module</strong>. Typing:</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>4.0 5.0
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Will take you to a folder named project/5.0/module(assuming that it exists of course). In general
+the command has the format <code>cd old new</code>.</p>
+
+<ul>
+<li>zsh comes with a built-in pager(similar to less). To try it just type &lt;somefilename. This is
+more or less equivalent to typing <code>less somefilename</code>.</li>
+</ul>
+
+
+<h2>Useful resources</h2>
+
+<ul>
+<li><a href="http://www.bash2zsh.com/zsh_refcard/refcard.pdf">zsh reference card</a></li>
+<li><a href="http://zsh.sourceforge.net/Doc/zsh_a4.pdf">zsh manual</a></li>
+<li><a href="http://zsh.sourceforge.net/Guide/zshguide.html">&ldquo;A User&rsquo;s Guide to Z-Shell&rdquo;</a></li>
+<li><a href="http://zshwiki.org/home/">zsh wiki</a></li>
+<li><a href="http://grml.org/zsh/zsh-lovers.html">zsh lovers</a> &ndash; collection of
+tips and tricks</li>
+<li><a href="http://www.bash2zsh.com/">&ldquo;From Bash to Z Shell &ndash; Conquering the Command Line&rdquo;</a></li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>There is no easy way to sum up everything that makes zsh great in a single blog post. I&rsquo;ll try to
+expand and improve it in time. I hope I&rsquo;ve whetted your appetite to try out zsh. If you like it
+well enough(of which I&rsquo;m most certain you should have a look at the resources in the end as well).</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/04/29/career-development/">Career Development - Should I Stay or Should I Go?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-29T00:00:00+03:00" pubdate data-updated="true">Apr 29<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p>I guess nothing describes more appropriately the essence of career
+development than the famous song by <a href="http://www.youtube.com/watch?v=V1Gn0e7kvTA">The Clash</a>.</p>
+
+<p>We generally have two options in front of us when we consider our
+careers &ndash; stay at our current company and hope to advance in it or
+jump ship to a new hopefully better job in another company. Both have
+their pros and cons which I&rsquo;ll shortly discuss. Mind, though, that I&rsquo;m
+no HR specialist or a pro career adviser so you&rsquo;d do well not to rely
+on my writing a 100%. Also everything I&rsquo;ll write comes from my own
+experience as professional software engineer. I guess some of my
+advice will not apply to other careers.</p>
+
+<h2>Stay at my current company</h2>
+
+<p><strong>Disclaimer</strong> &ndash; <em>there are some
+companies that are so great that no one wants to leave them. This
+section is not about them. This is about the companies we all know and
+have grown accustomed to tolerate &ndash; the ones with the mostly same
+work, lying bosses and a lot of empty promises.</em></p>
+
+<p>The idea is basic. You&rsquo;ve spent some time in the company, you&rsquo;re
+hoping that in time with hard work and dedication you&rsquo;ll rise in the
+company ranks and you&rsquo;ll get a healthy salary increase in the process.</p>
+
+<p>Unfortunately this doesn&rsquo;t happen quite often. Most companies have
+some internal salary limits and some next to irreplaceable
+people. This means that there is a cap at your growth there. Sure, if
+you stay with the company long enough &ndash; say 10 years, probably some of
+the irreplaceable people will be replaced, but is worth the wait?</p>
+
+<p>When you sit around just doing the same things you tend to get bored
+and demotivated at times. You become less productive and less
+interested in your work in general. You just go to work, stay there
+for 8 hours and go home. The paycheck is the only thing of interest
+to you and you become duller and duller by the day.</p>
+
+<p>This is what I call &ldquo;flowing down the current&rdquo;. One of my former bosses used
+to say that when you start feeling you&rsquo;re flowing down the current you
+should immediately start looking for another job(that is unless you&rsquo;re
+one of the those people that just like to complain how they hate their
+job, but actually doesn&rsquo;t mind to sit around doing nothing and get
+paid for it). My boss also used to say that one shouldn&rsquo;t spend more
+than 3 or 4 years in a company he doesn&rsquo;t own.</p>
+
+<p>Of course you shouldn&rsquo;t jump between jobs every 6 or so months because
+this will make you a blacklisted candidate by most HRs &ndash; after all
+they&rsquo;re looking most of the time for people ready to commit to their
+cause for at least a few years.</p>
+
+<p>Pros of staying:</p>
+
+<ul>
+<li>you know the game and how to play it</li>
+<li>you&rsquo;re accustomed to colleagues, the office and you don&rsquo;t have to
+change them</li>
+<li>you&rsquo;ve got a guaranteed paycheck that is unlikely to evaporate</li>
+<li>if the company is bigger(100+) you&rsquo;ve got a fair chance to advance
+in the company hierarchy if you&rsquo;re willing to stay long enough</li>
+</ul>
+
+
+<p>Cons of staying:</p>
+
+<ul>
+<li>you limit your professional development</li>
+<li>you limit the possibilities for salary improvements</li>
+</ul>
+
+
+<p>In the end it seems to me that most people are not too fond of taking
+chances(me included). This is the reason that a lot of average
+companies have employees that could do a lot better somewhere
+else. This is partly caused by our very own society &ndash; the people and
+media around us keep telling us that we&rsquo;re mostly the same, that it&rsquo;s
+unlikely we&rsquo;ll ever achieve something great, something
+monumental&hellip; and many of us do believe them.</p>
+
+<p>Hristo Stoichkov might not be the all time greatest philosopher, but
+said something extremely important once(or twice) &ndash; &ldquo;If you don&rsquo;t play
+you can&rsquo;t win&rdquo;(in Bulgarian &ndash; &ldquo;Който не играе не печели.&rdquo;).</p>
+
+<h2>Move to another company</h2>
+
+<p>Moving to another company is not a silver bullet. Most of the time it
+guarantees you a higher salary(the top reason why people switch
+jobs), but it doesn&rsquo;t certainly mean you&rsquo;ll have a more interesting
+and fulfilling work. This is especially true if you go to work for
+some huge corporation and you&rsquo;re not part of its Research&amp;Development
+department. I generally avoid such job offers. Corporations offer some
+measure of security, but little if any excitement.</p>
+
+<p>I think that most people should try to find employment in companies
+that are start-ups or that regularly start to work on new
+projects. There one has plenty of opportunities to prove himself and
+to advance in the company along the way. Of course such companies have
+the nasty habit of going down under from time to time so you have to
+think long and hard before joining one if you&rsquo;re living under rent or
+have to pay down-payments on two mortgages. Of course if you&rsquo;re good
+enough at your job &ndash; you&rsquo;ll find a new one soon enough and that shouldn&rsquo;t
+really be bothering you.</p>
+
+<p>Pros of moving:</p>
+
+<ul>
+<li>moving to a new company is likely to represent a raise in your
+salary you&rsquo;ll have to wait several years to get with your current
+employer</li>
+<li>there is a strong possibility that your new work will be more
+exciting than your old one(after all you&rsquo;ve tried to pick a more
+exciting job, right?)</li>
+<li>you might get to meet some interesting new people, learn from them
+and improve your professional skills</li>
+</ul>
+
+
+<p>Cons of moving:</p>
+
+<ul>
+<li>you have to prove your worth again(you&rsquo;ve already did this in your
+old job)</li>
+<li>the is the factor of uncertainty every time you start something new</li>
+<li>you&rsquo;ll have to learn how to work and deal with your new colleagues</li>
+<li>you might get more of the same work that made you leave in the first
+place in case you have not chosen carefully your new employer.</li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>Topics such a career development are highly subjective and depend on a
+myriad of factors. My musings here are inspired by my 7 year long
+career as a software engineer that spanned over four employers and
+will probably soon include a fifth. This is not a lot of data to
+consider, but I can assure you that the traits that I describe are
+most real and are here to stay.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/04/27/programming-languages-worth-learning/">Programming Languages Worth Learning</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-27T00:00:00+03:00" pubdate data-updated="true">Apr 27<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p>Programming languages have always been a passion of mine and through
+the years I&rsquo;ve learnt quite a few of them. The first one was Pascal,
+some 13 years ago, and the last was Scala, just a couple of months ago.</p>
+
+<p>Although the authors of many languages claim that the language they
+created is the greatest thing after hot water, this is rarely the
+case. Most of the &ldquo;unique&rdquo; features are not quite unique, and the truly
+unique stuff is often just useless. I don&rsquo;t believe that there is a
+single greatest and unparallelled language, but I do believe that some
+languages are more valuable them others in term of both theory(the
+concepts around which they revolve) and practice(the chances of you
+landing a job with them or simply getting a task done).</p>
+
+<p>In this blog post I&rsquo;ll review the ten or so languages that I&rsquo;ve found to
+be most enlightening/helpful for me over the years. I think that every
+professional software engineer should have at least a passing
+knowledge of them.</p>
+
+<h2>C</h2>
+
+<p>The C programming language has been around for about forty
+years now (it appeared in 1973). While it&rsquo;s often viewed as a higher
+level assembly language today in the era of Java, .Net and Python, C
+remains the sole choice for doing serious system programming &ndash; writing
+drivers, all kinds of servers and virtual machines.</p>
+
+<p>Learning C also give you an insight to the inner working of the
+computer, like memory management and native data types (based on a CPU&rsquo;s
+registries).</p>
+
+<p>The best way to get started with C
+hasn&rsquo;t changed in the past 20+ years &ndash; just pick a copy of <a href="http://www.amazon.com/Programming-Language-2nd-Brian-Kernighan/dp/0131103628">&ldquo;The C
+Programming Language&rdquo;</a> by K&amp;R.</p>
+
+<h2>Lisp</h2>
+
+<blockquote><p>Lisp is worth learning for the profound enlightenment<br/>experience you will have when you finally get it; that experience will<br/>make you a better programmer for the rest of your days, even if you<br/>never actually use Lisp itself a lot.</p><footer><strong>Eric S. Raymond</strong> <cite>How to Become a Hacker</cite></footer></blockquote>
+
+
+<p>One of the oldest programming languages around &ndash; created in 1958 and
+still relevant today. Important for its unique code is data approach,
+advanced code generation facilities (macros) and the ability to develop
+software in incremental and interactive fashion.</p>
+
+<p>Although many of the features that originally made it truly
+unique (like garbage collection, if expression, function objects) are
+now found in many modern languages, Lisp still offers some compelling
+alternatives for those interested to explore it.</p>
+
+<p>These days Common Lisp is considered the canonical Lisp dialect &ndash; a
+multi-paradigm language with excellent support for imperative,
+functional and object-oriented programming. Another popular dialect is
+Scheme which is a simpler language focused mainly on functional
+programming and until recently was a popular choice for teaching
+introductory programming classes in many major US
+universities (recently it&rsquo;s being displaced by Python).</p>
+
+<p>You cannot start with a better introduction to Common Lisp than Peter
+Seibel&rsquo;s
+<a href="http://www.gigamonkeys.com/book/">&ldquo;Practical Common Lisp&rdquo;</a>. If you
+fancy Scheme more take a look at the classic text
+<a href="http://mitpress.mit.edu/sicp/full-text/book/book.html">&ldquo;Structure and Interpretation of Computer Programs&rdquo;</a>. A
+good source of exercises for aspiring Lisp programmers are the
+<a href="/Misc/Common%20Lisp/2011/05/04/lisp-problems.html">&ldquo;Lisp Problems&rdquo;</a>(a work in progress based on the original &ldquo;Prolog Problems&rdquo;).</p>
+
+<h2>Java</h2>
+
+<p>Let&rsquo;s face it &ndash; if you&rsquo;re in the market for jobs a third of them are
+about Java EE or Android development (the other two thirds are probably
+related to PHP and .NET). The language is not quite
+elegant, but the platform is truly magnificent. Although there are
+many other languages targeting the JVM (Scala, Groovy, Clojure, JRuby,
+Jython &ndash; just to name a few) Java is still predominant by a wide
+margin and this is unlikely to change soon. It&rsquo;s actually <a href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html">the most
+popular programming language in the world</a>.</p>
+
+<p>I&rsquo;ve taught a couple of introductory Java programming courses (in
+Bulgarian), but I&rsquo;d recommend the
+<a href="http://www.amazon.com/Core-Java-TM-I--Fundamentals-8th/dp/0132354764/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1303901341&amp;sr=1-1">&ldquo;Core Java&rdquo;</a>
+book over my lectures any day of
+the week. :&ndash;)</p>
+
+<h2>Haskell</h2>
+
+<p>Functional programming has been gaining popularity in recent years
+with the rise of parallel computers, and of the pure functional
+programming languages Haskell is probably the closest to the
+mainstream. It features great ideas like type inference, lazy
+evaluation, monads, pattern matching. As with Lisp many of the
+features of Haskell can be found in more impure packages(like Scala
+and Clojure), but Haskell is still the top pure functional language in
+my humble opinion.</p>
+
+<p>There are great free Haskell learning resources
+on-line like <a href="http://learnyouahaskell.com/">&ldquo;Learn you a Haskell for great good&rdquo;</a> and <a href="http://book.realworldhaskell.org/read/">&ldquo;Real world
+Haskell&rdquo;</a></p>
+
+<h2>Perl</h2>
+
+<p>Once the undisputed king of the Internet Perl has recently fallen down
+from grace in its battle with the newer generation of dynamic
+languages like PHP, Ruby and Python. While I wouldn&rsquo;t advise anyone to
+start writing Web or Enterprise apps with Perl it&rsquo;s still the best language for
+writing administration and helper scripts with minimum fuss and maximum
+developer throughput. It features the greatest support for text
+processing ever and an extremely flexible (albeit a bit of confusing)
+syntax.</p>
+
+<p>Perl <a href="http://www.cpan.org/">CPAN</a> is probably the largest collection of third party
+libraries for a single language ever assembled.</p>
+
+<p>Pick up a copy of <a href="http://oreilly.com/catalog/9780596520113">&ldquo;Learning Perl&rdquo;</a> or just browse the excellent
+<em>perldoc</em> and start coding in Perl right away.</p>
+
+<h2>Clojure</h2>
+
+<p>Clojure is a Lisp dialect with an unique support for parallel and
+concurrent programming and runs on top of the venerable JVM. If you&rsquo;re
+looking to do some serious parallel programming look no further. Other
+than that you&rsquo;ll find in Clojure a superb collection of functional
+data structures, pervasive use of laziness, higher order functions and
+tail-call optimizations,
+and some rather novel ideas on the topics of state and
+identity. Clojure also cleans up a bit the traditional Lisp
+syntax (read this as Clojure has fewer parentheses than say Common Lisp).</p>
+
+<p>To get started I recommend you to watch the free Clojure screencasts
+on <a href="http://clojure.blip.tv/">blip.tv</a>.</p>
+
+<h2>Prolog</h2>
+
+<p>The most famous language from the logic programming family. Solving a
+problem like a sudoku puzzle in Prolog will be an eye opening
+experience for any developer. While it&rsquo;s unlikely that you&rsquo;ll ever use
+it practice the ideas found in it, Prolog will truly expand your thinking
+horizons.</p>
+
+<p>A good starting point in your journey to Prolog will be
+<a href="http://www.learnprolognow.org/">&ldquo;Learn Prolog Now&rdquo;</a>. You may do a
+follow up with the collection of programming puzzles <a href="http://sites.google.com/site/prologsite/prolog-problems/">&ldquo;Prolog problems&rdquo;</a>.</p>
+
+<h2>Ruby</h2>
+
+<p>A pure object oriented dynamic scripting language with a very nice support for
+metaprogramming. It has versions written in Java (JRuby) and
+.Net (IronRuby) which makes it easy to integrate it with any software
+for those popular platforms. The language became popular with the rise of the Ruby
+on Rails web framework, but it has many potential applications that don&rsquo;t
+involve RoR or web development.</p>
+
+<p><a href="http://www.amazon.com/Programming-Ruby-1-9-Pragmatic-Programmers/dp/1934356085/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1303901367&amp;sr=1-1">&ldquo;Programming Ruby&rdquo;</a> and <a href="http://www.amazon.com/Ruby-Programming-Language-David-Flanagan/dp/0596516177/ref=sr_1_3?s=books&amp;ie=UTF8&amp;qid=1303901367&amp;sr=1-3">&ldquo;The Ruby Programming Language&rdquo;</a> are two of the
+best introductory Ruby books around.</p>
+
+<h2>Python</h2>
+
+<p>A pure object oriented dynamic scripting language with a focus on
+simplicity, readability and maintainability. Popular for development
+of web applications, GUI applications and system administration
+utilities. Driven by the motto &ldquo;There is only one way to do it&rdquo; and
+the philosophy &ldquo;It comes with battery included&rdquo;. Python is Google&rsquo;s
+darling and is widely used by the IT giant.</p>
+
+<p>A nice free on-line book about Python is <a href="http://diveintopython3.org/">&ldquo;Dive into Python 3&rdquo;</a>.</p>
+
+<h2>C</h2>
+
+<p>The flagman language of the .NET platform. Similar in many aspects to
+Java C# is never-the-less ahead then Java in the innovations
+department &ndash; first to introduce concepts like Generics and Attributes
+to the mainstream programmers. It features some nice improvements over
+Java like properties, flexible namespaces and limited type inference.</p>
+
+<p>The primary reason it&rsquo;s included in this list, however, is simply
+the sheer amount of job openings for C## developers. In my home
+country (Bulgaria) about a third of all programming positions are C##
+related.</p>
+
+<p>My favourite C# book happens to be
+<a href="http://www.amazon.com/C-Depth-Second-Jon-Skeet/dp/1935182471/ref=sr_1_3?ie=UTF8&amp;qid=1304516334&amp;sr=8-3">&ldquo;C# in Depth&rdquo;</a>. You
+might happen to enjoy it as well.</p>
+
+<h2>Scala</h2>
+
+<p>An interesting blend of pure object orientation and functional
+programming with some concurrency support baked in (actors). Of the
+current crop of JVM languages, next to Clojure, Scala looks most
+promising. It features an advanced static type system (more advanced
+than Haskell&rsquo;s), state of the art Java integration, support for
+pattern matching, extractors and other functional goodness. If any
+language has a chance of displacing the Java programming language it
+must be Scala&hellip; Even the father of Java James Gosling acknowledged
+that if he decided to replace Java with another language it would be Scala.</p>
+
+<p>Start your journey to Scala mastery with
+<a href="http://www.artima.com/pins1ed/">&ldquo;Programming in Scala&rdquo;</a>.</p>
+
+<h2>JavaScript</h2>
+
+<p>We cannot conclude this whirlwind tour of notable programming
+languages without mentioning the King of the Web, the language that
+drove the Web 2.0 revolution &ndash; JavaScript. Although it has a terrible
+name (JavaScript shares nothing with Java), a questionable programming
+model built around mutating global variables, and prototype instead of
+class inheritance, it is supported virtually everywhere (most web
+browsers have built-in JavaScript interpreters) and any web
+developer will do well to learn some JavaScript.</p>
+
+<h2>Epilogue</h2>
+
+<p>We cannot be experts in ten or twenty programming languages &ndash; I&rsquo;m
+certain of that. I do,
+however, believe that all the ideas and techniques that we discover in
+different programming languages will generally enrich our thinking and
+make us better software engineers in principle.</p>
+
+<p><em>P.S. If you&rsquo;re wondering why a certain &ldquo;great&rdquo; language X is not on
+the list keep in mind that this is my personal(and highly subjective)
+point of view on the subject. Who knows, in some dark and twisted
+place there may very well be people who consider BASIC a programming
+language masterpiece&hellip; :&ndash;)</em></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/articles/page/22/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/articles/page/20/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I&#8217;m a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

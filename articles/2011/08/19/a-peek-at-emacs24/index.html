@@ -1,0 +1,613 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>A peek at Emacs 24 - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude Recently I&rsquo;ve decided to have a look at the current development
+version of Emacs &ndash; namely Emacs 24. I was quite impressed with &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2011/08/19/a-peek-at-emacs24">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">A Peek at Emacs 24</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-19T00:00:00+03:00" pubdate data-updated="true">Aug 19<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Prelude</h2>
+
+<p>Recently I&rsquo;ve decided to have a look at the current development
+version of Emacs &ndash; namely Emacs 24. I was quite impressed with the work done
+by the development team so far so I decided to share some of the cool things
+I&rsquo;ve found in Emacs 24.</p>
+
+<p>It seems to me that this will be the most important Emacs release in
+quite some time.</p>
+
+<!--more-->
+
+
+<h2>Installation changes in Emacs 24</h2>
+
+<p>There are a couple of new build flags support in Emacs 24 &ndash; most
+notably there is GTK 3.0 support present. You can enable it by passing
+the <strong>&mdash;with-x-toolkit=gtk3</strong> flag to <em>configure</em>. There is also built-in
+support for selinux (that can be disabled at build time) and the
+installed info and man pages are now compressed by default.</p>
+
+<p>All in all &ndash; nothing major has changed with the installation process.</p>
+
+<p><img src="/images/articles/emacs24.png"></p>
+
+<h2>General changes</h2>
+
+<h4>Completion improvements</h4>
+
+<p>There has been a lot of work done in the completion department. For
+instance <strong>shell-mode</strong> now uses pcomplete rules and the standard
+completion UI, which is pretty cool IMHO. Some other insteresting
+improvements (mostly copied directly from Emacs&#8217; NEWS files):</p>
+
+<ul>
+<li>Many packages have been changed to use <em>completion-at-point</em> rather than
+their own completion code.</li>
+<li>Completion in a non-minibuffer now tries to detect the end of completion
+and pops down the *Completions* buffer accordingly.</li>
+<li>Completion can cycle, depending on completion-cycle-threshold.</li>
+<li>There is a new completion style called <em>substring</em>.</li>
+<li>Completion style can be set per-category with <em>completion-category-overrides</em>.</li>
+<li>Completion of buffers now uses substring completion by default.</li>
+<li><em>completing-read</em> can be customized using the new variable
+<em>completing-read-function</em>.</li>
+<li><em>minibuffer-local-filename-must-match-map</em> is not used any more.
+Instead, the bindings in <em>minibuffer-local-filename-completion-map</em> are combined
+with minibuffer-local-must-match-map.</li>
+</ul>
+
+
+<h4>Scrolling improvements</h4>
+
+<p>Scrolling has always been a sour subject in Emacs. Emacs 24 finally
+alleviates many of the long standing issues in the scrolling department:</p>
+
+<ul>
+<li><p>New scrolling commands <em>scroll-up-command</em> and <em>scroll-down-command</em>
+(bound to C-v/[next] and M-v/[prior]) do not signal errors at top/bottom
+of buffer at first key-press (instead move to top/bottom of buffer)
+when a new variable <em>scroll-error-top-bottom</em> is non-nil.</p></li>
+<li><p>New scrolling commands <em>scroll-up-line</em> and <em>scroll-down-line</em>
+scroll a line instead of full screen.</p></li>
+<li><p>New property <em>scroll-command</em> should be set on a command&rsquo;s symbol to
+define it as a scroll command affected by <em>scroll-preserve-screen-position</em>.</p></li>
+<li><p>If you customize <em>scroll-conservatively</em> to a value greater than 100,
+Emacs will never recenter point in the window when it scrolls due to
+cursor motion commands or commands that move point (e.f., <em>M-g M-g</em>).
+Previously, you needed to use <em>most-positive-fixnum</em> as the value of
+<em>scroll-conservatively</em> to achieve the same effect.</p></li>
+<li><p><strong>Aggressive</strong> scrolling now honors the scroll margins.
+If you customize <em>scroll-up-aggressively</em> or
+<em>scroll-down-aggressively</em> and move point off the window, Emacs now
+scrolls the window so as to avoid positioning point inside the scroll
+margin.</p></li>
+</ul>
+
+
+<h4>GTK improvements</h4>
+
+<p>Linux users are in for a treat:</p>
+
+<ul>
+<li>GTK scroll bars are finally placed on the right by default.
+You can still use <em>set-scroll-bar-mode</em> to change this.</li>
+<li>GTK tool bars can have just text, just images or images and text.
+Customize <em>tool-bar-style</em> to choose style.  On a Gnome desktop, the default
+is taken from the desktop settings.</li>
+<li>GTK tool bars can be placed on the left/right or top/bottom of the frame.
+The frame-parameter tool-bar-position controls this.  It takes the values
+top, left, right or bottom.  The <strong>Options => Show/Hide</strong> menu has entries
+for this.</li>
+<li>The colors for selected text (the region face) are taken from the GTK
+theme when Emacs is built with GTK.</li>
+<li>Emacs uses GTK tooltips by default if built with GTK.  You can turn that
+off by customizing x-gtk-use-system-tooltips.</li>
+</ul>
+
+
+<h4>Cocoa (OS X improvements)</h4>
+
+<p>OS X users seem to be a bit neglected, but still:</p>
+
+<ul>
+<li>the annoying bug with the cursor not having an inverse video face
+(meaning you couldn&rsquo;t see the symbol under it) is finally fixed</li>
+<li>the menu bar can be hidden by customizing
+ns-auto-hide-menu-bar.</li>
+</ul>
+
+
+<h4>ELPA (a package manager for Emacs)</h4>
+
+<ul>
+<li><p>An Emacs Lisp package manager (aka ELPA) is now included.
+This is a convenient way to download and install additional packages,
+from a package repository at elpa.gnu.org.</p></li>
+<li><p>The addition of external repositories is also supported ( I&rsquo;m
+particularly fond of the <a href="http://marmalade-repo.org/">Marmalade repo</a>)</p></li>
+<li><p><em>M-x list-packages</em> shows a list of packages, which can be
+selected for installation.</p></li>
+<li><p>New command <em>describe-package</em>, bound to <em>C-h P</em>.</p></li>
+<li><p>By default, all installed packages are loaded and activated
+automatically when Emacs starts up.  To disable this, set
+<em>package-enable-at-startup</em> to nil.  To change which packages are
+loaded, customize <em>package-load-list</em>.</p></li>
+</ul>
+
+
+<p>I&rsquo;m personally a little bit underwhelmed by ELPA at this point. It
+lacks something that I deem rather critical &ndash; the ability to upgrade
+already installed packages automatically. Hopefully, this deficiency
+will be amended in the near future.</p>
+
+<p>There is also the restrictive licensing policy that GNU enforces
+that will certainly prevent a lot of packages from being distributed
+via the official ELPA repo.</p>
+
+<h4>Custom color themes</h4>
+
+<p>Most hackers are very fond of custom color themes. I&rsquo;m no exception &ndash;
+after all I&rsquo;m the maintainer of the <a href="https://github.com/bbatsov/zenburn-emacs">Zenburn color theme for Emacs</a>. The
+problems with custom color themes so far was that depended on the
+horrible external package color-theme, that wasn&rsquo;t maintained
+particularly actively in the past few years.</p>
+
+<p>Now Emacs 24 comes with a built-in theming infrastructure
+affectionately called <strong>deftheme</strong> and several quite nice themes that
+Emacs users can choose from (like tango). I&rsquo;ve already ported Zenburn to the
+deftheme infrastructure, so if you like it be sure to give it a
+try. The magic command you&rsquo;ll need to keep in mind is called <em>load-theme</em>.</p>
+
+<h2>Editing improvements</h2>
+
+<p>Emacs is after all mostly an editor and there is a lot of work done in
+the editing area in 24:</p>
+
+<h4>Search changes</h4>
+
+<ul>
+<li><p>C-y in Isearch is now bound to isearch-yank-kill, instead of
+isearch-yank-line.</p></li>
+<li><p>M-y in Isearch is now bound to isearch-yank-pop, instead of
+isearch-yank-kill.</p></li>
+<li><p>M-s C-e in Isearch is now bound to isearch-yank-line.</p></li>
+</ul>
+
+
+<h4>General</h4>
+
+<ul>
+<li><p>There is a new command <em>count-words-region</em>, which does what you expect.</p></li>
+<li><p><em>completion-at-point</em> now handles tags and semantic completion.</p></li>
+<li><p>The default value of <em>backup-by-copying-when-mismatch</em> is now t.</p></li>
+<li><p>The command <em>just-one-space</em> (C-SPC), if given a negative argument,
+also deletes newlines around point.</p></li>
+</ul>
+
+
+<h4>Deletion changes</h4>
+
+<ul>
+<li><p>New option <em>delete-active-region</em>.
+If non-nil, C-d, [delete], and DEL delete the region if it is active
+and no prefix argument is given.  If set to <em>kill</em>, these commands
+kill instead.</p></li>
+<li><p>New command <em>delete-forward-char</em>, bound to C-d and [delete].
+This is meant for interactive use, and obeys <em>delete-active-region</em>.
+The command <em>delete-char</em> does not obey <em>delete-active-region</em>.</p></li>
+<li><p><em>delete-backward-char</em> is now a Lisp function.
+Apart from obeying <em>delete-active-region</em>, its behavior is unchanged.
+However, the byte compiler now warns if it is called from Lisp; you
+should use delete-char with a negative argument instead.</p></li>
+<li><p>The option <em>mouse-region-delete-keys</em> has been deleted.</p></li>
+</ul>
+
+
+<h4>Selection changes</h4>
+
+<p>The default handling of clipboard and primary selections was changed
+to conform with modern X applications.  In short, most commands for
+killing and yanking text now use the clipboard, while mouse commands
+use the primary selection.</p>
+
+<p>In the following, we provide a list of these changes, followed by a
+list of steps to get the old behavior back if you prefer that.</p>
+
+<ul>
+<li><p><em>select-active-regions</em> now defaults to t.
+Merely selecting text (e.g. with drag-mouse-1) no longer puts it in
+the kill ring.  The selected text is put in the primary selection, if
+the system possesses a separate primary selection facility (e.g. X).</p></li>
+<li><p><em>select-active-regions</em> also accepts a new value, <em>only</em>.
+This means to only set the primary selection for temporarily active
+regions (usually made by mouse-dragging or shift-selection);
+&ldquo;ordinary&rdquo; active regions, such as those made with C-SPC followed by
+point motion, do not alter the primary selection.</p></li>
+<li><p><em>mouse-drag-copy-region</em> now defaults to nil.</p></li>
+<li><p>mouse-2 is now bound to <em>mouse-yank-primary</em>.
+This pastes from the primary selection, ignoring the kill-ring.
+Previously, mouse-2 was bound to <em>mouse-yank-at-click</em>.</p></li>
+<li><p><em>x-select-enable-clipboard</em> now defaults to t on all platforms.</p></li>
+<li><p><em>x-select-enable-primary</em> now defaults to nil.
+Thus, commands that kill text or copy it to the kill-ring (such as
+M-w, C-w, and C-k) also use the clipboard&mdash;-not the primary selection.</p></li>
+<li><p>The &ldquo;Copy&rdquo;, &ldquo;Cut&rdquo;, and &ldquo;Paste&rdquo; items in the &ldquo;Edit&rdquo; menu are now
+exactly equivalent to, respectively M-w, C-w, and C-y.</p></li>
+<li><p>Note that on MS-Windows, <em>x-select-enable-clipboard</em> was already
+non-nil by default, as Windows does not support the primary selection
+between applications.</p></li>
+<li><p>Support for X cut buffers has been removed.</p></li>
+<li><p>Support for X clipboard managers has been added.</p></li>
+<li><p>To inhibit use of the clipboard manager, set
+<em>x-select-enable-clipboard-manager</em> to nil.</p></li>
+</ul>
+
+
+<h2>New modes</h2>
+
+<ul>
+<li><p>Occur Edit mode applies edits made in *Occur* buffers to the
+original buffers.  It is bound to C-x C-q in Occur mode. This
+basically removes the need for an external package such as iedit.el.</p></li>
+<li><p>New global minor modes electric-pair-mode, electric-indent-mode,
+and electric-layout-mode. One of my favourite new
+additions. electric-pair-mode renders obsolete the popular
+autopair-mode and electric-indent-mode and electric-layout-mode
+provide a much more IDE feel to the editing experience in Emacs. This
+triumvirate of modes has been a long time coming</p></li>
+<li><p>secrets.el is an implementation of the Secret Service API, an
+interface to password managers like GNOME Keyring or KDE Wallet.  The
+Secret Service API requires D-Bus for communication.  The command
+<em>secrets-show-secrets</em> offers a buffer with a visualization of the
+secrets.</p></li>
+<li><p>notifications.el provides an implementation of the Desktop
+Notifications API.  It requires D-Bus for communication.</p></li>
+<li><p>soap-client.el supports access to SOAP web services from Emacs.
+soap-inspect.el is an interactive inspector for SOAP WSDL structures.</p></li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>Emacs 24 brings quite a lot to the table. I&rsquo;ve barely scratch the
+surface as far as the new features are concerned. There is so much
+more &ndash; improvements to lots of the existing modes (most notably much
+better support for distributed VC systems such as Git, Mercurial and
+Bazaar), internal cleanups and improvements, etc.</p>
+
+<p>I truly feel that Emacs 24 will be the most important Emacs release in
+a long long time and I commend the new dev team leads for their
+passion and resolve to modernize Emacs.</p>
+
+<p>Expect future blog posts dedicated to specific new features and
+improvements.</p>
+
+<p>P.S. Btw <a href="https://github.com/bbatsov/prelude">The Emacs Prelude</a>
+already makes use of some the new features from Emacs 24. In due time
+it will make use of much more of them. It&rsquo;s one of the very few
+advanced Emacs setups targeting exclusively Emacs 24.</p>
+
+<p><strong>Update</strong></p>
+
+<p>A lot of people have been asking me about the level of stability and
+usability of Emacs 24 at this point since I didn&rsquo;t mention them at my
+article. I&rsquo;ve been using Emacs 24 for all of my work for about a month
+now and I&rsquo;ve experienced absolutely no crashes/freezes/any sort of
+instabilities. On the usability side I&rsquo;ve encountered a few bugs that
+might be related to some work in progress (for instance face inheritance doesn&rsquo;t
+work with deftheme), but nothing major.</p>
+
+<p>If you&rsquo;re considering trying out Emacs 24 more seriously &ndash; my advice
+is to go for it. With no clear release date in sight you might be in
+for a long wait before the final release is here and you&rsquo;ll be missing
+on some really great features in the meantime. I&rsquo;ll write a separate
+article soon detailing how to get started with Emacs 24 on the most
+popular platforms (Linux, OS X and Windows).</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-19T00:00:00+03:00" pubdate data-updated="true">Aug 19<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/emacs/'>Emacs</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2011/08/19/a-peek-at-emacs24/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2011/08/19/a-peek-at-emacs24/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2011/07/04/debian-tips/" title="Previous Post: Debian post installation setup & tips">&laquo; Debian post installation setup & tips</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2011/10/09/getting-started-with-emacs-24/" title="Next Post: Getting started with Emacs 24">Getting started with Emacs 24 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2011/08/19/a-peek-at-emacs24/';
+        var disqus_url = 'http://batsov.com/articles/2011/08/19/a-peek-at-emacs24/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

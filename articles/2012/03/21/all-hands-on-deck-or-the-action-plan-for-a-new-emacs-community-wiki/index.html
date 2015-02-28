@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>All Hands on Deck! (or the Action Plan for a new Emacs community wiki) - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude Yesterday I wrote a highly
+controversial article about the state of the EmacsWiki
+and suggested a few things we can do to make things better &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2012/03/21/all-hands-on-deck-or-the-action-plan-for-a-new-emacs-community-wiki">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">All Hands on Deck! (or the Action Plan for a New Emacs Community Wiki)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-21T11:11:00+02:00" pubdate data-updated="true">Mar 21<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Prelude</h2>
+
+<p>Yesterday I wrote a highly
+<a href="http://batsov.com/articles/2012/03/20/die-emacswiki/">controversial article about the state of the EmacsWiki</a>
+and suggested a few things we can do to make things better. I got the
+usual batch of hate mail and some remarks on the poor quality of my
+English and writing style (which generally amuse me a lot). But I
+got much more encouraging feedback from <strong>a lot</strong> of Emacs community
+members. So here our story continues&hellip;</p>
+
+<!--more -->
+
+
+<h2>On The Essence of Things</h2>
+
+<p>Some people accused me that I don&rsquo;t even know what I wiki is. To them
+I&rsquo;d like to say that a thing is not its dictionary/encyclopedia
+definition. A thing is what it&rsquo;s perceived to be. People expect wiki
+entries to look and behave like those found in MediaWiki or Confluence
+and not like some mixture of a wiki, forum and irc conversation&hellip;</p>
+
+<h2>A Word from Our Sponsor</h2>
+
+<p>Alex wrote a
+<a href="http://www.emacswiki.org/emacs/2012-03-20">public response on the EmacsWiki</a>
+yesterday, that I&rsquo;d first like to share (since probably more people
+will see it here, than there). I publish it here with no alternations:</p>
+
+<blockquote><p>Bozhidar Batsov is apparently very frustrated with Emacs Wiki. He<br/>seems to think that we should start over – use new software, add<br/>moderators, guidelines, and sorts of fancy stuff. My answer is the<br/>same as it was back in 2008 (http://www.emacswiki.org/emacs/MissionRant).</p><p>One of his ideas I actually agree with. &#8220;Submit documentation only to<br/>the official project pages.&#8221; Absolutely. :)</p><p>Some ideas I am luke warm about: &#8220;package something on Marmalade…&#8221;<br/>Sure, why not? I have never used Marmalade, but I encourage you to<br/>improve the tools you use. There&#8217;s also &#8220;don&#8217;t respond to any bug<br/>requests regarding modified copies of your sources distributed via<br/>EmacsWiki.&#8221; I also don&#8217;t want to encourage bug reports on the<br/>wiki. Use the facilities built into Emacs to report bugs. But almost<br/>all of you know that.</p><p>But other ideas?</p><p>&#8220;Drop the current format of the wiki - use something standard like<br/>MediaWiki instead of OddMuse.&#8221; How is reformatting the pages going to<br/>improve them?</p><p>&#8220;Drop all the articles about Emacs extensions.&#8221; Just delete them? Are<br/>you at least going to rewrite them and move them to the appropriate<br/>project pages out there? Or are you just going to delete them? Taking<br/>away and not giving back?</p><p>&#8220;Drop all the extensions hosted there.&#8221; Some of the old code has no<br/>other home. Some of the old code is here for the poor sods stuck with<br/>Emacs 20. Are you going to package them for ELPA or Marmalade or<br/>whatever you are going to suggest instead?</p><p>Some of you – like Drew Adams – keep their packages on the wiki. For<br/>those packages, I don&#8217;t see any alternative. Are you going to maintain<br/>his software? Fix his bugs? Develop his features? Unless you are, I<br/>guess you can try and fork his stuff and keep it on whatever other<br/>system you want. But please don&#8217;t suggest taking something away<br/>without giving something in return.</p><p>&#8220;Assemble a team of moderators.&#8221; Indeed. Moderators! Where have you<br/>been hiding for the last ten years! Are you volunteering? I&#8217;m a bit<br/>wary regarding your deletionist tendencies. But perhaps you’d like to<br/>start with a new Table of Contents and new top-down menus where only<br/>the pages you personally vetted and checked are listed. That would be<br/>an awesome thing to do! Of course, there’s no need to delete anything<br/>in order for you to do this. Just arrange the stuff you like and do<br/>it.</p><p>In fact, in order to do it, just do it.</p><p>&#8220;Accept only articles about general Emacs usage and Emacs Lisp<br/>programming.&#8221; How is that going to work – more deleting? I don&#8217;t<br/>know&#8230; I don&#8217;t think you understand where the value of Emacs Wiki<br/>comes from. Perhaps you should write a book about Emacs? Collect a<br/>team of authors and editors and deletionists, take a copy of the wiki,<br/>and just do it right.</p><p>Also, less hyperbole when posting&#8230; :P</p><footer><strong>Alex Schroeder</strong> <cite>Creator and Maintainer of EmacsWiki.org</cite></footer></blockquote>
+
+
+<p>Here&rsquo;s my two cents on the letter:</p>
+
+<ul>
+<li><p>The markup format hardly matters. A new wiki engine would give us
+better structure of the wiki as whole (like separate discussion pages
+for one).</p></li>
+<li><p>Dropping it from the wiki doesn&rsquo;t mean we&rsquo;ll delete the code
+forever. What I meant was &ndash; dump all the extensions to some archive
+for the interested parties and remove them from the wiki. You&rsquo;re
+basically putting words in my mouth.</p></li>
+<li><p>We should care for the bad choices some people made (like Drew &ndash; all
+my respect to his work). With so many free project hosting services I
+don&rsquo;t feel we&rsquo;ll be taking something away and not giving an alternative.</p></li>
+<li><p>No, I don&rsquo;t volunteer. Not for this format of the wiki. But I do
+volunteer for an alternative matching the outline I&rsquo;ve suggested.</p></li>
+<li><p>Mocking me is not right response, you know. The problem exists, you
+fail to acknowledge it, but I don&rsquo;t care that much.</p></li>
+<li><p>Alex calls it hyperbole, I call it the simple truth (and many others
+would second me).</p></li>
+</ul>
+
+
+<h2>The Plan</h2>
+
+<p>Many people commented that my post is not worth a damn if I&rsquo;m not
+willing to back it with action. I&rsquo;m sad to disappoint my critics &ndash; but
+I&rsquo;ll willing to go the whole nine yards on this one. Here&rsquo;s the
+outline of my proposal for a new wiki:</p>
+
+<ol>
+<li><p>Use <a href="http://moinmo.in/">MoinMoin</a> as the wiki engine. It&rsquo;s written in Python and
+it&rsquo;s GPL software. It doesn&rsquo;t use a database, it&rsquo;s featureful and
+mature. It&rsquo;s successfully used by Debian and Ubuntu (and many other
+respectable software organizations). I&rsquo;m against using a Git backed
+systems since it will increase the entry bar for user
+participation. I&rsquo;m even more against the use of a custom platform
+developed specially to serve as the EmacsWiki.</p></li>
+<li><p>I&rsquo;ll pay for the hosting and the new domain and set up the wiki
+initially. I&rsquo;d suggest that the new project begins with the domain
+emacswiki.net or emacswiki.info and eventually we&rsquo;ll assume the old
+emacswiki.org domain as well (should the new wiki be successful
+enough). Suggestions for another name are welcome in the comments
+section.</p></li>
+<li><p>I and anyone willing to lend a hand will pick the articles worth
+saving from the EmacsWiki and migrate them to the new one. I and
+anyone willing to serve as moderator will monitor new contributions
+afterwards.</p></li>
+<li><p>Wiki entries will have a more or less standard structure and will
+adhere and community established guidelines.</p></li>
+<li><p>The old EmacsWiki will eventually be retired to another domain such
+as old.emacswiki.org (or similar) for historic purposes and benefit of
+users of old Emacs versions.</p></li>
+</ol>
+
+
+<p>It this good enough for you to call it an action plan? Comments on it
+are most welcome!</p>
+
+<h2>Epilogue</h2>
+
+<p>I&rsquo;m sorry that I&rsquo;m the guy that has to break the terrible news to all of
+the delusional EmacsWiki supporters out there &ndash; <em>It&rsquo;s not
+special. It&rsquo;s not a beautiful or unique snowflake. It&rsquo;s the same
+decaying wiki matter like some many else.</em> I&rsquo;m sorry for my terrible
+English and my lack of good manners. I&rsquo;m sorry I&rsquo;m willing do to
+something while so many of you are just whining and ignoring the
+existing problems.</p>
+
+<p>I think as a member of the Emacs community I&rsquo;ve shown my worth so far
+and I&rsquo;ll willing to do even more. But I cannot carry out such a
+massive undertaking on my own. I encourage everyone serious about
+helping out to comment the article (here, not on reddit or hacker
+news) or send me a personal email.</p>
+
+<p><strong>Update</strong></p>
+
+<p>The new wiki is now available at
+<a href="http://wikemacs.org">http://wikemacs.org</a>. It&rsquo;s using MediaWiki (it
+turned out it had several nice advantages over MoinMoin).</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-21T11:11:00+02:00" pubdate data-updated="true">Mar 21<span>st</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/emacs/'>Emacs</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2012/03/21/all-hands-on-deck-or-the-action-plan-for-a-new-emacs-community-wiki/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2012/03/21/all-hands-on-deck-or-the-action-plan-for-a-new-emacs-community-wiki/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2012/03/20/die-emacswiki/" title="Previous Post: Die EmacsWiki, Die!">&laquo; Die EmacsWiki, Die!</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2012/03/26/wikemacs-the-other-emacs-wiki/" title="Next Post: WikEmacs - The Other Emacs Wiki">WikEmacs - The Other Emacs Wiki &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2012/03/21/all-hands-on-deck-or-the-action-plan-for-a-new-emacs-community-wiki/';
+        var disqus_url = 'http://batsov.com/articles/2012/03/21/all-hands-on-deck-or-the-action-plan-for-a-new-emacs-community-wiki/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

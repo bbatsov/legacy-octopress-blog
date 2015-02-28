@@ -1,0 +1,621 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Package Management in Emacs: The Good, the Bad and the Ugly - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude Let&rsquo;s face it &ndash; although a vanilla Emacs installation is quite
+powerful almost nobody is using Emacs without a pile of add-ons. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Package Management in Emacs: The Good, the Bad and the Ugly</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T12:18:00+02:00" pubdate data-updated="true">Feb 19<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Prelude</h2>
+
+<p>Let&rsquo;s face it &ndash; although a vanilla Emacs installation is quite
+powerful almost nobody is using Emacs without a pile of add-ons. And
+managing those add-ons is quite frankly a pain in the ass. Traditional
+options included installing Emacs add-ons via the operating system&rsquo;s
+package manager (if available), downloading <code>.el</code> files from various
+locations (everybody hates packages distributed only on Emacs Wiki
+with no canonical version control repo) and simply sticking them on
+the <code>load-path</code>, etc. It&rsquo;s more than obvious that such solutions are
+less than ideal.</p>
+
+<p>For instance if you&rsquo;re installing Emacs add-ons via a package manager
+and you have to change OSes (or machines) you&rsquo;re mostly fucked. On the
+other hand piling files manually in <code>.emacs.d</code> is equal to hell in the
+version and dependency tracking department. There has to be a better
+way, right? Wouldn&rsquo;t it be nice if Emacs had its own package manager
+similar to the likes of <code>homebrew</code>, <code>apt</code> or <code>yum</code>?</p>
+
+<p><a href="http://batsov.com/articles/2011/08/19/a-peek-at-emacs24/">Emacs 24</a>
+finally introduces such a tool &ndash; its name is <code>package.el</code> (very
+original, right?) and it&rsquo;s promise is to make you&rsquo;re lives a bit
+easier. Does it manage to deliver on that promise? We&rsquo;ll see that in a bit&hellip;</p>
+
+<!--more-->
+
+
+<h2>Package management with package.el</h2>
+
+<p><code>package.el</code> is bundled with Emacs 24, but it&rsquo;s not bound to Emacs
+24. Before it became part of Emacs it was an external package, known
+as ELPA (I guess that stood for Emacs Lisp Package Manager or
+something similar). So even if you&rsquo;re an Emacs 23 user you can copy
+the latest version of <code>package.el</code> from
+<a href="http://repo.or.cz/w/emacs.git/blob_plain/1a0a666f941c99882093d7bd08ced15033bc3f0c:/lisp/emacs-lisp/package.el">here</a>
+and enjoy it. At this point you&rsquo;ll have to do something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;package</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nv">package-initialize</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Put this snippet of code near the beginning of your Emacs config,
+since you&rsquo;ll definitely want packages installed via <code>package.el</code> to be
+initalized <em>before</em> you start tweaking them.</p>
+
+<p>What <code>package.el</code> basically does is that it connects to a list of
+package repositories, retrieves the list of the packages there,
+presents it to you in a interactive fashion and lets you install the
+packages you like (of course you can also remove the once you don&rsquo;t
+like). <code>package.el</code> understands the dependencies between packages and
+if one package requires others to run they will be installed
+automatically (which is really neat).</p>
+
+<p>The magic starts with the command <code>M-x package-list-packages</code>. At this
+point you should see something in the lines of this.</p>
+
+<p><img src="/images/articles/packages-list.png"></p>
+
+<p>You can navigate the list of packages, mark the ones you want to
+install with the &ldquo;i&rdquo; key or the ones you want removed with the &ldquo;d&rdquo; key
+and when you&rsquo;re done you can press the &ldquo;x&rdquo; key to execute the
+scheduled actions.</p>
+
+<p>Initially <code>package.el</code> didn&rsquo;t provide the option to update a package,
+but that should be fixed in recent Emacs builds. According to this
+<a href="http://lists.gnu.org/archive/html/emacs-devel/2011-09/msg00371.html">thread</a>
+you can even update all of the installed packages by using the &ldquo;U&rdquo; key
+in the packages list view (I guess that a small &ldquo;u&rdquo; would update only
+one package). Unfortunately my build is lacking those capabilities so
+I cannot comment of their usability.</p>
+
+<p>You&rsquo;d probably notice that your list of available packages is not
+particularly long. That&rsquo;s because the official Emacs 24 package
+repository has a strict licensing (and source code) requirements to
+include a package there. Luckily there are a number of
+community-maintained <code>package.el</code> repos around with much more relaxed
+requirements. Probably the most popular of them is
+<a href="http://marmalade-repo.org/">Marmalade</a>, created by
+<a href="http://nex-3.com/">Nathan Weizenbaum</a> of Sass and Haml fame. You can
+include it in your <code>package-archives</code> list like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;package-archives</span>
+</span><span class='line'>             <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;marmalade&quot;</span> <span class="o">.</span> <span class="s">&quot;http://marmalade-repo.org/packages/&quot;</span><span class="p">)</span> <span class="no">t</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Marmalade provides a web based UI for package upload and search (both
+quite buggy unfortunately) and the ability to share the maintenance of
+a package between several people, who&rsquo;ll be able to upload new version
+of the package. There&rsquo;s also a Emacs Lisp Marmalade tool, that allows
+you to submit packages directly from Emacs.</p>
+
+<p>Using the <code>package.el</code> UI is ok if you&rsquo;re a casual Emacs user, but
+what if you have a custom Emacs configuration, stored under version
+control, that you&rsquo;d like to instantly deploy on any OS/machine (like
+Emacs Prelude). Here in play comes <code>package.el</code>&rsquo;s programmer
+interface. In
+<a href="https://github.com/bbatsov/prelude">Emacs Prelude</a> I use the
+following code to install a list of required packages automatically on Emacs
+startup (if necessary):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defvar</span> <span class="nv">prelude-packages</span>
+</span><span class='line'>  <span class="o">&#39;</span><span class="p">(</span><span class="nv">ack-and-a-half</span> <span class="nv">auctex</span> <span class="nv">clojure-mode</span> <span class="nv">coffee-mode</span> <span class="nv">deft</span> <span class="nv">expand-region</span>
+</span><span class='line'>                   <span class="nv">gist</span> <span class="nv">groovy-mode</span> <span class="nv">haml-mode</span> <span class="nv">haskell-mode</span> <span class="nv">inf-ruby</span>
+</span><span class='line'>                   <span class="nv">magit</span> <span class="nv">magithub</span> <span class="nv">markdown-mode</span> <span class="nv">paredit</span> <span class="nv">projectile</span> <span class="nv">python</span>
+</span><span class='line'>                   <span class="nv">sass-mode</span> <span class="nv">rainbow-mode</span> <span class="nv">scss-mode</span> <span class="nv">solarized-theme</span>
+</span><span class='line'>                   <span class="nv">volatile-highlights</span> <span class="nv">yaml-mode</span> <span class="nv">yari</span> <span class="nv">zenburn-theme</span><span class="p">)</span>
+</span><span class='line'>  <span class="s">&quot;A list of packages to ensure are installed at launch.&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">prelude-packages-installed-p</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">p</span> <span class="nv">in</span> <span class="nv">prelude-packages</span>
+</span><span class='line'>        <span class="nb">when</span> <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nv">package-installed-p</span> <span class="nv">p</span><span class="p">))</span> <span class="nb">do</span> <span class="p">(</span><span class="nb">return</span> <span class="no">nil</span><span class="p">)</span>
+</span><span class='line'>        <span class="nv">finally</span> <span class="p">(</span><span class="nb">return</span> <span class="no">t</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nv">prelude-packages-installed-p</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">;; check for new packages (package versions)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">message</span> <span class="s">&quot;%s&quot;</span> <span class="s">&quot;Emacs Prelude is now refreshing its package database...&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">package-refresh-contents</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">message</span> <span class="s">&quot;%s&quot;</span> <span class="s">&quot; done.&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">;; install the missing packages</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">dolist</span> <span class="p">(</span><span class="nv">p</span> <span class="nv">prelude-packages</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nv">package-installed-p</span> <span class="nv">p</span><span class="p">))</span>
+</span><span class='line'>      <span class="p">(</span><span class="nv">package-install</span> <span class="nv">p</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">provide</span> <span class="ss">&#39;prelude-packages</span><span class="p">)</span>
+</span><span class='line'><span class="c1">;;; prelude-packages.el ends here</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This code check if all of the packages in the list are installed and
+if any of them are not installed if refreshes the local package
+database (in the case a required package for recently added to the remote
+repo) and installs them.</p>
+
+<p>To be able to publish a package to Marmalade (or another repo) it
+should comform a standardized structure. A single-file package might look like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="c1">;;; sass-mode.el --- Sass major mode</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; Copyright 2007-2010 Nathan Weizenbaum</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; Author: Nathan Weizenbaum &lt;nex342@gmail.com&gt;</span>
+</span><span class='line'><span class="c1">;; URL: http://github.com/nex3/sass-mode</span>
+</span><span class='line'><span class="c1">;; Version: 3.0.20</span>
+</span><span class='line'><span class="c1">;; Package-Requires: ((haml-mode &quot;3.0.20&quot;))</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; Code goes here</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;;; sass-mode.el ends here</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A multi-file package should have an additional file named
+<code>&lt;name&gt;-pkg.el</code> that should look like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">define-package</span> <span class="s">&quot;sass-mode&quot;</span> <span class="s">&quot;3.0.20&quot;</span>
+</span><span class='line'>                <span class="s">&quot;Sass major mode&quot;</span>
+</span><span class='line'>                <span class="o">&#39;</span><span class="p">((</span><span class="nv">haml-mode</span> <span class="s">&quot;3.0.20&quot;</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>The Bad and the Ugly</h2>
+
+<p>While <code>package.el</code> is great on paper, for it to really take off some
+problems need to be resolved.</p>
+
+<h4>Updating should be easy</h4>
+
+<p>One of the best features of OS package managers is that they make it
+really easy to update all of the installed packages to their latest
+versions. Currently <code>package.el</code> doesn&rsquo;t support that (at least to my
+knowledge), with the exception of the &ldquo;U&rdquo; key in the list packages
+view. This seems to me like a pretty basic feature and I (and everyone
+I&rsquo;ve talked with) would really like to see it in Emacs 24 final.</p>
+
+<h4>Too much is riding on Marmalade</h4>
+
+<p>Marmalade has become extremely important in the recent months and the
+list of packages there is growing every day. This would have normally
+filled me with great joy, if it weren&rsquo;t for a few problems.</p>
+
+<p>It seems that the project isn&rsquo;t getting much attention from its maintainer
+(which is understandable, given the fact that he&rsquo;s maintaining several
+high profile projects + the fact he&rsquo;s a full time Google
+employee). As a result Marmalade is quite buggy (especially in the UI
+department) and is missing key features, like the ability to contact a
+package maintainer. At some point it was even lacking the ability to
+delete a package. Uploads don&rsquo;t work reliably there, package refresh
+sometimes yields http errors that require manual <code>M-x
+package-refresh-contents</code> and from time to time there is even downtime
+of the service.</p>
+
+<p>The fact that its backend is written in Node.js (great technology, but
+not widely understood for now) and hosted on Google
+Code, doesn&rsquo;t improve the situation a lot. A Ruby or Python based
+solution hosted on GitHub would certainly gain much more traction in
+the community (and I&rsquo;m planning to start work on one soon).</p>
+
+<h4>Scarce documentation</h4>
+
+<p><code>package.el</code> is light on the documentation and you&rsquo;ll have to explore
+its source code if you want to implement its required interface
+(which luckily is very simple). I hope this will change by the release
+of Emacs 24.</p>
+
+<h4>Too few package authors care about package.el</h4>
+
+<p>Package authors rarely tag versions that could be uploaded to a
+<code>package.el</code> compatible repo and from time to time don&rsquo;t follow the
+basic structure required. I always contact package authors to let them
+know of such shortcomings in their packages and so should you.</p>
+
+<h2>Alternatives</h2>
+
+<p><a href="https://github.com/dimitri/el-get">el-get</a> is another popular Emacs
+add-ons management solution that has recently become popular.</p>
+
+<p>el-get allows you to install and manage elisp code for Emacs. It
+supports lots of differents types of sources (git, svn, apt, elpa,
+etc) and is able to install them, update them and remove them, but
+more importantly it will init them for you.</p>
+
+<p>That means it will require the features you need, load the necessary
+files, set the Info paths so that <code>C-h i</code> shows the new documentation
+you now depend on, and finally call your own <code>:post-init</code> function for
+you to setup the extension. Or call it a package.</p>
+
+<p>el-get is inherently troublesome piece of software on Windows machines
+and was originally designed to make it simple to obtain the latest
+versions of packages from git &ndash; a practice which I profoundly
+dislike. Master package branches are often buggy (but there are also
+authors that never tag versions and rely on the rolling release model)
+and I&rsquo;m generally supportive of the stable version releases. While
+some view it as a nice addition to <code>package.el</code> I feel that el-get is
+too low level tool (in its approach to the problem) and should be
+avoided.</p>
+
+<p><strong>Update</strong></p>
+
+<p>A few hours after I posted this article it got a nice lengthy comment
+by el-get&rsquo;s author. Since I believe, that the comment is quite
+interesting I&rsquo;m adding it here without any alterations.</p>
+
+<blockquote><p>As the author of el-get, good article!  The Emacs extension situation<br/>is far from ideal and needs hard critics so that work is done to<br/>improve it.</p><p>I now want to share with you some of the features that are currently<br/>only available in the development branch of el-get (soon to be<br/>released as 4.1): you can now easily checkout a stable branch from a<br/>git repository (thanks to the :checkout property) and you can even<br/>setup which checksum you want installed.So when using git, the<br/>checksum is in fact a revision, when using emacswiki you have to<br/>compute the checksum (doing M-x el-get-checksum) and register it in<br/>your el-get-sources setup, then if the file change on emacswiki el-get<br/>will refuse loading it (hopefully until you&#8217;ve done your review then<br/>updated the checksum).So while I perfectly understand your reserve<br/>toward depending on el-get, I believe that your concerns are being<br/>solved now.I would like to believe that authors of emacs lisp scripts<br/>would take the time to consider formatting their sources for<br/>package.el. Today it&#8217;s far from granted, so by choosing ELPA you miss<br/>a lot of things. And for the situation to change you need to have the<br/>authors willing to package their extensions, or you have to fork their<br/>work. With el-get you have access to 536 packages from the get-go, and<br/>all of emacswiki (that&#8217;s currently more than 1700 packages) after<br/>you&#8217;ve done M-x el-get-emacswiki-refresh. As of writing this comment,<br/>my M-x el-get-package-list contains 2106 packages ready to install,<br/>almost all with descriptions.el-get is about social packaging where<br/>it&#8217;s easy to prepare a recipe for a package, whatever distribution<br/>means its author picked. Then you can share that recipe very easily,<br/>for example with el-get on github where we&#8217;ll be happy to add your<br/>work and have it installed by default when users either install el-get<br/>or do M-x el-get-self-update.As for windows support, it all depends on<br/>the packages you want to install. Most of them just work out of the<br/>box, being a single emacs lisp file (.el). Some of them require to<br/>have extra tools installed, from git or svn or mercurial to make and<br/>autoconf. That&#8217;s only how the authors are shipping their extensions<br/>though, el-get is only providing for an integrated way to get at it.<br/>We have accepted several improvements so that the windows experience<br/>matches the others OS, and we consider windows a first class citizen<br/>here.</p><footer><strong>Dimitri Fontaine</strong> <cite>Author of El-get</cite></footer></blockquote>
+
+
+<h2>Epilogue</h2>
+
+<p><code>package.el</code> is the future of Emacs add-on management &ndash; of that I&rsquo;m
+quite certain. It&rsquo;s far from perfect, but even in its present flawed
+form it has already simplified the life of many Emacs users
+immensely. I urge all of you to stop distributing Emacs packages via
+sources such as the Emacs Wiki and to put a heavy emphasis on
+<code>package.el</code>. Make your packages compatible with it, upload them to a
+community maintained repo (or the official if possible) and keep them
+up-to-date. Your users will love you for that!</p>
+
+<p>I&rsquo;d like to see a replacement to Marmalade in the future as well. A
+more robust and polished solution, maintained by a team of several
+people. Hopefully that moment is not that far in the future.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T12:18:00+02:00" pubdate data-updated="true">Feb 19<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/emacs/'>Emacs</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2012/02/19/color-theming-in-emacs-reloaded/" title="Previous Post: Color Theming in Emacs: Reloaded">&laquo; Color Theming in Emacs: Reloaded</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2012/03/08/emacs-tip-number-4-repeat-last-command/" title="Next Post: Emacs Tip #4: Repeat Last Command">Emacs Tip #4: Repeat Last Command &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/';
+        var disqus_url = 'http://batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

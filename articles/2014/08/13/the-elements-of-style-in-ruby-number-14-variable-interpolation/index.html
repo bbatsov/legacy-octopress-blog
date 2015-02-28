@@ -1,0 +1,413 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The Elements of Style in Ruby #14: Variable Interpolation - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Most experienced Rubyists probably know that there are two ways to interpolate instance, class and global variables into
+strings. 1
+2
+3
+4
+5
+# compact &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2014/08/13/the-elements-of-style-in-ruby-number-14-variable-interpolation">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">The Elements of Style in Ruby #14: Variable Interpolation</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-13T16:27:00+03:00" pubdate data-updated="true">Aug 13<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Most experienced Rubyists probably know that there are two ways to interpolate instance, class and global variables into
+strings.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># compact notation (works only for instance/class/global vars)</span>
+</span><span class='line'><span class="s2">&quot;this is </span><span class="si">#$some_var</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># standard notation (works for any expression)</span>
+</span><span class='line'><span class="s2">&quot;this is </span><span class="si">#{</span><span class="vg">$some_var</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you&rsquo;ve noticed you can leave out the <code>{}</code> which can&rsquo;t be left out for any other expression. Some people find this
+interpolation syntax concise and elegant, but I&rsquo;ll argue that it should be avoided. Here&rsquo;s why:</p>
+
+<ul>
+<li>You can&rsquo;t use this notation in every possible scenario:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># this is fine</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="vi">@variable</span><span class="si">}</span><span class="s2">string_straight_after_without_space&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># but this means something totally different</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#@variablestring_straight_after_without_space</span><span class="s2">&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This means that using the compact notation only when applicable forces you to introduce some inconsistency in your code.
+This is rarely good&hellip;</p>
+
+<ul>
+<li>You&rsquo;re using different notations for the same basic operation (interpolation), without getting anything in return.
+That&rsquo;s not the same with semantic use of single and double quoted strings or <code>fail</code> and <code>raise</code>.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># using compact</span>
+</span><span class='line'><span class="s2">&quot;this is </span><span class="si">#@x</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="s2">&quot;this is </span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># using standard</span>
+</span><span class='line'><span class="s2">&quot;this is </span><span class="si">#{</span><span class="vi">@x</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="s2">&quot;this is </span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>It&rsquo;s easy to make a mistake in the context of a regular expression
+(as interpolation works in regexp literals).  Recently I saw the
+following regexp &ndash; <code>/[0-9.(),;:!?%#$?\x27\x22_+=\\\/\-]*/</code>. There&rsquo;s a
+subtle problem with it, that&rsquo;s not obvious (unless you have a good
+editor, that is). The sequence <code>#$?</code> is interpreted as interpolation
+of the global variable <code>$?</code> (a.k.a. <code>$CHILD_STATUS</code>) and this regexp doesn&rsquo;t work as intended.</li>
+</ul>
+
+
+<p>This scenario shows that the syntax was ill-conceived.</p>
+
+<ul>
+<li>Non-experience Rubyists probably don&rsquo;t know about the compact interpolation notation.
+Few books and tutorials mention it these days, so using it your code will confuse at least
+some of the people reading it.</li>
+</ul>
+
+
+<hr />
+
+<p>It seems to me that Ruby will be better off without a special syntax
+for variable interpolation. Ideally it would be removed in Ruby 3 and
+we&rsquo;ll have one less thing to worry about in our Ruby code.</p>
+
+<p>That&rsquo;s all for today, folks!</p>
+
+<p>As usual I&rsquo;m looking forward to hearing your thoughts here and on
+<a href="http://twitter.com/bbatsov">Twitter</a>!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-13T16:27:00+03:00" pubdate data-updated="true">Aug 13<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/ruby/'>Ruby</a>, <a class='category' href='/articles/categories/style/'>Style</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2014/08/13/the-elements-of-style-in-ruby-number-14-variable-interpolation/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2014/08/13/the-elements-of-style-in-ruby-number-14-variable-interpolation/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2014/08/12/the-state-of-some-emacs-packages-for-clojure-development/" title="Previous Post: The State of Some Emacs Packages for Clojure Development">&laquo; The State of Some Emacs Packages for Clojure Development</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2014/08/29/sicp-distilled/" title="Next Post: SICP Distilled">SICP Distilled &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2014/08/13/the-elements-of-style-in-ruby-number-14-variable-interpolation/';
+        var disqus_url = 'http://batsov.com/articles/2014/08/13/the-elements-of-style-in-ruby-number-14-variable-interpolation/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

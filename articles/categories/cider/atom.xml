@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: cider | (think)]]></title>
+  <link href="http://batsov.com/articles/categories/cider/atom.xml" rel="self"/>
+  <link href="http://batsov.com/"/>
+  <updated>2015-02-28T09:00:23+02:00</updated>
+  <id>http://batsov.com/</id>
+  <author>
+    <name><![CDATA[Bozhidar Batsov]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[A CIDER Unsession at Clojure/conj]]></title>
+    <link href="http://batsov.com/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/"/>
+    <updated>2014-11-15T20:17:00+02:00</updated>
+    <id>http://batsov.com/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ll be talking about the evolution of CIDER at the
+<a href="http://clojure-conj.org/">conj</a>, but I won&rsquo;t be able to show much (in
+terms of features) during my talk. Luckily, however, beside the talks
+we also have the option for <a href="https://github.com/cognitect/clojure-conj/wiki/Clojure-conj-2014-Unsessions">unsessions</a>. Here&rsquo;s my proposal for one such unsession&hellip;</p>
+
+<p>I&rsquo;d like to do a more extensive demonstration of the general
+workflow with CIDER and all the cool things we&rsquo;ve done recently and
+I&rsquo;d also like discuss with our users (and potential users) existing
+problems, ideas for improvements and the future direction of the
+project. If you like my idea you can show your support for it
+<a href="https://github.com/cognitect/clojure-conj/wiki/Clojure-conj-2014-Unsessions#cider-demoqa">here</a>.</p>
+
+<p>Feedback is important and I&rsquo;d like to get as much as possible
+to make CIDER better!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A Profiling Extension for CIDER]]></title>
+    <link href="http://batsov.com/articles/2014/11/15/a-profiling-extension-for-cider/"/>
+    <updated>2014-11-15T20:16:00+02:00</updated>
+    <id>http://batsov.com/articles/2014/11/15/a-profiling-extension-for-cider</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/edw">Edwin Watkeys</a> has just released a
+<a href="https://github.com/thunknyc/nrepl-profile">profiling extension for CIDER</a>,
+based on his library
+<a href="http://github.com/thunknyc/profile">profile</a>. The profiling data you&rsquo;ll get
+is rather crude, but it&rsquo;s still better than nothing and is certainly nicer
+than what you&rsquo;d get by using <code>time</code>.</p>
+
+<p>Here you can see the extension in action:</p>
+
+<p><img class="<a" src="href="https://camo.githubusercontent.com/636b6897b279bb761f3377f6e002bbdb8b474937/68747470733a2f2f7261772e6769746875622e636f6d2f7468756e6b6e79632f6e7265706c2d70726f66696c652f6d61737465722f646f632f70726f66696c652d73637265656e73686f742e706e67">https://camo.githubusercontent.com/636b6897b279bb761f3377f6e002bbdb8b474937/68747470733a2f2f7261772e6769746875622e636f6d2f7468756e6b6e79632f6e7265706c2d70726f66696c652f6d61737465722f646f632f70726f66696c652d73637265656e73686f742e706e67</a>"></p>
+
+<p>Check out the documentation of both projects for more details.</p>
+]]></content>
+  </entry>
+  
+</feed>

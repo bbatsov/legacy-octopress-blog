@@ -1,0 +1,668 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Admin Interfaces for Rails Apps: RailsAdmin vs ActiveAdmin - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude Often in comparisons between Django
+and Rails, one of the Django advantages being cited is the automatic
+admin interface you get for free out &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2011/11/20/admin-interfaces-for-rails-apps-railsadmin-vs-activeadmin">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Admin Interfaces for Rails Apps: RailsAdmin vs ActiveAdmin</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-20T09:24:00+02:00" pubdate data-updated="true">Nov 20<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Prelude</h2>
+
+<p>Often in comparisons between <a href="https://www.djangoproject.com/">Django</a>
+and Rails, one of the Django advantages being cited is the automatic
+admin interface you get for free out-of-the-box there.</p>
+
+<p>I guess a lot of people don&rsquo;t know that there are similar solutions for
+Rails, although they are not included in the standard
+distribution. Currently the two most prominent admin UI &lsquo;frameworks&rsquo; are
+<a href="https://github.com/sferik/rails_admin">RailsAdmin</a> and <a href="http://activeadmin.info/">Active Admin</a>.</p>
+
+<p>While they are both shooting to solve the same problem, they do it in
+a very different way. Many new users are quite confused what
+advantages/disadvantages one has over the other (and vice versa) and
+that&rsquo;s the reason I&rsquo;m writing this article right now &ndash; to clarify a
+few vague points and to help people choose the framework most
+appropriate for the task at hand.</p>
+
+<!--more-->
+
+
+<h2>RailsAdmin</h2>
+
+<p>RailsAdmin started its life as a port of MerbAdmin to Rails 3 and was
+implemented as a Ruby Summer of Code project by Bogdan Gaza with
+mentors Erik Michaels-Ober, Yehuda Katz, Luke van der Hoeven, and Rein
+Henrichs. The project is self described as <em>a Rails
+engine that provides an easy-to-use interface for managing your
+data.</em>.</p>
+
+<p>Its main features include:</p>
+
+<ul>
+<li>Display database tables</li>
+<li>Create new data</li>
+<li>Easily update data</li>
+<li>Safely delete data</li>
+<li>Automatic form validation</li>
+<li>Search and filtering</li>
+<li>Export data to CSV/JSON/XML (very handy)</li>
+<li>Authentication (via Devise)</li>
+<li>User action history</li>
+</ul>
+
+
+<p>RailsAdmin currently supports only ActiveRecord as the ORM. You can
+see a live demo of RailsAdmin <a href="http://rails-admin-tb.herokuapp.com/">here</a>.</p>
+
+<p>The current master branch of RailsAdmin targets Rails 3.1.x and it&rsquo;s
+naturally aware of the asset pipeline introduced there. Installing
+RailsAdmin is a trivial exercise. Just add these deps to your
+<code>Gemfile</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;fastercsv&#39;</span> <span class="c1"># Only required on Ruby 1.8 and below</span>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;rails_admin&#39;</span><span class="p">,</span> <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s1">&#39;git://github.com/sferik/rails_admin.git&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Afterwards you should run:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bundle install
+</span><span class='line'><span class="nv">$ </span>rails g rails_admin:install
+</span><span class='line'><span class="nv">$ </span>rake db:migrate
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And you&rsquo;re done. RailsAdmin uses internally the tried and true
+<a href="https://github.com/plataformatec/devise">Devise</a> for admin users authentication. If you&rsquo;re already using
+devise &ndash; you&rsquo;re covered, otherwise RailsAdmin will install it for you.</p>
+
+<p>At this point you can boot your development web server (<code>rails s</code>) and
+visit the url <a href="http://localhost:3000/admin">localhost:3000/admin</a> (or whatever port you&rsquo;re running
+the dev server on). You&rsquo;ll be able to create admin accounts and after
+you log in you&rsquo;ll be presented by an attractive admin dashboard, that
+shows you an overview of all the tables in your model.</p>
+
+<p>By default you&rsquo;ll be able to manage every single model in your
+app. You&rsquo;ll have to customize the contents of
+<code>config/initializers/rails_admin.rb</code> to change that default
+behavior.</p>
+
+<p>One thing to note is that there are no gem releases of
+RailsAdmin. It&rsquo;s still alpha quality software (at least on paper &ndash; it&rsquo;s
+quite stable actually). I&rsquo;m generally a bit annoyed to have to track
+gems from a git repo, but I understand and respect the developer&rsquo;s
+decision on the matter. Hopefully we&rsquo;ll see a stable release of
+RailsAdmin soon enough and a gem to go with it.</p>
+
+<p>Another thing to keep in mind is the use case for RailsAdmin &ndash; it is
+pretty much an automatic backend, that you&rsquo;re not supposed to modify a
+lot. In its spirit it&rsquo;s very close to what Django&rsquo;s admin backend
+is. RailsAdmin is very smart in determining the relations between
+model and supplying forms and show views that express them properly.</p>
+
+<p>Unfortunately not all relationships are represented correctly and
+modifying the form builders in RailsAdmin is no walk in the
+park. Another minor annoyance is that CarrierWave is not supported out
+of the box so you have to do some manual tinkering in the RailsAdmin
+initializer to make it work.</p>
+
+<p>Some of the nicer touches in RailsAdmin include basic integration with
+CKEditor (a rich WYSIWYG editor) and an user action feature, which
+helps keep track of who did what. I wouldn&rsquo;t mind seeing some mention of
+TinyMCE as an alternative to CKEditor in the docs, since it&rsquo;s considered more
+robust by many (yours truly included).</p>
+
+<p>The docs themselves are just a big README in the project&rsquo;s github
+repo. While they feature most of what you&rsquo;ll need to know about
+RailsAdmin, having them organized in a nicer way (something that the
+guys behind Active Admin have done) wouldn&rsquo;t hurt.</p>
+
+<h2>Active Admin</h2>
+
+<p>Active Admin is the other big Rails admin UI framework, developed by
+Greg Bell. Its official web site describes it like this:</p>
+
+<blockquote><p>Active Admin is a Ruby on Rails plugin for generating administration<br/>style interfaces. It abstracts common business application patterns to<br/>make it simple for developers to implement beautiful and elegant<br/>interfaces with very little effort.</p></blockquote>
+
+
+<p>Active Admin is of course Rails 3.1 ready, plays nice with the asset
+pipeline and has great documentation on its official web site. There
+also a very nice <a href="http://railscasts.com/episodes/284-active-admin">introductory screencast</a> by Ryan Bates from RailsCasts.</p>
+
+<p>Getting started with Active Admin is just as easy as getting started
+with RailsAdmin. You just need to add a dependency to your <code>Gemfile</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;activeadmin&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And to a few command line incantations afterwards to seal the deal:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bundle install
+</span><span class='line'><span class="nv">$ </span>rails g active_admin:install
+</span><span class='line'><span class="nv">$ </span>rake db:migrate
+</span><span class='line'><span class="nv">$ </span>rails s
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Fire up your favorite browser and visit
+<a href="http://localhost:3000/admin">localhost:3000/admin</a>. The default username is
+<em>admin@example.com</em> and the default password is <em>password</em>. You&rsquo;d
+probably be surprised to see an empty dashboard and absolutely no
+models that you can administer. Active Admin takes a totally different
+approach compared to RailsAdmin. Here nothing happens automatically &ndash;
+you have to customize your dashboard yourself and you have to register
+the models you&rsquo;d be administrating with the following command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rails g active_admin:resource ModelName
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will create a file named <code>app/admin/model_name.rb</code> where you can
+tinker with looks of the resource&rsquo;s index, form and show view.</p>
+
+<p>And here comes Active Admin&rsquo;s core feature &ndash; it&rsquo;s immensely easy to
+customize anything in the Admin UI. The forms used to create and
+update model records are simple Formtastic forms (the same Formtastic
+forms you&rsquo;re probably already using throughout the rest of your
+apps):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">ActiveAdmin</span><span class="o">.</span><span class="n">register</span> <span class="no">Post</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">form</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">f</span><span class="o">.</span><span class="n">inputs</span> <span class="s2">&quot;Details&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">f</span><span class="o">.</span><span class="n">input</span> <span class="ss">:title</span>
+</span><span class='line'>      <span class="n">f</span><span class="o">.</span><span class="n">input</span> <span class="ss">:published_at</span><span class="p">,</span> <span class="ss">:label</span> <span class="o">=&gt;</span> <span class="s2">&quot;Publish Post At&quot;</span>
+</span><span class='line'>      <span class="n">f</span><span class="o">.</span><span class="n">input</span> <span class="ss">:category</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>    <span class="n">f</span><span class="o">.</span><span class="n">inputs</span> <span class="s2">&quot;Content&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">f</span><span class="o">.</span><span class="n">input</span> <span class="ss">:body</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>    <span class="n">f</span><span class="o">.</span><span class="n">buttons</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Rendering a partial for the form is also supported.</p>
+
+<p>Active Admin features an elegant DSL to express the index and the show
+views. Here&rsquo;s an example of index table for a fictional Course
+Management app:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">ActiveAdmin</span><span class="o">.</span><span class="n">register</span> <span class="no">Course</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">index</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">column</span> <span class="ss">:id</span>
+</span><span class='line'>    <span class="n">column</span> <span class="ss">:title</span>
+</span><span class='line'>    <span class="n">column</span> <span class="ss">:start_date</span>
+</span><span class='line'>    <span class="n">column</span> <span class="ss">:end_date</span>
+</span><span class='line'>    <span class="n">column</span> <span class="ss">:created_at</span>
+</span><span class='line'>    <span class="n">column</span> <span class="ss">:updated_at</span>
+</span><span class='line'>    <span class="n">default_actions</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>default_actions</code> method invocation here is important &ndash; without it
+you&rsquo;ll be missing the action buttons in the last column of the index
+table.</p>
+
+<p>Here&rsquo;s an example of a show view:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">ActiveAdmin</span><span class="o">.</span><span class="n">register</span> <span class="no">Post</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">show</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">h3</span> <span class="n">post</span><span class="o">.</span><span class="n">title</span>
+</span><span class='line'>    <span class="n">div</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">simple_format</span> <span class="n">post</span><span class="o">.</span><span class="n">body</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Alternatively you can forgo the Arbre HTML DSL and render a partial like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">ActiveAdmin</span><span class="o">.</span><span class="n">register</span> <span class="no">Post</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">show</span> <span class="k">do</span>
+</span><span class='line'>    <span class="c1"># renders app/views/admin/posts/_some_partial.html.erb</span>
+</span><span class='line'>    <span class="n">render</span> <span class="s2">&quot;some_partial&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The documentation is very well written and quite extensive so I
+wouldn&rsquo;t go into many details here (remember DRY). The only issue I&rsquo;ve
+had with Active Admin so far is not related to Active Admin directly &ndash;
+the latest gem release still depends on the old Formtastic 1.3 and I
+happen to use Formtastic 2.0 in all of my apps. Luckily the master
+branch is already using Formtastic 2.0, so all you have to do if you
+have this problem is to use the gem from git:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s1">&#39;activeadmin&#39;</span><span class="p">,</span> <span class="ss">git</span><span class="p">:</span> <span class="ss">git</span><span class="p">:</span><span class="sr">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">gregbell</span><span class="o">/</span><span class="n">active_admin</span><span class="o">.</span><span class="n">git</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you&rsquo;re reading this article after the release of Active Admin 0.4
+(which should happen any day now) &ndash; you don&rsquo;t have to do this.</p>
+
+<h2>Which Should You Use</h2>
+
+<p>The answer to that question depends on your needs for a particular
+project.</p>
+
+<p>RailsAdmin is still alpha. Unstable developments are made in topic branches
+and master is supposed to be as stable as possible. RailsAdmin is not an admin scaffolder as is
+Active Admin. It&rsquo;s an automatic backend. It&rsquo;s goal is to provide a full
+access to your data, with maximum of defaults extracted from
+application&rsquo;s ORM/ActiveModel, a DSL to customize those, and hooks for
+third-party projects (Cancan/Devise/Paperclip/CKeditor) to enrich the
+experience. Granularity is
+higher in RA. You are not supposed to access FormBuilder the way you
+would with Active Admin and Formtastic. RailAdmin says here <em>It&rsquo;s in the dev field, not
+configuration</em>. Still, the current blackbox has some flaws, discrepancies
+and uncovered areas that its developers are currently addressing.</p>
+
+<p>Active Admin basically does things the other way around. You&rsquo;re
+totally supposed to tweak every aspect of the Admin UI &ndash; but tweaking
+those aspects is very very easy. If you&rsquo;re looking for a heavily
+customized Admin UI solution &ndash; Active Admin is certainly the way to
+go. It&rsquo;s not an automatic admin backend by any means &ndash; it&rsquo;s more or
+less a framework that simplifies the creation of admin UIs.</p>
+
+<p>In terms of popularity it seems that RailsAdmin is a bit more popular
+right now. I consider the GitHub watchers of a project to be a fairly
+accurate measurement of its popularity and as of the time of this
+writing RailsAdmin has 2539 compared to 2127 for Active Admin. You
+have to consider the fact that RailsAdmin has been out in the open a
+bit longer. Active Admin is rapidly closing this gap, however, and I
+expect it to surpass RailsAdmin in a month or two.</p>
+
+<p>My personal recommendation is to start by trying RailsAdmin &ndash; if it
+covers your use cases, you&rsquo;d do well to simply use it instead of
+pouring additional effort into creating a similar UI with Active
+Admin. If you need heavily customized admin UI, however, you&rsquo;d
+probably do well to start with Active Admin in the first place, since
+after all &ndash; it was designed for such scenarios.</p>
+
+<h2>Epilogue</h2>
+
+<p>Having used both RailsAdmin and Active Admin with real projects I can
+tell you that they serve a different purpose &ndash; the
+admin UI generated by RailsAdmin is quite usable by default and might
+be used with very little changes. Active Admin&rsquo;s admin UI generally
+requires manual tweaking to achieve the same effect. On the other hand
+Active Admin was developed with manual customization in mind at it&rsquo;s
+very easy to do such changes there. Modifying the forms in RailsAdmin
+was definitely a less pleasant experience (not to mention stuff like
+CarrierWave integration).</p>
+
+<p>While there are some people urging the projects to merge I think that
+would be a terrible idea. Aside from the technical difficulties of
+merging separate projects sharing no common codebase, I do think diversity
+matters. Rails has virtually no alternatives (in Rubyland) and that is bad for
+business, since competition always drives innovation. I&rsquo;d love to see
+both projects evolve in their current directions (and stabilize along
+the way).</p>
+
+<p>So what are you waiting for? Give them both a shot and share your
+experience in the comments section! :&ndash;)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-20T09:24:00+02:00" pubdate data-updated="true">Nov 20<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/activeadmin/'>ActiveAdmin</a>, <a class='category' href='/articles/categories/railsadmin/'>RailsAdmin</a>, <a class='category' href='/articles/categories/ruby/'>Ruby</a>, <a class='category' href='/articles/categories/ruby-on-rails/'>Ruby on Rails</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2011/11/20/admin-interfaces-for-rails-apps-railsadmin-vs-activeadmin/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2011/11/20/admin-interfaces-for-rails-apps-railsadmin-vs-activeadmin/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2011/11/19/why-emacs/" title="Previous Post: Why Emacs?">&laquo; Why Emacs?</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2011/11/25/emacs-tip-number-3-whitespace-cleanup/" title="Next Post: Emacs Tip #3: Whitespace Cleanup">Emacs Tip #3: Whitespace Cleanup &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://batsov.com/articles/2011/11/20/admin-interfaces-for-rails-apps-railsadmin-vs-activeadmin/';
+        var disqus_url = 'http://batsov.com/articles/2011/11/20/admin-interfaces-for-rails-apps-railsadmin-vs-activeadmin/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

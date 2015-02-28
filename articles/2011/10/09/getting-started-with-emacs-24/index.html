@@ -1,0 +1,438 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Getting started with Emacs 24 - (think)</title>
+  <meta name="author" content="Bozhidar Batsov">
+
+  
+  <meta name="description" content="Prelude Last month I&rsquo;ve blogged about the
+exciting things are coming up in Emacs 24. What
+I failed to mention originally is that altough Emacs &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://batsov.com/articles/2011/10/09/getting-started-with-emacs-24">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="(think)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22917580-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">(think)</a></h1>
+  
+    <h2>An online novel about the Source, the Force, the real life and everything in between...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:batsov.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Articles</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About Bozhidar</a></li>
+  <li><a href="/colophon/">Colophon</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Getting Started With Emacs 24</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-09T00:00:00+03:00" pubdate data-updated="true">Oct 9<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Prelude</h2>
+
+<p>Last month I&rsquo;ve blogged about the
+<a href="/articles/2011/08/19/a-peek-at-emacs24/">exciting things are coming up in Emacs 24</a>. What
+I failed to mention originally is that altough Emacs 24 is slated for
+a Spring 2012 (tentatively) release there is no real reason not to start using it
+now. You should also keep in mind that it&rsquo;s feature complete since it
+officially entered the feature freeze of its development cycle in July 2011.</p>
+
+<p>I&rsquo;ve been using Emacs 24 for several months now and it has been
+nothing but rock solid. I guess the only real obstacle currently is
+that the way to obtain Emacs 24 is not particularly straightfoward/clear,
+hence this post.</p>
+
+<p>I&rsquo;ll discuss here the installation and initial configuration of Emacs
+24 on OSX, GNU/Linux and Windows.</p>
+
+<!--more-->
+
+
+<h2>Installing Emacs 24</h2>
+
+<h4>OS X</h4>
+
+<p>Obtaining Emacs 24 on OS X is really simple. There are two popular
+ways to do it. The first is to simply download a pretest (or a nightly
+build) from <a href="http://emacsformacosx.com">Emacs for OSX</a>. My personal
+recommendation would be to get the latest pretest (which is ironically
+the first pretest as well) from
+<a href="http://emacsformacosx.com/emacs-builds/Emacs-pretest-24.0.90-universal-10.6.7.dmg">here</a>.</p>
+
+<p>That was really easy, right?</p>
+
+<p>The second easy way to obtain Emacs 24 is via
+<a href="http://mxcl.github.com/homebrew/">homebrew</a>. Just type the following
+incantation in your shell and you&rsquo;re done:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew install emacs --cocoa --use-git-head --HEAD
+</span><span class='line'><span class="nv">$ </span>cp -r /usr/local/Cellar/emacs/HEAD/Emacs.app /Applications/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The second step is optional, but it&rsquo;s recommended if you like to start
+Emacs from the launchpad or from Spotlight. Personally I prefer to
+start Emacs in daemon mode (<code>emacs --daemon</code>), so that I could share a
+single Emacs instance between several Emacs clients (<code>emacsclient
+-c/t</code>).</p>
+
+<p>That&rsquo;s all folk! You may now proceed to the configuration section.</p>
+
+<h4>Linux</h4>
+
+<p>Given that Linux is more or less the home os of Emacs it presents us
+with the most installation options. Of course, we can build Emacs from
+<a href="https://github.com/emacsmirror/emacs">source</a> on every distribution
+out there, but I rarely bother to do so. Using the distribution&rsquo;s
+package manager is a better idea for many reasons &ndash; you don&rsquo;t need to
+install a build chain and lots of dev libraries, you get updated
+versions when they are released and you get automated dependency
+manager, just to name a few.</p>
+
+<p>That said, few distributions include in their primary repositories
+builds of Emacs 24. Luckily there are some unofficial repos that come
+to the rescue.</p>
+
+<p>Debian/Ubuntu users should look no further than the amazing
+<a href="http://emacs.naquadah.org/">emacs-snapshot APT repo</a>. You&rsquo;ll find
+installation instructions there for all the relevant Debian and Ubuntu
+versions out there. High quality, highly recommended builds!</p>
+
+<p>Gentoo users have even less to do, since Emacs 24 can be obtained via
+the <code>emacs-vcs</code> package in portage, as noted in the official
+<a href="http://www.gentoo.org/proj/en/lisp/emacs/emacs.xml">Emacs on Gentoo page</a>.</p>
+
+<p>Unfortunately I wasn&rsquo;t able to find prebuilt Emacs 24 packages for any
+of the RPM distros (Fedora, SUSE, Mandriva, etc). Since, I&rsquo;m Debian
+user I have to admit that I didn&rsquo;t look that far, but the source
+installation is not particularly hard and is always an option.</p>
+
+<h4>Windows</h4>
+
+<p>There are several ways to obtain precompiled Emacs 24 binaries if
+you&rsquo;re a Windows users. The most popular are
+<a href="http://ourcomments.org/cgi-bin/emacsw32-dl-latest.pl">EmacsW32</a>,
+<a href="http://code.google.com/p/emacs-for-windows/">Emacs for Windows</a> and
+of course the official
+<a href="http://alpha.gnu.org/gnu/emacs/windows/">Emacs Windows builds</a>. I&rsquo;ve
+,personally, never used any builds other than the official ones. The
+unofficial builds usually include installers and various patches that
+might be of use to some users.</p>
+
+<p>Since I rarely use Windows I cannot give you any more advice on the
+choice of a binary vendor.</p>
+
+<h2>Initial configuration</h2>
+
+<p>Installing Emacs has always been the easy part, configuring it
+properly &ndash; not that much. That&rsquo;s why I&rsquo;ve created the
+<a href="https://github.com/bbatsov/prelude">Emacs Prelude</a> &ndash; an
+advanced Emacs setup specifically for Emacs 24 that has been tested to
+properly work on OSX, Linux and Windows.</p>
+
+<p>Its installation is dead simple:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git clone git://github.com/bbatsov/prelude.git path/to/local/repo
+</span><span class='line'><span class="nv">$ </span>ln -s path/to/local/repo ~/.emacs.d
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>For Windows Vista/7 the ~(home) folder is
+<code>C:\Users\&lt;USER&gt;\AppData\Roaming\</code>.</p>
+
+<p>The configuration in the Prelude is commented extensively and will be
+improved more along the way. Reading it will be an enlightening
+experience for all new Emacs users.</p>
+
+<p>The Prelude itself is a moving target. I&rsquo;ve created it recently and I
+plan to add a lot more cool things very soon, so stay tuned. If you
+have any problems with it or have feature suggestions &ndash; do not
+hesitate to open tickets and send pull requests.</p>
+
+<h2>Epilogue</h2>
+
+<p>Now that I&rsquo;ve shown you how easy it is to get a hold of Emacs 24 and
+I&rsquo;ve provided you with a starting configuration there is really no
+excuse not to switch to Emacs 24. Install it, use it, love it!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Bozhidar Batsov</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-09T00:00:00+03:00" pubdate data-updated="true">Oct 9<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/articles/categories/emacs/'>Emacs</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://batsov.com/articles/2011/10/09/getting-started-with-emacs-24/" data-via="bbatsov" data-counturl="http://batsov.com/articles/2011/10/09/getting-started-with-emacs-24/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/articles/2011/08/19/a-peek-at-emacs24/" title="Previous Post: A peek at Emacs 24">&laquo; A peek at Emacs 24</a>
+      
+      
+        <a class="basic-alignment right" href="/articles/2011/10/30/deploying-rails31-apps-on-celadon-cedar/" title="Next Post: Deploying Rails 3.1 applications on Heroku's Celadon Cedar stack">Deploying Rails 3.1 applications on Heroku's Celadon Cedar stack &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Bozhidar</h1>
+  <p>My name is Bozhidar Batsov and I'm a Ruby/Clojure/Emacs hacker
+  from Sofia, Bulgaria. I love building neat stuff. In the Source I trust!</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/12/04/introducing-inf-clojure-a-better-basic-clojure-repl-for-emacs/">Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
+      </li>
+    
+      <li class="post">
+        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+     <h1>Twitter</h1>
+     <!-- PASTE THE WIDGET CODE HERE -->
+     <a class="twitter-timeline" href="https://twitter.com/bbatsov" data-widget-id="382536919663386624">Tweets by @bbatsov</a>
+     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+ </section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/bbatsov">@bbatsov</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'bbatsov',
+            count: 8,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/108153044872779739189?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Bozhidar Batsov -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'batsov';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
