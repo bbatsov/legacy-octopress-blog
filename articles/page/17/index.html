@@ -9,9 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Prelude Often in comparisons between Django
-and Rails, one of the Django advantages being cited is the automatic
-admin interface you get for free out &hellip;">
+  <meta name="description" content="Good developers are very careful about the proper use of
+whitespace in their files &ndash; there should be no empty lines at the
+beginning of a file &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,104 @@ admin interface you get for free out &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/11/25/emacs-tip-number-3-whitespace-cleanup/">Emacs Tip #3: Whitespace Cleanup</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-25T14:26:00+02:00" pubdate data-updated="true">Nov 25<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Good developers are very careful about the proper use of
+whitespace in their files &ndash; there should be no empty lines at the
+beginning of a file, no empty lines at the end of a file, no trailing
+whitespace, no mixture of tabs and spaces, etc.</p>
+
+<p>Emacs, naturally, wants to help with every problem possible and
+provides a very nice solution in the form of the <code>whitespace-cleanup</code>
+command. It&rsquo;s a much more powerful alternative to the older
+<code>delete-trailing-whitespace</code> command, that simply deletes trailing
+whitespace, and it&rsquo;s aware of the <code>whitespace-style</code> variable, used by <code>whitespace-mode</code>.</p>
+
+<p>It usually applies to the whole buffer, but in transient mark
+mode when the mark is active, it applies to the region.  It also
+applies to the region when it is not in transient mark mode, the
+mark is active and <code>C-u</code> was pressed just before
+calling <code>whitespace-cleanup</code> interactively. There is also a similar
+command called <code>whitespace-cleanup-region</code>.</p>
+
+<p>The problems cleaned up are (borrowed from the official documentation):</p>
+
+<ol>
+<li><p>Empty lines at beginning of buffer.</p></li>
+<li><p>Empty lines at end of buffer.
+If <code>whitespace-style</code> includes the value <code>empty</code>, remove all
+empty lines at beginning and/or end of buffer.</p></li>
+<li><p>8 or more SPACEs at beginning of line.
+If <code>whitespace-style</code> includes the value <code>indentation</code>:
+replace 8 or more SPACEs at beginning of line by TABs, if
+<code>indent-tabs-mode</code> is non-nil; otherwise, replace TABs by
+SPACEs.
+If <code>whitespace-style</code> includes the value <code>indentation::tab</code>,
+replace 8 or more SPACEs at beginning of line by TABs.
+If <code>whitespace-style</code> includes the value <code>indentation::space</code>,
+replace TABs by SPACEs.</p></li>
+<li><p>SPACEs before TAB.
+If <code>whitespace-style</code> includes the value <code>space-before-tab</code>:
+replace SPACEs by TABs, if <code>indent-tabs-mode</code> is non-nil;
+otherwise, replace TABs by SPACEs.
+If <code>whitespace-style</code> includes the value
+<code>space-before-tab::tab</code>, replace SPACEs by TABs.
+If <code>whitespace-style</code> includes the value
+<code>space-before-tab::space</code>, replace TABs by SPACEs.</p></li>
+<li><p>SPACEs or TABs at end of line.
+If <code>whitespace-style</code> includes the value <code>trailing</code>, remove
+all SPACEs or TABs at end of line.</p></li>
+<li><p>8 or more SPACEs after TAB.
+If <code>whitespace-style</code> includes the value <code>space-after-tab</code>:
+replace SPACEs by TABs, if <code>indent-tabs-mode</code> is non-nil;
+otherwise, replace TABs by SPACEs.
+If <code>whitespace-style</code> includes the value
+<code>space-after-tab::tab</code>, replace SPACEs by TABs.
+If <code>whitespace-style</code> includes the value
+<code>space-after-tab::space</code>, replace TABs by SPACEs.</p></li>
+</ol>
+
+
+<p>It might be a good idea to add <code>whitespace-cleanup</code> to your
+<code>before-save-hook</code> so that every buffer would be cleaned up before it&rsquo;s saved:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;before-save-hook</span> <span class="ss">&#39;whitespace-cleanup</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -323,73 +421,6 @@ actively involve them in the process. So here my story begins&hellip;</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2011/10/30/deploying-rails31-apps-on-celadon-cedar/">Deploying Rails 3.1 Applications on Heroku&#8217;s Celadon Cedar Stack</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-30T00:00:00+03:00" pubdate data-updated="true">Oct 30<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Prelude</h2>
-
-<p><a href="http://heroku.com">Heroku</a> is an amazing cloud hosting solution. It&rsquo;s extremely well
-documented, very easy to start with, very stable and provides you with
-the option to use free hosting for some small applications.</p>
-
-<p>While Heroku is generally known as a Ruby on Rails hosting company,
-since their acquisition by SalesForce last year, they&rsquo;ve expanded
-their deployment options a lot. Currently Ruby, Java, Scala, Clojure,
-Python and Node.js are all officially supported (on the Cedar Celadon
-stack) and more will probably come very soon.</p>
-
-<p>All of our company&rsquo;s applications are using
-<a href="http://guides.rubyonrails.org/">Ruby on Rails 3.1.x</a> and are
-targeting the <a href="http://ruby-lang.org">MRI 1.9.2</a>. Those two facts are
-the reason that we&rsquo;re using Heroku&rsquo;s
-<a href="http://devcenter.heroku.com/articles/cedar">Celadon Cedar</a> deployment
-stack. Celadon Cedar is currently in beta, but it offer a lot of
-benefit over the old (stable) Bamboo stack (which also support Rails
-3.1 apps and Ruby 1.9.2). For instance &ndash; Celadon is aware of the Rails
-3.1 asset pipeline and can compile the assets automatically when you
-deploy your apps to Heroku. With Bamboo you have to precompile the
-resources, which is a very tedious task.</p>
-
-<p>While our experience with Heroku has been very positive in
-general, we&rsquo;ve hit some bumps along the road, so I&rsquo;ve decided to share
-some of the problems and their solutions with everyone.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/articles/2011/10/30/deploying-rails31-apps-on-celadon-cedar/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/18/">&larr; Older</a>
@@ -412,6 +443,10 @@ some of the problems and their solutions with everyone.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
       </li>
     
@@ -425,10 +460,6 @@ some of the problems and their solutions with everyone.</p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
       </li>
     
   </ul>

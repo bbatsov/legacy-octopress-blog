@@ -9,9 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Have you ever been wondering how to access the Emacs menu bar, when
-using Emacs in console mode? The answer is easy &ndash; press F10 or type
-M-x &hellip;">
+  <meta name="description" content="I always thought that the fact that JDialogs accepted a parent frame
+as a constructor argument was the thing, that would make the dialog’s
+position &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,63 @@ M-x &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2009/12/18/center-jdialog-over-jframe/">How to Center a JDialog Over a JFrame in Swing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-18T00:00:00+02:00" pubdate data-updated="true">Dec 18<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I always thought that the fact that JDialogs accepted a parent frame
+as a constructor argument was the thing, that would make the dialog’s
+position relative to that of the frame:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nf">JDialog</span><span class="o">(</span><span class="kd">final</span> <span class="n">java</span><span class="o">.</span><span class="na">awt</span><span class="o">.</span><span class="na">Frame</span> <span class="n">parent</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">modal</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Unfortunately all of my freshly opened dialogs would appear in the
+upper left angle of my screen, not centered over the parent JFrame. I
+looked around and found out that I simply needed one more method call
+per dialog:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">theDialog</span><span class="o">.</span><span class="na">setLocationRelativeTo</span><span class="o">(</span><span class="n">theFrame</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You need to call this method before the JDialog’s show() method. Now
+everything is perfect and the dialog appears always right above the
+center of the frame.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -280,55 +337,6 @@ probably the following file:</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2009/07/19/dotemacs-github/">Emacs Configuration in Github</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-07-19T00:00:00+03:00" pubdate data-updated="true">Jul 19<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When you have applications, whose configuration is as complex as that
-of Emacs it’s always a good idea to store that configuration under
-version control so you can easily share it between multiple
-computers. You can always set up some version control system yourself,
-but it’s a lot more convenient (and much more reliable) to use an
-already existing code hosting solution such a GitHub. I have created a
-small repo there housing my humble Emacs configuration(.emacs, some
-custom stuff) and this way I can easily access it on all the computers
-that I happen to be working on.</p>
-
-<p><strong>Update</strong></p>
-
-<p>At some point my custom configuration grew into what is known today as
-the <a href="https://github.com/bbatsov/prelude">Emacs Prelude</a>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/25/">&larr; Older</a>
@@ -351,6 +359,10 @@ the <a href="https://github.com/bbatsov/prelude">Emacs Prelude</a>.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
       </li>
     
@@ -364,10 +376,6 @@ the <a href="https://github.com/bbatsov/prelude">Emacs Prelude</a>.</p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
       </li>
     
   </ul>

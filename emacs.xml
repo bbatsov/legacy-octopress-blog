@@ -4,7 +4,7 @@
   <title><![CDATA[Emacs @ (think)]]></title>
   <link href="http://batsov.com/emacs.xml" rel="self"/>
   <link href="http://batsov.com/"/>
-  <updated>2015-02-28T09:15:47+02:00</updated>
+  <updated>2015-03-29T10:29:21+03:00</updated>
   <id>http://batsov.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -12,6 +12,52 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Projectile 0.12 released]]></title>
+    <link href="http://batsov.com/articles/2015/03/29/projectile-0-dot-12-released/"/>
+    <updated>2015-03-29T10:11:00+03:00</updated>
+    <id>http://batsov.com/articles/2015/03/29/projectile-0-dot-12-released</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/bbatsov/projectile">Projectile</a> 0.12 is finally out!</p>
+
+<p>A lot of time has passed since the previous stable release, for which
+I&rsquo;m truly sorry.  I kept delaying and delaying the release for various
+reasons, but it&rsquo;s finally here and it&rsquo;s pretty <strong>big</strong>.  Please,
+consult the
+<a href="https://github.com/bbatsov/projectile/blob/master/CHANGELOG.md">CHANGELOG</a>
+for some of the more interesting changes. Note that some changes and
+new features are totally undocumented, as I haven&rsquo;t been as demanding
+to contributors as I&rsquo;m usually on my other projects (meaning I didn&rsquo;t
+ask everyone to update the changelog or the readme).</p>
+
+<p>It&rsquo;s funny how open-source works &ndash; I never expected that Projectile
+would have any users except me, but today it&rsquo;s one of the most popular
+3rd party Emacs extensions. Unfortunately I&rsquo;m involved with many
+other projects and have a pretty demanding day job, so issues and feature
+requests have been piling up
+lately. <a href="https://github.com/bbatsov/projectile/issues">80 open issues</a> &ndash;
+that&rsquo;s depressing! I guess I&rsquo;m a pretty lame maintainer! :&ndash;)</p>
+
+<p>If you like the project, I&rsquo;d appreciate your assistance to bring their
+number down.  Many of the requests are relatively easy to implement,
+some don&rsquo;t make sense and should be simply closed (or might have been
+fixed accidentally). Same goes for the open PRs.</p>
+
+<p>Alternatively, you can support Projectile&rsquo;s continued development via
+<a href="https://www.gratipay.com/bbatsov">gratipay</a> or PayPal.</p>
+
+<p><a href="https://gratipay.com/bbatsov"><img src="https://cdn.rawgit.com/gratipay/gratipay-badge/2.1.3/dist/gratipay.png" alt="Support via Gratipay" /></a></p>
+
+<p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=3J4QE5QBJU84Q"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="Paypal" /></a></p>
+
+<p>That&rsquo;s all for me now, folks! I&rsquo;ll try to deliver stable releases
+faster in the future, but I won&rsquo;t make any promises. Thanks for all
+your help and support! I really appreciate them!</p>
+
+<p><strong>P.S.</strong> I&rsquo;d love for Projectile to have a cool logo. Maybe someone can
+help out with that as well?</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Introducing Inf-clojure - a Better Basic Clojure REPL for Emacs]]></title>
@@ -888,124 +934,6 @@ versa. This is not a contest and there will be no winner. I wish the
 best of luck to EmacsWiki and its supporters. What I wish for is to give
 our community the best source of documentation available and the
 option to choose.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[All Hands on Deck! (or the Action Plan for a new Emacs community wiki)]]></title>
-    <link href="http://batsov.com/articles/2012/03/21/all-hands-on-deck-or-the-action-plan-for-a-new-emacs-community-wiki/"/>
-    <updated>2012-03-21T11:11:00+02:00</updated>
-    <id>http://batsov.com/articles/2012/03/21/all-hands-on-deck-or-the-action-plan-for-a-new-emacs-community-wiki</id>
-    <content type="html"><![CDATA[<h2>Prelude</h2>
-
-<p>Yesterday I wrote a highly
-<a href="http://batsov.com/articles/2012/03/20/die-emacswiki/">controversial article about the state of the EmacsWiki</a>
-and suggested a few things we can do to make things better. I got the
-usual batch of hate mail and some remarks on the poor quality of my
-English and writing style (which generally amuse me a lot). But I
-got much more encouraging feedback from <strong>a lot</strong> of Emacs community
-members. So here our story continues&hellip;</p>
-
-<!--more -->
-
-
-<h2>On The Essence of Things</h2>
-
-<p>Some people accused me that I don&rsquo;t even know what I wiki is. To them
-I&rsquo;d like to say that a thing is not its dictionary/encyclopedia
-definition. A thing is what it&rsquo;s perceived to be. People expect wiki
-entries to look and behave like those found in MediaWiki or Confluence
-and not like some mixture of a wiki, forum and irc conversation&hellip;</p>
-
-<h2>A Word from Our Sponsor</h2>
-
-<p>Alex wrote a
-<a href="http://www.emacswiki.org/emacs/2012-03-20">public response on the EmacsWiki</a>
-yesterday, that I&rsquo;d first like to share (since probably more people
-will see it here, than there). I publish it here with no alternations:</p>
-
-<blockquote><p>Bozhidar Batsov is apparently very frustrated with Emacs Wiki. He<br/>seems to think that we should start over – use new software, add<br/>moderators, guidelines, and sorts of fancy stuff. My answer is the<br/>same as it was back in 2008 (http://www.emacswiki.org/emacs/MissionRant).</p><p>One of his ideas I actually agree with. &#8220;Submit documentation only to<br/>the official project pages.&#8221; Absolutely. :)</p><p>Some ideas I am luke warm about: &#8220;package something on Marmalade…&#8221;<br/>Sure, why not? I have never used Marmalade, but I encourage you to<br/>improve the tools you use. There&#8217;s also &#8220;don&#8217;t respond to any bug<br/>requests regarding modified copies of your sources distributed via<br/>EmacsWiki.&#8221; I also don&#8217;t want to encourage bug reports on the<br/>wiki. Use the facilities built into Emacs to report bugs. But almost<br/>all of you know that.</p><p>But other ideas?</p><p>&#8220;Drop the current format of the wiki - use something standard like<br/>MediaWiki instead of OddMuse.&#8221; How is reformatting the pages going to<br/>improve them?</p><p>&#8220;Drop all the articles about Emacs extensions.&#8221; Just delete them? Are<br/>you at least going to rewrite them and move them to the appropriate<br/>project pages out there? Or are you just going to delete them? Taking<br/>away and not giving back?</p><p>&#8220;Drop all the extensions hosted there.&#8221; Some of the old code has no<br/>other home. Some of the old code is here for the poor sods stuck with<br/>Emacs 20. Are you going to package them for ELPA or Marmalade or<br/>whatever you are going to suggest instead?</p><p>Some of you – like Drew Adams – keep their packages on the wiki. For<br/>those packages, I don&#8217;t see any alternative. Are you going to maintain<br/>his software? Fix his bugs? Develop his features? Unless you are, I<br/>guess you can try and fork his stuff and keep it on whatever other<br/>system you want. But please don&#8217;t suggest taking something away<br/>without giving something in return.</p><p>&#8220;Assemble a team of moderators.&#8221; Indeed. Moderators! Where have you<br/>been hiding for the last ten years! Are you volunteering? I&#8217;m a bit<br/>wary regarding your deletionist tendencies. But perhaps you’d like to<br/>start with a new Table of Contents and new top-down menus where only<br/>the pages you personally vetted and checked are listed. That would be<br/>an awesome thing to do! Of course, there’s no need to delete anything<br/>in order for you to do this. Just arrange the stuff you like and do<br/>it.</p><p>In fact, in order to do it, just do it.</p><p>&#8220;Accept only articles about general Emacs usage and Emacs Lisp<br/>programming.&#8221; How is that going to work – more deleting? I don&#8217;t<br/>know&#8230; I don&#8217;t think you understand where the value of Emacs Wiki<br/>comes from. Perhaps you should write a book about Emacs? Collect a<br/>team of authors and editors and deletionists, take a copy of the wiki,<br/>and just do it right.</p><p>Also, less hyperbole when posting&#8230; :P</p><footer><strong>Alex Schroeder</strong> <cite>Creator and Maintainer of EmacsWiki.org</cite></footer></blockquote>
-
-
-<p>Here&rsquo;s my two cents on the letter:</p>
-
-<ul>
-<li><p>The markup format hardly matters. A new wiki engine would give us
-better structure of the wiki as whole (like separate discussion pages
-for one).</p></li>
-<li><p>Dropping it from the wiki doesn&rsquo;t mean we&rsquo;ll delete the code
-forever. What I meant was &ndash; dump all the extensions to some archive
-for the interested parties and remove them from the wiki. You&rsquo;re
-basically putting words in my mouth.</p></li>
-<li><p>We should care for the bad choices some people made (like Drew &ndash; all
-my respect to his work). With so many free project hosting services I
-don&rsquo;t feel we&rsquo;ll be taking something away and not giving an alternative.</p></li>
-<li><p>No, I don&rsquo;t volunteer. Not for this format of the wiki. But I do
-volunteer for an alternative matching the outline I&rsquo;ve suggested.</p></li>
-<li><p>Mocking me is not right response, you know. The problem exists, you
-fail to acknowledge it, but I don&rsquo;t care that much.</p></li>
-<li><p>Alex calls it hyperbole, I call it the simple truth (and many others
-would second me).</p></li>
-</ul>
-
-
-<h2>The Plan</h2>
-
-<p>Many people commented that my post is not worth a damn if I&rsquo;m not
-willing to back it with action. I&rsquo;m sad to disappoint my critics &ndash; but
-I&rsquo;ll willing to go the whole nine yards on this one. Here&rsquo;s the
-outline of my proposal for a new wiki:</p>
-
-<ol>
-<li><p>Use <a href="http://moinmo.in/">MoinMoin</a> as the wiki engine. It&rsquo;s written in Python and
-it&rsquo;s GPL software. It doesn&rsquo;t use a database, it&rsquo;s featureful and
-mature. It&rsquo;s successfully used by Debian and Ubuntu (and many other
-respectable software organizations). I&rsquo;m against using a Git backed
-systems since it will increase the entry bar for user
-participation. I&rsquo;m even more against the use of a custom platform
-developed specially to serve as the EmacsWiki.</p></li>
-<li><p>I&rsquo;ll pay for the hosting and the new domain and set up the wiki
-initially. I&rsquo;d suggest that the new project begins with the domain
-emacswiki.net or emacswiki.info and eventually we&rsquo;ll assume the old
-emacswiki.org domain as well (should the new wiki be successful
-enough). Suggestions for another name are welcome in the comments
-section.</p></li>
-<li><p>I and anyone willing to lend a hand will pick the articles worth
-saving from the EmacsWiki and migrate them to the new one. I and
-anyone willing to serve as moderator will monitor new contributions
-afterwards.</p></li>
-<li><p>Wiki entries will have a more or less standard structure and will
-adhere and community established guidelines.</p></li>
-<li><p>The old EmacsWiki will eventually be retired to another domain such
-as old.emacswiki.org (or similar) for historic purposes and benefit of
-users of old Emacs versions.</p></li>
-</ol>
-
-
-<p>It this good enough for you to call it an action plan? Comments on it
-are most welcome!</p>
-
-<h2>Epilogue</h2>
-
-<p>I&rsquo;m sorry that I&rsquo;m the guy that has to break the terrible news to all of
-the delusional EmacsWiki supporters out there &ndash; <em>It&rsquo;s not
-special. It&rsquo;s not a beautiful or unique snowflake. It&rsquo;s the same
-decaying wiki matter like some many else.</em> I&rsquo;m sorry for my terrible
-English and my lack of good manners. I&rsquo;m sorry I&rsquo;m willing do to
-something while so many of you are just whining and ignoring the
-existing problems.</p>
-
-<p>I think as a member of the Emacs community I&rsquo;ve shown my worth so far
-and I&rsquo;ll willing to do even more. But I cannot carry out such a
-massive undertaking on my own. I encourage everyone serious about
-helping out to comment the article (here, not on reddit or hacker
-news) or send me a personal email.</p>
-
-<p><strong>Update</strong></p>
-
-<p>The new wiki is now available at
-<a href="http://wikemacs.org">http://wikemacs.org</a>. It&rsquo;s using MediaWiki (it
-turned out it had several nice advantages over MoinMoin).</p>
 ]]></content>
   </entry>
   

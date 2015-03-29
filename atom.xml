@@ -4,7 +4,7 @@
   <title><![CDATA[(think)]]></title>
   <link href="http://batsov.com/atom.xml" rel="self"/>
   <link href="http://batsov.com/"/>
-  <updated>2015-02-28T09:15:47+02:00</updated>
+  <updated>2015-03-29T10:29:21+03:00</updated>
   <id>http://batsov.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -12,6 +12,52 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Projectile 0.12 released]]></title>
+    <link href="http://batsov.com/articles/2015/03/29/projectile-0-dot-12-released/"/>
+    <updated>2015-03-29T10:11:00+03:00</updated>
+    <id>http://batsov.com/articles/2015/03/29/projectile-0-dot-12-released</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/bbatsov/projectile">Projectile</a> 0.12 is finally out!</p>
+
+<p>A lot of time has passed since the previous stable release, for which
+I&rsquo;m truly sorry.  I kept delaying and delaying the release for various
+reasons, but it&rsquo;s finally here and it&rsquo;s pretty <strong>big</strong>.  Please,
+consult the
+<a href="https://github.com/bbatsov/projectile/blob/master/CHANGELOG.md">CHANGELOG</a>
+for some of the more interesting changes. Note that some changes and
+new features are totally undocumented, as I haven&rsquo;t been as demanding
+to contributors as I&rsquo;m usually on my other projects (meaning I didn&rsquo;t
+ask everyone to update the changelog or the readme).</p>
+
+<p>It&rsquo;s funny how open-source works &ndash; I never expected that Projectile
+would have any users except me, but today it&rsquo;s one of the most popular
+3rd party Emacs extensions. Unfortunately I&rsquo;m involved with many
+other projects and have a pretty demanding day job, so issues and feature
+requests have been piling up
+lately. <a href="https://github.com/bbatsov/projectile/issues">80 open issues</a> &ndash;
+that&rsquo;s depressing! I guess I&rsquo;m a pretty lame maintainer! :&ndash;)</p>
+
+<p>If you like the project, I&rsquo;d appreciate your assistance to bring their
+number down.  Many of the requests are relatively easy to implement,
+some don&rsquo;t make sense and should be simply closed (or might have been
+fixed accidentally). Same goes for the open PRs.</p>
+
+<p>Alternatively, you can support Projectile&rsquo;s continued development via
+<a href="https://www.gratipay.com/bbatsov">gratipay</a> or PayPal.</p>
+
+<p><a href="https://gratipay.com/bbatsov"><img src="https://cdn.rawgit.com/gratipay/gratipay-badge/2.1.3/dist/gratipay.png" alt="Support via Gratipay" /></a></p>
+
+<p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=3J4QE5QBJU84Q"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="Paypal" /></a></p>
+
+<p>That&rsquo;s all for me now, folks! I&rsquo;ll try to deliver stable releases
+faster in the future, but I won&rsquo;t make any promises. Thanks for all
+your help and support! I really appreciate them!</p>
+
+<p><strong>P.S.</strong> I&rsquo;d love for Projectile to have a cool logo. Maybe someone can
+help out with that as well?</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Octopress 3.0]]></title>
@@ -1106,60 +1152,6 @@ also extremely enjoyable and gratifying experience.</p>
 
 <p>No idea how 2014 will turn out, but I hope it will be at least as fun
 as 2013 was!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Projectile 0.10 is out!]]></title>
-    <link href="http://batsov.com/articles/2013/12/09/projectile-0-dot-10-is-out/"/>
-    <updated>2013-12-09T15:26:00+02:00</updated>
-    <id>http://batsov.com/articles/2013/12/09/projectile-0-dot-10-is-out</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/bbatsov/projectile">Projectile</a> 0.10.0 is out!</p>
-
-<p>This might come as a surprise for people tracking Projectile&rsquo;s
-development, since recent snapshots were using 1.0 as the version
-number, so allow me to explain. I&rsquo;ve been wanting to release
-Projectile 1.0 for a while now, but I felt that without the addition
-of <em>per-project settings</em> support and some refinements to the way
-<em>ignoring of files &amp; folders</em> currently work, such moniker would be
-unjustified. Unfortunately, lately I&rsquo;ve been quite busy working on
-other projects like <a href="https://github.com/clojure-emacs/cider">cider</a>
-and <a href="https://github.com/bbatsov/rubocop">RuboCop</a> and I don&rsquo;t have
-that much time to work on Projectile, so I kept delaying the 1.0
-version.</p>
-
-<p>Recently I decided to release version 0.10 instead, for the benefit of
-users of package repos like Marmalade. The minor bump in the version
-doesn&rsquo;t mean that 0.10 is not a noteworthy update, though. 5 months of
-development and more than a hundred commits from almost a dozen of
-developers have really improved the Projectile experience.  It&rsquo;s
-easily the biggest update of Projectile, since the project was
-conceived.</p>
-
-<p>Some of the highlights include:</p>
-
-<ul>
-<li><code>.projectile</code> is always taken into account (previously it was consulted only when doing <code>native</code> indexing)</li>
-<li>There&rsquo;s now the ability to search for files in a specific directory</li>
-<li>More project types are recognized</li>
-<li>You can search for etags (ctags) in a project</li>
-<li><strong>The Commander</strong> (a really cool feature inspired from CIDER &amp; SLIME, that I&rsquo;ll show in a bit)</li>
-<li>Dozens of (mostly undocumented in the Changelog) bugfixes</li>
-</ul>
-
-
-<p>Have a look at the <a href="https://github.com/bbatsov/projectile/blob/master/CHANGELOG.md">changelog</a> for more details.</p>
-
-<p>And here&rsquo;s the new <strong>Commander</strong> in action:</p>
-
-<p><img src="http://batsov.com/images/articles/projectile-commander.gif"></p>
-
-<p>Basically it gives you a way to invoke many of the Projectile commands
-with a single key &ndash; <code>f</code> for <code>find-file</code>, <code>s</code> for <code>switch-project</code>,
-etc. It&rsquo;s very handy when switching projects since with this command
-you can always pick a different command to execute in the new
-project. By the way, <code>projectile-switch-project</code> will now run the
-commander, when invoked with a prefix argument (<code>C-u C-c p s</code>).</p>
 ]]></content>
   </entry>
   

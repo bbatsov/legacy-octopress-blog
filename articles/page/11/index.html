@@ -9,9 +9,8 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="One operation that we have to do fairly often when editing text is
-manipulating the case of words. The most popular case manipulations
-are probably &hellip;">
+  <meta name="description" content="For some reason the standard Clojure library doesn&rsquo;t have a drop-nth
+function (although it has take-nth). Luckily implementing it is trivial: 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +80,77 @@ are probably &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2013/01/20/drop-nth-in-clojure/">Drop-nth in Clojure</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-20T15:31:00+02:00" pubdate data-updated="true">Jan 20<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For some reason the standard Clojure library doesn&rsquo;t have a <code>drop-nth</code>
+function (although it has <code>take-nth</code>). Luckily implementing it is trivial:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">drop-nth</span>
+</span><span class='line'>  <span class="p">[</span><span class="nv">n</span> <span class="nv">coll</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">-&gt;&gt;</span> <span class="nv">coll</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">map vector </span><span class="p">(</span><span class="nb">iterate inc </span><span class="mi">1</span><span class="p">))</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">remove </span><span class="o">#</span><span class="p">(</span><span class="nb">zero? </span><span class="p">(</span><span class="nf">mod</span> <span class="p">(</span><span class="nb">first </span><span class="nv">%</span><span class="p">)</span> <span class="nv">n</span><span class="p">)))</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">map </span><span class="nv">second</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&rsquo;s try it out:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">drop-nth</span> <span class="mi">3</span> <span class="p">(</span><span class="nb">range </span><span class="mi">1</span> <span class="mi">10</span><span class="p">))</span>
+</span><span class='line'><span class="c1">;; =&gt; (1 2 4 5 7 8)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">drop-nth</span> <span class="mi">5</span> <span class="p">(</span><span class="nb">range </span><span class="mi">1</span> <span class="mi">10</span><span class="p">))</span>
+</span><span class='line'><span class="c1">;; =&gt; (1 2 3 4 6 7 8 9)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">drop-nth</span> <span class="mi">5</span> <span class="p">(</span><span class="nb">range </span><span class="mi">1</span> <span class="mi">20</span><span class="p">))</span>
+</span><span class='line'><span class="c1">;; =&gt; (1 2 3 4 6 7 8 9 11 12 13 14 16 17 18 19)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Looks good to me. Hopefully it will be of some use to someone.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -319,110 +389,6 @@ specific command-line tools near the end of the article though.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2012/12/06/dealing-with-ssl-certificate-validation-errors-in-rails/">Dealing With SSL Certificate Validation Errors in Rails</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-06T17:07:00+02:00" pubdate data-updated="true">Dec 6<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I often see this question asked &ndash; &ldquo;I&rsquo;m getting the following error</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>OpenSSL::SSL::SSLError: hostname was not match with the server certificate</span></code></pre></td></tr></table></div></figure>
-
-
-<p>when trying to deliver an email with Rails 3. How can I solve the problem?&#8221;</p>
-
-<p>Obviously the best solution would be get a valid certificate for your hostname, but sometimes
-this is not possible or you simply don&rsquo;t want to bother with this stuff (on your development machine for instance).
-The solution to the problem commonly suggested is to turn off encryption completely like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">smtp_settings</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>  <span class="ss">:address</span>              <span class="o">=&gt;</span> <span class="s1">&#39;mail.foo.com&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:port</span>                 <span class="o">=&gt;</span> <span class="mi">587</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:domain</span>               <span class="o">=&gt;</span> <span class="s1">&#39;foo.com&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:user_name</span>            <span class="o">=&gt;</span> <span class="s1">&#39;addy@foo.com&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:password</span>             <span class="o">=&gt;</span> <span class="s1">&#39;foofoo&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:authentication</span>       <span class="o">=&gt;</span> <span class="s1">&#39;plain&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:enable_starttls_auto</span> <span class="o">=&gt;</span> <span class="kp">true</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This bit of code represent a portion of your <code>ActionMailer</code> configuration and you&rsquo;d put it in <code>application.rb</code> or
-<code>env.rb</code> (where env is something like <code>development</code>, <code>staging</code>, <code>production</code>, etc).</p>
-
-<p>While the solution is OK for <code>development.rb</code> you&rsquo;d be crazy to use
-this code in production! Disabling encryption means that your username
-and password will traverse the Internet in plain text! A simple, but
-secure solution would be to just disable the certificate validation,
-without sacrificing the secure connection:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">smtp_settings</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>  <span class="ss">:address</span>              <span class="o">=&gt;</span> <span class="s1">&#39;mail.foo.com&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:port</span>                 <span class="o">=&gt;</span> <span class="mi">587</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:domain</span>               <span class="o">=&gt;</span> <span class="s1">&#39;foo.com&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:user_name</span>            <span class="o">=&gt;</span> <span class="s1">&#39;addy@foo.com&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:password</span>             <span class="o">=&gt;</span> <span class="s1">&#39;foofoo&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:authentication</span>       <span class="o">=&gt;</span> <span class="s1">&#39;plain&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:enable_starttls_auto</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:openssl_verify_mode</span>  <span class="o">=&gt;</span> <span class="s1">&#39;none&#39;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This code snippet is mostly the same as the one shown before. The crucial difference is the line
-<code>:openssl_verify_mode =&gt; 'none'</code>.</p>
-
-<p>I hope someone will find this short article useful. Happy hacking!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/12/">&larr; Older</a>
@@ -445,6 +411,10 @@ without sacrificing the secure connection:</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
       </li>
     
@@ -458,10 +428,6 @@ without sacrificing the secure connection:</p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
       </li>
     
   </ul>

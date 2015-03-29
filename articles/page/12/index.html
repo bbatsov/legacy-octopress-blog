@@ -9,10 +9,8 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="One of the major problems when using
-Emacs on OSX is
-not related to OSX itself &ndash; the problem has to do with the Mac&rsquo;s
-hardware. Recent &hellip;">
+  <meta name="description" content="I often see this question asked &ndash; &ldquo;I&rsquo;m getting the following error 1
+OpenSSL::SSL::SSLError: hostname was not match with the server &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +80,110 @@ hardware. Recent &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/12/06/dealing-with-ssl-certificate-validation-errors-in-rails/">Dealing With SSL Certificate Validation Errors in Rails</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-06T17:07:00+02:00" pubdate data-updated="true">Dec 6<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I often see this question asked &ndash; &ldquo;I&rsquo;m getting the following error</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>OpenSSL::SSL::SSLError: hostname was not match with the server certificate</span></code></pre></td></tr></table></div></figure>
+
+
+<p>when trying to deliver an email with Rails 3. How can I solve the problem?&#8221;</p>
+
+<p>Obviously the best solution would be get a valid certificate for your hostname, but sometimes
+this is not possible or you simply don&rsquo;t want to bother with this stuff (on your development machine for instance).
+The solution to the problem commonly suggested is to turn off encryption completely like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">smtp_settings</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="ss">:address</span>              <span class="o">=&gt;</span> <span class="s1">&#39;mail.foo.com&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:port</span>                 <span class="o">=&gt;</span> <span class="mi">587</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:domain</span>               <span class="o">=&gt;</span> <span class="s1">&#39;foo.com&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:user_name</span>            <span class="o">=&gt;</span> <span class="s1">&#39;addy@foo.com&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:password</span>             <span class="o">=&gt;</span> <span class="s1">&#39;foofoo&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:authentication</span>       <span class="o">=&gt;</span> <span class="s1">&#39;plain&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:enable_starttls_auto</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This bit of code represent a portion of your <code>ActionMailer</code> configuration and you&rsquo;d put it in <code>application.rb</code> or
+<code>env.rb</code> (where env is something like <code>development</code>, <code>staging</code>, <code>production</code>, etc).</p>
+
+<p>While the solution is OK for <code>development.rb</code> you&rsquo;d be crazy to use
+this code in production! Disabling encryption means that your username
+and password will traverse the Internet in plain text! A simple, but
+secure solution would be to just disable the certificate validation,
+without sacrificing the secure connection:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">smtp_settings</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="ss">:address</span>              <span class="o">=&gt;</span> <span class="s1">&#39;mail.foo.com&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:port</span>                 <span class="o">=&gt;</span> <span class="mi">587</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:domain</span>               <span class="o">=&gt;</span> <span class="s1">&#39;foo.com&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:user_name</span>            <span class="o">=&gt;</span> <span class="s1">&#39;addy@foo.com&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:password</span>             <span class="o">=&gt;</span> <span class="s1">&#39;foofoo&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:authentication</span>       <span class="o">=&gt;</span> <span class="s1">&#39;plain&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:enable_starttls_auto</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:openssl_verify_mode</span>  <span class="o">=&gt;</span> <span class="s1">&#39;none&#39;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This code snippet is mostly the same as the one shown before. The crucial difference is the line
+<code>:openssl_verify_mode =&gt; 'none'</code>.</p>
+
+<p>I hope someone will find this short article useful. Happy hacking!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -445,95 +547,6 @@ enjoy your new pry-powered Rails console.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2012/10/14/ruby-tip-number-3-matching-on-an-objects-class-in-a-case-expression/">Ruby Tip #3: Matching on an Object&#8217;s Class in a Case Expression</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-14T15:23:00+03:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>From time to time you might want to take different actions depending
-on an object&rsquo;s class. One handy way to do so is with a <code>case</code>
-expression:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">case</span> <span class="n">object</span>
-</span><span class='line'><span class="k">when</span> <span class="no">Fixnum</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is an integer number&#39;</span>
-</span><span class='line'><span class="k">when</span> <span class="nb">String</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is a string&#39;</span>
-</span><span class='line'><span class="k">when</span> <span class="no">Hash</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is a hash&#39;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Behind the scenes this is transformed to:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">if</span> <span class="no">Fixnum</span> <span class="o">===</span> <span class="n">object</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s1">&#39;Object is an integer number&#39;</span>
-</span><span class='line'><span class="k">elsif</span> <span class="nb">String</span> <span class="o">===</span> <span class="n">object</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s1">&#39;Object is a string&#39;</span>
-</span><span class='line'><span class="k">elsif</span> <span class="no">Hash</span> <span class="o">===</span> <span class="n">object</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s1">&#39;Object is a hash&#39;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>A lot of people seem to make the following mistake, so beware:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># WRONG - Class === Class will return false</span>
-</span><span class='line'><span class="k">case</span> <span class="n">object</span><span class="o">.</span><span class="n">class</span>
-</span><span class='line'><span class="k">when</span> <span class="no">Fixnum</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is an integer number&#39;</span>
-</span><span class='line'><span class="k">when</span> <span class="nb">String</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is a string&#39;</span>
-</span><span class='line'><span class="k">when</span> <span class="no">Hash</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is a hash&#39;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Hopefully you&rsquo;ll find this small tip useful.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/13/">&larr; Older</a>
@@ -556,6 +569,10 @@ expression:</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
       </li>
     
@@ -569,10 +586,6 @@ expression:</p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
       </li>
     
   </ul>

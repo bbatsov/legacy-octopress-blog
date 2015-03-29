@@ -9,7 +9,7 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Welcome to the first installment of The Elements of Style in Ruby. We&rsquo;ll start off with something pretty generic, that&rsquo;s not specific to &hellip;">
+  <meta name="description" content="Today&rsquo;s topic is the following rule from the Ruby Style Guide: Favor the use of sprintf and its alias format over the fairly cryptic String#% &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +79,156 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2013/06/27/the-elements-of-style-in-ruby-number-2-favor-sprintf-format-over-string-number-percent/">The Elements of Style in Ruby #2: Favor Sprintf(format) Over String#%</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-27T13:15:00+03:00" pubdate data-updated="true">Jun 27<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today&rsquo;s topic is the following rule from the <a href="https://github.com/bbatsov/ruby-style-guide">Ruby Style Guide</a>:</p>
+
+<blockquote><p>Favor the use of <code>sprintf</code> and its alias <code>format</code> over the fairly </br>
+cryptic <code>String#%</code> method.</p></blockquote>
+
+<p><code>Kernel#sprintf</code> and <code>String#%</code> basically do the same thing &ndash; the main
+difference is that <code>sprintf</code> is generally used as a command(it does
+not operate on its receiver) and <code>String#%</code> is obviously an instance
+method of the class <code>String</code>. Here&rsquo;s the two of them in action:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s1">&#39;%d %d&#39;</span> <span class="o">%</span> <span class="o">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="o">]</span>
+</span><span class='line'><span class="c1"># =&gt; &#39;20 10&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sprintf</span><span class="p">(</span><span class="s1">&#39;%d %d&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; &#39;20 10&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So, considering they both do the same thing why should you opt to use
+<code>sprintf</code> instead of <code>%</code>? Here&rsquo;s a few reasons:</p>
+
+<ul>
+<li><code>%</code> takes either a single element or an array of elements as its
+sole argument; <code>sprintf</code> consistently takes a variable number of
+arguments.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s1">&#39;%d&#39;</span> <span class="o">%</span> <span class="mi">20</span>
+</span><span class='line'><span class="c1"># =&gt; &#39;20&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">&#39;%d %d&#39;</span> <span class="o">%</span> <span class="o">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="o">]</span>
+</span><span class='line'><span class="c1"># =&gt; &#39;20 10&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sprintf</span><span class="p">(</span><span class="s1">&#39;%d %d&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; &#39;20&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">sprintf</span><span class="p">(</span><span class="s1">&#39;%d %d&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># =&gt; &#39;20 10&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Personally, I dislike such inconsistencies a lot.</p>
+
+<ul>
+<li>It&rsquo;s not always clear what <code>%</code> means without additional
+context. Take a look at this short snippet:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># a and b are variables</span>
+</span><span class='line'><span class="n">a</span> <span class="o">%</span> <span class="n">b</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Without some knowledge of <code>a</code> and <code>b</code> we cannot know if we&rsquo;re dealing
+with a modulo operation (if <code>a</code> and <code>b</code> are fixnums), <code>String#%</code> or if
+<code>a</code> is an instance of some other class which has implemented the <code>%</code>
+method.</p>
+
+<p>With <code>sprintf</code> it&rsquo;s always crystal-clear what&rsquo;s going on.</p>
+
+<ul>
+<li><code>%</code> does not carry much of a semantic value in it.</li>
+</ul>
+
+
+<p>Sure, it was named so because of the <code>%</code> placeholders in the target
+string, but people not familiar with that operator will probably be
+confused by such odd-looking syntax. <code>sprintf</code> on the other hand is
+old as time (so people reading your code have probably encountered it
+somewhere before) and beside that it&rsquo;s fairly easy to remember that it
+stands for <code>string print formatted</code> (or something similar). On a
+related note &ndash; the use of <code>Kernel%sprintf</code>&rsquo;s alias <code>format</code> yields
+even better readability, since <code>format</code> is obviously less cryptic name
+than <code>sprintf</code> and the same name is employed in many programming
+languages (most notably <code>Java</code> and many Lisp dialects).</p>
+
+<p>There&rsquo;s one thing about <code>sprintf/format</code> that I dislike, though. It
+doesn&rsquo;t make that much sense to have such an operation as command in a
+OO language like Ruby. Alas, those things are not up to me &ndash; I guess
+the authors had something in mind when they made that particular
+decision about the standard library.</p>
+
+<p>In an ideal world the standard library would have included a
+<code>String#format</code> method, that took variable number of arguments. For
+some reason (unknown to me) &ndash; that has not happened (and maybe never
+will). For now the use of <code>Kernel#sprintf</code> (and <code>Kernel#format</code>)
+yields the best results when it comes down to code clarity and
+consistency. I encourage you to use them (<code>format</code> in particular)!</p>
+
+<p>As usual I&rsquo;m looking forward to hearing your thoughts here and on
+<a href="http://twitter.com/bbatsov">Twitter</a>!</p>
+
+<p><strong>Update</strong></p>
+
+<p><code>String#format</code> is part of the <a href="https://github.com/bbatsov/powerpack">Powerpack library</a>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -521,6 +671,8 @@ interesting discussions with you!</p>
   <!-- categories if -->
 
   <!-- categories if -->
+
+  <!-- categories if -->
  <!-- posts for -->
 </ul>
 
@@ -643,91 +795,6 @@ moment to show you love and spread the word.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2013/04/23/rubocop-0-dot-6-0-released/">RuboCop 0.6.0 Released</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-23T14:46:00+03:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://github.com/bbatsov/rubocop">RuboCop</a> 0.6.0 was just released!
-It&rsquo;s RuboCop&rsquo;s biggest and most ambitious release yet.  Here&rsquo;s the
-highlights:</p>
-
-<ul>
-<li>15 new cops(checks)</li>
-<li>Support for disabling cops locally in a file with <code>rubocop:disable</code> comments</li>
-<li>Half a dozen bugs squashed</li>
-<li>Small improvements across the board</li>
-</ul>
-
-
-<p>I guess the support for disabling cops locally deserves a bit of special treatment.</p>
-
-<p>So here&rsquo;s the basics &ndash; you&rsquo;re now allowed to enable/disable certain cops
-(checks) and to alter their behavior if they accept any parameters.</p>
-
-<p>One or more individual cops can be disabled locally in a section of a
-file by adding a comment such as:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># rubocop:disable LineLength, StringLiterals</span>
-</span><span class='line'><span class="o">[.</span><span class="n">.</span><span class="o">.]</span>
-</span><span class='line'><span class="c1"># rubocop:enable LineLength, StringLiterals</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can also disable <em>all</em> cops with:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># rubocop:disable all</span>
-</span><span class='line'><span class="o">[.</span><span class="n">.</span><span class="o">.]</span>
-</span><span class='line'><span class="c1"># rubocop:enable all</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>One or more cops can be disabled on a single line with an end-of-line
-comment:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">19</span><span class="p">)</span> <span class="c1"># rubocop:disable AvoidFor</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can see all the gory details in the
-<a href="https://github.com/bbatsov/rubocop/blob/master/CHANGELOG.md">changelog</a>. I hope you&rsquo;ll enjoy RuboCop 0.6.0!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/10/">&larr; Older</a>
@@ -750,6 +817,10 @@ comment:</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
       </li>
     
@@ -763,10 +834,6 @@ comment:</p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
       </li>
     
   </ul>

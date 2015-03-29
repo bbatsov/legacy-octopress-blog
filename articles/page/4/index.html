@@ -9,9 +9,11 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="One of the problems newcomers to Ruby experience is that there are
-often quite a few ways to do same thing. For instance &ndash; you can obtain
-the &hellip;">
+  <meta name="description" content="Have you ever wondered where a particular rake task is defined? Enter rake -W (introduced in rake 0.9): 1
+2
+3
+4
+$ rake -W db:schema:load rake db: &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +83,56 @@ the &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2014/05/30/find-out-where-a-rake-task-is-defined/">Find Out Where a Rake Task Is Defined</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-30T17:23:00+03:00" pubdate data-updated="true">May 30<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Have you ever wondered where a particular rake task is defined? Enter <code>rake -W</code> (introduced in <code>rake</code> 0.9):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake -W db:schema:load
+</span><span class='line'>
+</span><span class='line'>rake db:schema:load                 /Users/bozhidar/.rbenv/versions/2.1.1/lib/ruby/gems/2.1.0/gems/activerecord-4.1.1/lib/active_record/railties/databases.rake:236:in `block (2 levels) in &lt;top (required)&gt;'
+</span><span class='line'>rake db:schema:load_if_ruby         /Users/bozhidar/.rbenv/versions/2.1.1/lib/ruby/gems/2.1.0/gems/activerecord-4.1.1/lib/active_record/railties/databases.rake:240:in `block (2 levels) in &lt;top (required)&gt;'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can also invoke <code>rake -W</code> without an argument and you&rsquo;ll get a listing of all available rake tasks and their source locations.</p>
+
+<p>Pretty neat, right?</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -657,87 +709,6 @@ as 2013 was!</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2013/12/09/projectile-0-dot-10-is-out/">Projectile 0.10 Is Out!</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-09T15:26:00+02:00" pubdate data-updated="true">Dec 9<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://github.com/bbatsov/projectile">Projectile</a> 0.10.0 is out!</p>
-
-<p>This might come as a surprise for people tracking Projectile&rsquo;s
-development, since recent snapshots were using 1.0 as the version
-number, so allow me to explain. I&rsquo;ve been wanting to release
-Projectile 1.0 for a while now, but I felt that without the addition
-of <em>per-project settings</em> support and some refinements to the way
-<em>ignoring of files &amp; folders</em> currently work, such moniker would be
-unjustified. Unfortunately, lately I&rsquo;ve been quite busy working on
-other projects like <a href="https://github.com/clojure-emacs/cider">cider</a>
-and <a href="https://github.com/bbatsov/rubocop">RuboCop</a> and I don&rsquo;t have
-that much time to work on Projectile, so I kept delaying the 1.0
-version.</p>
-
-<p>Recently I decided to release version 0.10 instead, for the benefit of
-users of package repos like Marmalade. The minor bump in the version
-doesn&rsquo;t mean that 0.10 is not a noteworthy update, though. 5 months of
-development and more than a hundred commits from almost a dozen of
-developers have really improved the Projectile experience.  It&rsquo;s
-easily the biggest update of Projectile, since the project was
-conceived.</p>
-
-<p>Some of the highlights include:</p>
-
-<ul>
-<li><code>.projectile</code> is always taken into account (previously it was consulted only when doing <code>native</code> indexing)</li>
-<li>There&rsquo;s now the ability to search for files in a specific directory</li>
-<li>More project types are recognized</li>
-<li>You can search for etags (ctags) in a project</li>
-<li><strong>The Commander</strong> (a really cool feature inspired from CIDER &amp; SLIME, that I&rsquo;ll show in a bit)</li>
-<li>Dozens of (mostly undocumented in the Changelog) bugfixes</li>
-</ul>
-
-
-<p>Have a look at the <a href="https://github.com/bbatsov/projectile/blob/master/CHANGELOG.md">changelog</a> for more details.</p>
-
-<p>And here&rsquo;s the new <strong>Commander</strong> in action:</p>
-
-<p><img src="/images/articles/projectile-commander.gif"></p>
-
-<p>Basically it gives you a way to invoke many of the Projectile commands
-with a single key &ndash; <code>f</code> for <code>find-file</code>, <code>s</code> for <code>switch-project</code>,
-etc. It&rsquo;s very handy when switching projects since with this command
-you can always pick a different command to execute in the new
-project. By the way, <code>projectile-switch-project</code> will now run the
-commander, when invoked with a prefix argument (<code>C-u C-c p s</code>).</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/5/">&larr; Older</a>
@@ -760,6 +731,10 @@ commander, when invoked with a prefix argument (<code>C-u C-c p s</code>).</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
       </li>
     
@@ -773,10 +748,6 @@ commander, when invoked with a prefix argument (<code>C-u C-c p s</code>).</p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
       </li>
     
   </ul>

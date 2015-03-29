@@ -9,10 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="I18n(internationalization) and l10n(localization) are topics that are
-covered superbly by the
-Rails Guides. The one thing
-that&rsquo;s left out is &hellip;">
+  <meta name="description" content="From time to time you might want to take different actions depending
+on an object&rsquo;s class. One handy way to do so is with a case
+expression: 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +81,95 @@ that&rsquo;s left out is &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/10/14/ruby-tip-number-3-matching-on-an-objects-class-in-a-case-expression/">Ruby Tip #3: Matching on an Object&#8217;s Class in a Case Expression</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-14T15:23:00+03:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>From time to time you might want to take different actions depending
+on an object&rsquo;s class. One handy way to do so is with a <code>case</code>
+expression:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">case</span> <span class="n">object</span>
+</span><span class='line'><span class="k">when</span> <span class="no">Fixnum</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is an integer number&#39;</span>
+</span><span class='line'><span class="k">when</span> <span class="nb">String</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is a string&#39;</span>
+</span><span class='line'><span class="k">when</span> <span class="no">Hash</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is a hash&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Behind the scenes this is transformed to:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">if</span> <span class="no">Fixnum</span> <span class="o">===</span> <span class="n">object</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s1">&#39;Object is an integer number&#39;</span>
+</span><span class='line'><span class="k">elsif</span> <span class="nb">String</span> <span class="o">===</span> <span class="n">object</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s1">&#39;Object is a string&#39;</span>
+</span><span class='line'><span class="k">elsif</span> <span class="no">Hash</span> <span class="o">===</span> <span class="n">object</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s1">&#39;Object is a hash&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A lot of people seem to make the following mistake, so beware:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># WRONG - Class === Class will return false</span>
+</span><span class='line'><span class="k">case</span> <span class="n">object</span><span class="o">.</span><span class="n">class</span>
+</span><span class='line'><span class="k">when</span> <span class="no">Fixnum</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is an integer number&#39;</span>
+</span><span class='line'><span class="k">when</span> <span class="nb">String</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is a string&#39;</span>
+</span><span class='line'><span class="k">when</span> <span class="no">Hash</span> <span class="k">then</span> <span class="nb">puts</span> <span class="s1">&#39;Object is a hash&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hopefully you&rsquo;ll find this small tip useful.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -345,50 +433,6 @@ dreaming of great Slim experience in Emacs. :&ndash;)</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2012/09/09/long-time-no-see/">Long Time, No See</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-09T19:50:00+03:00" pubdate data-updated="true">Sep 9<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>It&rsquo;s been quite a while since my last blog post. And there hasn&rsquo;t been that
-much action on the open-source projects I happen to maintain
-either. The reason for this is quite simple &ndash; recently I&rsquo;ve joined the
-ranks of the social trading start-up <a href="http://tradeo.com">Tradeo</a> and
-things have been crazy at work ever since.</p>
-
-<p>While this is without a doubt my coolest job to date, it&rsquo;s also the
-most demanding. Anyways &ndash; just wanted to let you know I&rsquo;m doing OK and
-I plan to resume my usual blogging and open-source coding duties soon.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/14/">&larr; Older</a>
@@ -411,6 +455,10 @@ I plan to resume my usual blogging and open-source coding duties soon.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
       </li>
     
@@ -424,10 +472,6 @@ I plan to resume my usual blogging and open-source coding duties soon.</p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
       </li>
     
   </ul>

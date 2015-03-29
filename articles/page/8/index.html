@@ -9,7 +9,8 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Today&rsquo;s topic is the following rule from the Ruby Style Guide: Add underscores to large numeric literals to improve their readability. Most of &hellip;">
+  <meta name="description" content="Today we&rsquo;ll talk about attributes in Ruby. Let&rsquo;s start with the following rule from the
+Ruby Style Guide: Use the attr family of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +80,358 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2013/07/04/the-elements-of-style-in-ruby-number-6-attributes-redux/">The Elements of Style in Ruby #6: Attributes Redux</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-04T15:36:00+03:00" pubdate data-updated="true">Jul 4<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today we&rsquo;ll talk about attributes in Ruby.</p>
+
+<p>Let&rsquo;s start with the following rule from the
+<a href="https://github.com/bbatsov/ruby-style-guide">Ruby Style Guide</a>:</p>
+
+<blockquote><p>Use the <code>attr</code> family of functions to define trivial accessors or mutators.</p></blockquote>
+
+<p>Everyone who&rsquo;s coded a bit of Ruby knows it&rsquo;s preferable to generate
+trivial reader and writer methods via some metaprogramming magic
+instead of writing them by hand. The methods from <code>Module</code> <code>attr</code>,
+<code>attr_reader</code>, <code>attr_writer</code> and <code>attr_accessor</code> do exactly that kind
+of magic. Here&rsquo;s an example using <code>attr_reader</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># bad</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">Person</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@first_name</span> <span class="o">=</span> <span class="n">first_name</span>
+</span><span class='line'>    <span class="vi">@last_name</span> <span class="o">=</span> <span class="n">last_name</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">first_name</span>
+</span><span class='line'>    <span class="vi">@first_name</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">last_name</span>
+</span><span class='line'>    <span class="vi">@last_name</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># good</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">Person</span>
+</span><span class='line'>  <span class="kp">attr_reader</span> <span class="ss">:first_name</span><span class="p">,</span> <span class="ss">:last_name</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@first_name</span> <span class="o">=</span> <span class="n">first_name</span>
+</span><span class='line'>    <span class="vi">@last_name</span> <span class="o">=</span> <span class="n">last_name</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here&rsquo;s <code>attr_writer</code> in action:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># bad</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">Person</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="nb">name</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">name</span><span class="o">=</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># good</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">Person</span>
+</span><span class='line'>  <span class="kp">attr_writer</span> <span class="ss">:name</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>attr_accessor</code> combines the two:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># bad</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">Person</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="nb">name</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">name</span>
+</span><span class='line'>    <span class="vi">@name</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">name</span><span class="o">=</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># good</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">Person</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:name</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Pretty sure none of you has learned anything new at this point. Now we start with the fun part&hellip;</p>
+
+<p>How many of you know how <code>attr</code> behaves? Are you totally sure? Let&rsquo;s
+see what the style guide says about it:</p>
+
+<blockquote><p>Avoid the use of <code>attr</code>. Use <code>attr_reader</code> and <code>attr_accessor</code> instead.</p></blockquote>
+
+<p><code>attr</code>&rsquo;s behavior changed between Ruby 1.8 and 1.9. In Ruby 1.8 <code>attr</code>
+created a single <em>reader</em> method. With an optional second boolean argument it
+created both a <em>reader</em> and a <em>writer</em> method (a la <code>attr_accessor</code>).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Ruby 1.8</span>
+</span><span class='line'><span class="c1"># same as attr_reader :something</span>
+</span><span class='line'><span class="kp">attr</span> <span class="ss">:something</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># creates a single attribute accessor (deprecated in 1.9) - same as attr_accessor :something</span>
+</span><span class='line'><span class="kp">attr</span> <span class="ss">:something</span><span class="p">,</span> <span class="kp">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># can&#39;t do this</span>
+</span><span class='line'><span class="kp">attr</span> <span class="ss">:one</span><span class="p">,</span> <span class="ss">:two</span><span class="p">,</span> <span class="ss">:three</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that you cannot pass multiple attribute names to <code>attr</code> in Ruby 1.8.</p>
+
+<p>In Ruby 1.9 calling <code>attr</code> with an attribute name and a boolean is
+deprecated and it now behaves a lot more like <code>attr_reader</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Ruby 1.9</span>
+</span><span class='line'><span class="kp">attr</span> <span class="ss">:one</span><span class="p">,</span> <span class="ss">:two</span><span class="p">,</span> <span class="ss">:three</span> <span class="c1"># behaves as attr_reader</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Given all this facts it&rsquo;s not a surprise that so many people think
+it&rsquo;s a bad idea to use <code>attr</code>. I guess if the design of that portion
+of the API were up to me I&rsquo;d have made <code>attr</code> behave like
+<code>attr_accessor</code> from day 1. The name of <code>attr_accessor</code> is a bit of a
+misnomer since <code>accessor</code> is hardly a synonym for <strong>reader and
+writer</strong>. Anyways, this is not of particular importance. Off to the
+next item on our agenda for today.</p>
+
+<p>Is this something that should have been defined with <code>attr_reader</code>?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">something</span>
+</span><span class='line'>  <span class="vi">@something_else</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Basically it call comes down to whether this is a trivial reader method or not.
+Some people would argue that because the name of the instance variable
+and the name of the method are not the same &ndash; it&rsquo;s not. I&rsquo;d argue the
+opposite case &ndash; it is! The name of the method does not change the
+semantics. In essence you&rsquo;re simply in need of an alias for the
+<em>default</em> attribute reader method:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="kp">attr_reader</span> <span class="ss">:something_else</span>
+</span><span class='line'><span class="n">alias_method</span> <span class="ss">:something</span><span class="p">,</span> <span class="ss">:something_else</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Boolean attributes are a bit special, since generally we&rsquo;d like to
+have a <code>?</code> at the end of predicate method names, but this cannot be done with
+<code>attr_reader/attr_accessor</code>. Some people would simple hand-code such
+methods:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">something?</span>
+</span><span class='line'>  <span class="vi">@something</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&rsquo;d employ <code>alias_method</code> again:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="kp">attr_reader</span> <span class="ss">:something</span>
+</span><span class='line'><span class="n">alias_method</span> <span class="ss">:something?</span><span class="p">,</span> <span class="ss">:something</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I wouldn&rsquo;t call one style necessary good or bad &ndash; it&rsquo;s more of a personal preference.</p>
+
+<p>One final note &ndash; you should use <code>attr_</code> only for trivial reader and writer methods (trivial means that
+they do not need any defensive copying or pre-update checks).</p>
+
+<p>Consider this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># attr_reader generates code like this</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">something</span>
+</span><span class='line'>  <span class="vi">@something</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This would expose <code>@something</code> to external modifications if it&rsquo;s a
+mutable object. To shield yourself from this you can use defensive
+copying (or freezing when applicable):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># defensive copying in action</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">something</span>
+</span><span class='line'>  <span class="vi">@something</span><span class="o">.</span><span class="n">dup</span> <span class="c1"># return a copy of @something</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Same goes for attributes writers. If you have an <code>age</code> attribute and you
+want to enforce that it should be a positive number you&rsquo;d generally roll your
+own writer:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">age</span><span class="o">=</span><span class="p">(</span><span class="n">age</span><span class="p">)</span>
+</span><span class='line'>  <span class="nb">fail</span> <span class="s1">&#39;Age should be a positive number!&#39;</span> <span class="k">unless</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="vi">@age</span> <span class="o">=</span> <span class="n">age</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This post has become way too long, so I&rsquo;ll be wrapping it up. I hope
+you&rsquo;ve found my musing on the subject of attributes useful.</p>
+
+<p>As usual I&rsquo;m looking forward to hearing your thoughts here and on
+<a href="http://twitter.com/bbatsov">Twitter</a>!</p>
+
+<p><strong>P.S.</strong> Happy 4th of July to all my American readers! :&ndash;)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -540,156 +893,6 @@ to hearing your thoughts here and on
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2013/06/27/the-elements-of-style-in-ruby-number-2-favor-sprintf-format-over-string-number-percent/">The Elements of Style in Ruby #2: Favor Sprintf(format) Over String#%</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-27T13:15:00+03:00" pubdate data-updated="true">Jun 27<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today&rsquo;s topic is the following rule from the <a href="https://github.com/bbatsov/ruby-style-guide">Ruby Style Guide</a>:</p>
-
-<blockquote><p>Favor the use of <code>sprintf</code> and its alias <code>format</code> over the fairly </br>
-cryptic <code>String#%</code> method.</p></blockquote>
-
-<p><code>Kernel#sprintf</code> and <code>String#%</code> basically do the same thing &ndash; the main
-difference is that <code>sprintf</code> is generally used as a command(it does
-not operate on its receiver) and <code>String#%</code> is obviously an instance
-method of the class <code>String</code>. Here&rsquo;s the two of them in action:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s1">&#39;%d %d&#39;</span> <span class="o">%</span> <span class="o">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="o">]</span>
-</span><span class='line'><span class="c1"># =&gt; &#39;20 10&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">sprintf</span><span class="p">(</span><span class="s1">&#39;%d %d&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># =&gt; &#39;20 10&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So, considering they both do the same thing why should you opt to use
-<code>sprintf</code> instead of <code>%</code>? Here&rsquo;s a few reasons:</p>
-
-<ul>
-<li><code>%</code> takes either a single element or an array of elements as its
-sole argument; <code>sprintf</code> consistently takes a variable number of
-arguments.</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s1">&#39;%d&#39;</span> <span class="o">%</span> <span class="mi">20</span>
-</span><span class='line'><span class="c1"># =&gt; &#39;20&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">&#39;%d %d&#39;</span> <span class="o">%</span> <span class="o">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="o">]</span>
-</span><span class='line'><span class="c1"># =&gt; &#39;20 10&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">sprintf</span><span class="p">(</span><span class="s1">&#39;%d %d&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># =&gt; &#39;20&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">sprintf</span><span class="p">(</span><span class="s1">&#39;%d %d&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># =&gt; &#39;20 10&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Personally, I dislike such inconsistencies a lot.</p>
-
-<ul>
-<li>It&rsquo;s not always clear what <code>%</code> means without additional
-context. Take a look at this short snippet:</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># a and b are variables</span>
-</span><span class='line'><span class="n">a</span> <span class="o">%</span> <span class="n">b</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Without some knowledge of <code>a</code> and <code>b</code> we cannot know if we&rsquo;re dealing
-with a modulo operation (if <code>a</code> and <code>b</code> are fixnums), <code>String#%</code> or if
-<code>a</code> is an instance of some other class which has implemented the <code>%</code>
-method.</p>
-
-<p>With <code>sprintf</code> it&rsquo;s always crystal-clear what&rsquo;s going on.</p>
-
-<ul>
-<li><code>%</code> does not carry much of a semantic value in it.</li>
-</ul>
-
-
-<p>Sure, it was named so because of the <code>%</code> placeholders in the target
-string, but people not familiar with that operator will probably be
-confused by such odd-looking syntax. <code>sprintf</code> on the other hand is
-old as time (so people reading your code have probably encountered it
-somewhere before) and beside that it&rsquo;s fairly easy to remember that it
-stands for <code>string print formatted</code> (or something similar). On a
-related note &ndash; the use of <code>Kernel%sprintf</code>&rsquo;s alias <code>format</code> yields
-even better readability, since <code>format</code> is obviously less cryptic name
-than <code>sprintf</code> and the same name is employed in many programming
-languages (most notably <code>Java</code> and many Lisp dialects).</p>
-
-<p>There&rsquo;s one thing about <code>sprintf/format</code> that I dislike, though. It
-doesn&rsquo;t make that much sense to have such an operation as command in a
-OO language like Ruby. Alas, those things are not up to me &ndash; I guess
-the authors had something in mind when they made that particular
-decision about the standard library.</p>
-
-<p>In an ideal world the standard library would have included a
-<code>String#format</code> method, that took variable number of arguments. For
-some reason (unknown to me) &ndash; that has not happened (and maybe never
-will). For now the use of <code>Kernel#sprintf</code> (and <code>Kernel#format</code>)
-yields the best results when it comes down to code clarity and
-consistency. I encourage you to use them (<code>format</code> in particular)!</p>
-
-<p>As usual I&rsquo;m looking forward to hearing your thoughts here and on
-<a href="http://twitter.com/bbatsov">Twitter</a>!</p>
-
-<p><strong>Update</strong></p>
-
-<p><code>String#format</code> is part of the <a href="https://github.com/bbatsov/powerpack">Powerpack library</a>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/9/">&larr; Older</a>
@@ -712,6 +915,10 @@ consistency. I encourage you to use them (<code>format</code> in particular)!</p
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
       </li>
     
@@ -725,10 +932,6 @@ consistency. I encourage you to use them (<code>format</code> in particular)!</p
     
       <li class="post">
         <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
       </li>
     
   </ul>

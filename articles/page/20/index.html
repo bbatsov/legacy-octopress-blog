@@ -9,9 +9,8 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Prelude Back in the day when Ruby wasn&rsquo;t particularly popular outside Japan
-there was only one book in English about Ruby &ndash;
-&ldquo; &hellip;">
+  <meta name="description" content="Prelude So far in the Java.next() series I&rsquo;ve discussed only languages that
+were engineered from the start to run on the JVM (Groovy, Scala and &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +80,545 @@ there was only one book in English about Ruby &ndash;
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/05/18/jvm-langs-jruby/">Java.next() - JRuby: The Rubyists Strike Back</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-18T00:00:00+03:00" pubdate data-updated="true">May 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p>So far in the Java.next() series I&rsquo;ve discussed only languages that
+were engineered from the start to run on the JVM (<a href="/Java/Groovy/2011/05/06/jvm-langs-groovy.html">Groovy</a>, <a href="/Java/Scala/2011/05/08/jvm-langs-scala.html">Scala</a> and
+<a href="/Clojure/Java/2011/05/12/jvm-langs-clojure.html">Clojure</a>). However, a lot of good programming languages existed even
+before the inception of the idea to run languages other than Java on top of
+the JVM. Some notable examples are Ruby and Python for instance. Today
+I&rsquo;ll be writing about <a href="http://jruby.org/">JRuby</a> &ndash; the pure Java port of the Ruby
+programming language (and undoubtedly the most advanced and widely
+adopted of the 9 (!) actively maintained Ruby ports).</p>
+
+<p>This post will differ somewhat from the others so far, because I won&rsquo;t
+be spending any time to dwell on the basic Ruby syntax and will only
+highlight the advantages over plain old Ruby that JRuby provides &ndash;
+like calling Java code from a Ruby application and scripting Ruby from a
+Java application.</p>
+
+<h2>Why JRuby?</h2>
+
+<p>Ruby has long been known as one of the most elegant programming
+languages out there. With the rise of the Rails web framework several
+years ago the language was propelled into the mainstream and showed a
+lot of common developers alternative (better) ways to get their jobs done with
+less hassle and more grace. While the language is generally well liked
+(albeit is has some syntax quirks and oddities, mostly courtesy of its
+Perl heritage) its default execution environment MRI (Matz&rsquo;s Ruby
+Interpreter) is not the object of international affection. As an
+application written in C it suffers some portability problems (a few
+years ago it was quite hard to get MRI to run properly on Windows and
+even now you might run into some missing dll error from time to
+time). MRI&rsquo;s performance is not stellar either and it even used to be
+quite terrible before the advent of Ruby 1.9 which incorporated YARV
+(Yet Another Ruby VM), which significantly improved its performance
+(but still left a what to be desired). There is also the problem with
+the missing standard portable GUI development library and the somewhat
+limited deployment options because of MRI&rsquo;s limited
+portability.</p>
+
+<p>Matz&rsquo;s has often said that he&rsquo;s no VM specialist, he&rsquo;s a
+language architect/designer and the beauty of the language concerns
+him more than the performance of the reference implementation. He&rsquo;s
+also said that he loves diversity and is certain that interested
+parties will offer high quality alternatives to the standard Ruby
+runtime.</p>
+
+<p>When it comes down to a high quality runtimes few people don&rsquo;t start
+thinking immediately about the Java platform, known for its infinite
+(not literally infinite of course, but vast enough) libraries,
+rock-solid and secure JVM and great support for compile-time and
+runtime performance
+optimizations. It&rsquo;s not unheard for a Java application to match and
+excel the performance of a native C application by employing
+techniques like <em>just in time</em>(JIT) compilation, hot spot detection and
+optimizations, etc.</p>
+
+<p>So it&rsquo;s only natural that at some point a bunch of people decided to
+create a version of Ruby that could run on top of the acclaimed
+JVM. This version of Ruby is (believe it or not) known as JRuby. With
+JRuby you get the best of both Java and the Ruby worlds. Here are just a few possibilities:</p>
+
+<ul>
+<li>Deploy a Ruby on Rails web application to Google’s App Engine
+service.</li>
+<li>Write a Rails web frontend to your existing Java enterprise
+application.</li>
+<li>Target the latest Android smartphones with your Ruby code using <a href="http://ruboto.org/">Ruboto</a></li>
+<li>Create cross-platform GUIs with Java&rsquo;s Swing (or SWT)</li>
+<li>Build your project on solid libraries written in Java, Scala, Clojure,
+or other JVM languages.</li>
+<li>Use the solid platform independent JDBC database
+drivers. Platform dependent drivers used with MRI Ruby are a common
+source of gripe for developers trying to migrate an application from
+one platform to another.</li>
+</ul>
+
+
+<p>Great prospects indeed! Now it&rsquo;s about time to get that magical piece
+of software called JRuby up and running&hellip;</p>
+
+<h2>Installing JRuby</h2>
+
+<p>There are several options to consider in the department of JRuby
+installation. JRuby requires a Java runtime 5.0+ to be installed. You
+can get one from <a href="http://www.oracle.com/technetwork/java/index.html">here</a>.</p>
+
+<h4>Using an Installer</h4>
+
+<p>The easiest way to install JRuby is to use one of the prebuilt installers
+available from the <a href="http://jruby.org/download">official download site</a>. These will take care of the
+low level of detail, such as setting up your <strong>PATH</strong> environment
+variable to make finding JRuby easier.
+The JRuby team currently maintains installers for Windows and Mac
+machines. If you&rsquo;re on Linux, your distribution may package its own
+JRuby build. For example, on Ubuntu (or any other Debian derived
+distro) you can type this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install jruby
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Red Had distribution users might try this incantation instead:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install jruby
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Most Linux distributions don&rsquo;t upgrade to the latest JRuby release the
+instant it comes out. If you want to stay with the latest and greatest,
+you might prefer installing from an archive instead or RVM instead.</p>
+
+<h4>Using RVM</h4>
+
+<p>Most Ruby hackers
+favour a powerful bash script called RVM(Ruby Version Manager) that
+allows you to install several different version(or flavours of Ruby)
+and switch easily between them. Please refer to the official
+<a href="https://rvm.beginrescueend.com/">RVM documentation</a> for installation
+and usage instructions. After you&rsquo;ve installed RVM getting JRuby
+installed is a child&rsquo;s play:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rvm list known | grep jruby
+</span><span class='line'>jruby-1.2.0
+</span><span class='line'>jruby-1.3.1
+</span><span class='line'>jruby-1.4.0
+</span><span class='line'>jruby-1.6.0
+</span><span class='line'>jruby<span class="o">[</span>-1.6.1<span class="o">]</span>
+</span><span class='line'>jruby-head
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>rvm install jruby
+</span><span class='line'><span class="nv">$ </span>rvm use jruby
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Just for the record &ndash; I personally use RVM and I recommend to all
+*BSD, Linux &amp; OS X hackers to try it out as well &ndash; great piece of
+software. One of the nicer side effects of using RVM is that you won&rsquo;t
+have to run operations like <strong>gem install</strong> as the root user.</p>
+
+<h4>Using prebuilt archive</h4>
+
+<p>If you have a heavily customized setup or just like doing things
+yourself, you can get a .zip or .tar.gz archive from the same download
+page. Extract the archive somewhere convenient on your system, such
+as <strong>C:** or </strong>/opt**. You can run JRuby straight from its own <em>bin</em>
+folder, but you&rsquo;ll probably find it more convenient to add it to
+your PATH. On UNIX (including Linux &amp; Mac OS X), you can do the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/opt/jruby/bin
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Testing the installation</h4>
+
+<p>Type the following commands:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>which jruby
+</span><span class='line'>~/.rvm/rubies/jruby-1.6.1/bin/jruby
+</span><span class='line'><span class="nv">$ </span>jruby -version
+</span><span class='line'>jruby 1.6.1 <span class="o">(</span>ruby-1.8.7-p330<span class="o">)</span> <span class="o">(</span>2011-04-12 85838f6<span class="o">)</span> <span class="o">(</span>Java HotSpot<span class="o">(</span>TM<span class="o">)</span> Server VM 1.6.0_22<span class="o">)</span> <span class="o">[</span>linux-i386-java<span class="o">]</span>
+</span><span class='line'><span class="nv">$ </span>jruby -e <span class="s1">&#39;puts &quot;Hello, JRuby!&quot;&#39;</span>
+</span><span class='line'>Hello, JRuby!
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we can see some of the unique JRuby features in action.</p>
+
+<h2>Common tasks with JRuby</h2>
+
+<p><strong>REPL</strong></p>
+
+<p>JRuby comes with an equivalent of the standard Ruby REPL irb, called
+jirb. To start it simply type:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>jirb
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you can do some interactive Ruby development:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='irb'><span class='line'><span class="go">jruby-1.6.1 :001 &gt; puts &quot;Hello, JRuby&quot;</span>
+</span><span class='line'><span class="go">Hello, JRuby</span>
+</span><span class='line'><span class="go"> =&gt; nil</span>
+</span><span class='line'><span class="go">jruby-1.6.1 :002 &gt; arr = [&quot;Chuck&quot;, &quot;Sarah&quot;, &quot;Morgan&quot;, &quot;Casey&quot;]</span>
+</span><span class='line'><span class="go"> =&gt; [&quot;Chuck&quot;, &quot;Sarah&quot;, &quot;Morgan&quot;, &quot;Casey&quot;]</span>
+</span><span class='line'><span class="go">jruby-1.6.1 :003 &gt; arr.length</span>
+</span><span class='line'><span class="go"> =&gt; 4</span>
+</span><span class='line'><span class="go">jruby-1.6.1 :004 &gt; arr.size</span>
+</span><span class='line'><span class="go"> =&gt; 4</span>
+</span><span class='line'><span class="go">jruby-1.6.1 :005 &gt; arr.size()</span>
+</span><span class='line'><span class="go"> =&gt; 4</span>
+</span><span class='line'><span class="go">jruby-1.6.1 :006 &gt; arr.each { |name| puts name }</span>
+</span><span class='line'><span class="go">Chuck</span>
+</span><span class='line'><span class="go">Sarah</span>
+</span><span class='line'><span class="go">Morgan</span>
+</span><span class='line'><span class="go">Casey</span>
+</span><span class='line'><span class="go"> =&gt; [&quot;Chuck&quot;, &quot;Sarah&quot;, &quot;Morgan&quot;, &quot;Casey&quot;]</span>
+</span><span class='line'><span class="go">jruby-1.6.1 :007 &gt; arr.each_with_index { |name, index| puts &quot;##{index}: #{name}&quot;}</span>
+</span><span class='line'><span class="go">0: Chuck</span>
+</span><span class='line'><span class="go">1: Sarah</span>
+</span><span class='line'><span class="go">2: Morgan</span>
+</span><span class='line'><span class="go">3: Casey</span>
+</span><span class='line'><span class="go"> =&gt; [&quot;Chuck&quot;, &quot;Sarah&quot;, &quot;Morgan&quot;, &quot;Casey&quot;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>jirb is a great tool for exploratory programming and has some nice
+features like TAB completion. Use it often!</p>
+
+<h4>Running scripts</h4>
+
+<p>Same as before (with MRI Ruby):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>jruby some_script.rb
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That was simple, right?</p>
+
+<h4>Running Ruby tools</h4>
+
+<p>You should prefix calls to common Ruby tools like gem and rake with
+<strong>jruby -S</strong> &ndash; otherwise they might get confused which Ruby version
+(if you have more than one Ruby installed, that is) to use:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>jruby -S gem install rails
+</span><span class='line'><span class="nv">$ </span>jruby -S rake install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Using the JRuby compiler</h4>
+
+<p>You can compile Ruby scripts directly to Java bytecode and run the
+resulting class files using the JVM:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>jrubyc hello.rb
+</span><span class='line'>Compiling hello.rb to class example
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The compiler supplies a main method for you, so you can now run the
+program straight from the java command (adjust the path here to point
+to your JRuby installation):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>java -cp .:/opt/jruby/lib/hello.jar example
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that your compiled program still depends on some JRuby-defined
+support routines, so jruby.jar needs to be on your classpath. Also,
+the compiler compiles only the files you specifically pass to it. If
+you reference some_ruby_library.rb from hello.rb, you&rsquo;ll have to
+compile that extra .rb file yourself or ship it in source form
+alongside your .class file. The Java compiler understands dependencies
+between source files and compiles them automatically so Java
+developers should keep this difference in mind.</p>
+
+<h2>Using Java from JRuby</h2>
+
+<p>One of the nicest features of JRuby is undoubtedly the ability to use
+Java libraries directly in your Ruby code. JRuby goes a long way to
+make the Java classes integrate into normal Ruby code as seamlessly as
+possible &ndash; for instance it gives you the ability to call methods using the
+snake_naming_convention, instead of the common in Java
+camelCaseNamingConvention. Let&rsquo;s see the Java integration in action:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;java&#39;</span>
+</span><span class='line'><span class="n">java_import</span> <span class="s1">&#39;java.lang.System&#39;</span>
+</span><span class='line'><span class="n">java_import</span> <span class="s1">&#39;java.util.ArrayList&#39;</span>
+</span><span class='line'><span class="n">java_import</span> <span class="s1">&#39;javax.swing.JOptionPane&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&quot;Feel the power of JRuby&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">## using snake_names for Java method names</span>
+</span><span class='line'><span class="nb">puts</span> <span class="no">System</span><span class="o">.</span><span class="n">current_time_millis</span>
+</span><span class='line'><span class="c1">## regular names work as well</span>
+</span><span class='line'><span class="nb">puts</span> <span class="no">System</span><span class="o">.</span><span class="n">currentTimeMillis</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">array_list</span> <span class="o">=</span> <span class="no">ArrayList</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">## the array list supports some common Ruby idioms</span>
+</span><span class='line'><span class="n">array_list</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+</span><span class='line'><span class="n">array_list</span><span class="o">.</span><span class="n">add</span> <span class="mi">2</span>
+</span><span class='line'><span class="n">array_list</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;List length is #</span><span class="si">#{</span><span class="n">array_list</span><span class="o">.</span><span class="n">length</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">array_list</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">elem</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">elem</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">## a glimpse of Swing</span>
+</span><span class='line'><span class="no">JOptionPane</span><span class="o">.</span><span class="n">show_message_dialog</span><span class="p">(</span><span class="kp">nil</span><span class="p">,</span> <span class="s2">&quot;This is a message from the future of Ruby!&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You shouldn&rsquo;t, of course, use ArrayList unless you&rsquo;re using a Java API
+that is requiring you to do so. Hopefully these simple examples gave
+you an idea how easy it is to access Java code from JRuby.</p>
+
+<p>It might be tempting to think of Java/Ruby integration as nothing more
+than calling from one language to another. That&rsquo;s not the case. In a
+typical project, you&rsquo;re really interacting with both platforms.  You
+might construct a Ruby object, pass it to a Java function, and watch
+the Java code call other Ruby methods you&rsquo;ve defined. All the advanced
+interactions are beyond the scope of this cursory overview, but you&rsquo;re
+definitely encouraged to explore them on your own.</p>
+
+<h2>Using JRuby from Java</h2>
+
+<p>While Java libraries are capable of doing just about anything they are
+generally not as elegant as some of their Ruby counterparts. This might
+make you want to run some Ruby code from a Java program. JRuby allows
+you do this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">org.jruby.embed.InvokeFailedException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.jruby.embed.ScriptingContainer</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RubyFromJava</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">ScriptingContainer</span> <span class="n">container</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ScriptingContainer</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">container</span><span class="o">.</span><span class="na">runScriptlet</span><span class="o">(</span><span class="s">&quot;puts &#39;Ruby bridge established successfully&#39;&quot;</span> <span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This example is quite basic, but you should be able to grasp the basic
+idea from it.</p>
+
+<h2>Compatibility with standard Ruby and performance</h2>
+
+<p>JRuby 1.6 is mostly compatible with MRI Ruby 1.9.2. Since Ruby doesn&rsquo;t
+have a formal standard and is mostly defined in terms of the reference
+implementation (although there are some compatibility test suites)
+alternative implementations like JRuby are bound to be a step behind
+the current reference version from time to time. JRuby, however,
+catches up very quickly and has reached a state in popularity and adoption
+at which I&rsquo;m certain that they (the JRuby team) keep an open communication channel with
+upstream MRI developers and are capable to add the new features with
+very little delay.</p>
+
+<p>In terms of performance JRuby is slightly faster in many tests than
+MRI 1.9.2 and with the inclusion of support for dynamic method
+dispatching in Java 7 (coming up later this year) the performance will
+probably be improved significantly. The only real performance problem
+is the JVM startup time. If you&rsquo;re using JRuby to run very simple
+scripts you might be mislead to believe that JRuby&rsquo;s very slow, when actually the
+delay you&rsquo;re witnessing is caused by the JVM startup (which is not
+very fast). Some Ruby features like ObjectSpace don&rsquo;t perform very
+well on the JVM as well, but they are used rarely.</p>
+
+<p>In a sentence &ndash; JRuby is quite compatible with the standard MRI Ruby
+and one of the fastest Ruby implementations around.</p>
+
+<h2>Deployment options and future prospects</h2>
+
+<p>With JRuby your number of deployment options vastly improves &ndash; now you
+can deploy your Ruby applications anywhere where a JVM can be run (and
+there are lot such places, believe me about that). With JRuby you can
+deploy your Rails applications on the Google App Engine or in a Java
+enterprise container such as Glassfish. You can also write mobile
+applications for the Android operating system.</p>
+
+<p>JRuby&rsquo;s development is funded by a very solid company, called
+<a href="http://www.engineyard.com/">&ldquo;Engine Yard&rdquo;</a> which is famous for its world class Rails hosting
+solutions. The company obviously has a lot at stake here and you
+shouldn&rsquo;t be afraid that JRuby might die anytime soon.</p>
+
+<p>IT consulting companies like
+<a href="http://www.thoughtworks.com/">ThoughtWorks</a> have used JRuby to deliver both products and customer
+applications on far more aggressive schedules than they could
+have with more conventional languages</p>
+
+<h2>The tools of the trade</h2>
+
+<p>Most Ruby hackers tend to program without the aid of sophisticated
+IDEs. Emacs, vim and TextMate are popular choices. Recently
+<a href="http://www.sublimetext.com/">SublimeText</a> has been getting a fair share of attention as well. While
+it&rsquo;s fairly easy to write Ruby code in a text editor it&rsquo;s generally a
+nightmare to write Java code in an editor. Some of the most old-school
+hardcore developers that I know bowed down before the complexity of
+Java and started using Eclipse, NetBeans or IntelliJ to keep their
+sanity intact. When you&rsquo;re working on a project that&rsquo;s a mixture of Ruby
+and Java code it might be a good choice to opt for using some IDE as
+well.</p>
+
+<ul>
+<li><a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a> &ndash; The legendary Java IDE comes with a very capable
+Ruby plug-in, that integrates well with Rails, the common templating
+languages often used with it and most Ruby testing
+frameworks. IntelliJ even has a variant for pure Ruby development
+called <a href="http://www.jetbrains.com/ruby/">RubyMine</a> which is regarded by many devs as the best Ruby
+IDE out there.</li>
+<li><a href="http://wiki.netbeans.org/RubySupport">NetBeans</a> &ndash; At some point the core JRuby team were employed by
+Sun and at that time great Ruby support was added to
+NetBeans. Oracle killed the official Ruby support in NetBeans 7.0,
+but it&rsquo;s still maintained as a community project. It&rsquo;s not as good
+as the one in RubyMine, but it doesn&rsquo;t cost anything either.</li>
+<li><a href="http://www.eclipse.org/dltk/">Eclipse</a> &ndash; Eclipse has an official
+Ruby plug-in(part of DLTK), but most people tend to prefer using
+<a href="http://www.aptana.com/products/studio3">Aptana Studio</a> &ndash; a web
+development IDE built on top of Eclipse.</li>
+</ul>
+
+
+<h2>Epilogue</h2>
+
+<p>JRuby is a solid addition to the ranks of JVM languages. Given the
+fact that Ruby served as the principle inspiration for Groovy many
+people will probably do better to use JRuby in preference to Groovy
+(except the ones fond of the Java syntax I guess). I personally love
+both Ruby and the JVM and for me JRuby was a match made in heaven. It
+opens a lot new and exciting possibilities before one of the most
+beautiful languages ever conceived.</p>
+
+<p>I particularly like the ability to create portable GUIs with Swing and
+the extended deployment options that JRuby provides. If Java 7 brings
+the promised speed improvements I&rsquo;m certain that JRuby will have a
+shot at becoming the reigning Ruby implementation.</p>
+
+<p>So what are you waiting for? Go grab a copy of the JRuby Bible
+<a href="http://pragprog.com/titles/jruby/using-jruby">&ldquo;Using JRuby&rdquo;</a> and
+start coding. :&ndash;)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -3182,949 +3720,6 @@ rising star of the JVM world &ndash; Clojure.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2011/05/06/jvm-langs-groovy/">Java.next() - the Groovy Programming Language</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-05-06T00:00:00+03:00" pubdate data-updated="true">May 6<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Java.next()</h2>
-
-<p>In a series of articles labeled &ldquo;Java.next()&rdquo; I&rsquo;ll be discussing
-modern alternatives to the Java programming language for use with the
-Java Platform. This is the first installment of the series &ndash; &ldquo;The
-Groovy Programming Language&rdquo;.</p>
-
-<h2>Prelude</h2>
-
-<p>We all know and love the Java <em>platform</em>(note the emphasis on
-platform) for a couple of obvious reasons. Most notably it features a
-huge high quality standard library and a legendary execution
-environment &ndash; the Java Virtual Machine(JVM). The JVM is known to
-posses the following qualities:</p>
-
-<ul>
-<li>Runs on all major platforms</li>
-<li>Enterprise ready</li>
-<li>Extremely stable</li>
-<li>Extremely fast</li>
-<li>Highly customizable &ndash; many aspects of its work can easily be
-adjusted such as GC settings, heap settings, etc.</li>
-</ul>
-
-
-<p>There is a terrific community around the Java platform that has
-contributed an immense amount of high quality software vital to the
-success of Java. Hibernate, Spring, Eclipse, NetBeans, the myriad of
-Apache projects are all community efforts.</p>
-
-<p>So far so good, but it&rsquo;s not all rainbows and unicorns in the land of
-Java. The Java programming language is a common source of gripe
-amongst many developers for various reasons. I&rsquo;ll list here some of
-the more notable of them:</p>
-
-<ul>
-<li>It&rsquo;s not a pure OOP language(there is a difference between primitive
-and reference data types)</li>
-<li>It uses static typing(highly subjective topic, but commonly brought up)</li>
-<li>It doesn&rsquo;t have support for closures(which instantly kills half of
-functional&rsquo;s programming ideas such as higher order functions)</li>
-<li>It has limited meta programming capabilities(compared to Ruby and
-Lisp for instance)</li>
-<li>There is no concept of top-level procedures(outside of class
-definitions)(this makes Java unsuitable for creating &ldquo;script&rdquo; programs)</li>
-<li>Its syntax is too verbose</li>
-<li>It&rsquo;s not suitable for the creation of DSLs</li>
-<li>Its development is sluggish and restrained by the corporate promise of backward compatibility</li>
-<li>It&rsquo;s an imperative language</li>
-<li>Its parallel programming model is revolving mostly around locks and
-threads</li>
-</ul>
-
-
-<p>Naturally there are some languages that alleviate some(most) of Java&rsquo;s
-problems such as:</p>
-
-<ul>
-<li>Ruby</li>
-<li>Python</li>
-<li>Lisp</li>
-<li>Erlang</li>
-<li>Haskell</li>
-</ul>
-
-
-<p>They all, however, lack(with their default implementations at least)
-an execution environment that can match the JVM. They also lack Java&rsquo;s
-immense amount of libraries currently available. When enthusiasts
-started porting existing languages to the JVM this came as no surprise
-&ndash; it was only logical. A good language get a good execution
-environment. For instance some folks ported Ruby to Java which
-resulted in JRuby, Python also got a Java port called Jython. Though a
-lot of good has come from such ports they was also a price to pay. In
-the case of Ruby and Python some libraries are not written in
-Ruby/Python, but in C for performance reasons, which naturally leads
-to problems when you factor in a Java implementation of the
-language. There is also the fact that the JVM(currently) doesn&rsquo;t have
-support for dynamic memory dispatching which is feature vital for
-dynamically typed languages to get a decent performance. For this
-reason Jython is notoriously slow. The JRuby team did a much better
-work, circumvented a lot of the JVM limitations and actually managed
-to create a Ruby implementation that in some scenarios beats the
-performance of the standard MRI Ruby 1.9 with it&rsquo;s custom YARV virtual
-machine implemented in C. JRuby will be the object of a further
-discussion down the road. Some of the languages that were ported to
-the JVM suffer from another problem as well &ndash; it&rsquo;s not straightforward
-and efficient in them to reuse existing Java libraries directly.</p>
-
-<p>I&rsquo;d like to lead this discussion in another direction, however &ndash;
-programming languages that were implemented from scratch with the JVM
-as their execution environment. While there are many of those three
-stand out and have gathered a significant momentum in recent
-years. They will be the subject of this post and the following
-two. Without further adieu I&rsquo;d like you to meet Groovy, Scala and
-Clojure.</p>
-
-<p>We&rsquo;ll begin our discussion with Groovy&hellip;</p>
-
-<p><strong>Disclaimer</strong></p>
-
-<p><em>Before I start I&rsquo;d like to point out that my knowledge of Groovy is
-limited compared to my knowledge of Scala and Clojure. Despite this I
-decided to share my thoughts on the language because it&rsquo;s certainly one
-of the most popular JVM languages out there. If I&rsquo;ve made any errors
-in the article I didn&rsquo;t mean to insult anyone with my ignorance and
-I&rsquo;ll certainly be glad to fix them when someone points them out.</em></p>
-
-<h2>A little bit of Groovy history</h2>
-
-<p>James Strachan first talked about the development of Groovy in his
-<a href="http://radio-weblogs.com/0112098/2003/08/29.html">blog</a> in August
-2003. Several versions were released between 2004 and 2006. After the
-JCP(yep, you read that correct &ndash; Groovy is actually a Java standard
-which is great or scary depending on your point of view)
-standardization process began, the version numbering was changed and a
-version called &ldquo;1.0&rdquo; was released on January 2, 2007. After various
-betas and release candidates numbered 1.1, on December 7, 2007, Groovy
-1.1 Final was released and immediately rebranded as Groovy 1.5 as a
-reflection of the many changes that were made.</p>
-
-<p>In July 2009, Strachan wrote on his blog that &ldquo;I can honestly say if
-someone had shown me the Programming in Scala book by Martin Odersky,
-Lex Spoon &amp; Bill Venners back in 2003 I&rsquo;d probably have never created
-Groovy.&rdquo; Strachan left the project silently a year before the
-Groovy 1.0 release in 2007. Leadership of the project was assumed by
-Guillaume Laforge (Project Manager and JSR-241 Spec Lead). Under his
-guidance Groovy thrived and his risen to be arguably the most widely
-used JVM language apart from Java.</p>
-
-<p>Currently the development of Groovy proceeds with a very fast pace and
-the latest major update 1.8.0 was released just a couple of days ago.</p>
-
-<h2>Installation &amp; Getting started</h2>
-
-<p><strong>Platform independent installation</strong>
-These instructions describe how to install a binary distribution of Groovy.</p>
-
-<ul>
-<li>download a <a href="http://groovy.codehaus.org/Download">binary distribution of Groovy</a> and unpack it into some file on your local file system</li>
-<li>set your GROOVY_HOME environment variable to the directory you unpacked the distribution</li>
-<li>add GROOVY_HOME/bin to your PATH environment variable</li>
-<li>set your JAVA_HOME environment variable to point to your JDK. On OS
-X this is /Library/Java/Home, on other unixes its often /usr/java
-etc. If you&rsquo;ve already installed tools like Ant or Maven you&rsquo;ve
-probably already done this step.</li>
-</ul>
-
-
-<p>For instance here&rsquo;s the relevant information of my shell&rsquo;s
-configuration:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/java/latest
-</span><span class='line'><span class="nb">export </span><span class="nv">GROOVY_HOME</span><span class="o">=</span>/opt/groovy-1.8.0
-</span><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$GROOVY_HOME</span>/bin:<span class="nv">$PATH</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You should now have Groovy installed properly. You can test this by
-typing the following in a command shell:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>groovysh
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Which should create an interactive groovy shell where you can type
-Groovy statements. Or to run the Swing interactive console type:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>groovyConsole
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>To run a specific Groovy script type:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>groovy SomeScript.groovy
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>Linux installation</h4>
-
-<p>Most Linux distributions provide Groovy through their integrated
-package management system. On Debian(and derivatives like Ubuntu) you
-can install it like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install groovy
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>On Red Hat systems the magic incantation looks like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo yum install groovy
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Personally I&rsquo;d prefer the platform-independent installation method,
-since some distribution package Groovy in a non-standard manner which
-confuses IDEs for instance.</p>
-
-<h4>Windows installation</h4>
-
-<p>Groovy features a native <a href="http://dist.codehaus.org/groovy/distributions/installers/windows/nsis/groovy-1.8.0-installer.exe">Windows installer</a>.</p>
-
-<h2>Meet Groovy</h2>
-
-<blockquote><p>&#8220;Groovy is like a super version of Java. It can leverage Java&#8217;s<br/>enterprise capabilities but also has cool productivity features like<br/>closures, builders and dynamic typing. If you are a developer, tester<br/>or script guru, you have to love Groovy.&#8221;</p><footer><strong>Praise for Groovy,</strong> <cite><a href='http://groovy.codehause.org'>groovy.codehause.org/&hellip;</a></cite></footer></blockquote>
-
-
-<p>Groovy is:</p>
-
-<ul>
-<li>is one of the two standard languages for the JVM(the other is Java
-of course)</li>
-<li>is an agile and dynamic language for the Java Virtual Machine</li>
-<li>builds upon the strengths of Java but has additional power features inspired by languages like Python, Ruby and Smalltalk</li>
-<li>makes modern programming features available to Java developers with almost-zero learning curve</li>
-<li>supports Domain-Specific Languages and other compact syntax so your
-code becomes easy to read and maintain</li>
-<li>makes writing shell and build scripts easy with its powerful processing primitives, OO abilities and an Ant DSL</li>
-<li>increases developer productivity by reducing scaffolding code when developing web, GUI, database or console applications</li>
-<li>simplifies testing by supporting unit testing and mocking out-of-the-box</li>
-<li>seamlessly integrates with all existing Java classes and libraries</li>
-<li>compiles straight to Java bytecode so you can use it anywhere you
-can use Java</li>
-</ul>
-
-
-<p>Some of Groovy&rsquo;s most compelling features are:</p>
-
-<ul>
-<li>Pure OOP language</li>
-<li>Mostly Java compatible syntax</li>
-<li>Optional typing</li>
-<li>No need to wait for a future version of Java to get:
-
-<ul>
-<li>Closures</li>
-<li>Attributes</li>
-<li>Smart switch</li>
-</ul>
-</li>
-<li>Duck typing</li>
-<li>BigInteger based arithmetic
-
-<ul>
-<li>This deserves some special explanation because of a rather
-strange design decision in Groovy. Groovy will create a
-BigIntiger out of a large enough number literal, but it won&rsquo;t
-promote the result of an integer operation into BigInteger &ndash;
-the result will actually overflow, in contrast to the semantics of most
-other dynamically typed languages. Multiply 1000 * 1000000000
-and you will end up with -727379968 in Groovy.</li>
-</ul>
-</li>
-<li>SQL, XML &amp; Swing improvements</li>
-<li>Unified data access API</li>
-</ul>
-
-
-<p>A core idea, guiding the design of Groovy, is making it easy to use for
-existing Java developers. Groovy&rsquo;s designers have gone so far in that
-direction that the Groovy compiler will happily compile most Java
-source files without the need for any modifications. Groovy, however,
-builds heavily upon the standard Java&rsquo;s syntax and you&rsquo;ll do well to
-get a grip of Groovy&rsquo;s core idioms. Groovy&rsquo;s syntax in a nutshell:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">// old school Java code, but also valid Groovy code</span>
-</span><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// idiomatic Groovy</span>
-</span><span class='line'><span class="n">println</span> <span class="s">&quot;Hello, world!&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// dynamic variable definition</span>
-</span><span class='line'><span class="n">def</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Bozhidar&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// GString featuring string interpolation</span>
-</span><span class='line'><span class="n">println</span> <span class="s">&quot;Hello, $name&quot;</span>  <span class="c1">// =&gt; &quot;Hello, Bozhidar&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// statically typed variable</span>
-</span><span class='line'><span class="n">String</span> <span class="n">songName</span> <span class="o">=</span> <span class="s">&quot;Coding in the Name of&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">println</span> <span class="s">&quot;Now playing - $songName&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">String</span> <span class="n">multiline</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;this is a multiline</span>
-</span><span class='line'><span class="s">string. There is not need to embed</span>
-</span><span class='line'><span class="s">newline characters in it&quot;&quot;&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">println</span> <span class="n">multiline</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// method definition</span>
-</span><span class='line'><span class="n">def</span> <span class="nf">greet</span><span class="o">(</span><span class="n">name</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">println</span> <span class="s">&quot;Hello, $name!&quot;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// method invocation</span>
-</span><span class='line'><span class="n">greet</span> <span class="s">&quot;Bozhidar&quot;</span>
-</span><span class='line'><span class="n">greet</span><span class="o">(</span><span class="s">&quot;Bozhidar&quot;</span><span class="o">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// safe dereferencing</span>
-</span><span class='line'><span class="n">def</span> <span class="nf">showSize</span><span class="o">(</span><span class="n">list</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">println</span> <span class="s">&quot;List size is: ${list?.size}&quot;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">showSize</span><span class="o">([</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">])</span>
-</span><span class='line'><span class="c1">// this is the important part</span>
-</span><span class='line'><span class="n">showSize</span><span class="o">(</span><span class="kc">null</span><span class="o">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// a list</span>
-</span><span class='line'><span class="n">def</span> <span class="n">beers</span> <span class="o">=</span> <span class="o">[</span><span class="s">&quot;Zagorka&quot;</span><span class="o">,</span> <span class="s">&quot;Bolyarka&quot;</span><span class="o">,</span> <span class="s">&quot;Shumensko&quot;</span><span class="o">,</span> <span class="s">&quot;Ariana&quot;</span><span class="o">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// list access</span>
-</span><span class='line'><span class="n">println</span> <span class="s">&quot;My favourite beer is ${beers[1]}&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">beers</span><span class="o">.</span><span class="na">each</span> <span class="o">{</span> <span class="n">beer</span> <span class="o">-&gt;</span> <span class="n">println</span> <span class="n">beer</span> <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// imports can appear anywhere and support the creation of aliases</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">static</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Calendar</span><span class="o">.</span><span class="na">getInstance</span> <span class="n">as</span> <span class="n">now</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.sql.Date</span> <span class="n">as</span> <span class="n">SDate</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">println</span> <span class="nf">now</span><span class="o">()</span>
-</span><span class='line'><span class="c1">// java.util package is automatically imported in Groovy so this is java.util.Date</span>
-</span><span class='line'><span class="n">println</span> <span class="k">new</span> <span class="nf">Date</span><span class="o">()</span>
-</span><span class='line'><span class="n">println</span> <span class="k">new</span> <span class="nf">SDate</span><span class="o">(</span><span class="mi">2011</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// language support for regular expressions</span>
-</span><span class='line'><span class="k">if</span> <span class="o">(</span><span class="s">&quot;Hello, Groovy&quot;</span> <span class="o">=~</span> <span class="o">/</span><span class="err">\</span><span class="n">w</span><span class="o">+,</span><span class="err">\</span><span class="n">s</span><span class="err">\</span><span class="n">w</span><span class="o">+/)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">println</span> <span class="s">&quot;It matches&quot;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// range filtering with higher-order functions</span>
-</span><span class='line'><span class="o">(</span><span class="mi">1</span><span class="o">..</span><span class="mi">10</span><span class="o">).</span><span class="na">findAll</span> <span class="o">{</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">}.</span><span class="na">each</span> <span class="o">{</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">println</span> <span class="n">n</span> <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// map</span>
-</span><span class='line'><span class="n">def</span> <span class="n">capitols</span> <span class="o">=</span> <span class="o">[</span><span class="nl">Bulgaria:</span> <span class="s">&quot;Sofia&quot;</span><span class="o">,</span> <span class="nl">USA:</span> <span class="s">&quot;Washington&quot;</span><span class="o">,</span> <span class="nl">England:</span><span class="s">&quot;London&quot;</span><span class="o">,</span> <span class="nl">France:</span><span class="s">&quot;Paris&quot;</span><span class="o">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">println</span> <span class="n">capitols</span><span class="o">[</span><span class="s">&quot;Bulgaria&quot;</span><span class="o">]</span> <span class="c1">// =&gt; Sofia</span>
-</span><span class='line'><span class="n">println</span> <span class="n">capitols</span><span class="o">[</span><span class="s">&quot;France&quot;</span><span class="o">]</span>  <span class="c1">// =&gt; Paris</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// class definition</span>
-</span><span class='line'><span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">def</span> <span class="n">name</span>
-</span><span class='line'>    <span class="n">def</span> <span class="n">age</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nf">Person</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">age</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span>
-</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;Name {$name}, age {$age}&quot;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">def</span> <span class="n">me</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Person</span><span class="o">(</span><span class="s">&quot;Bozhidar&quot;</span><span class="o">,</span> <span class="mi">26</span><span class="o">)</span>
-</span><span class='line'><span class="n">println</span> <span class="n">me</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>From the brief overview you might have noticed that like Ruby and
-Python Groovy has language support for commonly used data structures
-such as lists, maps, ranges and regular expressions:</p>
-
-<ul>
-<li>List &ndash; def number = [1, 2, 3]</li>
-<li>Map &ndash; def countries = [BG: “Bulgaria”, DE: “Germany]</li>
-<li>Range &ndash; def range = 1..1000</li>
-<li>Regular expressions &ndash; def whitespace = /\s+/</li>
-</ul>
-
-
-<p>You might have noticed another interesting feature in Groovy &ndash; the
-ability to combine static type(like in Java) with dynamic typing(like
-in Ruby and Python). The keyword <em>def</em> is used to introduce
-dynamically typed variables in Groovy.</p>
-
-<p>Groovy comes with its very own standard library(GDK) which builds upon
-the JDK(for instance the File and String classes are enhanced in
-Groovy) and offer some new features like the Groovy&rsquo;s famous builders.</p>
-
-<h2>OOP in Groovy</h2>
-
-<p>Groovy is a pure object oriented language. Everything is an object,
-operations are methods, etc. Compared the Java the picture looks right
-about this way:</p>
-
-<ul>
-<li><p>Similar capabilities to Java</p>
-
-<ul>
-<li>Define classes, interfaces, enums, annotations</li>
-</ul>
-</li>
-<li><p>Differences to Java</p>
-
-<ul>
-<li>Classes (and interfaces etc.) public by default</li>
-<li>Methods public by default</li>
-<li>Property support within classes (auto-setters/getters)</li>
-<li>Duck typing</li>
-</ul>
-</li>
-</ul>
-
-
-<p>Java developers should feel mostly at home.</p>
-
-<h2>SQL and XML handling</h2>
-
-<p>Groovy offers some nice improvements over JDBC and JAXP for handling
-database queries and XML parsing.</p>
-
-<p>Groovy removes a lot of boilerplate when dealing with SQL queries
-compared to the native JDBC API:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">groovy.sql.Sql</span>
-</span><span class='line'><span class="n">sql</span> <span class="o">=</span> <span class="n">Sql</span><span class="o">.</span><span class="na">newInstance</span><span class="o">(</span><span class="s">&quot;jdbc:mysql://host/db&quot;</span><span class="o">,</span> <span class="s">&quot;username&quot;</span><span class="o">,</span> <span class="s">&quot;password&quot;</span><span class="o">,</span> <span class="s">&quot;com.mysql.jdbc.Driver&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="n">sql</span><span class="o">.</span><span class="na">eachRow</span><span class="o">(</span><span class="s">&quot;select * from tableName&quot;</span><span class="o">,</span> <span class="o">{</span> <span class="n">println</span> <span class="n">it</span><span class="o">.</span><span class="na">id</span> <span class="o">+</span> <span class="s">&quot; -- ${it.firstName} --&quot;</span><span class="o">}</span> <span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This code is written for a connection to a MySQL database. You will
-need to adjust all the parameters to newInstance to connect to your
-database, especially username and password.  Finally the third line
-calls the eachRow method of sql, passing in two arguments, the first
-being the query string, the second being a closure to print out some
-values.  Notice that in the closure the fields of &ldquo;it&rdquo; are accessed in
-two different ways. The first is as a simple field reference,
-accessing the id field of it. The second is the included Groovy
-expression mentioned above.</p>
-
-<p>So the output from a row might look like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="mi">1</span> <span class="o">--</span> <span class="n">Bozhidar</span> <span class="o">--</span>
-</span><span class='line'><span class="mi">2</span> <span class="o">--</span> <span class="n">Maya</span> <span class="o">--</span>
-</span><span class='line'><span class="mi">3</span> <span class="o">--</span> <span class="n">Kate</span> <span class="o">--</span>
-</span><span class='line'><span class="mi">4</span> <span class="o">--</span> <span class="n">Valentine</span> <span class="o">--</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>XML processing is common enough task in computing and Groovy&rsquo;s
-developers tried to make it simple and straightforward as
-possible. Let&rsquo;s parse the following file:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;books&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;book&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;title&gt;</span>Dune<span class="nt">&lt;/title&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;author</span> <span class="na">firstname=</span><span class="s">&quot;Frank&quot;</span> <span class="na">lastname=</span><span class="s">&quot;Herbert&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/book&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;book&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;title&gt;</span>Dune Messiah<span class="nt">&lt;/title&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;author</span> <span class="na">firstname=</span><span class="s">&quot;Frank&quot;</span> <span class="na">lastname=</span><span class="s">&quot;Herbert&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/book&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;book&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;title&gt;</span>Children of Dune<span class="nt">&lt;/title&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;author</span> <span class="na">firstname=</span><span class="s">&quot;Frank&quot;</span> <span class="na">lastname=</span><span class="s">&quot;Herbert&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/book&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;book&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;title&gt;</span>A Game of Thrones<span class="nt">&lt;/title&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;author</span> <span class="na">firstname=</span><span class="s">&quot;George&quot;</span> <span class="na">lastname=</span><span class="s">&quot;Martin&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/book&gt;</span>
-</span><span class='line'><span class="nt">&lt;/books&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>All the code we need to write is:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">def</span> <span class="n">books</span> <span class="o">=</span> <span class="k">new</span> <span class="n">XmlSlurper</span><span class="o">().</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;books.xml&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="n">books</span><span class="o">.</span><span class="na">book</span><span class="o">.</span><span class="na">each</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">println</span> <span class="s">&quot;Title = ${it.title}, Author: ${it.author.@firstname} ${it.author.@lastname}&quot;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ruby and Python developers probably aren&rsquo;t particularly impressed, but
-I can only imagine the look on the faces of Java developers that are
-generally required to write huge amount of boilerplate code when
-dealing with XML.</p>
-
-<h2>Builders</h2>
-
-<p>Groovy has special syntax support for List and Maps. This is great
-because it gives a concise representation of the actual object being
-defined, so its easier to keep track of what a program or script is
-doing. But what about programs which contain arbitrary nested tree
-structures. Surely, they are the hardest ones to keep track of what is
-going on. Isn&rsquo;t that an area where syntactic help will be most
-beneficial?</p>
-
-<p>The answer is definitely yes and Groovy comes to the party with its
-builder concept. You can use it for DOM-like APIs or Ant tasks or
-Jelly tags or Swing widgets or whatever. Each may have their own
-particular factory mechanism to create the tree of objects &ndash; however
-they can share the same builder syntax to define them &ndash; in a concise
-alternative to XML or lengthy programming code.</p>
-
-<p>One use for builders is the generation of markup:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">groovy.xml.*</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">def</span> <span class="n">page</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MarkupBuilder</span><span class="o">()</span>
-</span><span class='line'><span class="n">page</span><span class="o">.</span><span class="na">html</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">head</span> <span class="o">{</span> <span class="n">title</span> <span class="err">&#39;</span><span class="n">Hello</span><span class="o">,</span> <span class="n">Groovy</span><span class="o">!</span><span class="err">&#39;</span> <span class="o">}</span>
-</span><span class='line'>    <span class="n">body</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">div</span> <span class="o">{</span>
-</span><span class='line'>            <span class="mi">3</span><span class="o">.</span><span class="na">times</span> <span class="o">{</span>
-</span><span class='line'>                <span class="n">p</span> <span class="s">&quot;Groovy power!&quot;</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Result:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;html&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;head&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;title&gt;</span>Hello, Groovy!<span class="nt">&lt;/title&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/head&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;body&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;div&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;p&gt;</span>Groovy power!<span class="nt">&lt;/p&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;p&gt;</span>Groovy power!<span class="nt">&lt;/p&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;p&gt;</span>Groovy power!<span class="nt">&lt;/p&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/body&gt;</span>
-</span><span class='line'><span class="nt">&lt;/html&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Builders can also be used to create Swing GUIs. Here&rsquo;s a very small example:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.awt.FlowLayout</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">groovy</span><span class="o">.</span><span class="na">swing</span><span class="o">.</span><span class="na">SwingBuilder</span><span class="o">()</span>
-</span><span class='line'><span class="n">langs</span> <span class="o">=</span> <span class="o">[</span><span class="s">&quot;Groovy&quot;</span><span class="o">,</span> <span class="s">&quot;Scala&quot;</span><span class="o">,</span> <span class="s">&quot;Clojure&quot;</span><span class="o">]</span>
-</span><span class='line'><span class="n">gui</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="na">frame</span><span class="o">(</span><span class="nl">size:</span> <span class="o">[</span><span class="mi">290</span><span class="o">,</span> <span class="mi">100</span><span class="o">],</span> <span class="nl">title:</span> <span class="err">&#39;</span><span class="n">Groovy</span> <span class="n">Swing</span><span class="err">&#39;</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">panel</span><span class="o">(</span><span class="nl">layout:</span> <span class="k">new</span> <span class="n">FlowLayout</span><span class="o">())</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">panel</span><span class="o">(</span><span class="nl">layout:</span> <span class="k">new</span> <span class="n">FlowLayout</span><span class="o">())</span> <span class="o">{</span>
-</span><span class='line'>            <span class="k">for</span> <span class="o">(</span><span class="n">lang</span> <span class="n">in</span> <span class="n">langs</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                <span class="n">radioButton</span><span class="o">(</span><span class="nl">text:</span> <span class="n">lang</span><span class="o">)</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="n">button</span><span class="o">(</span><span class="nl">text:</span> <span class="err">&#39;</span><span class="n">Perform</span> <span class="n">Magic</span><span class="err">&#39;</span><span class="o">,</span> <span class="nl">actionPerformed:</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">builder</span><span class="o">.</span><span class="na">optionPane</span><span class="o">(</span><span class="nl">message:</span> <span class="s">&quot;Feel the power of Groovy!&quot;</span><span class="o">).</span>
-</span><span class='line'>                    <span class="n">createDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="err">&#39;</span><span class="n">Message</span><span class="err">&#39;</span><span class="o">).</span><span class="na">show</span><span class="o">()</span>
-</span><span class='line'>        <span class="o">})</span>
-</span><span class='line'>        <span class="n">button</span><span class="o">(</span><span class="nl">text:</span> <span class="err">&#39;</span><span class="n">Quit</span><span class="err">&#39;</span><span class="o">,</span>
-</span><span class='line'>                <span class="nl">actionPerformed:</span> <span class="o">{</span><span class="n">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">0</span><span class="o">)})</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="n">gui</span><span class="o">.</span><span class="na">show</span><span class="o">()</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Run the code to see the resulting GUI!</p>
-
-<h2>Groovy tooling</h2>
-
-<ul>
-<li><p>IDE</p>
-
-<ul>
-<li><a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a> &ndash; the ultimate
-Groovy IDE. It&rsquo;s excellent Groovy support is part of its open
-source Community Edition.</li>
-<li><a href="http://groovy.codehaus.org/Eclipse+Plugin">Eclipse</a> &ndash; the most
-popular Java IDE has an actively maintained Groovy plugin</li>
-<li><a href="http://netbeans.org/features/groovy/">NetBeans</a> &ndash; Like IDEA
-NetBeans features built-in Groovy support</li>
-</ul>
-</li>
-<li><p>Groovy distribution</p>
-
-<ul>
-<li>groovysh &ndash; A Groovy REPL for exploratory programming</li>
-<li>groovyConsole &ndash; A GUI groovy shell with extended capabilities,
-that is handy for the development and testing of small Groovy scripts</li>
-<li>groovyc &ndash; the Groovy compiler</li>
-</ul>
-</li>
-<li><p>Build tools</p>
-
-<ul>
-<li><a href="http://maven.apache.org">Apache Maven</a></li>
-<li><a href="http://buildr.apache.org">Apache Buildr</a></li>
-<li><a href="http://gradle.org">Gradle</a></li>
-</ul>
-</li>
-</ul>
-
-
-<h2>Killer apps</h2>
-
-<ul>
-<li><a href="http://grails.org">Grails</a>
-
-<ul>
-<li>Groovy port of Ruby on Rails</li>
-<li>Leverages the best Java technologies
-
-<ul>
-<li>Hibernate</li>
-<li>Spring</li>
-<li>Tomcat</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="http://gradle.org">Gradle</a> &ndash; powerful build tool, considered by many vastly superior to
-Maven. Several high profile projects(such as Hibernate) already
-migrated their builds to Gradle.</li>
-<li><a href="http://griffon.codehaus.org/">Griffon</a> &ndash; a Grails like application
-framework for developing desktop applications</li>
-</ul>
-
-
-<h2>Common use cases</h2>
-
-<p>Groovy is a general purpose language, but it&rsquo;s used for some tasks
-more often than for others. It&rsquo;s extremely suitable for:</p>
-
-<ul>
-<li>web application development(usually with Grails)</li>
-<li>scripting(although you have to factor in the cold startup time of
-the JVM before you start writing all your scripts in Groovy)</li>
-<li>tests development &ndash; it&rsquo;s a common practice in many Java projects to
-have the tests written in Groovy</li>
-<li>GUI development(usually with Griffon)</li>
-<li>Rapid prototyping &ndash; you&rsquo;d do a quick app prototype in Groovy as a
-proof on concept and then you&rsquo;d create a Java application based on
-it</li>
-<li>Exploratory programming &ndash; the groovysh is a great way to test class
-capabilities, methods and ideas with almost zero overhead &ndash; no
-annoying compile/run cycles to slow you down</li>
-</ul>
-
-
-<p>When performance is critical you&rsquo;d probably want to avoid
-Groovy. According to some benchmarks around the Internet(like
-<a href="http://stronglytypedblog.blogspot.com/2010/02/java-vs-scala-vs-groovy-vs-groovy.html">this one</a>)
-Groovy is much slower than Java for certain tasks. I, however, haven&rsquo;t
-read any new benchmarks on the subject and have no idea how reliable
-the old ones are and how relevant they are to the current Groovy
-version.</p>
-
-<h2>Future prospects</h2>
-
-<p>With so many languages being created all the time developers
-naturally ask themselves the same question over and over again &ndash;
-should I waste my time learning this language? Related questions seem
-to be:</p>
-
-<ul>
-<li>Will it endure the test of time?</li>
-<li>Does it have a vibrant and committed community around it?</li>
-<li>Can I find professional support?</li>
-<li>Does it integrate well with out current infrastructure?</li>
-<li>Does it have good tooling?</li>
-</ul>
-
-
-<p>After all most of the currently popular languages like Java, C# and
-PHP are nothing spectacular on their own, but have a combination of
-factors that worked in their favour to get them to the top &ndash; solid
-companies behind them, many deployment options and just the right
-amount of beefing up/simplifying C/C++ make existing developers transition to the
-new languages a relatively easy and painless experience.</p>
-
-<p>SpringSource(the company responsible for the creation of the popular
-Spring framework, now a division of VMWare) employs most of the core
-Groovy developers and offers both <a href="http://www.springsource.com/developer/grails">Groovy and Grails support</a>. The fact
-that a company such as this one believes in the technology is very
-important whey you&rsquo;re trying to sell using Groovy in your current
-company. And if you&rsquo;re existing infrastructure is built around Java &ndash;
-well, you have next to nothing to worry about, except maybe will Java 7
-deliver the promised speed improvement for dynamic languages
-implemented on top of it.</p>
-
-<p>Presently the Groovy community is vast and rapidly growing. The
-language itself &ndash; constantly evolving.</p>
-
-<p>NetBeans and IntelliJ have built-in Groovy support, which is a big
-testament to the language&rsquo;s popularity as well.</p>
-
-<p>In a sentence I don&rsquo;t see Groovy disappearing or dying anytime soon
-even if its original creator has lost faith in it.</p>
-
-<h2>Groovy resources</h2>
-
-<ul>
-<li>Books
-
-<ul>
-<li><a href="http://www.manning.com/koenig2/">&ldquo;Groovy in Action&rdquo;</a></li>
-<li><a href="http://pragprog.com/titles/vslg/programming-groovy">&ldquo;Programming Groovy&rdquo;</a></li>
-</ul>
-</li>
-<li>On-line resources
-
-<ul>
-<li><a href="http://groovy.codehaus.org/User+Guide">Official documentation</a></li>
-</ul>
-</li>
-</ul>
-
-
-<h2>Epilogue</h2>
-
-<p>Groovy is a language aiming to bring dynamic productivity to Java
-developer without introducing them to a steep learning curve. The
-language is beautifully architectured and integrates seamlessly with
-the existing Java libraries and infrastructure. My biggest gripe with
-Groovy was the lack of advanced support for parallel and concurrent
-programming. A few days before I wrote this article, however, Groovy
-1.8.0 was released and it features the excellent library for parallel
-programming <a href="http://gpars.codehaus.org/">GPars</a>. Groovy&rsquo;s performance
-is not stellar at this point, but I guess
-this will be improved upon in Java 7.</p>
-
-<p>With its easy to grasp Java-like syntax Groovy is a solid contender
-for the attention of Java developers. A growing number of Groovy
-related job offerings is a sign of Groovy&rsquo;s acceptance as a industrial
-strength tool.</p>
-
-<p>Some people criticize Groovy for the lack of innovation and claim that
-it&rsquo;s simply an amalgam of ideas borrowed from other languages. I don&rsquo;t
-see nothing bad with that approach as long as the features are
-tastefully combined. Groovy might not be the most elegant language out
-there, but it&rsquo;s one of the most practical ones and will help you get
-the job done.</p>
-
-<hr />
-
-<p><em>P.S. Coming up next is a discussion of the Scala programming
-language.</em></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/21/">&larr; Older</a>
@@ -4147,6 +3742,10 @@ language.</em></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
       </li>
     
@@ -4160,10 +3759,6 @@ language.</em></p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
       </li>
     
   </ul>

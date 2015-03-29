@@ -9,8 +9,8 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Prelude If there is something that people love as much as tweaking their
-editing configurations it&rsquo;s probably the selection of color themes. A &hellip;">
+  <meta name="description" content="Prelude Let&rsquo;s face it &ndash; although a vanilla Emacs installation is quite
+powerful almost nobody is using Emacs without a pile of add-ons. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,69 @@ editing configurations it&rsquo;s probably the selection of color themes. A &hel
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/">Package Management in Emacs: The Good, the Bad and the Ugly</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-19T12:18:00+02:00" pubdate data-updated="true">Feb 19<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Prelude</h2>
+
+<p>Let&rsquo;s face it &ndash; although a vanilla Emacs installation is quite
+powerful almost nobody is using Emacs without a pile of add-ons. And
+managing those add-ons is quite frankly a pain in the ass. Traditional
+options included installing Emacs add-ons via the operating system&rsquo;s
+package manager (if available), downloading <code>.el</code> files from various
+locations (everybody hates packages distributed only on Emacs Wiki
+with no canonical version control repo) and simply sticking them on
+the <code>load-path</code>, etc. It&rsquo;s more than obvious that such solutions are
+less than ideal.</p>
+
+<p>For instance if you&rsquo;re installing Emacs add-ons via a package manager
+and you have to change OSes (or machines) you&rsquo;re mostly fucked. On the
+other hand piling files manually in <code>.emacs.d</code> is equal to hell in the
+version and dependency tracking department. There has to be a better
+way, right? Wouldn&rsquo;t it be nice if Emacs had its own package manager
+similar to the likes of <code>homebrew</code>, <code>apt</code> or <code>yum</code>?</p>
+
+<p><a href="http://batsov.com/articles/2011/08/19/a-peek-at-emacs24/">Emacs 24</a>
+finally introduces such a tool &ndash; its name is <code>package.el</code> (very
+original, right?) and it&rsquo;s promise is to make you&rsquo;re lives a bit
+easier. Does it manage to deliver on that promise? We&rsquo;ll see that in a bit&hellip;</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -362,104 +425,6 @@ understood by even some fairly experienced Ruby developers.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2011/11/25/emacs-tip-number-3-whitespace-cleanup/">Emacs Tip #3: Whitespace Cleanup</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-25T14:26:00+02:00" pubdate data-updated="true">Nov 25<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Good developers are very careful about the proper use of
-whitespace in their files &ndash; there should be no empty lines at the
-beginning of a file, no empty lines at the end of a file, no trailing
-whitespace, no mixture of tabs and spaces, etc.</p>
-
-<p>Emacs, naturally, wants to help with every problem possible and
-provides a very nice solution in the form of the <code>whitespace-cleanup</code>
-command. It&rsquo;s a much more powerful alternative to the older
-<code>delete-trailing-whitespace</code> command, that simply deletes trailing
-whitespace, and it&rsquo;s aware of the <code>whitespace-style</code> variable, used by <code>whitespace-mode</code>.</p>
-
-<p>It usually applies to the whole buffer, but in transient mark
-mode when the mark is active, it applies to the region.  It also
-applies to the region when it is not in transient mark mode, the
-mark is active and <code>C-u</code> was pressed just before
-calling <code>whitespace-cleanup</code> interactively. There is also a similar
-command called <code>whitespace-cleanup-region</code>.</p>
-
-<p>The problems cleaned up are (borrowed from the official documentation):</p>
-
-<ol>
-<li><p>Empty lines at beginning of buffer.</p></li>
-<li><p>Empty lines at end of buffer.
-If <code>whitespace-style</code> includes the value <code>empty</code>, remove all
-empty lines at beginning and/or end of buffer.</p></li>
-<li><p>8 or more SPACEs at beginning of line.
-If <code>whitespace-style</code> includes the value <code>indentation</code>:
-replace 8 or more SPACEs at beginning of line by TABs, if
-<code>indent-tabs-mode</code> is non-nil; otherwise, replace TABs by
-SPACEs.
-If <code>whitespace-style</code> includes the value <code>indentation::tab</code>,
-replace 8 or more SPACEs at beginning of line by TABs.
-If <code>whitespace-style</code> includes the value <code>indentation::space</code>,
-replace TABs by SPACEs.</p></li>
-<li><p>SPACEs before TAB.
-If <code>whitespace-style</code> includes the value <code>space-before-tab</code>:
-replace SPACEs by TABs, if <code>indent-tabs-mode</code> is non-nil;
-otherwise, replace TABs by SPACEs.
-If <code>whitespace-style</code> includes the value
-<code>space-before-tab::tab</code>, replace SPACEs by TABs.
-If <code>whitespace-style</code> includes the value
-<code>space-before-tab::space</code>, replace TABs by SPACEs.</p></li>
-<li><p>SPACEs or TABs at end of line.
-If <code>whitespace-style</code> includes the value <code>trailing</code>, remove
-all SPACEs or TABs at end of line.</p></li>
-<li><p>8 or more SPACEs after TAB.
-If <code>whitespace-style</code> includes the value <code>space-after-tab</code>:
-replace SPACEs by TABs, if <code>indent-tabs-mode</code> is non-nil;
-otherwise, replace TABs by SPACEs.
-If <code>whitespace-style</code> includes the value
-<code>space-after-tab::tab</code>, replace SPACEs by TABs.
-If <code>whitespace-style</code> includes the value
-<code>space-after-tab::space</code>, replace TABs by SPACEs.</p></li>
-</ol>
-
-
-<p>It might be a good idea to add <code>whitespace-cleanup</code> to your
-<code>before-save-hook</code> so that every buffer would be cleaned up before it&rsquo;s saved:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;before-save-hook</span> <span class="ss">&#39;whitespace-cleanup</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/17/">&larr; Older</a>
@@ -482,6 +447,10 @@ If <code>whitespace-style</code> includes the value
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
       </li>
     
@@ -495,10 +464,6 @@ If <code>whitespace-style</code> includes the value
     
       <li class="post">
         <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
       </li>
     
   </ul>

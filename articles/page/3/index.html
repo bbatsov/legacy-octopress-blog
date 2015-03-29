@@ -9,9 +9,13 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="There are quite a few packages in the &ldquo;official&rdquo;
-clojure-emacs GitHub organization,
-but many of them have been deprecated recently with &hellip;">
+  <meta name="description" content="Most experienced Rubyists probably know that there are two ways to interpolate instance, class and global variables into
+strings. 1
+2
+3
+4
+5
+# compact &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +85,133 @@ but many of them have been deprecated recently with &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2014/08/13/the-elements-of-style-in-ruby-number-14-variable-interpolation/">The Elements of Style in Ruby #14: Variable Interpolation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-13T16:27:00+03:00" pubdate data-updated="true">Aug 13<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Most experienced Rubyists probably know that there are two ways to interpolate instance, class and global variables into
+strings.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># compact notation (works only for instance/class/global vars)</span>
+</span><span class='line'><span class="s2">&quot;this is </span><span class="si">#$some_var</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># standard notation (works for any expression)</span>
+</span><span class='line'><span class="s2">&quot;this is </span><span class="si">#{</span><span class="vg">$some_var</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you&rsquo;ve noticed you can leave out the <code>{}</code> which can&rsquo;t be left out for any other expression. Some people find this
+interpolation syntax concise and elegant, but I&rsquo;ll argue that it should be avoided. Here&rsquo;s why:</p>
+
+<ul>
+<li>You can&rsquo;t use this notation in every possible scenario:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># this is fine</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="vi">@variable</span><span class="si">}</span><span class="s2">string_straight_after_without_space&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># but this means something totally different</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#@variablestring_straight_after_without_space</span><span class="s2">&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This means that using the compact notation only when applicable forces you to introduce some inconsistency in your code.
+This is rarely good&hellip;</p>
+
+<ul>
+<li>You&rsquo;re using different notations for the same basic operation (interpolation), without getting anything in return.
+That&rsquo;s not the same with semantic use of single and double quoted strings or <code>fail</code> and <code>raise</code>.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># using compact</span>
+</span><span class='line'><span class="s2">&quot;this is </span><span class="si">#@x</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="s2">&quot;this is </span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># using standard</span>
+</span><span class='line'><span class="s2">&quot;this is </span><span class="si">#{</span><span class="vi">@x</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="s2">&quot;this is </span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>It&rsquo;s easy to make a mistake in the context of a regular expression
+(as interpolation works in regexp literals).  Recently I saw the
+following regexp &ndash; <code>/[0-9.(),;:!?%#$?\x27\x22_+=\\\/\-]*/</code>. There&rsquo;s a
+subtle problem with it, that&rsquo;s not obvious (unless you have a good
+editor, that is). The sequence <code>#$?</code> is interpreted as interpolation
+of the global variable <code>$?</code> (a.k.a. <code>$CHILD_STATUS</code>) and this regexp doesn&rsquo;t work as intended.</li>
+</ul>
+
+
+<p>This scenario shows that the syntax was ill-conceived.</p>
+
+<ul>
+<li>Non-experience Rubyists probably don&rsquo;t know about the compact interpolation notation.
+Few books and tutorials mention it these days, so using it your code will confuse at least
+some of the people reading it.</li>
+</ul>
+
+
+<hr />
+
+<p>It seems to me that Ruby will be better off without a special syntax
+for variable interpolation. Ideally it would be removed in Ruby 3 and
+we&rsquo;ll have one less thing to worry about in our Ruby code.</p>
+
+<p>That&rsquo;s all for today, folks!</p>
+
+<p>As usual I&rsquo;m looking forward to hearing your thoughts here and on
+<a href="http://twitter.com/bbatsov">Twitter</a>!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -491,56 +622,6 @@ found the time I never did and got the job done (in style).</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2014/05/30/find-out-where-a-rake-task-is-defined/">Find Out Where a Rake Task Is Defined</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-30T17:23:00+03:00" pubdate data-updated="true">May 30<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Have you ever wondered where a particular rake task is defined? Enter <code>rake -W</code> (introduced in <code>rake</code> 0.9):</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake -W db:schema:load
-</span><span class='line'>
-</span><span class='line'>rake db:schema:load                 /Users/bozhidar/.rbenv/versions/2.1.1/lib/ruby/gems/2.1.0/gems/activerecord-4.1.1/lib/active_record/railties/databases.rake:236:in `block (2 levels) in &lt;top (required)&gt;'
-</span><span class='line'>rake db:schema:load_if_ruby         /Users/bozhidar/.rbenv/versions/2.1.1/lib/ruby/gems/2.1.0/gems/activerecord-4.1.1/lib/active_record/railties/databases.rake:240:in `block (2 levels) in &lt;top (required)&gt;'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can also invoke <code>rake -W</code> without an argument and you&rsquo;ll get a listing of all available rake tasks and their source locations.</p>
-
-<p>Pretty neat, right?</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/4/">&larr; Older</a>
@@ -563,6 +644,10 @@ found the time I never did and got the job done (in style).</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/02/15/octopress-3-dot-0/">Octopress 3.0</a>
       </li>
     
@@ -576,10 +661,6 @@ found the time I never did and got the job done (in style).</p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/12/rubocop-plugin-for-rubymine/">RuboCop Plugin for RubyMine</a>
       </li>
     
   </ul>
