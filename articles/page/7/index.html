@@ -9,9 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="One can often find similar code in the wild: 1
-some_hash.has_key?(some_key) has_something? predicates are not idiomatic in Ruby and
-Hash#has_key? and &hellip;">
+  <meta name="description" content="String#gsub is one of the most used Ruby methods in the wild. Just
+about every Ruby programmer knows about the method and uses it fairly
+regularly. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,111 @@ Hash#has_key? and &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2013/08/30/using-gsub-with-a-block/">Using Ruby&#8217;s Gsub With a Block</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-30T15:29:00+03:00" pubdate data-updated="true">Aug 30<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><code>String#gsub</code> is one of the most used Ruby methods in the wild. Just
+about every Ruby programmer knows about the method and uses it fairly
+regularly.</p>
+
+<p>Here&rsquo;s a quick refresher of the typical <code>gsub</code> usage:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># using string match</span>
+</span><span class='line'><span class="s1">&#39;John Wayne&#39;</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Bruce&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Bruce Wayne&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># using regexp match</span>
+</span><span class='line'><span class="s1">&#39;John   Wayne&#39;</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/\w+\s+(\w+)/</span><span class="p">,</span> <span class="s1">&#39;Bruce \1&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Bruce Wayne&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Basically we can replace string and regexp matches with other
+strings. When doing regexp matches we can access the matched groups
+individually with <code>\1</code>, <code>\2</code>, etc and embed them in the replacement
+string.  Sometimes, however, some additional processing of the matched
+data might be required. Consider this trivial example &ndash; we might want
+to increment a matched number by 1. Here <code>gsub</code>&rsquo;s version that takes a
+block comes into action:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># num will be passed the string &#39;12&#39;</span>
+</span><span class='line'><span class="s1">&#39;Apollo 12&#39;</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/\d+/</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">num</span><span class="o">|</span> <span class="n">num</span><span class="o">.</span><span class="n">to_i</span><span class="o">.</span><span class="n">next</span> <span class="p">}</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Apollo 13&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Basically we&rsquo;re replacing the matched portion of the string with the
+result of the block. While the param enhances the readability of the code it&rsquo;s not necessary:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># we&#39;re not making use of a block param</span>
+</span><span class='line'><span class="s1">&#39;Apollo 12&#39;</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/(\d+)/</span><span class="p">)</span> <span class="p">{</span> <span class="no">Regexp</span><span class="o">.</span><span class="n">last_match</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">to_i</span><span class="o">.</span><span class="n">next</span> <span class="p">}</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Apollo 13&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>Regexp.last_match[1]</code> is the OO version of the obscure (but pretty
+popular) Perlism <code>$1</code>. In this particular case using the block param
+(as in the first example) is obviously a better idea.</p>
+
+<p>Note that some people expect that <code>gsub</code> would yield to the block all
+the matched groups as arguments &ndash; that is not the case, you&rsquo;ll always
+get a single argument denoting the entire regexp match.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># here name is &#39;Apollo 12&#39; and number is blank</span>
+</span><span class='line'><span class="s1">&#39;Apollo 12&#39;</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/(\w+) (\d+)/</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="nb">name</span><span class="p">,</span> <span class="n">number</span><span class="o">|</span> <span class="nb">puts</span> <span class="nb">name</span><span class="p">,</span> <span class="n">number</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Keep this in mind!</p>
+
+<p>That&rsquo;s all for today folks! I hope you&rsquo;ll find this short article useful!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -612,156 +717,6 @@ you!</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2013/07/10/the-elements-of-style-in-ruby-number-7-the-case-against-equals-equals-equals/">The Elements of Style in Ruby #7: The Case Against ===</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-10T15:44:00+03:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today we&rsquo;ll discuss the following section from the <a href="https://github.com/bbatsov/ruby-style-guide">Ruby Style Guide</a>:</p>
-
-<blockquote><p>Avoid explicit use of the case equality operator <code>===</code>. As it name<br/>
-implies it&rsquo;s meant to be used implicitly by <code>case</code> expressions and<br/>
-outside of them it yields some pretty confusing code.</p></blockquote>
-
-<p>For those of you who don&rsquo;t know of the case equality operator <code>===</code> &ndash;
-it&rsquo;s the magic behind <code>case</code> that allows us to write code like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">case</span> <span class="n">something</span>
-</span><span class='line'><span class="k">when</span> <span class="nb">Array</span> <span class="k">then</span> <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="k">when</span> <span class="mi">1</span><span class="o">.</span><span class="n">.</span><span class="mi">100</span> <span class="k">then</span> <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="k">when</span> <span class="sr">/some_regexp/</span> <span class="k">then</span> <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ruby will convert the above code to something like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">case</span> <span class="n">something</span>
-</span><span class='line'><span class="k">when</span> <span class="nb">Array</span> <span class="o">===</span> <span class="n">something</span> <span class="k">then</span> <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="k">when</span> <span class="mi">1</span><span class="o">.</span><span class="n">.</span><span class="mi">100</span> <span class="o">===</span> <span class="n">something</span> <span class="k">then</span> <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="k">when</span> <span class="sr">/some_regexp/</span> <span class="o">===</span> <span class="n">something</span> <span class="k">then</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>For many classes (like <code>Fixnum</code> and <code>String</code>) <code>===</code> will behave the
-same way as <code>==</code>.  On the other hand &ndash; <code>Module</code>, <code>Range</code> and <code>Regexp</code>
-define customized versions of the operator method <code>===</code>.  Knowing how
-these 3 classes have defined <code>===</code>, the case expression is also
-equivalent to this one:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">case</span> <span class="n">something</span>
-</span><span class='line'><span class="k">when</span> <span class="n">something</span><span class="o">.</span><span class="n">is_a?</span> <span class="nb">Array</span> <span class="k">then</span> <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="k">when</span> <span class="mi">1</span><span class="o">.</span><span class="n">.</span><span class="mi">100</span><span class="o">.</span><span class="n">include?</span> <span class="n">something</span> <span class="k">then</span> <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="k">when</span> <span class="n">something</span> <span class="o">=~</span> <span class="sr">/some_regexp/</span> <span class="k">then</span> <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So far everything is peachy, right?</p>
-
-<p>The problem with the <code>===</code> is that when some people see it they decide
-it&rsquo;s very <em>cool</em> and start using it all over their code instead of
-its much clearer alternatives. I&rsquo;ve seen <code>===</code> (ab)used quite often for <strong>instance of</strong> checks.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># wtf, why doesn&#39;t this work???</span>
-</span><span class='line'><span class="c1"># extremely common mistake I&#39;ve seen numerous times</span>
-</span><span class='line'><span class="k">return</span> <span class="k">unless</span> <span class="n">a</span> <span class="o">===</span> <span class="nb">Array</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># === is defined in Module</span>
-</span><span class='line'><span class="k">return</span> <span class="k">unless</span> <span class="nb">Array</span> <span class="o">===</span> <span class="n">a</span> <span class="c1"># same as Array.===(a)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I&rsquo;ve also seen it used many times for range inclusion
-tests. Fortunately nobody has decided so far that <code>===</code> is preferable
-to <code>=~</code> for regular expressions.</p>
-
-<p>It should be our utmost goal as programmers to produce clear and
-easily digestible code. This means we should abstain ourselves from
-doing clever tricks like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">Array</span> <span class="o">===</span> <span class="n">something</span>
-</span><span class='line'><span class="p">(</span><span class="mi">1</span><span class="o">.</span><span class="n">.</span><span class="mi">100</span><span class="p">)</span> <span class="o">===</span> <span class="mi">7</span>
-</span><span class='line'><span class="o">/</span><span class="n">something</span><span class="o">/</span> <span class="o">===</span> <span class="n">some_string</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And bet on clarity instead:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">something</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="nb">Array</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="mi">1</span><span class="o">.</span><span class="n">.</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
-</span><span class='line'><span class="n">some_string</span> <span class="o">=~</span> <span class="sr">/something/</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>They don&rsquo;t call it the <strong>case equality operator</strong> for no reason &ndash; it&rsquo;s
-meant to be used internally by <code>case</code> expressions. I guess if it were
-a regular method (instead of an operator method) we&rsquo;d never have had
-to deal with its abuse.</p>
-
-<p>As usual I&rsquo;m looking forward
-to hearing your thoughts here and on
-<a href="http://twitter.com/bbatsov">Twitter</a>!</p>
-
-<p>Code long and prosper!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/8/">&larr; Older</a>
@@ -784,6 +739,10 @@ to hearing your thoughts here and on
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/06/16/cider-0-dot-9/">CIDER 0.9</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
       </li>
     
@@ -797,10 +756,6 @@ to hearing your thoughts here and on
     
       <li class="post">
         <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
       </li>
     
   </ul>

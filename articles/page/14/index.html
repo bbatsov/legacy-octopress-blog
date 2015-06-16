@@ -9,8 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="It&rsquo;s been quite a while since my last blog post. And there hasn&rsquo;t been that
-much action on the open-source projects I happen to maintain &hellip;">
+  <meta name="description" content="I&rsquo;m mostly a Ruby on Rails developer these days and as such I&rsquo;m pretty
+fond of the Slim template language. I&rsquo;ve
+always hated HTML &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +81,63 @@ much action on the open-source projects I happen to maintain &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/09/09/emacs-support-for-the-slim-template-language/">Emacs Support for the Slim Template Language</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-09T20:16:00+03:00" pubdate data-updated="true">Sep 9<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;m mostly a Ruby on Rails developer these days and as such I&rsquo;m pretty
+fond of the <a href="http://slim-lang.com">Slim template language</a>. I&rsquo;ve
+always hated HTML + ERB, since that evil duo encourages all sorts of
+ever practices and recently I&rsquo;ve adopted Slim as a replacement for
+my long time favourite ERB alternative &ndash; <a href="http://haml-lang.com">Haml</a>.</p>
+
+<p>I won&rsquo;t discuss here the shortcomings of Haml vs Slim, but I&rsquo;ll share
+with you the big advantage Haml has over Slim (for Emacs users at
+least) &ndash; it has a pretty nice major editing mode for Emacs. Slim&rsquo;s
+Emacs support on the other hand is rather iffy and is presently mostly
+based on <code>haml-mode</code>. That will hopefully change soon, since recently
+I&rsquo;ve become a co-maintainer of
+<a href="http://github.com/minad/emacs-slim">slim-mode</a> and I plan to improve
+it as much as I can (currently I&rsquo;m mostly working on precise
+font-locking). Any help from interested parties is, naturally, most
+welcome. I very much doubt that me and
+<a href="https://github.com/minad">Daniel Mendler</a> are the only two people
+dreaming of great Slim experience in Emacs. :&ndash;)</p>
+
+<p><img src="/images/articles/slim-mode.png"></p>
+
+<p>Let us together eliminate that big Haml advantage. :&ndash;)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -354,104 +412,6 @@ use MELPA instead of Marmalade.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2012/03/26/wikemacs-the-other-emacs-wiki/">WikEmacs - the Other Emacs Wiki</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-26T11:23:00+03:00" pubdate data-updated="true">Mar 26<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&rsquo;d like to apologize to everyone insulted by my previous
-posts. Contrary to popular belief I acknowledge EmacsWiki&rsquo;s
-contribution to the Emacs community. Obviously many people are too
-fond of its current format so I doubt that it will ever change
-(considerably). I didn&rsquo;t mean to insult anyone, I just wanted to catch
-your attention (which unfortunately requires harsher words from time to
-time) and point it in the direction of the existing problems.</p>
-
-<p>For the people that weren&rsquo;t happy with EmacsWiki &ndash; the ones that felt
-my pain and were looking for a change I present
-<a href="http://wikemacs.org">WikEmacs</a> (pronounced wikimacs). It&rsquo;s a
-MediaWiki powered Emacs wiki, that will try to bring to the community
-cleaner, leaner and more up-to-date documentation.</p>
-
-<p>There are only a few guidelines for the contributors there:</p>
-
-<ul>
-<li>articles should be geared only towards the current and future
-versions of Emacs (currently 23 and 24) for maintainability&rsquo;s sake.</li>
-<li>articles should not copy Emacs&rsquo;s or extension&rsquo;s official
-documentation &ndash; they should refer to it instead. An overview, some
-nice pointers, tips and links &ndash; that seems like a good article,
-doesn&rsquo;t it?</li>
-<li>comments and questions should go to an article&rsquo;s discussion page</li>
-</ul>
-
-
-<p>File uploads are disabled on WikEmacs (but image file uploads will
-probably be allowed soon) &ndash; it will never host Emacs extensions of any
-sort.</p>
-
-<p>There is a Google discussion group
-<a href="https://groups.google.com/forum/?fromgroups#!forum/wikemacs">here</a>
-for more general questions regarding the wiki.</p>
-
-<p>Our goal is not to copy over the 8500 articles available at
-EmacsWiki. It&rsquo;s to provide a good road map for new users coming to
-Emacs and enough helpful hints and tips for experienced users. Everyone
-is welcome to join our efforts.</p>
-
-<p>As far as short term goals go &ndash; have a look at the outlined structure
-of the wiki (on its home page), pick a section that interests you and
-create/extend/improve it. Our content is licensed with GNU&rsquo;s Free
-Documentation License (which is compatible with Wikipedia&rsquo;s and
-probably EmacsWiki&rsquo;s GPL2). Some nice blog articles about Emacs might
-be converted to wiki articles with permission from their authors. You
-might find <a href="http://johnmacfarlane.net/pandoc/try">pandoc</a> useful to
-automatically convert articles from other formats to MediaWiki markup
-and <a href="https://launchpad.net/mediawiki-el">mediawiki.el</a> to edit
-articles on wiki from the comfort of your beloved editor.</p>
-
-<p>Thanks to the people that brought us the original EmacsWiki. Thanks to
-everyone who supported the idea for the new wiki. Thanks in advance to
-all future contributors.</p>
-
-<p>Some people will undoubtedly see the birth of WikEmacs as a separatist move to fraction
-the Emacs community. To them I&rsquo;d like to say that few things in life
-are as productive as competition. Obviously a lot of people willing to
-contribute to a new wiki are unwilling to do so for EmacsWiki and vice
-versa. This is not a contest and there will be no winner. I wish the
-best of luck to EmacsWiki and its supporters. What I wish for is to give
-our community the best source of documentation available and the
-option to choose.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/15/">&larr; Older</a>
@@ -474,6 +434,10 @@ option to choose.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/06/16/cider-0-dot-9/">CIDER 0.9</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
       </li>
     
@@ -487,10 +451,6 @@ option to choose.</p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
       </li>
     
   </ul>

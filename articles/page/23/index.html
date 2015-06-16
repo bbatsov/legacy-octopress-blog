@@ -9,10 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="This is my first post after a very long hiatus partially induced by a
-migration of my blog from WordPress to
-Jekyll, which I started half an
-year ago &hellip;">
+  <meta name="description" content="As you know I&rsquo;ve recently migrated my blog from WordPress to
+Jekyll. One of the things I had to do was add an Atom feed(RSS
+sucks). It was &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +81,57 @@ year ago &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/04/24/add-atom-feed-to-jekyll/">Add Atom Feed to Jekyll Powered Blog</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-24T00:00:00+03:00" pubdate data-updated="true">Apr 24<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As you know I&rsquo;ve recently migrated my blog from WordPress to
+Jekyll. One of the things I had to do was add an Atom feed(RSS
+sucks). It was quite the easy task. I just had to create an
+<a href="https://github.com/bbatsov/blog/blob/master/atom.xml">atom.xml</a> file
+and place in the root of my blog.</p>
+
+<p>Afterwards I only had to link my default layout to the atom feed:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span> <span class="na">type=</span><span class="s">&quot;application/atom+xml&quot;</span> <span class="na">href=</span><span class="s">&quot;atom.xml&quot;</span> <span class="na">title=</span><span class="s">&quot;Atom feed&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this point I was able to subscribe to my new atom feed(and
+hopefully my followers(which I may or may not have) were able to do
+the same).</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -292,60 +342,6 @@ information about look &amp; feels in NetBeans can be found here.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2010/02/26/enable-aa-in-swing/">How to Enable Font Anti-aliasing in a Java Swing App</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-02-26T00:00:00+02:00" pubdate data-updated="true">Feb 26<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>If you have access to the source, you can do this in the main method:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">// enable anti-aliasing</span>
-</span><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="s">&quot;awt.useSystemAAFontSettings&quot;</span><span class="o">,</span><span class="s">&quot;on&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="s">&quot;swing.aatext&quot;</span><span class="o">,</span> <span class="s">&quot;true&quot;</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Alternatively (and if you do not have access to the source, or if you find this
-easier) you can simply pass the system properties above to the JVM by
-adding these options to the command line:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">-</span><span class="n">Dawt</span><span class="o">.</span><span class="na">useSystemAAFontSettings</span><span class="o">=</span><span class="n">on</span> <span class="o">-</span><span class="n">Dswing</span><span class="o">.</span><span class="na">aatext</span><span class="o">=</span><span class="kc">true</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/24/">&larr; Older</a>
@@ -368,6 +364,10 @@ adding these options to the command line:</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/06/16/cider-0-dot-9/">CIDER 0.9</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
       </li>
     
@@ -381,10 +381,6 @@ adding these options to the command line:</p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[(think)]]></title>
   <link href="http://batsov.com/atom.xml" rel="self"/>
   <link href="http://batsov.com/"/>
-  <updated>2015-03-29T10:29:21+03:00</updated>
+  <updated>2015-06-16T17:27:48+03:00</updated>
   <id>http://batsov.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -12,6 +12,131 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CIDER 0.9]]></title>
+    <link href="http://batsov.com/articles/2015/06/16/cider-0-dot-9/"/>
+    <updated>2015-06-16T15:59:00+03:00</updated>
+    <id>http://batsov.com/articles/2015/06/16/cider-0-dot-9</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/clojure-emacs/cider">CIDER</a> 0.9 is finally out and
+it&rsquo;s our best release yet (believe it or not)! It took a lot
+more time than I originally anticipated, but at least we managed to
+ship in time for <a href="http://euroclojure.org">EuroClojure</a>!</p>
+
+<p>There are a ton of important changes and new features in 0.9 and now I&rsquo;ll go
+quickly through some of them.</p>
+
+<h3>Debugger</h3>
+
+<p>Believe it or not CIDER now has a debugger! This was like
+the most requested feature ever, so I&rsquo;m sure at least some of you are
+excited. The debugger was developed by the awesome
+<a href="http://endlessparentheses.com">Artur Malabarba</a>. He even wrote
+<a href="http://endlessparentheses.com/cider-debug-a-visual-interactive-debugger-for-clojure.html">a post about it</a>
+and I guess you should read it.</p>
+
+<h3>Dependency isolation</h3>
+
+<p>CIDER&rsquo;s dependencies will no longer affect your projects (read this as
+<em>introduce dependency conflicts in them</em>). All the dependencies are
+now isolated using source rewriting (simply put &ndash; they live in
+different namespaces than the original libraries). This magic is done by
+<a href="https://github.com/benedekfazekas/mranderson">mranderson</a>. Thanks to
+<a href="https://github.com/benedekfazekas">Benedek Fazekas</a> for creating this
+small but super helpful tool!</p>
+
+<h3>Rich code completion</h3>
+
+<p>Completion candidates are now annotated with information about the
+namespace and the type of the thing being completed. It&rsquo;s pretty neat.</p>
+
+<p><img src="https://raw.githubusercontent.com/clojure-emacs/cider/master/screenshots/completion-annotations.png"></p>
+
+<p>The screenshot above features
+<a href="http://company-mode.github.io/">company-mode</a>. The annotations are
+not supported in <code>auto-complete-mode</code> (that&rsquo;s a limitation of AC, not
+a limitation of CIDER).</p>
+
+<h3>Misc additions</h3>
+
+<p>Here&rsquo;s a short list of other important additions:</p>
+
+<ul>
+<li>Support for Piggieback 0.2</li>
+<li>New code formatting commands (based on <a href="https://github.com/weavejester/cljfmt">cljfmt</a>)</li>
+<li>New EDN data formatting commands</li>
+</ul>
+
+
+<h2>Changes</h2>
+
+<p>There were also a few important changes. Most notably we had to
+<a href="https://github.com/clojure-emacs/cider/issues/1088">kill source-tracking code evaluation</a>,
+as it wasn&rsquo;t playing nice with ClojureScript. This was also a hacky
+solution and I still hope than one day this will be properly supported
+in nREPL itself. In simple terms &ndash; var definitions evaluated by
+themselves won&rsquo;t have any location metadata set for them, which will
+make it impossible to go their definition.  You can also help out by
+voicing your support for this
+<a href="http://dev.clojure.org/jira/browse/NREPL-59">nREPL ticket</a>&rsquo;s patch to
+be merged.</p>
+
+<p>You&rsquo;ll also notice that some commands that didn&rsquo;t prompt for
+confirmation in the past do so now (e.g. <code>find-var</code>).  This was done mostly for
+consistency with Emacs&rsquo;s own commands that do similar things. The
+behavior is configurable via <code>cider-prompt-for-symbol</code>. If a ton of
+people dislike the new defaults reverting them is on the table.</p>
+
+<h2>All the Gory Details</h2>
+
+<p>There were truly a ton of changes and there&rsquo;s little point in me
+repeating them here. If you want to know everything have a look at the
+<a href="https://github.com/clojure-emacs/cider/releases/tag/v0.9.0">release notes</a>.</p>
+
+<h2>The Road Ahead</h2>
+
+<p>Going forward our top priority will be merging some functionality from
+<a href="https://github.com/clojure-emacs/refactor-nrepl">refactor-nrepl</a> and
+<a href="https://github.com/clojure-emacs/clj-refactor.el">clj-refactor</a> into
+CIDER itself.  Think of things like <code>find-usages</code>,
+<code>extract-definition</code>, etc. Refining the debugger will be another top
+priority.</p>
+
+<p>We&rsquo;ll also try to do some important internal changes:</p>
+
+<ul>
+<li><a href="https://github.com/clojure-emacs/cider/issues/1068">reorganize the entire codebase in a more sensible manner</a></li>
+<li><a href="https://github.com/clojure-emacs/cider/issues/1099">rework nREPL response handling</a></li>
+<li><a href="https://github.com/clojure-emacs/cider/issues/709">rework the REPL to use <code>comint-mode</code></a></li>
+<li><a href="https://github.com/clojure-emacs/cider/issues/732">improve quitting and restarting</a></li>
+</ul>
+
+
+<p>Depending of how well we progress on those tasks the next release will
+be either 0.10 or 1.0. I won&rsquo;t make any commitments about its release
+date (but judging from past it will likely be 3 to 6 months from now).</p>
+
+<p>If you&rsquo;re wondering why things are moving more slowly lately, here&rsquo;s
+the answer for you &ndash; I&rsquo;ve been super busy since the beginning of the
+year and haven&rsquo;t had much time for open-source projects. I&rsquo;m hoping
+this will change, but only time will tell.  I&rsquo;m very happy that a lot
+of people contributed to the development of CIDER 0.9. The project
+definitely doesn&rsquo;t have a bus factor of one. :&ndash;)</p>
+
+<p>Special thanks to <a href="https://github.com/cichli">Michael Griffiths</a> who
+did a ton of great work on this release. You rock!</p>
+
+<p><strong>P.S.</strong> Recently I talked on the
+<a href="http://blog.cognitect.com/cognicast">Cognicast</a> about CIDER (in
+general and 0.9 in particular). You might find
+<a href="http://blog.cognitect.com/cognicast/080">this episode</a> interesting.</p>
+
+<p><strong>P.P.S.</strong> I&rsquo;m rarely on IRC these days. <code>#cider</code> on
+  <a href="https://clojurians.slack.com/">slack</a> and our
+  <a href="https://gitter.im/clojure-emacs/cider">gitter channel</a> are the
+  official CIDER chats as far as I&rsquo;m concerned.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Projectile 0.12 released]]></title>
@@ -1075,83 +1200,6 @@ it&rsquo;s symmetrical to <code>Kernel#lambda</code>.</p>
 
 <p>By the way, given <code>proc</code>&rsquo;s fairly counter-intuitive behavior regarding <code>return</code>, you should probably
 use <code>lambda</code>s most of the time.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Looking back at 2013]]></title>
-    <link href="http://batsov.com/articles/2014/01/01/looking-back-at-2013/"/>
-    <updated>2014-01-01T12:30:00+02:00</updated>
-    <id>http://batsov.com/articles/2014/01/01/looking-back-at-2013</id>
-    <content type="html"><![CDATA[<p>2013 was a good year for me in many aspects. I&rsquo;ll share here some of
-the programming related achievements of mine over the year that made
-me somewhat proud of myself.</p>
-
-<h2>Achievements</h2>
-
-<h3>Ruby</h3>
-
-<h4>RuboCop</h4>
-
-<p>I&rsquo;ve made great headway with the
-<a href="https://github.com/bbatsov/rubocop">RuboCop</a> static code analyzer
-over the year. Working on a big non-Rails Ruby project reminded me
-why I fell in love with Ruby in the first place. I was also amazed by
-great community that quickly formed around RuboCop and propelled it to
-popularity. I hope that in 2014 I&rsquo;ll be able to deliver a 1.0 release.</p>
-
-<h4>Blogging</h4>
-
-<p>I finally did some Ruby-related blogging this year &ndash; mostly regarding
-good programming style. I enjoyed it, although I noticed it&rsquo;s much
-harder for me to blog, than it is to code. Good thing I became a
-programmer and not a writer I guess!</p>
-
-<h3>Emacs</h3>
-
-<p>I spent a lot of time working on Emacs-related stuff over the year:</p>
-
-<ul>
-<li>I started a new Emacs blog called <a href="http://emacsredux.com">EmacsRedux</a></li>
-<li>I improved a lot <a href="https://github.com/bbatsov/prelude">Prelude</a>
-and <a href="https://github.com/bbatsov/projectile">Projectile</a></li>
-<li>I contributed code to Emacs for the first time</li>
-<li>I took over the maintenance of <a href="https://github.com/clojure-emacs/cider">CIDER</a></li>
-<li>I was involved in a lesser role in the development of many cool Emacs extensions</li>
-</ul>
-
-
-<h3>Clojure</h3>
-
-<p>I wrote a
-<a href="https://github.com/bbatsov/clojure-style-guide">Clojure Style Guide</a>
-at the beginning of the year. I also hoped I&rsquo;d be able to work on
-static code analyzer for Clojure similar to RuboCop, but I got
-sidetracked and this did not happen. I did lots of CIDER-related work
-over the year and I hope I&rsquo;ll be able improve CIDER significantly in
-2014 (I have so many great ideas about it!).</p>
-
-<p>Clojure is still my favorite programming language and hope in 2014 I&rsquo;ll be
-able to work on more Clojure projects.</p>
-
-<h3>Misc</h3>
-
-<p>I spent some time playing with algorithms and math for the first time
-in a long while (inspired by Coursera).  This was lots of fun! I hope
-that in 2014 I&rsquo;ll be able to allocate even more time to studying them
-properly.</p>
-
-<h2>Epilogue</h2>
-
-<p>In previous years I generally spent a lot of time studying/researching new
-programming related stuff &ndash; new languages, new frameworks, new tools,
-new paradigms, etc. Conversely, I spent relatively little time hacking
-on open-source projects. 2013 was quite different for me &ndash; very little
-research, lots of open-source hacking. It was pretty tiresome at times, but
-also extremely enjoyable and gratifying experience.</p>
-
-<p>No idea how 2014 will turn out, but I hope it will be at least as fun
-as 2013 was!</p>
 ]]></content>
   </entry>
   

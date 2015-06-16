@@ -9,8 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Projectile 0.10.0 is out! This might come as a surprise for people tracking Projectile&rsquo;s
-development, since recent snapshots were using 1.0 as &hellip;">
+  <meta name="description" content="2013 was a good year for me in many aspects. I&rsquo;ll share here some of
+the programming related achievements of mine over the year that made
+me &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +81,110 @@ development, since recent snapshots were using 1.0 as &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2014/01/01/looking-back-at-2013/">Looking Back at 2013</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-01T12:30:00+02:00" pubdate data-updated="true">Jan 1<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>2013 was a good year for me in many aspects. I&rsquo;ll share here some of
+the programming related achievements of mine over the year that made
+me somewhat proud of myself.</p>
+
+<h2>Achievements</h2>
+
+<h3>Ruby</h3>
+
+<h4>RuboCop</h4>
+
+<p>I&rsquo;ve made great headway with the
+<a href="https://github.com/bbatsov/rubocop">RuboCop</a> static code analyzer
+over the year. Working on a big non-Rails Ruby project reminded me
+why I fell in love with Ruby in the first place. I was also amazed by
+great community that quickly formed around RuboCop and propelled it to
+popularity. I hope that in 2014 I&rsquo;ll be able to deliver a 1.0 release.</p>
+
+<h4>Blogging</h4>
+
+<p>I finally did some Ruby-related blogging this year &ndash; mostly regarding
+good programming style. I enjoyed it, although I noticed it&rsquo;s much
+harder for me to blog, than it is to code. Good thing I became a
+programmer and not a writer I guess!</p>
+
+<h3>Emacs</h3>
+
+<p>I spent a lot of time working on Emacs-related stuff over the year:</p>
+
+<ul>
+<li>I started a new Emacs blog called <a href="http://emacsredux.com">EmacsRedux</a></li>
+<li>I improved a lot <a href="https://github.com/bbatsov/prelude">Prelude</a>
+and <a href="https://github.com/bbatsov/projectile">Projectile</a></li>
+<li>I contributed code to Emacs for the first time</li>
+<li>I took over the maintenance of <a href="https://github.com/clojure-emacs/cider">CIDER</a></li>
+<li>I was involved in a lesser role in the development of many cool Emacs extensions</li>
+</ul>
+
+
+<h3>Clojure</h3>
+
+<p>I wrote a
+<a href="https://github.com/bbatsov/clojure-style-guide">Clojure Style Guide</a>
+at the beginning of the year. I also hoped I&rsquo;d be able to work on
+static code analyzer for Clojure similar to RuboCop, but I got
+sidetracked and this did not happen. I did lots of CIDER-related work
+over the year and I hope I&rsquo;ll be able improve CIDER significantly in
+2014 (I have so many great ideas about it!).</p>
+
+<p>Clojure is still my favorite programming language and hope in 2014 I&rsquo;ll be
+able to work on more Clojure projects.</p>
+
+<h3>Misc</h3>
+
+<p>I spent some time playing with algorithms and math for the first time
+in a long while (inspired by Coursera).  This was lots of fun! I hope
+that in 2014 I&rsquo;ll be able to allocate even more time to studying them
+properly.</p>
+
+<h2>Epilogue</h2>
+
+<p>In previous years I generally spent a lot of time studying/researching new
+programming related stuff &ndash; new languages, new frameworks, new tools,
+new paradigms, etc. Conversely, I spent relatively little time hacking
+on open-source projects. 2013 was quite different for me &ndash; very little
+research, lots of open-source hacking. It was pretty tiresome at times, but
+also extremely enjoyable and gratifying experience.</p>
+
+<p>No idea how 2014 will turn out, but I hope it will be at least as fun
+as 2013 was!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -410,79 +515,6 @@ All configurable aspects of RuboCop are listed <a href="https://github.com/bbats
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2013/10/03/using-rubys-gsub-with-a-hash/">Using Ruby&#8217;s Gsub With a Hash</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-03T16:12:00+03:00" pubdate data-updated="true">Oct 3<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Recently we discussed <a href="http://batsov.com/articles/2013/08/30/using-gsub-with-a-block/">how you can use <code>String#gsub</code> with a block</a>.
-Today we&rsquo;ll examine another somewhat unknown feature of the <code>gsub</code> method &ndash; the ability to supply a replacement hash as the second argument (which is normally a string).</p>
-
-<p>If the replacement argument is a hash, and the matched text is one of its keys, the corresponding value is the replacement string. Here&rsquo;s a simple example:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">geekify</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-</span><span class='line'>  <span class="n">string</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/[leto]/</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">geekify</span><span class="p">(</span><span class="s1">&#39;leet&#39;</span><span class="p">)</span> <span class="c1"># =&gt; &#39;1337&#39;</span>
-</span><span class='line'><span class="n">geekify</span><span class="p">(</span><span class="s1">&#39;noob&#39;</span><span class="p">)</span> <span class="c1"># =&gt; &#39;n00b&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Keep in mind you&rsquo;re not restricted to single character replacements:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">doctorize</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-</span><span class='line'>  <span class="n">string</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/M(iste)?r/</span><span class="p">,</span> <span class="s1">&#39;Mister&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Doctor&#39;</span><span class="p">,</span> <span class="s1">&#39;Mr&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Dr&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">doctorize</span><span class="p">(</span><span class="s1">&#39;Mister Freeze&#39;</span><span class="p">)</span> <span class="c1"># =&gt; &#39;Doctor Freeze&#39;</span>
-</span><span class='line'><span class="n">doctorize</span><span class="p">(</span><span class="s1">&#39;Mr Smith&#39;</span><span class="p">)</span>   <span class="c1"># =&gt; &#39;Dr Smith&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>That&rsquo;s all for today folks! I hope you&rsquo;ll find this short article useful!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/6/">&larr; Older</a>
@@ -505,6 +537,10 @@ Today we&rsquo;ll examine another somewhat unknown feature of the <code>gsub</co
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/06/16/cider-0-dot-9/">CIDER 0.9</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
       </li>
     
@@ -518,10 +554,6 @@ Today we&rsquo;ll examine another somewhat unknown feature of the <code>gsub</co
     
       <li class="post">
         <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
       </li>
     
   </ul>

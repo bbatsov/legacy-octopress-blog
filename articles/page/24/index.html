@@ -9,9 +9,11 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="I always thought that the fact that JDialogs accepted a parent frame
-as a constructor argument was the thing, that would make the dialog’s
-position &hellip;">
+  <meta name="description" content="If you have access to the source, you can do this in the main method: 1
+2
+3
+// enable anti-aliasing
+System.setProperty(&quot;awt. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +83,60 @@ position &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2010/02/26/enable-aa-in-swing/">How to Enable Font Anti-aliasing in a Java Swing App</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-26T00:00:00+02:00" pubdate data-updated="true">Feb 26<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>If you have access to the source, you can do this in the main method:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">// enable anti-aliasing</span>
+</span><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="s">&quot;awt.useSystemAAFontSettings&quot;</span><span class="o">,</span><span class="s">&quot;on&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="s">&quot;swing.aatext&quot;</span><span class="o">,</span> <span class="s">&quot;true&quot;</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Alternatively (and if you do not have access to the source, or if you find this
+easier) you can simply pass the system properties above to the JVM by
+adding these options to the command line:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">-</span><span class="n">Dawt</span><span class="o">.</span><span class="na">useSystemAAFontSettings</span><span class="o">=</span><span class="n">on</span> <span class="o">-</span><span class="n">Dswing</span><span class="o">.</span><span class="na">aatext</span><span class="o">=</span><span class="kc">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -280,63 +336,6 @@ with your Phaser.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2009/09/03/jboss-jvm-params/">Mofidy JVM Parameters for JBoss As</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-09-03T00:00:00+03:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Most people have been in a situation requiring them to change one or
-more of the parameters passed to the JVM on top of which JBoss AS is
-running. For instance &ndash; you may need a bigger heap, bigger perm gen
-size or something else. The best place to put these parameters is
-probably the following file:</p>
-
-<p><strong>$JBOSS_HOME/bin/run.conf</strong></p>
-
-<p>where <strong>$JBOSS_HOME</strong> refers to the directory in which you’ve unpacked the JBoss AS distribution.</p>
-
-<p>Look for this section:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;x$JAVA_OPTS&quot;</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span> <span class="o">]</span>; <span class="k">then</span>
-</span><span class='line'><span class="k">    </span><span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">&quot;...&quot;</span>
-</span><span class='line'><span class="k">fi</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>All you have to do now is adapt it to your needs.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/25/">&larr; Older</a>
@@ -359,6 +358,10 @@ probably the following file:</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/06/16/cider-0-dot-9/">CIDER 0.9</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
       </li>
     
@@ -372,10 +375,6 @@ probably the following file:</p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
       </li>
     
   </ul>

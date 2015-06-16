@@ -9,9 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="When you have applications, whose configuration is as complex as that
-of Emacs it’s always a good idea to store that configuration under
-version &hellip;">
+  <meta name="description" content="Most people have been in a situation requiring them to change one or
+more of the parameters passed to the JVM on top of which JBoss AS is
+running. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,63 @@ version &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2009/09/03/jboss-jvm-params/">Mofidy JVM Parameters for JBoss As</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-03T00:00:00+03:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Most people have been in a situation requiring them to change one or
+more of the parameters passed to the JVM on top of which JBoss AS is
+running. For instance &ndash; you may need a bigger heap, bigger perm gen
+size or something else. The best place to put these parameters is
+probably the following file:</p>
+
+<p><strong>$JBOSS_HOME/bin/run.conf</strong></p>
+
+<p>where <strong>$JBOSS_HOME</strong> refers to the directory in which you’ve unpacked the JBoss AS distribution.</p>
+
+<p>Look for this section:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;x$JAVA_OPTS&quot;</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">    </span><span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">&quot;...&quot;</span>
+</span><span class='line'><span class="k">fi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>All you have to do now is adapt it to your needs.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -316,49 +373,6 @@ snippet one might have in his .emacs(or other) “configuration” file:</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2009/05/04/switch-string-idiom-java/">A Switch on String Idiom for Java</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-05-04T00:00:00+03:00" pubdate data-updated="true">May 4<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&rsquo;ve always been frustrated with the inability to write a switch on
-String in Java.  However the enum type introduced in Java 5.0 somewhat
-diminishes the issue. Read this excellent
-<a href="http://www.xefer.com/2006/12/switchonstring">article</a> on the subject.</p>
-
-<p><strong>Update</strong></p>
-
-<p>Java 7 now supports switch on String!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/26/">&larr; Older</a>
@@ -381,6 +395,10 @@ diminishes the issue. Read this excellent
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/06/16/cider-0-dot-9/">CIDER 0.9</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
       </li>
     
@@ -394,10 +412,6 @@ diminishes the issue. Read this excellent
     
       <li class="post">
         <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
       </li>
     
   </ul>

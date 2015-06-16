@@ -9,15 +9,8 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="There are whopping 4 ways to invoke a lambda (or a proc) in Ruby: 1
-2
-3
-4
-5
-6
-7
-8
-lambda.call(arg1, arg2) lambda[arg1, arg2] lambda.(arg1, arg2) # &hellip;">
+  <meta name="description" content="Recently we discussed how you can use String#gsub with a block.
+Today we&rsquo;ll examine another somewhat unknown feature of the gsub method &ndash &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -87,6 +80,79 @@ lambda.call(arg1, arg2) lambda[arg1, arg2] lambda.(arg1, arg2) # &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2013/10/03/using-rubys-gsub-with-a-hash/">Using Ruby&#8217;s Gsub With a Hash</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-03T16:12:00+03:00" pubdate data-updated="true">Oct 3<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Recently we discussed <a href="http://batsov.com/articles/2013/08/30/using-gsub-with-a-block/">how you can use <code>String#gsub</code> with a block</a>.
+Today we&rsquo;ll examine another somewhat unknown feature of the <code>gsub</code> method &ndash; the ability to supply a replacement hash as the second argument (which is normally a string).</p>
+
+<p>If the replacement argument is a hash, and the matched text is one of its keys, the corresponding value is the replacement string. Here&rsquo;s a simple example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">geekify</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">string</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/[leto]/</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">geekify</span><span class="p">(</span><span class="s1">&#39;leet&#39;</span><span class="p">)</span> <span class="c1"># =&gt; &#39;1337&#39;</span>
+</span><span class='line'><span class="n">geekify</span><span class="p">(</span><span class="s1">&#39;noob&#39;</span><span class="p">)</span> <span class="c1"># =&gt; &#39;n00b&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Keep in mind you&rsquo;re not restricted to single character replacements:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">doctorize</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">string</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/M(iste)?r/</span><span class="p">,</span> <span class="s1">&#39;Mister&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Doctor&#39;</span><span class="p">,</span> <span class="s1">&#39;Mr&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Dr&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">doctorize</span><span class="p">(</span><span class="s1">&#39;Mister Freeze&#39;</span><span class="p">)</span> <span class="c1"># =&gt; &#39;Doctor Freeze&#39;</span>
+</span><span class='line'><span class="n">doctorize</span><span class="p">(</span><span class="s1">&#39;Mr Smith&#39;</span><span class="p">)</span>   <span class="c1"># =&gt; &#39;Dr Smith&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&rsquo;s all for today folks! I hope you&rsquo;ll find this short article useful!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -724,111 +790,6 @@ share this with me in the comments or on
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2013/08/30/using-gsub-with-a-block/">Using Ruby&#8217;s Gsub With a Block</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-30T15:29:00+03:00" pubdate data-updated="true">Aug 30<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><code>String#gsub</code> is one of the most used Ruby methods in the wild. Just
-about every Ruby programmer knows about the method and uses it fairly
-regularly.</p>
-
-<p>Here&rsquo;s a quick refresher of the typical <code>gsub</code> usage:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># using string match</span>
-</span><span class='line'><span class="s1">&#39;John Wayne&#39;</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Bruce&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Bruce Wayne&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># using regexp match</span>
-</span><span class='line'><span class="s1">&#39;John   Wayne&#39;</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/\w+\s+(\w+)/</span><span class="p">,</span> <span class="s1">&#39;Bruce \1&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Bruce Wayne&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Basically we can replace string and regexp matches with other
-strings. When doing regexp matches we can access the matched groups
-individually with <code>\1</code>, <code>\2</code>, etc and embed them in the replacement
-string.  Sometimes, however, some additional processing of the matched
-data might be required. Consider this trivial example &ndash; we might want
-to increment a matched number by 1. Here <code>gsub</code>&rsquo;s version that takes a
-block comes into action:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># num will be passed the string &#39;12&#39;</span>
-</span><span class='line'><span class="s1">&#39;Apollo 12&#39;</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/\d+/</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">num</span><span class="o">|</span> <span class="n">num</span><span class="o">.</span><span class="n">to_i</span><span class="o">.</span><span class="n">next</span> <span class="p">}</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Apollo 13&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Basically we&rsquo;re replacing the matched portion of the string with the
-result of the block. While the param enhances the readability of the code it&rsquo;s not necessary:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># we&#39;re not making use of a block param</span>
-</span><span class='line'><span class="s1">&#39;Apollo 12&#39;</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/(\d+)/</span><span class="p">)</span> <span class="p">{</span> <span class="no">Regexp</span><span class="o">.</span><span class="n">last_match</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">to_i</span><span class="o">.</span><span class="n">next</span> <span class="p">}</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="s2">&quot;Apollo 13&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>Regexp.last_match[1]</code> is the OO version of the obscure (but pretty
-popular) Perlism <code>$1</code>. In this particular case using the block param
-(as in the first example) is obviously a better idea.</p>
-
-<p>Note that some people expect that <code>gsub</code> would yield to the block all
-the matched groups as arguments &ndash; that is not the case, you&rsquo;ll always
-get a single argument denoting the entire regexp match.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># here name is &#39;Apollo 12&#39; and number is blank</span>
-</span><span class='line'><span class="s1">&#39;Apollo 12&#39;</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/(\w+) (\d+)/</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="nb">name</span><span class="p">,</span> <span class="n">number</span><span class="o">|</span> <span class="nb">puts</span> <span class="nb">name</span><span class="p">,</span> <span class="n">number</span> <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Keep this in mind!</p>
-
-<p>That&rsquo;s all for today folks! I hope you&rsquo;ll find this short article useful!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/7/">&larr; Older</a>
@@ -851,6 +812,10 @@ get a single argument denoting the entire regexp match.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/06/16/cider-0-dot-9/">CIDER 0.9</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
       </li>
     
@@ -864,10 +829,6 @@ get a single argument denoting the entire regexp match.</p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
       </li>
     
   </ul>

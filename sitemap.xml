@@ -599,12 +599,16 @@
         <lastmod>2015-03-29T10:29:04+03:00</lastmod>
     </url>
     <url>
+        <loc>http://batsov.com/articles/2015/06/16/cider-0-dot-9/</loc>
+        <lastmod>2015-06-16T17:27:27+03:00</lastmod>
+    </url>
+    <url>
         <loc>http://batsov.com/about/</loc>
         <lastmod>2015-02-15T13:31:47+02:00</lastmod>
     </url>
     <url>
         <loc>http://batsov.com/blog/archives/</loc>
-        <lastmod>2015-03-29T10:29:04+03:00</lastmod>
+        <lastmod>2015-06-16T17:27:27+03:00</lastmod>
     </url>
     <url>
         <loc>http://batsov.com/colophon/</loc>
@@ -616,7 +620,7 @@
     </url>
     <url>
         <loc>http://batsov.com/</loc>
-        <lastmod>2015-03-29T10:29:04+03:00</lastmod>
+        <lastmod>2015-06-16T17:27:27+03:00</lastmod>
     </url>
     <url>
         <loc>http://batsov.com/lisp-problems/</loc>

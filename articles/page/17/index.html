@@ -9,9 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Good developers are very careful about the proper use of
-whitespace in their files &ndash; there should be no empty lines at the
-beginning of a file &hellip;">
+  <meta name="description" content="Newcomers to Ruby are often confused by the fact the Object class
+defines three methods related to equality &ndash; ==, eql? and
+equal?. Of the three &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,116 @@ beginning of a file &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2011/11/28/ruby-tip-number-1-demystifying-the-difference-between-equals-equals-and-eql/">Ruby Tip #1: Demystifying the Difference Between == and Eql?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-28T16:54:00+02:00" pubdate data-updated="true">Nov 28<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Newcomers to Ruby are often confused by the fact the <code>Object</code> class
+defines three methods related to equality &ndash; <code>==</code>, <code>eql?</code> and
+<code>equal?</code>. Of the three the one that it&rsquo;s easiest to describe is
+<code>equal?</code> &ndash; it implements what&rsquo;s commonly known as reference equality
+check. The method returns <code>true</code> only if its receiver (the object upon
+the method was invoked) and parameter (the object we&rsquo;re comparing to) are
+the same object (Java developers should think of the <code>==</code> operator
+there).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">some_word</span> <span class="o">=</span> <span class="s2">&quot;word&quot;</span>
+</span><span class='line'><span class="n">some_other_word</span> <span class="o">=</span> <span class="n">some_word</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">some_word</span><span class="o">.</span><span class="n">equal?</span> <span class="n">some_other_word</span> <span class="c1"># true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Both <code>==</code> and <code>eql?</code> implement value equality checks &ndash; they are not
+interested in whether two variables point to the same object in
+memory, but whether two objects are equal in terms of their
+values. For instance &ldquo;cat&rdquo; and &ldquo;cat&rdquo; might very well be two completely
+different <code>String</code> objects, but they are quite obviously the same as
+far as their value is concerned.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="s2">&quot;cat&quot;</span><span class="o">.</span><span class="n">equal?</span> <span class="s2">&quot;cat&quot;</span>     <span class="c1"># false</span>
+</span><span class='line'><span class="s2">&quot;cat&quot;</span> <span class="o">==</span> <span class="s2">&quot;cat&quot;</span>         <span class="c1"># true</span>
+</span><span class='line'><span class="s2">&quot;cat&quot;</span><span class="o">.</span><span class="n">eql?</span> <span class="s2">&quot;cat&quot;</span>       <span class="c1"># true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What&rsquo;s not immediately obvious is why are there two different
+methods that seem to be doing exactly the same thing. The answer is
+simple &ndash; <code>eql?</code> is meant to be used as a stricter version of <code>==</code>, if
+there is a need for such stricter version.<code>eql?</code> most prominent usage
+is probably in the <code>Hash</code> class, where it&rsquo;s used to test members for equality.</p>
+
+<p>In the <code>Object</code> class <code>eql?</code> is synonym with <code>==</code>. Most subclasses
+continue this tradition, but there are a few classes that provide a
+different implementation for <code>eql?</code>.  Numeric types, for example,
+perform type conversion across <code>==</code>, but not across <code>eql?</code>, so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span>       <span class="c1"># true</span>
+</span><span class='line'><span class="mi">1</span><span class="o">.</span><span class="n">eql?</span> <span class="mi">1</span>     <span class="c1"># true</span>
+</span><span class='line'><span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span>     <span class="c1"># true</span>
+</span><span class='line'><span class="mi">1</span><span class="o">.</span><span class="n">eql?</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span>   <span class="c1"># false</span>
+</span><span class='line'><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="n">eql?</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span> <span class="c1"># true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see clearly from this example &ndash; <code>eql?</code> for <code>Numeric</code> classes
+requires both objects to be instances of the same class, apart from
+having equal values, to return <code>true</code>.</p>
+
+<p>If you&rsquo;re wondering about the origins of that convention I should probably
+refer you to Common Lisp (one of the languages cited as principle
+inspiration for Ruby). Common Lisp has <a href="http://eli.thegreenplace.net/2004/08/08/equality-in-lisp/">quite a few equality
+predicates</a>,
+dealing with various aspects of equality. I guess I never found <code>==</code>
+and <code>eql?</code> in Ruby particularly confusing, because I knew Common Lisp,
+before I started playing with Ruby.</p>
+
+<p>Hopefully, I&rsquo;ve managed to make the difference between <code>==</code> and <code>eql?</code>
+clear. That&rsquo;s some fairly esoteric matter that&rsquo;s not totally
+understood by even some fairly experienced Ruby developers.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -367,60 +477,6 @@ program in the minibuffer.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2011/11/11/blogging-like-a-hacker-evolution/">Blogging Like a Hacker: Evolution</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-11T08:52:00+02:00" pubdate data-updated="true">Nov 11<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Prelude</h2>
-
-<p>I&rsquo;ve started my personal blog some three years ago. Back then in was
-hosted on <a href="http://wordpress.com">wordpress.com</a> and was called
-devcraft.wordpress.com. I had a lot of interesting (at least to me)
-topics to write about on my mind, but I was immediately faced with a
-serious problem &ndash; I felt very uncomfortable writing posts in a small
-text area, using the primitive editing capabilities of a web
-browser. Ordinary decent hackers love and value two tools above all
-else &ndash; their text editor and their shell. And we love solving problems
-automatically with clever programs and scripts, instead of manually.</p>
-
-<p>I knew the only way to ever start writing, like I intended, to was to
-actively involve them in the process. So here my story begins&hellip;</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/articles/2011/11/11/blogging-like-a-hacker-evolution/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/18/">&larr; Older</a>
@@ -443,6 +499,10 @@ actively involve them in the process. So here my story begins&hellip;</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/06/16/cider-0-dot-9/">CIDER 0.9</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
       </li>
     
@@ -456,10 +516,6 @@ actively involve them in the process. So here my story begins&hellip;</p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
       </li>
     
   </ul>

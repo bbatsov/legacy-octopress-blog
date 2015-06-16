@@ -9,8 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="Projectile 0.12 is finally out! A lot of time has passed since the previous stable release, for which
-I&rsquo;m truly sorry. I kept delaying and &hellip;">
+  <meta name="description" content="CIDER 0.9 is finally out and
+it&rsquo;s our best release yet (believe it or not)! It took a lot
+more time than I originally anticipated, but at least &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +81,158 @@ I&rsquo;m truly sorry. I kept delaying and &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2015/06/16/cider-0-dot-9/">CIDER 0.9</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-16T15:59:00+03:00" pubdate data-updated="true">Jun 16<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/clojure-emacs/cider">CIDER</a> 0.9 is finally out and
+it&rsquo;s our best release yet (believe it or not)! It took a lot
+more time than I originally anticipated, but at least we managed to
+ship in time for <a href="http://euroclojure.org">EuroClojure</a>!</p>
+
+<p>There are a ton of important changes and new features in 0.9 and now I&rsquo;ll go
+quickly through some of them.</p>
+
+<h3>Debugger</h3>
+
+<p>Believe it or not CIDER now has a debugger! This was like
+the most requested feature ever, so I&rsquo;m sure at least some of you are
+excited. The debugger was developed by the awesome
+<a href="http://endlessparentheses.com">Artur Malabarba</a>. He even wrote
+<a href="http://endlessparentheses.com/cider-debug-a-visual-interactive-debugger-for-clojure.html">a post about it</a>
+and I guess you should read it.</p>
+
+<h3>Dependency isolation</h3>
+
+<p>CIDER&rsquo;s dependencies will no longer affect your projects (read this as
+<em>introduce dependency conflicts in them</em>). All the dependencies are
+now isolated using source rewriting (simply put &ndash; they live in
+different namespaces than the original libraries). This magic is done by
+<a href="https://github.com/benedekfazekas/mranderson">mranderson</a>. Thanks to
+<a href="https://github.com/benedekfazekas">Benedek Fazekas</a> for creating this
+small but super helpful tool!</p>
+
+<h3>Rich code completion</h3>
+
+<p>Completion candidates are now annotated with information about the
+namespace and the type of the thing being completed. It&rsquo;s pretty neat.</p>
+
+<p><img src="https://raw.githubusercontent.com/clojure-emacs/cider/master/screenshots/completion-annotations.png"></p>
+
+<p>The screenshot above features
+<a href="http://company-mode.github.io/">company-mode</a>. The annotations are
+not supported in <code>auto-complete-mode</code> (that&rsquo;s a limitation of AC, not
+a limitation of CIDER).</p>
+
+<h3>Misc additions</h3>
+
+<p>Here&rsquo;s a short list of other important additions:</p>
+
+<ul>
+<li>Support for Piggieback 0.2</li>
+<li>New code formatting commands (based on <a href="https://github.com/weavejester/cljfmt">cljfmt</a>)</li>
+<li>New EDN data formatting commands</li>
+</ul>
+
+
+<h2>Changes</h2>
+
+<p>There were also a few important changes. Most notably we had to
+<a href="https://github.com/clojure-emacs/cider/issues/1088">kill source-tracking code evaluation</a>,
+as it wasn&rsquo;t playing nice with ClojureScript. This was also a hacky
+solution and I still hope than one day this will be properly supported
+in nREPL itself. In simple terms &ndash; var definitions evaluated by
+themselves won&rsquo;t have any location metadata set for them, which will
+make it impossible to go their definition.  You can also help out by
+voicing your support for this
+<a href="http://dev.clojure.org/jira/browse/NREPL-59">nREPL ticket</a>&rsquo;s patch to
+be merged.</p>
+
+<p>You&rsquo;ll also notice that some commands that didn&rsquo;t prompt for
+confirmation in the past do so now (e.g. <code>find-var</code>).  This was done mostly for
+consistency with Emacs&rsquo;s own commands that do similar things. The
+behavior is configurable via <code>cider-prompt-for-symbol</code>. If a ton of
+people dislike the new defaults reverting them is on the table.</p>
+
+<h2>All the Gory Details</h2>
+
+<p>There were truly a ton of changes and there&rsquo;s little point in me
+repeating them here. If you want to know everything have a look at the
+<a href="https://github.com/clojure-emacs/cider/releases/tag/v0.9.0">release notes</a>.</p>
+
+<h2>The Road Ahead</h2>
+
+<p>Going forward our top priority will be merging some functionality from
+<a href="https://github.com/clojure-emacs/refactor-nrepl">refactor-nrepl</a> and
+<a href="https://github.com/clojure-emacs/clj-refactor.el">clj-refactor</a> into
+CIDER itself.  Think of things like <code>find-usages</code>,
+<code>extract-definition</code>, etc. Refining the debugger will be another top
+priority.</p>
+
+<p>We&rsquo;ll also try to do some important internal changes:</p>
+
+<ul>
+<li><a href="https://github.com/clojure-emacs/cider/issues/1068">reorganize the entire codebase in a more sensible manner</a></li>
+<li><a href="https://github.com/clojure-emacs/cider/issues/1099">rework nREPL response handling</a></li>
+<li><a href="https://github.com/clojure-emacs/cider/issues/709">rework the REPL to use <code>comint-mode</code></a></li>
+<li><a href="https://github.com/clojure-emacs/cider/issues/732">improve quitting and restarting</a></li>
+</ul>
+
+
+<p>Depending of how well we progress on those tasks the next release will
+be either 0.10 or 1.0. I won&rsquo;t make any commitments about its release
+date (but judging from past it will likely be 3 to 6 months from now).</p>
+
+<p>If you&rsquo;re wondering why things are moving more slowly lately, here&rsquo;s
+the answer for you &ndash; I&rsquo;ve been super busy since the beginning of the
+year and haven&rsquo;t had much time for open-source projects. I&rsquo;m hoping
+this will change, but only time will tell.  I&rsquo;m very happy that a lot
+of people contributed to the development of CIDER 0.9. The project
+definitely doesn&rsquo;t have a bus factor of one. :&ndash;)</p>
+
+<p>Special thanks to <a href="https://github.com/cichli">Michael Griffiths</a> who
+did a ton of great work on this release. You rock!</p>
+
+<p><strong>P.S.</strong> Recently I talked on the
+<a href="http://blog.cognitect.com/cognicast">Cognicast</a> about CIDER (in
+general and 0.9 in particular). You might find
+<a href="http://blog.cognitect.com/cognicast/080">this episode</a> interesting.</p>
+
+<p><strong>P.P.S.</strong> I&rsquo;m rarely on IRC these days. <code>#cider</code> on
+  <a href="https://clojurians.slack.com/">slack</a> and our
+  <a href="https://gitter.im/clojure-emacs/cider">gitter channel</a> are the
+  official CIDER chats as far as I&rsquo;m concerned.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -305,53 +458,6 @@ to make CIDER better!</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-15T20:16:00+02:00" pubdate data-updated="true">Nov 15<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://github.com/edw">Edwin Watkeys</a> has just released a
-<a href="https://github.com/thunknyc/nrepl-profile">profiling extension for CIDER</a>,
-based on his library
-<a href="http://github.com/thunknyc/profile">profile</a>. The profiling data you&rsquo;ll get
-is rather crude, but it&rsquo;s still better than nothing and is certainly nicer
-than what you&rsquo;d get by using <code>time</code>.</p>
-
-<p>Here you can see the extension in action:</p>
-
-<p><img src="https://camo.githubusercontent.com/636b6897b279bb761f3377f6e002bbdb8b474937/68747470733a2f2f7261772e6769746875622e636f6d2f7468756e6b6e79632f6e7265706c2d70726f66696c652f6d61737465722f646f632f70726f66696c652d73637265656e73686f742e706e67"></p>
-
-<p>Check out the documentation of both projects for more details.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/2/">&larr; Older</a>
@@ -372,6 +478,10 @@ than what you&rsquo;d get by using <code>time</code>.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/06/16/cider-0-dot-9/">CIDER 0.9</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
       </li>
     
@@ -385,10 +495,6 @@ than what you&rsquo;d get by using <code>time</code>.</p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
       </li>
     
   </ul>

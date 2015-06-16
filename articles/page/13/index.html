@@ -9,9 +9,9 @@
   <meta name="author" content="Bozhidar Batsov">
 
   
-  <meta name="description" content="From time to time you might want to take different actions depending
-on an object&rsquo;s class. One handy way to do so is with a case
-expression: 1 &hellip;">
+  <meta name="description" content="This tip is going to be a really short one. Hopefully by now you&rsquo;ve
+heard about pry &ndash; a fantastic irb
+replacement, that somewhat reminds &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,52 @@ expression: 1 &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/articles/2012/10/14/rails-tip-number-1-use-pry-instead-of-irb-for-the-rails-console/">Rails Tip #1: Use Pry Instead of Irb for the Rails Console</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-14T18:06:00+03:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This tip is going to be a really short one. Hopefully by now you&rsquo;ve
+heard about <a href="http://pryrepl.org/">pry</a> &ndash; a fantastic <code>irb</code>
+replacement, that somewhat reminds me of the mighty Lisp REPLs. What
+you might not know is how to hook it into Rails so that the <code>rails
+console</code> (a.k.a. <code>rails c</code>) command would fire a pry shell instead of
+an irb one. There are several ways to do so, but I find one
+particularly straightforward &ndash; the awesome little gem
+<a href="https://github.com/rweng/pry-rails">pry-rails</a>.</p>
+
+<p>So what are you waiting for? Go ahead, install the little sucker and
+enjoy your new pry-powered Rails console.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -376,63 +422,6 @@ venerable <code>gtypist</code> before looking at <code>guru-mode</code>.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/articles/2012/09/09/emacs-support-for-the-slim-template-language/">Emacs Support for the Slim Template Language</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-09T20:16:00+03:00" pubdate data-updated="true">Sep 9<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&rsquo;m mostly a Ruby on Rails developer these days and as such I&rsquo;m pretty
-fond of the <a href="http://slim-lang.com">Slim template language</a>. I&rsquo;ve
-always hated HTML + ERB, since that evil duo encourages all sorts of
-ever practices and recently I&rsquo;ve adopted Slim as a replacement for
-my long time favourite ERB alternative &ndash; <a href="http://haml-lang.com">Haml</a>.</p>
-
-<p>I won&rsquo;t discuss here the shortcomings of Haml vs Slim, but I&rsquo;ll share
-with you the big advantage Haml has over Slim (for Emacs users at
-least) &ndash; it has a pretty nice major editing mode for Emacs. Slim&rsquo;s
-Emacs support on the other hand is rather iffy and is presently mostly
-based on <code>haml-mode</code>. That will hopefully change soon, since recently
-I&rsquo;ve become a co-maintainer of
-<a href="http://github.com/minad/emacs-slim">slim-mode</a> and I plan to improve
-it as much as I can (currently I&rsquo;m mostly working on precise
-font-locking). Any help from interested parties is, naturally, most
-welcome. I very much doubt that me and
-<a href="https://github.com/minad">Daniel Mendler</a> are the only two people
-dreaming of great Slim experience in Emacs. :&ndash;)</p>
-
-<p><img src="/images/articles/slim-mode.png"></p>
-
-<p>Let us together eliminate that big Haml advantage. :&ndash;)</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/articles/page/14/">&larr; Older</a>
@@ -455,6 +444,10 @@ dreaming of great Slim experience in Emacs. :&ndash;)</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/articles/2015/06/16/cider-0-dot-9/">CIDER 0.9</a>
+      </li>
+    
+      <li class="post">
         <a href="/articles/2015/03/29/projectile-0-dot-12-released/">Projectile 0.12 Released</a>
       </li>
     
@@ -468,10 +461,6 @@ dreaming of great Slim experience in Emacs. :&ndash;)</p>
     
       <li class="post">
         <a href="/articles/2014/11/15/a-cider-unsession-at-clojure-slash-conj/">A CIDER Unsession at Clojure/conj</a>
-      </li>
-    
-      <li class="post">
-        <a href="/articles/2014/11/15/a-profiling-extension-for-cider/">A Profiling Extension for CIDER</a>
       </li>
     
   </ul>
