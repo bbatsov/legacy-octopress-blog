@@ -1,0 +1,122 @@
+---
+layout: post
+title: "CIDER 0.9"
+date: 2015-06-16 15:59
+comments: true
+categories:
+- emacs
+- clojure
+- cider
+---
+
+[CIDER](https://github.com/clojure-emacs/cider) 0.9 is finally out and
+it's our best release yet (believe it or not)! It took a lot
+more time than I originally anticipated, but at least we managed to
+ship in time for [EuroClojure](http://euroclojure.org)!
+
+There are a ton of important changes and new features in 0.9 and now I'll go
+quickly through some of them.
+
+### Debugger
+
+Believe it or not CIDER now has a debugger! This was like
+the most requested feature ever, so I'm sure at least some of you are
+excited. The debugger was developed by the awesome
+[Artur Malabarba](http://endlessparentheses.com). He even wrote
+[a post about it](http://endlessparentheses.com/cider-debug-a-visual-interactive-debugger-for-clojure.html)
+and I guess you should read it.
+
+### Dependency isolation
+
+CIDER's dependencies will no longer affect your projects (read this as
+_introduce dependency conflicts in them_). All the dependencies are
+now isolated using source rewriting (simply put - they live in
+different namespaces than the original libraries). This magic is done by
+[mranderson](https://github.com/benedekfazekas/mranderson). Thanks to
+[Benedek Fazekas](https://github.com/benedekfazekas) for creating this
+small but super helpful tool!
+
+### Rich code completion
+
+Completion candidates are now annotated with information about the
+namespace and the type of the thing being completed. It's pretty neat.
+
+{% img https://raw.githubusercontent.com/clojure-emacs/cider/master/screenshots/completion-annotations.png %}
+
+The screenshot above features
+[company-mode](http://company-mode.github.io/). The annotations are
+not supported in `auto-complete-mode` (that's a limitation of AC, not
+a limitation of CIDER).
+
+### Misc additions
+
+Here's a short list of other important additions:
+
+* Support for Piggieback 0.2
+* New code formatting commands (based on [cljfmt](https://github.com/weavejester/cljfmt))
+* New EDN data formatting commands
+
+## Changes
+
+There were also a few important changes. Most notably we had to
+[kill source-tracking code evaluation](https://github.com/clojure-emacs/cider/issues/1088),
+as it wasn't playing nice with ClojureScript. This was also a hacky
+solution and I still hope than one day this will be properly supported
+in nREPL itself. In simple terms - var definitions evaluated by
+themselves won't have any location metadata set for them, which will
+make it impossible to go their definition.  You can also help out by
+voicing your support for this
+[nREPL ticket](http://dev.clojure.org/jira/browse/NREPL-59)'s patch to
+be merged.
+
+You'll also notice that some commands that didn't prompt for
+confirmation in the past do so now (e.g. `find-var`).  This was done mostly for
+consistency with Emacs's own commands that do similar things. The
+behavior is configurable via `cider-prompt-for-symbol`. If a ton of
+people dislike the new defaults reverting them is on the table.
+
+## All the Gory Details
+
+There were truly a ton of changes and there's little point in me
+repeating them here. If you want to know everything have a look at the
+[release notes](https://github.com/clojure-emacs/cider/releases/tag/v0.9.0).
+
+## The Road Ahead
+
+Going forward our top priority will be merging some functionality from
+[refactor-nrepl](https://github.com/clojure-emacs/refactor-nrepl) and
+[clj-refactor](https://github.com/clojure-emacs/clj-refactor.el) into
+CIDER itself.  Think of things like `find-usages`,
+`extract-definition`, etc. Refining the debugger will be another top
+priority.
+
+We'll also try to do some important internal changes:
+
+- [reorganize the entire codebase in a more sensible manner](https://github.com/clojure-emacs/cider/issues/1068)
+- [rework nREPL response handling](https://github.com/clojure-emacs/cider/issues/1099)
+- [rework the REPL to use `comint-mode`](https://github.com/clojure-emacs/cider/issues/709)
+- [improve quitting and restarting](https://github.com/clojure-emacs/cider/issues/732)
+
+Depending of how well we progress on those tasks the next release will
+be either 0.10 or 1.0. I won't make any commitments about its release
+date (but judging from past it will likely be 3 to 6 months from now).
+
+If you're wondering why things are moving more slowly lately, here's
+the answer for you - I've been super busy since the beginning of the
+year and haven't had much time for open-source projects. I'm hoping
+this will change, but only time will tell.  I'm very happy that a lot
+of people contributed to the development of CIDER 0.9. The project
+definitely doesn't have a bus factor of one. :-)
+
+Special thanks to [Michael Griffiths](https://github.com/cichli) who
+did a ton of great work on this release. You rock!
+
+**P.S.** Recently I talked on the
+[Cognicast](http://blog.cognitect.com/cognicast) about CIDER (in
+general and 0.9 in particular). You might find
+[this episode](http://blog.cognitect.com/cognicast/080) interesting.
+
+**P.P.S.** I'm rarely on IRC these days. `#cider` on
+  [slack](https://clojurians.slack.com/) and our
+  [gitter channel](https://gitter.im/clojure-emacs/cider) are the
+  official CIDER chats as far as I'm concerned.
