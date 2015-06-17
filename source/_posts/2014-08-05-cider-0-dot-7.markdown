@@ -4,8 +4,8 @@ title: "CIDER 0.7"
 date: 2014-08-05 15:19
 comments: true
 categories:
-- Emacs
-- Clojure
+- emacs
+- clojure
 ---
 
 [CIDER](https://github.com/clojure-emacs/cider) 0.7 is finally out and

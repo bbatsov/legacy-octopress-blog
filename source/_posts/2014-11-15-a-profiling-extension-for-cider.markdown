@@ -14,7 +14,7 @@ categories:
 based on his library
 [profile](http://github.com/thunknyc/profile). The profiling data you'll get
 is rather crude, but it's still better than nothing and is certainly nicer
-than what you'd get by using `time`. 
+than what you'd get by using `time`.
 
 Here you can see the extension in action:
 
