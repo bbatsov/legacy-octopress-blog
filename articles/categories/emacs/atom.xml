@@ -4,7 +4,7 @@
   <title><![CDATA[Category: emacs | (think)]]></title>
   <link href="http://batsov.com/articles/categories/emacs/atom.xml" rel="self"/>
   <link href="http://batsov.com/"/>
-  <updated>2015-06-16T17:27:48+03:00</updated>
+  <updated>2015-06-17T12:45:14+03:00</updated>
   <id>http://batsov.com/</id>
   <author>
     <name><![CDATA[Bozhidar Batsov]]></name>
@@ -12,6 +12,131 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CIDER 0.9]]></title>
+    <link href="http://batsov.com/articles/2015/06/16/cider-0-dot-9/"/>
+    <updated>2015-06-16T15:59:00+03:00</updated>
+    <id>http://batsov.com/articles/2015/06/16/cider-0-dot-9</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/clojure-emacs/cider">CIDER</a> 0.9 is finally out and
+it&rsquo;s our best release yet (believe it or not)! It took a lot
+more time than I originally anticipated, but at least we managed to
+ship in time for <a href="http://euroclojure.org">EuroClojure</a>!</p>
+
+<p>There are a ton of important changes and new features in 0.9 and now I&rsquo;ll go
+quickly through some of them.</p>
+
+<h3>Debugger</h3>
+
+<p>Believe it or not CIDER now has a debugger! This was like
+the most requested feature ever, so I&rsquo;m sure at least some of you are
+excited. The debugger was developed by the awesome
+<a href="http://endlessparentheses.com">Artur Malabarba</a>. He even wrote
+<a href="http://endlessparentheses.com/cider-debug-a-visual-interactive-debugger-for-clojure.html">a post about it</a>
+and I guess you should read it.</p>
+
+<h3>Dependency isolation</h3>
+
+<p>CIDER&rsquo;s dependencies will no longer affect your projects (read this as
+<em>introduce dependency conflicts in them</em>). All the dependencies are
+now isolated using source rewriting (simply put &ndash; they live in
+different namespaces than the original libraries). This magic is done by
+<a href="https://github.com/benedekfazekas/mranderson">mranderson</a>. Thanks to
+<a href="https://github.com/benedekfazekas">Benedek Fazekas</a> for creating this
+small but super helpful tool!</p>
+
+<h3>Rich code completion</h3>
+
+<p>Completion candidates are now annotated with information about the
+namespace and the type of the thing being completed. It&rsquo;s pretty neat.</p>
+
+<p><img class="<a" src="href="https://raw.githubusercontent.com/clojure-emacs/cider/master/screenshots/completion-annotations.png">https://raw.githubusercontent.com/clojure-emacs/cider/master/screenshots/completion-annotations.png</a>"></p>
+
+<p>The screenshot above features
+<a href="http://company-mode.github.io/">company-mode</a>. The annotations are
+not supported in <code>auto-complete-mode</code> (that&rsquo;s a limitation of AC, not
+a limitation of CIDER).</p>
+
+<h3>Misc additions</h3>
+
+<p>Here&rsquo;s a short list of other important additions:</p>
+
+<ul>
+<li>Support for Piggieback 0.2</li>
+<li>New code formatting commands (based on <a href="https://github.com/weavejester/cljfmt">cljfmt</a>)</li>
+<li>New EDN data formatting commands</li>
+</ul>
+
+
+<h2>Changes</h2>
+
+<p>There were also a few important changes. Most notably we had to
+<a href="https://github.com/clojure-emacs/cider/issues/1088">kill source-tracking code evaluation</a>,
+as it wasn&rsquo;t playing nice with ClojureScript. This was also a hacky
+solution and I still hope than one day this will be properly supported
+in nREPL itself. In simple terms &ndash; var definitions evaluated by
+themselves won&rsquo;t have any location metadata set for them, which will
+make it impossible to go their definition.  You can also help out by
+voicing your support for this
+<a href="http://dev.clojure.org/jira/browse/NREPL-59">nREPL ticket</a>&rsquo;s patch to
+be merged.</p>
+
+<p>You&rsquo;ll also notice that some commands that didn&rsquo;t prompt for
+confirmation in the past do so now (e.g. <code>find-var</code>).  This was done mostly for
+consistency with Emacs&rsquo;s own commands that do similar things. The
+behavior is configurable via <code>cider-prompt-for-symbol</code>. If a ton of
+people dislike the new defaults reverting them is on the table.</p>
+
+<h2>All the Gory Details</h2>
+
+<p>There were truly a ton of changes and there&rsquo;s little point in me
+repeating them here. If you want to know everything have a look at the
+<a href="https://github.com/clojure-emacs/cider/releases/tag/v0.9.0">release notes</a>.</p>
+
+<h2>The Road Ahead</h2>
+
+<p>Going forward our top priority will be merging some functionality from
+<a href="https://github.com/clojure-emacs/refactor-nrepl">refactor-nrepl</a> and
+<a href="https://github.com/clojure-emacs/clj-refactor.el">clj-refactor</a> into
+CIDER itself.  Think of things like <code>find-usages</code>,
+<code>extract-definition</code>, etc. Refining the debugger will be another top
+priority.</p>
+
+<p>We&rsquo;ll also try to do some important internal changes:</p>
+
+<ul>
+<li><a href="https://github.com/clojure-emacs/cider/issues/1068">reorganize the entire codebase in a more sensible manner</a></li>
+<li><a href="https://github.com/clojure-emacs/cider/issues/1099">rework nREPL response handling</a></li>
+<li><a href="https://github.com/clojure-emacs/cider/issues/709">rework the REPL to use <code>comint-mode</code></a></li>
+<li><a href="https://github.com/clojure-emacs/cider/issues/732">improve quitting and restarting</a></li>
+</ul>
+
+
+<p>Depending of how well we progress on those tasks the next release will
+be either 0.10 or 1.0. I won&rsquo;t make any commitments about its release
+date (but judging from past it will likely be 3 to 6 months from now).</p>
+
+<p>If you&rsquo;re wondering why things are moving more slowly lately, here&rsquo;s
+the answer for you &ndash; I&rsquo;ve been super busy since the beginning of the
+year and haven&rsquo;t had much time for open-source projects. I&rsquo;m hoping
+this will change, but only time will tell.  I&rsquo;m very happy that a lot
+of people contributed to the development of CIDER 0.9. The project
+definitely doesn&rsquo;t have a bus factor of one. :&ndash;)</p>
+
+<p>Special thanks to <a href="https://github.com/cichli">Michael Griffiths</a> who
+did a ton of great work on this release. You rock!</p>
+
+<p><strong>P.S.</strong> Recently I talked on the
+<a href="http://blog.cognitect.com/cognicast">Cognicast</a> about CIDER (in
+general and 0.9 in particular). You might find
+<a href="http://blog.cognitect.com/cognicast/080">this episode</a> interesting.</p>
+
+<p><strong>P.P.S.</strong> I&rsquo;m rarely on IRC these days. <code>#cider</code> on
+  <a href="https://clojurians.slack.com/">slack</a> and our
+  <a href="https://gitter.im/clojure-emacs/cider">gitter channel</a> are the
+  official CIDER chats as far as I&rsquo;m concerned.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A CIDER Unsession at Clojure/conj]]></title>
@@ -56,161 +181,224 @@ than what you&rsquo;d get by using <code>time</code>.</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Emacs Tip #6: Remove variable &amp; function definitions]]></title>
-    <link href="http://batsov.com/articles/2012/10/20/emacs-tip-number-6-remove-variable-and-function-definitions/"/>
-    <updated>2012-10-20T20:29:00+03:00</updated>
-    <id>http://batsov.com/articles/2012/10/20/emacs-tip-number-6-remove-variable-and-function-definitions</id>
-    <content type="html"><![CDATA[<p>From time to time you might want to void (unbind) a variable or a
-function definition in Emacs. Most often you&rsquo;ll probably be dealing
-with variables created with <code>defvar</code> whose values you&rsquo;ll want to
-update.  The magic functions you need are the following:</p>
+    <title type="html"><![CDATA[The Road to CIDER 0.8]]></title>
+    <link href="http://batsov.com/articles/2014/11/10/the-road-to-cider-0-dot-8/"/>
+    <updated>2014-11-10T15:27:00+02:00</updated>
+    <id>http://batsov.com/articles/2014/11/10/the-road-to-cider-0-dot-8</id>
+    <content type="html"><![CDATA[<p>I&rsquo;m planning to release the long overdue <a href="https://github.com/clojure-emacs/cider">CIDER</a> 0.8 at <a href="http://clojure-conj.org/">clojure/conj</a> 2014.
+I&rsquo;ll be giving a talk there that will be mostly about CIDER, so this seems like a pretty good idea to me.</p>
 
-<p><code>cl
-;; this will make the symbol my-nasty-variable's value void
-(makunbound 'my-nasty-variable)
-;; this will make the symbol my-nasty-function's
-;; function definition void
-(fmakunbound 'my-nasty-function)
-</code></p>
+<p>I&rsquo;d like to ask you to do a bit of extra testing to the current
+snapshot builds, so we can deliver a solid release (if we&rsquo;re lucky &ndash;
+the most solid ever). Guess you should pay extra attention to the
+<a href="https://github.com/clojure-emacs/cider/blob/master/CHANGELOG.md">new features</a>.</p>
 
-<p>The names aren&rsquo;t exactly intuitive and even I happen to forget them from time to
-time. Now at least I&rsquo;ll now where to look for them if that happens
-again. :&ndash;)</p>
+<p>If you want to get some issue fixed in time for 0.8 you&rsquo;d better <a href="https://github.com/clojure-emacs/cider/issues">get started right away</a>.</p>
+
+<p>Thanks in advance for your help!</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Emacs on OSX]]></title>
-    <link href="http://batsov.com/articles/2012/10/14/emacs-on-osx/"/>
-    <updated>2012-10-14T22:03:00+03:00</updated>
-    <id>http://batsov.com/articles/2012/10/14/emacs-on-osx</id>
-    <content type="html"><![CDATA[<h2>Prelude</h2>
+    <title type="html"><![CDATA[CIDER 0.7]]></title>
+    <link href="http://batsov.com/articles/2014/08/05/cider-0-dot-7/"/>
+    <updated>2014-08-05T15:19:00+03:00</updated>
+    <id>http://batsov.com/articles/2014/08/05/cider-0-dot-7</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/clojure-emacs/cider">CIDER</a> 0.7 is finally out and
+it&rsquo;s an epic release! It&rsquo;s without a doubt the most important release
+since the inception of the project about two years ago and it&rsquo;s the
+biggest one in terms of features and code changes.</p>
 
-<p>In this article I&rsquo;ll share with you a few tips and tricks about
-running Emacs under the Max OSX operating system.</p>
+<p>The release is special for a number of reasons. Allow me to quickly
+enumerate though them.</p>
 
-<h2>Installation</h2>
+<h3>Middleware-based</h3>
 
-<p>While Emacs is available for installation from
-<a href="http://wikemacs.org/wiki/Installing_Emacs_on_OS_X">various sources</a>
-I personally recommend you to use the
-<a href="http://wikemacs.org/wiki/Installing_Emacs_on_OS_X">Emacs for Mac OSX binary distribution</a>.</p>
+<p>One of the huge problems we&rsquo;ve had so far was that a lot of
+functionality that was present in SLIME + swank-clojure was missing in
+CIDER. For many people the transition between the two didn&rsquo;t really
+feel like an upgrade (although it was advertised as such) &ndash; after all
+they lost things like inspection, tracing, apropos, caller cross-reference, the
+debugger, etc.</p>
 
-<p>Installation via Homebrew is also a decent option, although it more time consuming.</p>
+<p>The reason this happened was CIDER&rsquo;s initial approach of implementing
+features by inlining Clojure code within the Emacs Lisp code and
+evaluating this code in a dedicated nREPL session (called the tooling
+session), to avoid contaminating the results in the &ldquo;primary&rdquo; eval
+session. This approach had one upside (you didn&rsquo;t need any extra deps
+(middleware) to run CIDER) and one huge downside (it&rsquo;s impossible
+to maintain non-trivial inlined code; not to mention it&rsquo;s not very
+practical). This meant that pretty much all third party libs were out
+of the equation and pretty much every advanced feature.</p>
 
-<p>After the installation you might want to wipe out the ancient Emacs 22
-that ships with OSX by default(its presence will only cause headaches, trust me):</p>
+<p>This problem was initially address by
+<a href="https://github.com/pallet/ritz">ritz</a>, which provided some extra
+functionality built on top of extra nREPL middleware. As it was a
+separate project it was hard to be kept in sync with the flurry of
+changes in CIDER and was abandoned at some point. While <code>ritz</code> failed
+it had the right approach and it served as the principle inspiration
+for CIDER 0.7.</p>
 
-<p><code>bash
-$ sudo rm /usr/bin/emacs
-$ sudo rm -rf /usr/share/emacs
-</code></p>
+<p>In CIDER 0.6 we introduced optional nREPL middleware for some
+operations (like completion, error reporting, var info) and in 0.7 the
+middleware stack was greatly extended, improved and promoted to a
+mandatory CIDER component. This has one downside (you&rsquo;ll have to
+install it to leverage all of CIDER&rsquo;s power) and a several upsides:</p>
 
-<p>Keep in mind that the OSX updates will (unfortunately) bring Emacs 22 back from the dead, so
-you might consider altering your <code>PATH</code> instead.</p>
+<ul>
+<li><p>A lot of the heavy lifting is now done in pure Clojure code (see
+<a href="https://github.com/clojure-emacs/cider-nrepl">cider-nrepl</a>) and it&rsquo;s
+much easier to implement complex features now (not to mention &ndash; this
+code is much easier to maintain). This also means that it&rsquo;s much
+easier for Clojure programmers to contribute to CIDER as a lot of
+functionality is just lots of Clojure code and very little Emacs Lisp
+code. I&rsquo;m reasonably sure I&rsquo;m one of the very few CIDER users who
+knows more Emacs Lisp than Clojure, so I consider this a big win.</p></li>
+<li><p>It&rsquo;s now easy to provide pretty similar level of support for both
+Clojure and ClojureScript as we can reconcile the differences
+between them in our middleware.</p></li>
+<li><p>It&rsquo;s easier to keep the code backwards compatible (which is a
+nightmare for inlined code).</p></li>
+<li><p>There are no implicit dependencies in the system (unlike before).</p></li>
+</ul>
 
-<p>Alternatively you can just create an alias in your shell and when you
-invoke <code>emacs</code> it will run the newly installed version:</p>
 
-<p><code>bash
-$ alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
-</code></p>
+<p>Consider auto-completion &ndash; this feature was implemented in terms of
+evaluating some <code>clojure-complete</code> code with the assumption that
+<code>clojure-complete</code> is available in the environment you were using as
+CIDER assumed you had started the nREPL server using <code>lein repl</code>. This
+would fire up a REPL-y REPL and <code>clojure-complete</code> is a REPL-y
+dependency. Not everyone uses <code>lein repl</code>, though and REPL-y can always
+switch to another completion library in the future.</p>
 
-<p>If you installed via Homebrew that path might look like this:</p>
+<p>If you connected CIDER to an embedded nREPL server,
+you&rsquo;d be greeted by a missing class error, as most apps don&rsquo;t normally
+depend on <code>clojure-complete</code>. You&rsquo;d be puzzled for a while, but eventually
+you&rsquo;ll realize what the problem is.</p>
 
-<p><code>bash
-$ alias emacs="/usr/local/Cellar/emacs/24.2/Emacs.app/Contents/MacOS/Emacs -nw"
-</code></p>
+<p>Now we&rsquo;re free to explicitly specify our deps and pick the best
+libraries for the job (as opposed to those that are available) &ndash;
+you&rsquo;ll quickly notice how smarter auto-completion is now on Clojure,
+because we&rsquo;re internally using the newer, faster and more feature-rich
+<a href="https://github.com/alexander-yakushev/compliment">compliment</a> library
+(note that we&rsquo;re using a different library for ClojureScript
+completion).
+* Other projects can leverage some of our middleware &ndash; somewhat
+  amusingly for Emacs users, <code>vim-fireplace</code> is using <code>cider-nrepl</code>
+  as well.</p>
 
-<p>To make it permanent, if using bash, add that line to
-<code>~/.bash_profile</code>. zsh users will want to update <code>~/.zshrc</code> instead.</p>
+<p>At this point we&rsquo;ve removed pretty much all inlined code (except some
+pretty-printing code) and that has yielded much improved eldoc,
+macroexpansion, documentation viewing (<code>cider-doc</code> will now display
+Javadoc in Emacs!!!), source browsing, etc.</p>
 
-<h2>Full-screen support</h2>
+<p>We&rsquo;ve also started bringing back some features we loved in SLIME, but
+were missing so far &ndash; the inspector, apropos and tracing are back. We&rsquo;re now working on
+bringing back function call cross-referencing and debugging as well.</p>
 
-<p>The Homebrew Emacs formula includes a patch providing the <code>M-x
-ns-toggle-fullscreen</code> command for switching between normal and
-full-screen modes. It works well, but does not provide the typical OS
-X Lion full-screen app experience. In particular, it remains on the
-desktop, obscuring non-full-screen applications, rather than moving to
-its own space. For OSX Lion style fullscreen support have a look at
-this
-<a href="http://sourcematters.org/2012/04/10/full-screen-emacs-24-for-os-x-lion.html">article</a>.</p>
+<p>Note that CIDER will still work if you connect to an nREPL server
+that&rsquo;s not using CIDER&rsquo;s middleware. In this case you&rsquo;ll get a
+warning and a pretty limited feature-set &ndash; source file loading, code
+evaluation, pretty-printing and error highlighting.</p>
 
-<p>Another option that you might want to explore is
-the <a href="http://osxdaily.com/2011/07/22/enable-full-screen-support-all-apps-os-x-lion-maximizer/">maximizer</a>
-utility that brings full-screen support for all Cocoa apps under Lion.</p>
+<h3>cider-test</h3>
 
-<h2>Keybindings</h2>
+<p><code>clojure-test-mode</code> (which was more or less abandoned in terms of
+maintenance) finally has a successor in CIDER itself. <code>cider-test</code>
+provides more or less the same functionality, but is implemented in
+terms of nREPL middleware and is a more robust solution. As it&rsquo;s part
+of CIDER it cannot ever be out-of-sync with CIDER as <code>clojure-test-mode</code> has
+often been lately.</p>
 
-<p>I heartily recommend you to remap your <em>Caps Lock</em> key to <em>Control</em>. This
-can be easily done via <em>Preferences &ndash;> Keyboard &ndash;> Modifier Keys</em>. If
-you&rsquo;re using a laptop keyboard or the bluetooth keyboard you&rsquo;ll
-definitely want to remap your right Option key to Control as
-well. No one can use effectively Emacs without a right Control
-key. Remapping it is a bit more involved and requires the use of the
-third-party utility
-<a href="http://pqrs.org/macosx/keyremap4macbook/">KeyRemap4MacBook</a>.</p>
+<p><code>cider-test</code> is a little rough around the edges, but I&rsquo;m fairly sure it has bright future
+ahead. Use it, love it, hate it and send us your feedback! We&rsquo;d love to hear it.</p>
 
-<p>On a regular Mac keyboard you&rsquo;ll probably want to map Command to Meta
-and Option to Super. On an external Windows keyboard you&rsquo;ll want to
-map Command to Super and Option to Meta (on Windows keyboard the
-Command and Option keys are swapped). Add this to your <code>init.el</code> (or
-<code>.emacs</code>) file:</p>
+<p><strong>P.S.</strong> We might extend this with support for other frameworks like
+<code>midje</code> and <code>expectations</code>, although that&rsquo;s not high on our priority
+list.</p>
 
-<p><code>cl
-(setq mac-command-modifier 'super)
-(setq mac-option-modifier 'meta)
-</code></p>
+<h3>Grimoire support</h3>
 
-<p>If you often switch between your laptop keyboard and an external
-Windows keyboard (like me) you might want to define this helper
-command and bind it to some key combo (<code>C-c w</code> in the example):</p>
+<p>In addition to built-in Clojure &amp; Javadoc you can now peruse the
+extended documentation provided by
+<a href="http://grimoire.arrdem.com/">Grimoire</a> from the comfort of your
+beloved editor. No more browser interruptions just to get a few usage
+examples of some function! <code>C-c C-d g</code> for the win!</p>
 
-<p>``` cl
-(defun swap-meta-and-super ()
-  &ldquo;Swap the mapping of meta and super. Very useful for people using their Mac
-with a Windows external keyboard from time to time.&rdquo;
-  (interactive)
-  (if (eq mac-command-modifier &lsquo;super)</p>
+<p>Adding some extended Grimoire integration is definitely on the roadmap.</p>
 
-<pre><code>  (progn
-    (setq mac-command-modifier 'meta)
-    (setq mac-option-modifier 'super)
-    (message "Command is now bound to META and Option is bound to SUPER."))
-(progn
-  (setq mac-command-modifier 'super)
-  (setq mac-option-modifier 'meta)
-  (message "Command is now bound to SUPER and Option is bound to META."))))
-</code></pre>
+<h3>Increased bus factor</h3>
 
-<p>(global-set-key (kbd &ldquo;C-c w&rdquo;) &lsquo;swap-meta-and-super)
-```</p>
+<p>One of the biggest problems of the project so far was that fairly few people
+were involved with it.  At one point it was mostly Tim, Hugo and
+me. At another it was mostly me. The bus factor was dangerously close
+to 1, which always worried me. Recently, however, a lot of people have
+been helping quite actively, which makes me more optimistic about the
+future. As much as I love CIDER I don&rsquo;t want it to depend on one
+extremely busy and very clumsy person (each time I go hiking there&rsquo;s a
+serious chance I&rsquo;ll fall of a cliff or something).</p>
 
-<h2>Setting the PATH variable</h2>
+<p>I&rsquo;d like to thank everyone for your wonderful contributions and single
+out a bunch of people for some outstanding work done by them:</p>
 
-<p>Long story short &ndash; if you&rsquo;re running Emacs from Spotlight (or any
-other launcher for that matter) your <code>PATH</code> and <code>exec-path</code> variables
-won&rsquo;t be same as the ones in your shell (and that&rsquo;s every nasty since
-you want be able to run some external programs from Emacs). The best
-way to handle this would be installing the package
-<a href="https://github.com/purcell/exec-path-from-shell">exec-path-from-shell</a>
-by Steve Purcell.</p>
+<ul>
+<li><a href="https://github.com/gtrak">Gary Trakhman</a> is the one responsible for
+the good ClojureScript support we now boast. Fantastic work, Gary! You have a big thanks from me!</li>
+<li><a href="https://github.com/jeffvalk">Jeff Valk</a> did some mighty fine work
+on the var info retrieval, source navigation, documentation display
+and single-handedly implemented <code>cider-test</code> and <code>cider-apropos</code>. We
+all owe Jeff a huge thanks!</li>
+<li><a href="https://github.com/hugoduncan">Hugo Duncan</a> who constantly
+  contributed patches, bug reports and ideas. His <code>nrepl-ritz</code>
+  project provided a lot of inspiration for some of the existing
+  middleware.</li>
+<li><a href="https://github.com/eslick">Ian Eslick</a> contributed the new inspector.</li>
+<li><a href="https://github.com/alexander-yakushev/compliment">Alexander Yakushev</a>
+  made so many improvements to his awesome <code>compliment</code>
+  library for the needs of CIDER. Did you notice that you now get
+  completion suggestions for <strong>locals</strong>? How amazing is that!</li>
+<li><a href="https://github.com/dgutov">Dmitry Gutov</a> implemented native support in CIDER for <code>company-mode</code>.</li>
+</ul>
 
-<h2>Flyspell</h2>
 
-<p>For flyspell to work correctly you&rsquo;ll need to install aspell plus a few dictionaries.</p>
+<h2>The Road Before Us</h2>
 
-<p><code>bash
-$ brew install aspell --lang=en
-</code></p>
+<p>Obviously our work is far from over &ndash; we&rsquo;re still lacking some crucial
+features (most notably a debugger) and a lot of code needs
+polish. This will obviously take some time and a lot of work to get right, but I&rsquo;m
+confident we&rsquo;ll get there.</p>
 
-<h2>More goodies</h2>
+<p>I&rsquo;d also want us to work a bit in the area of documentation &ndash; a
+manual, a cheatsheet, etc. Have a look at the
+<a href="https://github.com/clojure-emacs/cider/issues">issue tracker</a> if
+you&rsquo;d like to help out &ndash; we definitely need all the help we can get.</p>
 
-<p>If you want to spare yourself part of the headache of configuring
-Emacs on OSX and get a lot of extra firepower you might want to install
-<a href="https://github.com/bbatsov/prelude">Emacs Prelude</a> &ndash; an enhanced
-Emacs 24.x configuration (developed by yours truly) that should make
-your experience with Emacs both more pleasant and more powerful.</p>
+<p>The 0.7 release required a massive amount of work and we spent more that 3 months to get it to
+a shippable state. With the bulk of the work behind us I hope we&rsquo;ll be able to deliver new
+releases more frequently &ndash; on a monthly (or bi-monthly) basis.</p>
+
+<p>I&rsquo;d love to be able to raise a lot of money via crowd-funding and work
+on CIDER for an year or get hired by some company to work full-time on
+it, but that&rsquo;s not going to happen. For one reason or another people
+rarely get excited about dev tools, so all of us have to work together
+to make CIDER the ultimate Clojure(Script) development environment.</p>
+
+<p>If I knew how much work I&rsquo;d have to do when I assumed the maintenance
+of CIDER exactly one year ago I might not have done it. Maintaining a
+project that&rsquo;s pivotal to an entire community (I recall some article
+mentioning about half the Clojure devs were using it) is both a lot of
+work and a lot of stress and pressure. That said, it&rsquo;s probably my
+favourite OSS project and I enjoy working on it immensely. If you
+don&rsquo;t have the time to help out with code or docs you can still support my
+work on CIDER (and all my other projects) via
+<a href="https://www.gittip.com/bbatsov">gittip</a>.</p>
+
+<p><a href="https://www.gittip.com/bbatsov"><img src="https://rawgithub.com/twolfson/gittip-badge/0.2.0/dist/gittip.png" alt="Support via Gittip" /></a></p>
+
+<p>For all the gory details regarding new features and changes in CIDER 0.7 &ndash; take a look at the
+<a href="https://github.com/clojure-emacs/cider/blob/master/CHANGELOG.md">changelog</a>.</p>
+
+<p>That&rsquo;s all from me, folks! Use CIDER, drink cider and prosper!</p>
 ]]></content>
   </entry>
   
